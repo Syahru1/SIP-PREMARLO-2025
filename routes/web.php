@@ -1,18 +1,16 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MahasiswaController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
 
-Route::get('/', function () {
-    return view('admin/kelolaDataLomba/index');
+Route::prefix('mahasiswa')->name('mahasiswa.')->group(function () {
+    Route::get('/beranda', [MahasiswaController::class, 'beranda'])->name('beranda');
+    Route::get('/prestasi', [MahasiswaController::class, 'prestasi'])->name('prestasi');
+    Route::get('/lomba', [MahasiswaController::class, 'lomba'])->name('lomba');
+    Route::get('/profil', [MahasiswaController::class, 'profil'])->name('profil');
+    Route::get('/notifikasi', [MahasiswaController::class, 'notifikasi'])->name('notifikasi');
+    Route::get('/detail-prestasi', [MahasiswaController::class, 'detail_prestasi'])->name('detail-prestasi');
+    Route::get('/detail-lomba', [MahasiswaController::class, 'detail_lomba'])->name('detail-lomba');
 });
+
