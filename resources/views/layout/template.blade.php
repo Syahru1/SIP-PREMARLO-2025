@@ -4,17 +4,26 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+
     <title>SIRLO</title>
     <link rel="icon" type="image/x-icon" href="{{asset('assets/img/favicon.ico')}}"/>
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
-    <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600;700&display=swap" rel="stylesheet">
     <link href="{{asset('bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('assets/css/plugins.css')}}" rel="stylesheet" type="text/css" />
+     @stack('styles')
+    <style>
+        * {
+            font-family: 'Urbanist', sans-serif !important;
+        }
+    </style>
     <!-- END GLOBAL MANDATORY STYLES -->
 
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->
     <!-- di bagian <head> layout.template -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
     <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
 
 </head>
@@ -22,6 +31,10 @@
 
     <!--  BEGIN NAVBAR  -->
     @include('layout.navbar')
+
+    {{-- @if (Request::is('mahasiswa/*'))
+        @include('layout.topbar-mahasiswa')
+    @endif --}}
     <!--  END NAVBAR  -->
 
     <!--  BEGIN MAIN CONTAINER  -->
@@ -32,7 +45,14 @@
         <div class="search-overlay"></div>
 
         <!--  BEGIN SIDEBAR  -->
-        @include('layout.sidebar')
+        @if (Request::is('dosen/*'))
+            @include('layout.sidebar-dosen')
+        @elseif (Request::is('mahasiswa/*'))
+            @include('layout.sidebar-mahasiswa')
+        @elseif (Request::is('admin/*'))
+            @include('layout.sidebar-admin')
+        @endif
+
         <!--  END SIDEBAR  -->
 
         <!--  BEGIN CONTENT AREA  -->
