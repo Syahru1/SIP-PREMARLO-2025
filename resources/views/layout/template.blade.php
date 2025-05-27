@@ -7,9 +7,16 @@
     <title>Blank Page | CORK - Multipurpose Bootstrap Dashboard Template </title>
     <link rel="icon" type="image/x-icon" href="{{asset('assets/img/favicon.ico')}}"/>
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
-    <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600;700&display=swap" rel="stylesheet">
     <link href="{{asset('bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('assets/css/plugins.css')}}" rel="stylesheet" type="text/css" />
+     @stack('styles')
+    <style>
+        * {
+            font-family: 'Urbanist', sans-serif !important;
+        }
+    </style>
     <!-- END GLOBAL MANDATORY STYLES -->
 
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->
@@ -21,6 +28,9 @@
 
     <!--  BEGIN NAVBAR  -->
     @include('layout.navbar')
+    @if (Request::is('mahasiswa/*'))
+        @include('layout.topbar-mahasiswa')
+    @endif
     <!--  END NAVBAR  -->
 
     <!--  BEGIN MAIN CONTAINER  -->
@@ -31,7 +41,14 @@
         <div class="search-overlay"></div>
 
         <!--  BEGIN SIDEBAR  -->
-        @include('layout.sidebar')
+        @if (Request::is('dosen/*'))
+            @include('layout.sidebar-dosen')
+        @elseif (Request::is('mahasiswa/*'))
+            @include('layout.sidebar-mahasiswa')
+        @elseif (Request::is('admin/*'))
+            @include('layout.sidebar-admin')
+        @endif
+
         <!--  END SIDEBAR  -->
 
         <!--  BEGIN CONTENT AREA  -->
