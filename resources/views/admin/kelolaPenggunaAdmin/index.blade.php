@@ -116,8 +116,8 @@
                             <td>Muhammad Syahrul Gunawan</td>
                             <td>Admin</td>
                             <td>
-                                <a href="tambahAdmin" class="btn btn-success btn-sm">Tambah</a>
-                                <a href="editAdmin" class="btn btn-warning btn-sm">Edit</a>
+                                <a href="{{ route('admin.kelolaAdmin.tambah') }}" class="btn btn-success btn-sm">Tambah</a>
+                                <a href="{{ route('admin.kelolaAdmin.edit', ['id' => 1]) }}" class="btn btn-warning btn-sm">Edit</a>
                                 <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus?')">Hapus</button>
                             </td>
                         </tr>
@@ -126,8 +126,8 @@
                             <td>Siti Rahma</td>
                             <td>Admin</td>
                             <td>
-                                <a href="tambahAdmin" class="btn btn-success btn-sm">Tambah</a>
-                                <a href="editAdmin" class="btn btn-warning btn-sm">Edit</a>
+                                <a href="{{ route('admin.kelolaAdmin.tambah') }}" class="btn btn-success btn-sm">Tambah</a>
+                                <a href="{{ route('admin.kelolaAdmin.edit', ['id' => 1]) }}" class="btn btn-warning btn-sm">Edit</a>
                                 <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus?')">Hapus</button>
                             </td>
                         </tr>

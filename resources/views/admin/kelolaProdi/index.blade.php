@@ -114,8 +114,8 @@
                             <td>KPTI01</td>
                             <td>D-4 Teknik Informatika</td>
                             <td>
-                                <a href="tambahProdi" class="btn btn-success btn-sm">Tambah</a>
-                                <a href="editProdi" class="btn btn-warning btn-sm">Edit</a>
+                                <a href="{{ route('admin.kelolaProdi.tambah') }}"> class="btn btn-success btn-sm">Tambah</a>
+                                <a href="{{ route('admin.kelolaProdi.edit') }}" class="btn btn-warning btn-sm">Edit</a>
                                 <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus?')">Hapus</button>
                             </td>
                         </tr>
@@ -123,8 +123,8 @@
                             <td>KPTI02</td>
                             <td>D-4 Sistem Informasi Bisnis</td>
                             <td>
-                                <a href="tambahProdi" class="btn btn-success btn-sm">Tambah</a>
-                                <a href="editProdi" class="btn btn-warning btn-sm">Edit</a>
+                                <a href="{{ route('admin.kelolaProdi.tambah') }}"> class="btn btn-success btn-sm">Tambah</a>
+                                <a href="{{ route('admin.kelolaProdi.edit') }}" class="btn btn-warning btn-sm">Edit</a>
                                 <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus?')">Hapus</button>
                             </td>
                         </tr>

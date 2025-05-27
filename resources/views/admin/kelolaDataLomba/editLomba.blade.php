@@ -127,7 +127,7 @@
                             </div>
 
                             <div class="d-flex justify-content-end gap-3 mt-3">
-                                <a href="index" class="btn btn-danger">Batal</a>
+                                <a href={{ route('admin.kelolaDataLomba.index') }} class="btn btn-danger">Batal</a>
                                 <button type="submit" class="btn btn-success">Simpan</button>
                             </div>
                         </form>

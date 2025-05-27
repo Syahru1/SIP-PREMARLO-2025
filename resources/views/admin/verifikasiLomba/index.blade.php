@@ -97,7 +97,7 @@
                             <td>2023</td>
                             <td>D-IV TEKNIK INFORMATIKA</td>
                             <td>
-                                <a href="detailLomba" class="btn btn-warning btn-sm">Lihat Detail Lomba</a>
+                                <a href="{{ route('admin.verifikasiLomba.detail') }}" class="btn btn-warning btn-sm">Lihat Detail Lomba</a>
                             </td>
                         </tr>
                         <tr>
@@ -106,7 +106,7 @@
                             <td>2024</td>
                             <td>D-IV SISTEM INFORMASI BISNIS</td>
                             <td>
-                                <a href="detailLomba" class="btn btn-warning btn-sm">Lihat Detail Lomba</a>
+                                <a href="{{ route('admin.verifikasiLomba.detail') }}" class="btn btn-warning btn-sm">Lihat Detail Lomba</a>
                             </td>
                         </tr>
                         <tr>
@@ -115,7 +115,7 @@
                             <td>2023</td>
                             <td>D-IV TEKNIK INFORMATIKA</td>
                             <td>
-                                <a href="detailLomba" class="btn btn-warning btn-sm">Lihat Detail Lomba</a>
+                                <a href="{{ route('admin.verifikasiLomba.detail') }}" class="btn btn-warning btn-sm">Lihat Detail Lomba</a>
                             </td>
                         </tr>
                         <tr>
@@ -124,7 +124,7 @@
                             <td>2024</td>
                             <td>D-IV TEKNIK INFORMATIKA</td>
                             <td>
-                                <a href="detailLomba" class="btn btn-warning btn-sm">Lihat Detail Lomba</a>
+                                <a href="{{ route('admin.verifikasiLomba.detail') }}" class="btn btn-warning btn-sm">Lihat Detail Lomba</a>
                             </td>
                         </tr>
                         <tr>
@@ -133,7 +133,7 @@
                             <td>2023</td>
                             <td>D-IV TEKNIK INFORMATIKA</td>
                             <td>
-                                <a href="detailLomba" class="btn btn-warning btn-sm">Lihat Detail Lomba</a>
+                                <a href="{{ route('admin.verifikasiLomba.detail') }}" class="btn btn-warning btn-sm">Lihat Detail Lomba</a>
                             </td>
                         </tr>
                     </tbody>

@@ -147,8 +147,8 @@
                 </div>
 
                 <div class="action-buttons">
-                    <button type="button" class="btn-cancel">Batal</button>
-                    <button type="submit" class="btn-save">Simpan</button>
+                    <a href="{{ route('admin.profile.index') }}" class="btn btn-warning btn-sm">Batal</a>
+                        <button type="submit" class="btn-save">Simpan</button>
                 </div>
             </form>
         </div>

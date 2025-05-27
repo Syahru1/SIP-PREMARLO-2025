@@ -98,7 +98,7 @@
                             </div>
 
                             <div class="d-flex justify-content-end gap-2 mt-3">
-                                <a href="#" class="btn btn-danger">Batal</a>
+                                <a href="{{ route('admin.kelolaDosen.index') }}" class="btn btn-danger">Batal</a>
                                 <button type="submit" class="btn btn-success">Simpan</button>
                             </div>
                         </form>

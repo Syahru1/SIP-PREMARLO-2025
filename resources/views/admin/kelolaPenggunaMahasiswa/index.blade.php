@@ -118,8 +118,8 @@
                             <td>2023</td>
                             <td>D-4 Teknik Informatika</td>
                             <td>
-                                <a href="tambahMahasiswa" class="btn btn-success btn-sm">Tambah</a>
-                                <a href="editMahasiswa" class="btn btn-warning btn-sm">Edit</a>
+                                <a href="{{ route('admin.kelolaMahasiswa.tambah') }}" class="btn btn-success btn-sm">Tambah</a>
+                                <a href="{{ route('admin.kelolaMahasiswa.edit') }}" class="btn btn-warning btn-sm">Edit</a>
                                 <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus?')">Hapus</button>
                             </td>
                         </tr>
@@ -129,8 +129,8 @@
                             <td>2022</td>
                             <td>D-4 Sistem Informasi Bisnis</td>
                             <td>
-                                <a href="tambahMahasiswa" class="btn btn-success btn-sm">Tambah</a>
-                                <a href="editMahasiswa" class="btn btn-warning btn-sm">Edit</a>
+                                <a href="{{ route('admin.kelolaMahasiswa.tambah') }}" class="btn btn-success btn-sm">Tambah</a>
+                                <a href="{{ route('admin.kelolaMahasiswa.edit') }}" class="btn btn-warning btn-sm">Edit</a>
                                 <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus?')">Hapus</button>
                             </td>
                         </tr>

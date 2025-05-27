@@ -82,7 +82,7 @@
                                 <label for="tahunAjaran" class="form-label">Tahun Ajaran</label>
                                 <input type="text" class="form-control" id="tahunAjaran" placeholder="Masukkan Tahun Ajaran">
                             </div>
-                            
+
                             <div class="form-group mb-3">
                                 <label for="semester">Semester</label>
                                 <select id="semester" name="semester" class="form-control">
@@ -92,7 +92,7 @@
                             </div>
 
                             <div class="d-flex justify-content-end gap-2 mt-3">
-                                <a href="#" class="btn btn-danger">Batal</a>
+                                <a href="{{ route('admin.kelolaPeriode.index') }}" class="btn btn-danger">Batal</a>
                                 <button type="submit" class="btn btn-success">Simpan</button>
                             </div>
                         </form>

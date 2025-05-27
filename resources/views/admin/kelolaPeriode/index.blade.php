@@ -114,8 +114,8 @@
                             <td>2023/2024</td>
                             <td>Ganjil</td>
                             <td>
-                                <a href="tambahPeriode" class="btn btn-success btn-sm">Tambah</a>
-                                <a href="editPeriode" class="btn btn-warning btn-sm">Edit</a>
+                                <a href="{{ route('admin.kelolaPeriode.tambah') }}" class="btn btn-success btn-sm">Tambah</a>
+                                <a href="{{ route('admin.kelolaPeriode.edit') }}" class="btn btn-warning btn-sm">Edit</a>
                                 <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus?')">Hapus</button>
                             </td>
                         </tr>
@@ -123,8 +123,8 @@
                             <td>2024/2025</td>
                             <td>Genap</td>
                             <td>
-                                <a href="tambahPeriode" class="btn btn-success btn-sm">Tambah</a>
-                                <a href="editPeriode" class="btn btn-warning btn-sm">Edit</a>
+                                <a href="{{ route('admin.kelolaPeriode.tambah') }}" class="btn btn-success btn-sm">Tambah</a>
+                                <a href="{{ route('admin.kelolaPeriode.edit') }}" class="btn btn-warning btn-sm">Edit</a>
                                 <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus?')">Hapus</button>
                             </td>
                         </tr>
