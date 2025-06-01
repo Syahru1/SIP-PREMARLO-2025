@@ -1,54 +1,8 @@
-<style>
-    .logout-item {
-        margin-top: auto;
-        padding: 20px 24px;
-        background-color: #fee2e2;
-        border-top: 1px solid #fee2e2;
-    }
-
-    .logout-item a:hover span {
-        color: red;
-    }
-
-    #sidebar {
-        width: 250px;
-        height: 100vh;
-        background: #ffffff;
-        color: white;
-        position: fixed;
-        left: 0;
-        top: 0;
-        transition: all 0.3s ease;
-        overflow: hidden;
-    }
-
-    #sidebar.collapsed {
-        width: 0;
-    }
-
-    #sidebar .menu a span {
-        font-size: 16px;
-        color: #333333;
-        font-weight: 500;
-    }
-
-    #sidebar .menu svg {
-        stroke: #333333;
-    }
-
-    #sidebar .menu a:hover span {
-        color: #1d4ed8;
-    }
-
-    .logout-item a:hover span {
-        color: red;
-    }
-</style>
         <div class="sidebar-wrapper sidebar-theme">
 
             <div id="dismiss" class="d-lg-none"><i class="flaticon-cancel-12"></i></div>
 
-            <nav id="sidebar" class="sidebar">
+            <nav id="sidebar">
 
                 <ul class="navbar-nav theme-brand flex-row  text-center">
                     <li class="nav-item theme-text">
@@ -93,38 +47,8 @@
                             </div>
                         </a>
                     </li>
-
-                    <li class="logout-item">
-                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="feather feather-log-out" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-                            <span>Logout</span>
-                        </a>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            @csrf
-                        </form>
-                    </li>
+   
                 </ul>
             </nav>
+
         </div>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-    const toggleButton = document.querySelector('.sidebarCollapse');
-    const sidebar = document.querySelector('#sidebar');
-
-    if (toggleButton && sidebar) {
-        toggleButton.addEventListener('click', function (e) {
-        e.stopPropagation();
-        sidebar.classList.toggle('collapsed');
-        const expanded = !sidebar.classList.contains('collapsed');
-        toggleButton.setAttribute('aria-expanded', expanded);
-        });
-
-        document.addEventListener('click', function (e) {
-        if (!sidebar.contains(e.target) && !toggleButton.contains(e.target)) {
-            sidebar.classList.add('collapsed');
-            toggleButton.setAttribute('aria-expanded', false);
-        }
-        });
-    }
-    });
-</script>
