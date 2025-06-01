@@ -151,8 +151,8 @@
                                 <td>2025-06-05</td>
                                 <td>2025-07-05</td>
                                 <td>
-                                    <a href="{{ route('admin.kelolaDataLomba.tambah') }}" class="btn btn-success btn-sm">Tambah</a>
-                                    <a href="{{ route('admin.kelolaDataLomba.edit') }}" class="btn btn-warning btn-sm">Edit</a>
+                                    <a href="{{ url('admin/kelola-pengguna-lomba/tambah') }}" class="btn btn-success btn-sm">Tambah</a>
+                                    <a href="{{ url('admin/kelola-pengguna-lomba/edit') }}" class="btn btn-warning btn-sm">Edit</a>
                                     <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus?')">Hapus</button>
                                 </td>
                             </tr>
@@ -166,8 +166,8 @@
                                 <td>2025-05-15</td>
                                 <td>2025-06-01</td>
                                 <td>
-                                    <a href="{{ route('admin.kelolaDataLomba.tambah') }}" class="btn btn-success btn-sm">Tambah</a>
-                                    <a href="{{ route('admin.kelolaDataLomba.edit') }}" class="btn btn-warning btn-sm">Edit</a>
+                                    <a href="{{ url('admin/kelola-pengguna-lomba/tambah') }}" class="btn btn-success btn-sm">Tambah</a>
+                                    <a href="{{ url('admin/kelola-pengguna-lomba/edit') }}" class="btn btn-warning btn-sm">Edit</a>
                                     <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus?')">Hapus</button>
                                 </td>
                             </tr>

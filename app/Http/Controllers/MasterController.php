@@ -1,0 +1,41 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+class MasterController extends Controller
+{
+    public function dosen()
+    {
+        return view('dosen.beranda',[
+            "title" => "Dashboard"
+        ]);
+        // if (auth()->user()->role == 'Owner') {
+        // }
+
+        return redirect()->back();
+    }
+
+    public function admin()
+    {
+        return view('admin.beranda',[
+            "title" => "Dashboard"
+        ]);
+        // if (auth()->user()->role == 'Admin') {
+        // }
+
+        return redirect()->back();
+    }
+
+    public function mahasiswa()
+    {
+        return view('mahasiswa.beranda',[
+            "title" => "Dashboard"
+        ]);
+        // if (auth()->user()->role == 'Kasir') {
+        // }
+
+        return redirect()->back();
+    }
+}

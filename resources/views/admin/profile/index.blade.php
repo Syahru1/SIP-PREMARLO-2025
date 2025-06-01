@@ -134,7 +134,7 @@
                             <p><strong>NIDN</strong><br>1907******</p>
                             <p><strong>Jabatan</strong><br>Admin Jurusan TI</p>
                             <div class="d-flex justify-content-end mt-3">
-                                <a href="{{ route('admin.profile.edit') }}" class="btn-edit">Edit Profile</a>
+                                <a href="{{ url('admin/profile/edit') }}" class="btn-edit">Edit Profile</a>
                             </div>
                         </div>
 
