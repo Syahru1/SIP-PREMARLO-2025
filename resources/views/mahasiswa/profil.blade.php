@@ -82,7 +82,7 @@
     <div class="card component-card_4">
         <div class="card-body">
 
-            
+
             <ul class="nav nav-tabs mb-3" id="lineTab" role="tablist">
                 <li class="nav-item">
                     <a class="nav-link active" id="underline-home-tab" data-toggle="tab" href="#underline-home" role="tab" aria-controls="underline-home" aria-selected="true">Kompetensi</a>
@@ -98,7 +98,7 @@
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h5 class="card-title mb-0 text-black" style="font-weight: bold !important;">Minat</h5>
                             <div class="d-flex align-items-center">
-            
+
                             <button class="btn btn-primary mb-2 mr-2">Tambah</button>
                             <button class="btn btn-secondary mb-2 mr-2">Edit</button>
 
@@ -122,7 +122,7 @@
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h5 class="card-title mb-0 text-black" style="font-weight: bold !important;">Bidang Keahlian</h5>
                             <div class="d-flex align-items-center">
-            
+
                             <button class="btn btn-primary mb-2 mr-2">Tambah</button>
                             <button class="btn btn-secondary mb-2 mr-2">Edit</button>
 
@@ -266,7 +266,7 @@
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         if (typeof feather !== 'undefined') {
-            feather.replace(); 
+            feather.replace();
         }
     });
 </script>
