@@ -8,22 +8,22 @@ class MahasiswaController extends Controller
 {
     public function beranda()
     {
-        return view('mahasiswa.beranda'); 
+        return view('mahasiswa.beranda.index'); 
     }
 
     public function prestasi()
     {
-        return view('mahasiswa.prestasi'); 
+        return view('mahasiswa.prestasi.index'); 
     }
 
     public function lomba()
     {
-        return view('mahasiswa.lomba'); 
+        return view('mahasiswa.lomba.index'); 
     }
 
     public function profil()
     {
-        return view('mahasiswa.profil'); 
+        return view('mahasiswa.profil.index'); 
     }
 
     public function notifikasi()
@@ -33,11 +33,11 @@ class MahasiswaController extends Controller
 
     public function detail_prestasi()
     {
-        return view('mahasiswa.detail-prestasi'); 
+        return view('mahasiswa.prestasi.detail-prestasi'); 
     }
 
     public function detail_lomba()
     {
-        return view('mahasiswa.detail-lomba'); 
+        return view('mahasiswa.lomba.detail-lomba'); 
     }
 }

@@ -31,7 +31,7 @@ Route::post('/logout', function () {
 
 Route::group(['prefix' => 'admin'],function () {
     // Beranda
-    Route::get('/beranda', [MasterController::class, 'admin'])->name('beranda.admin');
+    Route::get('/beranda', [MasterController::class, 'admin'])->name('beranda');
     
     // Kelola Data Lomba
     Route::get('/kelola-data-lomba', [AdminController::class, 'kelolaDataLombaIndex'])->name('kelolaDataLomba.index');
