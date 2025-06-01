@@ -22,7 +22,6 @@
 
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->
     <!-- di bagian <head> layout.template -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
     <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
 
@@ -32,9 +31,6 @@
     <!--  BEGIN NAVBAR  -->
     @include('layout.navbar')
 
-    {{-- @if (Request::is('mahasiswa/*'))
-        @include('layout.topbar-mahasiswa')
-    @endif --}}
     <!--  END NAVBAR  -->
 
     <!--  BEGIN MAIN CONTAINER  -->
