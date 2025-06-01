@@ -30,6 +30,9 @@
 
     <!--  BEGIN NAVBAR  -->
     @include('layout.navbar')
+    @if (Request::is('mahasiswa/*'))
+        @include('layout.topbar-mahasiswa')
+    @endif
 
     <!--  END NAVBAR  -->
 

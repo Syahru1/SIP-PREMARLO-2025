@@ -1,0 +1,38 @@
+.navbar-custom {
+    height: 64px;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    z-index: 1030;
+}
+
+.nav-link-custom,
+.nav-link-home {
+    color: #4337F1 ;
+    margin-right: 1rem;
+    margin-left: 1rem;
+}
+
+.nav-link-custom {
+    color: #000;
+    margin-right: 1rem;
+}
+
+.nav-link-home.active,
+.nav-link-custom.active {
+    color: #4337F1 !important;
+    font-weight: 600 !important;
+}
+
+.btn-login {
+    background-color: #4337F1;
+    color: white;
+}
+
+.btn-login:hover {
+    background-color: #352cc4;
+    color: white;
+}
+
+html {
+    scroll-behavior: smooth;
+}

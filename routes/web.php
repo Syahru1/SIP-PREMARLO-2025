@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\MasterController;
+use App\Http\Controllers\HalamanUtamaController;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,6 +18,10 @@ use App\Http\Controllers\MasterController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('/', [MasterController::class, 'index']);
+
+Route::get('/login', [AuthController::class, 'login'])->name('login');
+
 Route::post('/logout', function () {
     Auth::logout();
     request()->session()->invalidate();
@@ -25,7 +31,7 @@ Route::post('/logout', function () {
 
 Route::group(['prefix' => 'admin'],function () {
     // Beranda
-    Route::get('/beranda', [MasterController::class, 'admin'])->name('beranda');
+    Route::get('/beranda', [MasterController::class, 'admin'])->name('beranda.admin');
     
     // Kelola Data Lomba
     Route::get('/kelola-data-lomba', [AdminController::class, 'kelolaDataLombaIndex'])->name('kelolaDataLomba.index');
@@ -75,7 +81,7 @@ Route::group(['prefix' => 'admin'],function () {
 
 Route::group(['prefix' => 'mahasiswa'],function () {
     // Beranda
-    Route::get('/beranda', [MasterController::class, 'mahasiswa'])->name('beranda');
+    Route::get('/beranda', [MasterController::class, 'mahasiswa'])->name('beranda.mahasiswa');
 
     // Route::get('/beranda', [MahasiswaController::class, 'beranda'])->name('beranda');
     Route::get('/prestasi', [MahasiswaController::class, 'prestasi'])->name('prestasi');
