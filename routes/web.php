@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\MahasiswaController;
+use App\Http\Controllers\MasterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,7 +23,10 @@ Route::post('/logout', function () {
     return redirect('/login');
 })->name('logout');
 
-Route::prefix('admin')->name('admin.')->group(function () {
+Route::group(['prefix' => 'admin'],function () {
+    // Beranda
+    Route::get('/beranda', [MasterController::class, 'admin'])->name('beranda');
+    
     // Kelola Data Lomba
     Route::get('/kelola-data-lomba', [AdminController::class, 'kelolaDataLombaIndex'])->name('kelolaDataLomba.index');
     Route::get('/kelola-data-lomba/tambah', [AdminController::class, 'kelolaDataLombaTambah'])->name('kelolaDataLomba.tambah');
@@ -69,8 +73,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/verifikasi-prestasi/detail', [AdminController::class, 'verifikasiPrestasiDetail'])->name('verifikasiPrestasi.detail');
 });
 
-Route::prefix('mahasiswa')->name('mahasiswa.')->group(function () {
-    Route::get('/beranda', [MahasiswaController::class, 'beranda'])->name('beranda');
+Route::group(['prefix' => 'mahasiswa'],function () {
+    // Beranda
+    Route::get('/beranda', [MasterController::class, 'mahasiswa'])->name('beranda');
+
+    // Route::get('/beranda', [MahasiswaController::class, 'beranda'])->name('beranda');
     Route::get('/prestasi', [MahasiswaController::class, 'prestasi'])->name('prestasi');
     Route::get('/lomba', [MahasiswaController::class, 'lomba'])->name('lomba');
     Route::get('/profil', [MahasiswaController::class, 'profil'])->name('profil');
