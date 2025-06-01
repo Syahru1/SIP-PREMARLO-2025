@@ -9,58 +9,19 @@
     .logout-item a:hover span {
         color: red;
     }
-
-    #sidebar {
-        width: 250px;
-        height: 100vh;
-        background: #ffffff;
-        color: white;
-        position: fixed;
-        left: 0;
-        top: 0;
-        transition: all 0.3s ease;
-        overflow: hidden;
-    }
-
-    #sidebar.collapsed {
-        width: 0;
-    }
-
-    #sidebar .menu a span {
-        font-size: 16px;
-        color: #333333;
-        font-weight: 500;
-    }
-
-    #sidebar .menu svg {
-        stroke: #333333;
-    }
-
-    #sidebar .menu a:hover span {
-        color: #1d4ed8;
-    }
-
-    #sidebar .submenu li a {
-        font-size: 18px;
-    }
-
-    #sidebar .submenu li a:hover {
-        color: #1d4ed8;
-    }
-
 </style>
 
-<div class="sidebar-wrapper sidebar-theme">
+ <div class="sidebar-wrapper sidebar-theme">
 
     <div id="dismiss" class="d-lg-none"><i class="flaticon-cancel-12"></i></div>
 
-    <nav id="sidebar" class="sidebar">
+        <nav id="sidebar">
 
-        <ul class="navbar-nav theme-brand flex-row text-center">
-            <li class="nav-item theme-text">
-                <a href="index.html" class="nav-link"> COMPQUEST </a>
-            </li>
-        </ul>
+            <ul class="navbar-nav theme-brand flex-row  text-center">
+                <li class="nav-item theme-text">
+                    <a href="index.html" class="nav-link"> COMPQUEST </a>
+                </li>
+            </ul>
 
         <ul class="list-unstyled menu-categories" id="accordionExample">
             <li class="menu">
@@ -170,26 +131,3 @@
         </ul>
     </nav>
 </div>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-    const toggleButton = document.querySelector('.sidebarCollapse');
-    const sidebar = document.querySelector('#sidebar');
-
-    if (toggleButton && sidebar) {
-        toggleButton.addEventListener('click', function (e) {
-        e.stopPropagation();
-        sidebar.classList.toggle('collapsed');
-        const expanded = !sidebar.classList.contains('collapsed');
-        toggleButton.setAttribute('aria-expanded', expanded);
-        });
-
-        document.addEventListener('click', function (e) {
-        if (!sidebar.contains(e.target) && !toggleButton.contains(e.target)) {
-            sidebar.classList.add('collapsed');
-            toggleButton.setAttribute('aria-expanded', false);
-        }
-        });
-    }
-    });
-</script>
