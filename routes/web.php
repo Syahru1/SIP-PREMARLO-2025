@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\MasterController;
 use App\Http\Controllers\HalamanUtamaController;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +18,10 @@ use App\Http\Controllers\HalamanUtamaController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('/', [MasterController::class, 'index']);
+
+Route::get('/login', [AuthController::class, 'login'])->name('login');
+
 Route::post('/logout', function () {
     Auth::logout();
     request()->session()->invalidate();
@@ -26,7 +31,7 @@ Route::post('/logout', function () {
 
 Route::group(['prefix' => 'admin'],function () {
     // Beranda
-    Route::get('/beranda', [MasterController::class, 'admin'])->name('beranda');
+    Route::get('/beranda', [MasterController::class, 'admin'])->name('beranda.admin');
     
     // Kelola Data Lomba
     Route::get('/kelola-data-lomba', [AdminController::class, 'kelolaDataLombaIndex'])->name('kelolaDataLomba.index');
@@ -76,7 +81,7 @@ Route::group(['prefix' => 'admin'],function () {
 
 Route::group(['prefix' => 'mahasiswa'],function () {
     // Beranda
-    Route::get('/beranda', [MasterController::class, 'mahasiswa'])->name('beranda');
+    Route::get('/beranda', [MasterController::class, 'mahasiswa'])->name('beranda.mahasiswa');
 
     // Route::get('/beranda', [MahasiswaController::class, 'beranda'])->name('beranda');
     Route::get('/prestasi', [MahasiswaController::class, 'prestasi'])->name('prestasi');
@@ -85,8 +90,4 @@ Route::group(['prefix' => 'mahasiswa'],function () {
     Route::get('/notifikasi', [MahasiswaController::class, 'notifikasi'])->name('notifikasi');
     Route::get('/detail-prestasi', [MahasiswaController::class, 'detail_prestasi'])->name('detail-prestasi');
     Route::get('/detail-lomba', [MahasiswaController::class, 'detail_lomba'])->name('detail-lomba');
-});
-
-Route::group(['prefix' => 'general'],function () {
-    Route::get('/landing', [HalamanUtamaController::class, 'index'])->name('landing');
 });
