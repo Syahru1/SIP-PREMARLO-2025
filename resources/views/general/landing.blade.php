@@ -27,19 +27,19 @@
 
     <!-- Content -->
      <!-- Halaman Awal -->
-    <section class="d-flex align-items-center justify-content-center text-center bg-white" style="min-height: 100vh;">
+    <section id="beranda" class="d-flex align-items-center justify-content-center text-center bg-white" style="min-height: 100vh;">
         <div class="container">
-            <h1 class="fw-bold display-4 text-dark">Selamat Datang di <span class="text-primary">COMPQUEST</span></h1>
+            <h1 class="fw-bold display-4 text-dark">Selamat Datang di <span class="text-custom" style="color: #4337F1;">COMPQUEST</span></h1>
             <p class="lead text-secondary">Empower Your Vision. Drive Your Success</p>
            
         </div>
     </section>
 
     <!-- Tentang -->
-   <section class="d-flex align-items-center justify-content-center text-start bg-light" style="min-height: 100vh; padding: 3rem 1rem;">
+   <section id="tentang" class="d-flex align-items-center justify-content-center text-start bg-light" style="min-height: 100vh; padding: 3rem 1rem;">
     <div class="container">
         <h1 class="fw-bold display-4 mb-4 text-dark">
-        Tentang <span class="text-primary">COMPQUEST</span>
+        Tentang <span class="text-custom" style="color: #4337F1;">COMPQUEST</span>
         </h1>
         <p class="lead text-secondary mb-4" style="max-width: 700px; line-height: 1.6;">
         COMPQUEST adalah platform inovatif yang membantu Anda mewujudkan visi dan mencapai kesuksesan.  
@@ -50,7 +50,7 @@
   </section>
 
   <!-- Prestasi Mahasiswa -->
-   <section class="d-flex align-items-center justify-content-center text-start bg-white" style="min-height: 100vh; padding: 3rem 1rem;">
+   <section id="prestasi" class="d-flex align-items-center justify-content-center text-start bg-white" style="min-height: 100vh; padding: 3rem 1rem;">
     <div class="container">
             <h2 class="mb-4 text-center text-dark fw-bold">Leaderboard Mahasiswa Berprestasi</h2>
             <div class="table-responsive">
@@ -101,7 +101,7 @@
 
 
     <!-- FAQ Section -->
-    <section class="py-5 bg-white">
+    <section id="faq" class="py-5 bg-white">
     <div class="container">
         <h2 class="mb-5 text-start text-dark fw-bold">FAQ</h2>
 
@@ -135,8 +135,10 @@
     <script src="{{ asset('assets/js/libs/jquery-3.1.1.min.js') }}"></script>
     <script src="{{ asset('bootstrap/js/popper.min.js') }}"></script>
     <script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/js/active-section.js') }}"></script>
 
 
     @stack('scripts')
 </body>
+
 </html>
