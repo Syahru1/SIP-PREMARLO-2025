@@ -1,4 +1,4 @@
-<footer class="text-center text-light bg-primary py-5">
+<footer class="text-center text-light py-5" style="background-color: #4337F1;">
   <div class="container">
     <h5 class="fw-bold mb-3">COMPQUEST</h5>
     <p class="mb-1">
