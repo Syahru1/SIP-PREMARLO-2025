@@ -10,7 +10,7 @@
     }
 
     .card-header {
-        background-color: #f7bb08;
+        background-color: #f7c01b;
         color: white;
         text-align: center;
         padding: 40px 15px 60px 15px;
@@ -19,7 +19,7 @@
     .card-header h2 {
         font-weight: bold;
         font-size: 34px;
-        color: black;
+        color: rgb(0, 0, 0);
         margin: 0;
         white-space: nowrap;
     }
@@ -87,6 +87,23 @@
     .btn-warning:hover,
     .btn-danger:hover {
         opacity: 0.8;
+    }
+
+    @media (max-width: 768px) {
+        .card-header h2 {
+            font-size: 24px;
+            white-space: normal;
+        }
+        table th,
+        table td {
+            padding: 12px !important;
+            font-size: 12px !important;
+            white-space: normal;
+        }
+        .btn-sm {
+            font-size: 12px !important;
+            padding: 0.2rem 0.4rem;
+        }
     }
 </style>
 

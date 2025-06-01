@@ -6,11 +6,10 @@
     .card-header,
     .card-body,
     table {
-        font-family: 'Poppins', sans-serif;
     }
 
     .card-header {
-        background-color: #0749ff;
+        background-color: #003ad8;
         color: white;
         text-align: center;
         padding: 40px 15px 60px 15px;
@@ -19,9 +18,15 @@
     .card-header h2 {
         font-weight: bold;
         font-size: 34px;
-        color: black;
+        color: rgb(255, 255, 255);
         margin: 0;
         white-space: nowrap;
+    }
+
+    .table-responsive {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
     }
 
     table {
@@ -51,7 +56,7 @@
         font-size: 14px !important;
         font-weight: bold;
         text-align: center;
-        color: #28a745f !important;
+        color: #4a4a4a !important;
     }
 
     .btn-sm {
@@ -88,6 +93,26 @@
     .btn-danger:hover {
         opacity: 0.8;
     }
+
+    @media (max-width: 768px) {
+        .card-header h2 {
+            font-size: 24px;
+        }
+
+        table th, table td {
+            padding: 12px !important;
+            font-size: 12px !important;
+        }
+
+        .btn-sm {
+            font-size: 12px !important;
+        }
+
+        .btn-success, .btn-danger, .btn-warning {
+            padding: 6px 12px;
+            font-size: 14px;
+        }
+    }
 </style>
 
 <div class="layout-px-spacing">
@@ -101,41 +126,43 @@
                 <h2 class="fw-bold">Akun Mahasiswa</h2>
             </div>
             <div class="card-body p-0">
-                <table class="table mb-0">
-                    <thead>
-                        <tr>
-                            <th>NIM</th>
-                            <th>Nama Mahasiswa</th>
-                            <th>Angkatan</th>
-                            <th>Program Studi</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1907******</td>
-                            <td>Muhammad Syahrul Gunawan</td>
-                            <td>2023</td>
-                            <td>D-4 Teknik Informatika</td>
-                            <td>
-                                <a href="{{ route('admin.kelolaMahasiswa.tambah') }}" class="btn btn-success btn-sm">Tambah</a>
-                                <a href="{{ route('admin.kelolaMahasiswa.edit') }}" class="btn btn-warning btn-sm">Edit</a>
-                                <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus?')">Hapus</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>1907******</td>
-                            <td>Siti Rahma</td>
-                            <td>2022</td>
-                            <td>D-4 Sistem Informasi Bisnis</td>
-                            <td>
-                                <a href="{{ route('admin.kelolaMahasiswa.tambah') }}" class="btn btn-success btn-sm">Tambah</a>
-                                <a href="{{ route('admin.kelolaMahasiswa.edit') }}" class="btn btn-warning btn-sm">Edit</a>
-                                <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus?')">Hapus</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table mb-0">
+                        <thead>
+                            <tr>
+                                <th>NIM</th>
+                                <th>Nama Mahasiswa</th>
+                                <th>Angkatan</th>
+                                <th>Program Studi</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1907******</td>
+                                <td>Muhammad Syahrul Gunawan</td>
+                                <td>2023</td>
+                                <td>D-4 Teknik Informatika</td>
+                                <td>
+                                    <a href="{{ route('admin.kelolaMahasiswa.tambah') }}" class="btn btn-success btn-sm">Tambah</a>
+                                    <a href="{{ route('admin.kelolaMahasiswa.edit') }}" class="btn btn-warning btn-sm">Edit</a>
+                                    <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus?')">Hapus</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>1907******</td>
+                                <td>Siti Rahma</td>
+                                <td>2022</td>
+                                <td>D-4 Sistem Informasi Bisnis</td>
+                                <td>
+                                    <a href="{{ route('admin.kelolaMahasiswa.tambah') }}" class="btn btn-success btn-sm">Tambah</a>
+                                    <a href="{{ route('admin.kelolaMahasiswa.edit') }}" class="btn btn-warning btn-sm">Edit</a>
+                                    <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus?')">Hapus</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

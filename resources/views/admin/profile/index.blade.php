@@ -32,7 +32,6 @@
     }
 
     .profile-info {
-        font-family: 'Poppins', sans-serif;
         font-size: 20px;
         color: #000;
     }
@@ -58,6 +57,59 @@
     .btn-edit:hover {
         background-color: #1e92ff;
         color: white;
+    }
+
+    @media (max-width: 992px) {
+        .card {
+            padding: 30px;
+        }
+        .profile-img {
+            width: 200px;
+            height: 200px;
+            border-width: 3px;
+        }
+        .profile-info {
+            font-size: 18px;
+        }
+        .btn-edit {
+            font-size: 14px;
+            padding: 8px 16px;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .page-title {
+            padding: 30px 20px;
+        }
+        .page-title h4 {
+            font-size: 24px;
+        }
+        .card {
+            padding: 20px;
+        }
+        .card-body {
+            flex-direction: column !important;
+            align-items: center !important;
+        }
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-width: 2px;
+            margin-bottom: 20px;
+        }
+        .profile-info {
+            font-size: 16px;
+            text-align: center;
+        }
+        .btn-edit {
+            width: 100%;
+            font-size: 16px;
+            padding: 10px 0;
+        }
+        .d-flex.justify-content-end.mt-3 {
+            justify-content: center !important;
+            margin-top: 10px !important;
+        }
     }
 </style>
 

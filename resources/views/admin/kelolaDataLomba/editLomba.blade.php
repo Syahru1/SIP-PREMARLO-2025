@@ -2,39 +2,49 @@
 
 @section('content')
 <style>
+    :root {
+        --font-base: 16px;
+        --font-label: 20px;
+        --font-title: 28px;
+        --btn-padding: 10px 20px;
+    }
+
     .page-title {
         background-color: #3F00FF;
         width: 100%;
-        padding: 50px;
+        padding: 32px 16px;
+        text-align: left;
     }
 
     .page-title h4 {
         color: white;
         font-weight: bold;
-        font-size: 36px;
+        font-size: var(--font-title);
         margin: 0;
     }
 
     .card {
         border: 3px solid #007bff;
         font-family: 'Poppins', sans-serif;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
     }
 
     .form-group label {
         color: black;
         font-weight: bold;
-        font-size: 20px;
+        font-size: var(--font-base);
     }
 
     .form-control {
-        font-size: 20px;
-        padding: 10px;
+        font-size: var(--font-base);
+        padding: 10px; /* setara dengan 0.6rem */
     }
 
     .btn-danger, .btn-success {
-        padding: 10px 20px;
+        padding: var(--btn-padding);
         font-weight: bold;
-        font-size: 20px;
+        font-size: var(--font-base);
+        border-radius: 6px;
     }
 
     .btn-danger {
@@ -57,7 +67,30 @@
     }
 
     .gap-3 > * + * {
-        margin-left: 1rem !important;
+        margin-left: 16px !important;
+    }
+
+     @media (max-width: 576px) {
+        .page-title h4 {
+            font-size: 21px;
+        }
+
+        .form-group label,
+        .form-control,
+        .btn-danger,
+        .btn-success {
+            font-size: 15px;
+        }
+
+        .btn-danger, .btn-success {
+            padding: 8px 16px;
+        }
+
+        .d-flex.justify-content-end {
+            flex-direction: column;
+            gap: 8px;
+            align-items: stretch;
+        }
     }
 </style>
 
@@ -127,7 +160,7 @@
                             </div>
 
                             <div class="d-flex justify-content-end gap-3 mt-3">
-                                <a href={{ route('admin.kelolaDataLomba.index') }} class="btn btn-danger">Batal</a>
+                                <a href="{{ route('admin.kelolaDataLomba.index') }}" class="btn btn-danger">Batal</a>
                                 <button type="submit" class="btn btn-success">Simpan</button>
                             </div>
                         </form>

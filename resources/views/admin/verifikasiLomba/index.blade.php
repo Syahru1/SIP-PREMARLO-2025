@@ -6,7 +6,6 @@
     .card-header,
     .card-body,
     table {
-        font-family: 'Poppins', sans-serif;
     }
 
     .card-header {
@@ -19,7 +18,7 @@
     .card-header h2 {
         font-weight: bold;
         font-size: 34px;
-        color: black;
+        color: rgb(255, 255, 255);
         margin: 0;
         white-space: nowrap;
     }
@@ -70,6 +69,57 @@
 
     .btn-warning:hover {
         opacity: 0.8;
+    }
+
+    @media (max-width: 992px) {
+        .card-header {
+            padding: 30px 10px 40px 10px;
+        }
+        .card-header h2 {
+            font-size: 28px;
+            white-space: normal;
+        }
+        table th, table td {
+            padding: 16px !important;
+            font-size: 13px !important;
+        }
+        thead th {
+            font-size: 16px !important;
+        }
+        tbody td {
+            font-size: 12px !important;
+        }
+        .btn-sm {
+            font-size: 12px !important;
+            padding: 0.2rem 0.4rem;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .card-header {
+            padding: 20px 8px 30px 8px;
+        }
+        .card-header h2 {
+            font-size: 22px;
+            white-space: normal;
+        }
+        table th, table td {
+            padding: 12px !important;
+            font-size: 11px !important;
+        }
+        thead th {
+            font-size: 14px !important;
+        }
+        tbody td {
+            font-size: 10px !important;
+        }
+        .btn-sm {
+            font-size: 10px !important;
+            padding: 0.15rem 0.3rem;
+        }
+        .card-body {
+            overflow-x: auto;
+        }
     }
 </style>
 

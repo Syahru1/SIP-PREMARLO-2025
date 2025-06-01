@@ -59,6 +59,26 @@
     .gap-3 > * + * {
         margin-left: 1rem !important;
     }
+
+    @media (max-width: 768px) {
+        .page-title {
+            padding: 25px 15px;
+        }
+        .page-title h4 {
+            font-size: 24px;
+        }
+        .form-group label {
+            font-size: 16px;
+        }
+        .form-control {
+            font-size: 16px;
+            padding: 8px;
+        }
+        .btn-danger, .btn-success {
+            font-size: 16px;
+            padding: 8px 15px;
+        }
+    }
 </style>
 
 <div class="layout-px-spacing">

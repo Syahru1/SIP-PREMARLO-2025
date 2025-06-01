@@ -125,9 +125,9 @@ class AdminController extends Controller
         return view('admin.verifikasiLomba.index');
     }
 
-    public function verifikasiLombaDetail($id)
+    public function verifikasiLombaDetail()
     {
-        return view('admin.verifikasiLomba.detailLomba', compact('id'));
+        return view('admin.verifikasiLomba.detailLomba');
     }
 
     // Verifikasi Prestasi
@@ -136,8 +136,8 @@ class AdminController extends Controller
         return view('admin.verifikasiPrestasi.index');
     }
 
-    public function verifikasiPrestasiDetail($id)
+    public function verifikasiPrestasiDetail()
     {
-        return view('admin.verifikasiPrestasi.detailPrestasi', compact('id'));
+        return view('admin.verifikasiPrestasi.detailPrestasi');
     }
 }

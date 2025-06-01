@@ -17,7 +17,6 @@
 
     .card {
         border: 3px solid #007bff;
-        font-family: 'Poppins', sans-serif;
     }
 
     .form-group label {
@@ -58,6 +57,59 @@
 
     .gap-3 > * + * {
         margin-left: 1rem !important;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 992px) {
+        .page-title {
+            padding: 40px 30px;
+        }
+        .page-title h4 {
+            font-size: 28px;
+        }
+        .form-group label {
+            font-size: 18px;
+        }
+        .form-control {
+            font-size: 18px;
+            padding: 8px;
+        }
+        .btn-danger, .btn-success {
+            font-size: 18px;
+            padding: 8px 16px;
+        }
+        .card {
+            padding: 20px;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .page-title {
+            padding: 25px 15px;
+        }
+        .page-title h4 {
+            font-size: 22px;
+        }
+        .form-group label {
+            font-size: 16px;
+        }
+        .form-control {
+            font-size: 16px;
+            padding: 6px;
+        }
+        .btn-danger, .btn-success {
+            font-size: 16px;
+            padding: 8px 12px;
+            width: 100%;
+        }
+        .d-flex.justify-content-end.gap-3.mt-4 {
+            flex-direction: column !important;
+            align-items: stretch !important;
+        }
+        .gap-3 > * + * {
+            margin-left: 0 !important;
+            margin-top: 10px !important;
+        }
     }
 </style>
 

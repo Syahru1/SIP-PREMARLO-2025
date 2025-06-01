@@ -6,7 +6,6 @@
     .card-header,
     .card-body,
     table {
-        font-family: 'Poppins', sans-serif;
     }
 
     .card-header {
@@ -19,7 +18,7 @@
     .card-header h2 {
         font-weight: bold;
         font-size: 34px;
-        color: black;
+        color: rgb(255, 255, 255);
         margin: 0;
         white-space: nowrap;
     }
@@ -29,6 +28,7 @@
         border-collapse: collapse;
         table-layout: auto;
         white-space: nowrap;
+        font-size: 16px;
     }
 
     table th,
@@ -48,14 +48,14 @@
     }
 
     tbody td {
-        font-size: 14px !important;
+        font-size: 16px !important;
         font-weight: bold;
         text-align: center;
         color: #28a745f !important;
     }
 
     .btn-sm {
-        font-size: 14px !important;
+        font-size: 16px !important;
         font-weight: bold;
         text-align: center;
         padding: 0.25rem 0.5rem;
@@ -70,6 +70,85 @@
 
     .btn-warning:hover {
         opacity: 0.8;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 992px) {
+        .card-header h2 {
+            font-size: 28px;
+            white-space: normal;
+        }
+
+        table th,
+        table td {
+            padding: 16px !important;
+            font-size: 14px !important;
+            white-space: normal;
+        }
+
+        tbody td {
+            font-size: 14px !important;
+        }
+
+        .btn-sm {
+            font-size: 14px !important;
+            padding: 0.2rem 0.4rem;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .card-header {
+            padding: 20px 10px 30px 10px;
+        }
+
+        .card-header h2 {
+            font-size: 22px;
+        }
+
+        table,
+        thead,
+        tbody,
+        th,
+        td,
+        tr {
+            display: block;
+        }
+
+        thead tr {
+            display: none;
+        }
+
+        tbody tr {
+            margin-bottom: 15px;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 10px;
+            background-color: #fff;
+        }
+
+        tbody td {
+            text-align: right;
+            padding-left: 50%;
+            position: relative;
+            font-size: 14px !important;
+            white-space: normal;
+        }
+
+        tbody td::before {
+            content: attr(data-label);
+            position: absolute;
+            left: 15px;
+            width: 45%;
+            padding-left: 10px;
+            font-weight: bold;
+            text-align: left;
+            color: black !important;
+        }
+
+        .btn-sm {
+            font-size: 13px !important;
+            padding: 0.2rem 0.4rem;
+        }
     }
 </style>
 
@@ -92,47 +171,47 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>2341******</td>
-                            <td>Syahrul</td>
-                            <td>2023</td>
-                            <td>D-IV TEKNIK INFORMATIKA</td>
-                            <td>
+                            <td data-label="NIM">2341******</td>
+                            <td data-label="Nama Mahasiswa">Syahrul</td>
+                            <td data-label="Angkatan">2023</td>
+                            <td data-label="Program Studi">D-IV TEKNIK INFORMATIKA</td>
+                            <td data-label="Action">
                                 <a href="{{ route('admin.verifikasiPrestasi.detail') }}" class="btn btn-warning btn-sm">Lihat Detail Lomba</a>
                             </td>
                         </tr>
                         <tr>
-                            <td>2341******</td>
-                            <td>Dewita</td>
-                            <td>2024</td>
-                            <td>D-IV SISTEM INFORMASI BISNIS</td>
-                            <td>
+                            <td data-label="NIM">2341******</td>
+                            <td data-label="Nama Mahasiswa">Dewita</td>
+                            <td data-label="Angkatan">2024</td>
+                            <td data-label="Program Studi">D-IV SISTEM INFORMASI BISNIS</td>
+                            <td data-label="Action">
                                 <a href="{{ route('admin.verifikasiPrestasi.detail') }}" class="btn btn-warning btn-sm">Lihat Detail Lomba</a>
                             </td>
                         </tr>
                         <tr>
-                            <td>2341******</td>
-                            <td>Ghaffar</td>
-                            <td>2023</td>
-                            <td>D-IV TEKNIK INFORMATIKA</td>
-                            <td>
+                            <td data-label="NIM">2341******</td>
+                            <td data-label="Nama Mahasiswa">Ghaffar</td>
+                            <td data-label="Angkatan">2023</td>
+                            <td data-label="Program Studi">D-IV TEKNIK INFORMATIKA</td>
+                            <td data-label="Action">
                                 <a href="{{ route('admin.verifikasiPrestasi.detail') }}" class="btn btn-warning btn-sm">Lihat Detail Lomba</a>
                             </td>
                         </tr>
                         <tr>
-                            <td>2341******</td>
-                            <td>Afifah</td>
-                            <td>2024</td>
-                            <td>D-IV TEKNIK INFORMATIKA</td>
-                            <td>
+                            <td data-label="NIM">2341******</td>
+                            <td data-label="Nama Mahasiswa">Afifah</td>
+                            <td data-label="Angkatan">2024</td>
+                            <td data-label="Program Studi">D-IV TEKNIK INFORMATIKA</td>
+                            <td data-label="Action">
                                 <a href="{{ route('admin.verifikasiPrestasi.detail') }}" class="btn btn-warning btn-sm">Lihat Detail Lomba</a>
                             </td>
                         </tr>
                         <tr>
-                            <td>2341******</td>
-                            <td>Agil</td>
-                            <td>2023</td>
-                            <td>D-IV TEKNIK INFORMATIKA</td>
-                            <td>
+                            <td data-label="NIM">2341******</td>
+                            <td data-label="Nama Mahasiswa">Agil</td>
+                            <td data-label="Angkatan">2023</td>
+                            <td data-label="Program Studi">D-IV TEKNIK INFORMATIKA</td>
+                            <td data-label="Action">
                                 <a href="{{ route('admin.verifikasiPrestasi.detail') }}" class="btn btn-warning btn-sm">Lihat Detail Prestasi</a>
                             </td>
                         </tr>

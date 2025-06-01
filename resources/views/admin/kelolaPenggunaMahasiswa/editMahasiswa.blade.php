@@ -6,6 +6,7 @@
         background-color: #3F00FF;
         width: 100%;
         padding: 50px;
+        text-align: center;
     }
 
     .page-title h4 {
@@ -17,24 +18,35 @@
 
     .card {
         border: 3px solid #007bff;
-        font-family: 'Poppins', sans-serif;
+        border-radius: 10px;
+        padding: 30px;
+        margin-top: 30px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
 
     .form-group label {
         color: black;
         font-weight: bold;
         font-size: 20px;
+        margin-bottom: 8px;
+        display: block;
     }
 
     .form-control {
         font-size: 20px;
         padding: 10px;
+        width: 100%;
+        box-sizing: border-box;
+        border-radius: 5px;
+        border: 1px solid #ced4da;
     }
 
-    .btn-danger, .btn-success {
+    .btn-danger,
+    .btn-success {
         padding: 10px 20px;
         font-weight: bold;
         font-size: 20px;
+        border-radius: 6px;
     }
 
     .btn-danger {
@@ -56,8 +68,36 @@
         opacity: 0.9;
     }
 
-    .gap-3 > * + * {
-        margin-left: 1rem !important;
+    .gap-3 {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    @media (max-width: 768px) {
+        .page-title {
+            padding: 30px 20px;
+        }
+
+        .page-title h4 {
+            font-size: 24px;
+        }
+
+        .card {
+            padding: 20px;
+        }
+
+        .form-group label,
+        .form-control,
+        .btn-danger,
+        .btn-success {
+            font-size: 16px;
+        }
+
+        .btn-danger,
+        .btn-success {
+            padding: 8px 16px;
+        }
     }
 </style>
 

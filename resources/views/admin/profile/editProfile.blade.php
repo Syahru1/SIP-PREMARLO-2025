@@ -56,6 +56,7 @@
         color: #333;
         margin-bottom: 5px;
         display: block;
+        font-size: 18px;
     }
 
     .form-control {
@@ -64,6 +65,7 @@
         padding: 10px;
         width: 100%;
         margin-bottom: 20px;
+        font-size: 18px;
     }
 
     .form-control:focus {
@@ -86,6 +88,7 @@
         font-weight: bold;
         margin-right: 10px;
         cursor: pointer;
+        font-size: 18px;
     }
     .btn-cancel:hover {
         background-color: #c82333;
@@ -99,9 +102,72 @@
         border-radius: 5px;
         font-weight: bold;
         cursor: pointer;
+        font-size: 18px;
     }
     .btn-save:hover {
         background-color: #218838;
+    }
+
+    @media (max-width: 992px) {
+        .edit-profile-card {
+            padding: 20px;
+        }
+        .profile-image-container {
+            margin-right: 30px;
+        }
+        .page-title {
+            padding: 40px 20px;
+        }
+        .page-title h4 {
+            font-size: 28px;
+        }
+        .form-group label,
+        .form-control,
+        .btn-cancel,
+        .btn-save,
+        .upload-photo-btn {
+            font-size: 16px;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .edit-profile-card {
+            padding: 15px;
+        }
+        .page-title {
+            padding: 30px 15px;
+        }
+        .page-title h4 {
+            font-size: 22px;
+        }
+        .d-flex.align-items-start {
+            flex-direction: column;
+            align-items: center !important;
+        }
+        .profile-image-container {
+            margin-right: 0;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+        .profile-img-edit {
+            width: 120px;
+            height: 120px;
+        }
+        .flex-grow-1.ms-4 {
+            margin-left: 0 !important;
+            width: 100%;
+        }
+        .form-group label,
+        .form-control,
+        .btn-cancel,
+        .btn-save,
+        .upload-photo-btn {
+            font-size: 14px;
+        }
+        .btn-cancel,
+        .btn-save {
+            padding: 8px 15px;
+        }
     }
 </style>
 
@@ -147,8 +213,8 @@
                 </div>
 
                 <div class="action-buttons">
-                    <a href="{{ route('admin.profile.index') }}" class="btn btn-warning btn-sm">Batal</a>
-                        <button type="submit" class="btn-save">Simpan</button>
+                    <a href="{{ route('admin.profile.index') }}" class="btn btn-warning btn-sm btn-cancel">Batal</a>
+                    <button type="submit" class="btn-save">Simpan</button>
                 </div>
             </form>
         </div>

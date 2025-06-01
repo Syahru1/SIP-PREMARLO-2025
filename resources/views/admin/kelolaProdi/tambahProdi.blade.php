@@ -17,7 +17,6 @@
 
     .card {
         border: 3px solid #007bff;
-        font-family: 'Poppins', sans-serif;
     }
 
     .form-label,

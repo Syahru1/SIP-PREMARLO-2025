@@ -6,6 +6,7 @@
         background-color: #3F00FF;
         width: 100%;
         padding: 50px;
+        text-align: left;
     }
 
     .page-title h4 {
@@ -17,7 +18,9 @@
 
     .card {
         border: 3px solid #007bff;
-        font-family: 'Poppins', sans-serif;
+        padding: 30px;
+        margin-top: 20px;
+        border-radius: 10px;
     }
 
     .form-label,
@@ -60,6 +63,36 @@
 
     .gap-2 > * + * {
         margin-left: 0.5rem !important;
+    }
+
+    @media (max-width: 768px) {
+        .page-title {
+            padding: 30px 20px;
+        }
+
+        .page-title h4 {
+            font-size: 24px;
+        }
+
+        .card {
+            padding: 20px;
+        }
+
+        .form-label,
+        .form-group label {
+            font-size: 16px;
+        }
+
+        .form-control {
+            font-size: 16px;
+            padding: 8px;
+        }
+
+        .btn-danger,
+        .btn-success {
+            font-size: 16px;
+            padding: 8px 16px;
+        }
     }
 </style>
 
