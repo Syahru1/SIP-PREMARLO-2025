@@ -1,13 +1,15 @@
 <style>
     .logout-item {
-        margin-top: auto;
-        padding: 20px 24px;
-        background-color: #fee2e2;
-        border-top: 1px solid #fee2e2;
+        background-color: #ee2a2a;
     }
 
-    .logout-item a:hover span {
-        color: red;
+    .logout-item a,
+    .logout-item a span {
+        color: white !important;
+    }
+
+    .logout-item svg {
+        stroke: white !important;
     }
 </style>
 
@@ -119,10 +121,12 @@
                     </div>
                 </a>
             </li>
-            <li class="logout-item">
-                <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="feather feather-log-out" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-                    <span>Logout</span>
+            <li class="menu logout-item">
+                <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="dropdown-toggle" aria-expanded="true">
+                    <div>
+                        <svg class="feather feather-log-out" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                        <span>Logout</span>
+                    </div>
                 </a>
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                     @csrf
