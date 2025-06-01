@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\MahasiswaController;
 
@@ -14,37 +15,43 @@ use App\Http\Controllers\MahasiswaController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::post('/logout', function () {
+    Auth::logout();
+    request()->session()->invalidate();
+    request()->session()->regenerateToken();
+    return redirect('/login');
+})->name('logout');
 
 Route::prefix('admin')->name('admin.')->group(function () {
     // Kelola Data Lomba
     Route::get('/kelola-data-lomba', [AdminController::class, 'kelolaDataLombaIndex'])->name('kelolaDataLomba.index');
     Route::get('/kelola-data-lomba/tambah', [AdminController::class, 'kelolaDataLombaTambah'])->name('kelolaDataLomba.tambah');
-    Route::get('/kelola-data-lomba/edit/{id}', [AdminController::class, 'kelolaDataLombaEdit'])->name('kelolaDataLomba.edit');
+    Route::get('/kelola-data-lomba/edit', [AdminController::class, 'kelolaDataLombaEdit'])->name('kelolaDataLomba.edit');
 
     // Kelola Pengguna Admin
-    Route::get('/kelola-admin', [AdminController::class, 'kelolaAdminIndex'])->name('kelolaAdmin.index');
-    Route::get('/kelola-admin/tambah', [AdminController::class, 'kelolaAdminTambah'])->name('kelolaAdmin.tambah');
-    Route::get('/kelola-admin/edit/{id}', [AdminController::class, 'kelolaAdminEdit'])->name('kelolaAdmin.edit');
+    Route::get('/kelola-pengguna-admin', [AdminController::class, 'kelolaAdminIndex'])->name('kelolaAdmin.index');
+    Route::get('/kelola-pengguna-admin/tambah', [AdminController::class, 'kelolaAdminTambah'])->name('kelolaAdmin.tambah');
+    Route::get('/kelola-pengguna-admin/edit', [AdminController::class, 'kelolaAdminEdit'])->name('kelolaAdmin.edit');
 
     // Kelola Pengguna Dosen
-    Route::get('/kelola-dosen', [AdminController::class, 'kelolaDosenIndex'])->name('kelolaDosen.index');
-    Route::get('/kelola-dosen/tambah', [AdminController::class, 'kelolaDosenTambah'])->name('kelolaDosen.tambah');
-    Route::get('/kelola-dosen/edit/{id}', [AdminController::class, 'kelolaDosenEdit'])->name('kelolaDosen.edit');
+    Route::get('/kelola-pengguna-dosen', [AdminController::class, 'kelolaDosenIndex'])->name('kelolaDosen.index');
+    Route::get('/kelola-pengguna-dosen/tambah', [AdminController::class, 'kelolaDosenTambah'])->name('kelolaDosen.tambah');
+    Route::get('/kelola-pengguna-dosen/edit', [AdminController::class, 'kelolaDosenEdit'])->name('kelolaDosen.edit');
 
     // Kelola Pengguna Mahasiswa
-    Route::get('/kelola-mahasiswa', [AdminController::class, 'kelolaMahasiswaIndex'])->name('kelolaMahasiswa.index');
-    Route::get('/kelola-mahasiswa/tambah', [AdminController::class, 'kelolaMahasiswaTambah'])->name('kelolaMahasiswa.tambah');
-    Route::get('/kelola-mahasiswa/edit/{id}', [AdminController::class, 'kelolaMahasiswaEdit'])->name('kelolaMahasiswa.edit');
-
+    Route::get('/kelola-pengguna-mahasiswa', [AdminController::class, 'kelolaMahasiswaIndex'])->name('kelolaMahasiswa.index');
+    Route::get('/kelola-pengguna-mahasiswa/tambah', [AdminController::class, 'kelolaMahasiswaTambah'])->name('kelolaMahasiswa.tambah');
+    Route::get('/kelola-pengguna-mahasiswa/edit', [AdminController::class, 'kelolaMahasiswaEdit'])->name('kelolaMahasiswa.edit');
+    
     // Kelola Periode
     Route::get('/kelola-periode', [AdminController::class, 'kelolaPeriodeIndex'])->name('kelolaPeriode.index');
     Route::get('/kelola-periode/tambah', [AdminController::class, 'kelolaPeriodeTambah'])->name('kelolaPeriode.tambah');
-    Route::get('/kelola-periode/edit/{id}', [AdminController::class, 'kelolaPeriodeEdit'])->name('kelolaPeriode.edit');
+    Route::get('/kelola-periode/edit', [AdminController::class, 'kelolaPeriodeEdit'])->name('kelolaPeriode.edit');
 
     // Kelola Prodi
     Route::get('/kelola-prodi', [AdminController::class, 'kelolaProdiIndex'])->name('kelolaProdi.index');
     Route::get('/kelola-prodi/tambah', [AdminController::class, 'kelolaProdiTambah'])->name('kelolaProdi.tambah');
-    Route::get('/kelola-prodi/edit/{id}', [AdminController::class, 'kelolaProdiEdit'])->name('kelolaProdi.edit');
+    Route::get('/kelola-prodi/edit', [AdminController::class, 'kelolaProdiEdit'])->name('kelolaProdi.edit');
 
     // Laporan Analisis Prestasi
     Route::get('/laporan-analisis-prestasi', [AdminController::class, 'laporanAnalisisPrestasiIndex'])->name('laporanAnalisisPrestasi.index');
@@ -55,11 +62,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     // Verifikasi Lomba
     Route::get('/verifikasi-lomba', [AdminController::class, 'verifikasiLombaIndex'])->name('verifikasiLomba.index');
-    Route::get('/verifikasi-lomba/detail/{id}', [AdminController::class, 'verifikasiLombaDetail'])->name('verifikasiLomba.detail');
+    Route::get('/verifikasi-lomba/detail', [AdminController::class, 'verifikasiLombaDetail'])->name('verifikasiLomba.detail');
 
     // Verifikasi Prestasi
     Route::get('/verifikasi-prestasi', [AdminController::class, 'verifikasiPrestasiIndex'])->name('verifikasiPrestasi.index');
-    Route::get('/verifikasi-prestasi/detail/{id}', [AdminController::class, 'verifikasiPrestasiDetail'])->name('verifikasiPrestasi.detail');
+    Route::get('/verifikasi-prestasi/detail', [AdminController::class, 'verifikasiPrestasiDetail'])->name('verifikasiPrestasi.detail');
 });
 
 Route::prefix('mahasiswa')->name('mahasiswa.')->group(function () {
