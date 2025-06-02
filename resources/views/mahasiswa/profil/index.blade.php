@@ -185,9 +185,6 @@
 
                 <div class="tab-pane fade" id="underline-profile" role="tabpanel" aria-labelledby="underline-profile-tab">
                     <div class="card">
-                        <!-- <div class="card-header">
-                            <h5 class="card-title" style="font-weight: bold !important;">Detail Pengguna</h5>
-                        </div> -->
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table mb-0" style="border-top: none; table-layout: fixed;">
