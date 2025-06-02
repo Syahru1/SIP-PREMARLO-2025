@@ -63,18 +63,28 @@
         </div>
     </div>
 
-    <!-- Catatan Dosen -->
+    <!-- Permohonan Bimbingan & Catatan -->
     <div class="card">
-        <div class="card-header">Catatan Dosen Pembimbing</div>
-        <div class="card-body">
-            <form method="POST" action="#">
-                @csrf
+        <div class="card-header">Permohonan Bimbingan Lomba</div>
+        <form method="POST" action="#">
+            @csrf
+            <div class="card-body">
+                <p><strong>Nama Lomba:</strong> UI/UX Nasional 2025</p>
+                <p><strong>Nama Tim:</strong> Tim Kreatif B</p>
+                <p><strong>Anggota:</strong> Mahasiswa B, Mahasiswa C, Mahasiswa D</p>
+                <p><strong>Keterangan Lomba:</strong> Lomba desain UI/UX tingkat nasional yang diselenggarakan oleh ABC University</p>
+                <p><strong>Proposal:</strong> <a href="#">Download Proposal</a></p>
+
                 <div class="mb-3">
-                    <textarea class="form-control" name="catatan" rows="4" placeholder="Tulis catatan tambahan di sini..."></textarea>
+                    <label for="catatan" class="form-label">Catatan Dosen (opsional):</label>
+                    <textarea class="form-control" name="catatan" id="catatan" rows="3" placeholder="Tulis catatan tambahan di sini..."></textarea>
                 </div>
-                <button type="submit" class="btn btn-success">Simpan Catatan</button>
-            </form>
-        </div>
+            </div>
+            <div class="card-footer d-flex justify-content-end">
+                <button type="submit" name="status" value="tolak" class="btn btn-danger me-2 mr-2">Tolak</button>
+                <button type="submit" name="status" value="terima" class="btn btn-success">Terima</button>
+            </div>
+        </form>
     </div>
 </div>
 @endsection
