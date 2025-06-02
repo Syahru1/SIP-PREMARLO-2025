@@ -11,9 +11,9 @@ class DosenController extends Controller
         return view('dosen.beranda.index'); 
     }
 
-    public function prestasi()
+    public function mahasiswa_bimbingan()
     {
-        return view('dosen.prestasi.index'); 
+        return view('dosen.mahasiswa-bimbingan.index'); 
     }
 
     public function lomba()
@@ -96,6 +96,11 @@ class DosenController extends Controller
     public function delete_pengalaman($id)
     {
         return redirect()->back()->with('success', 'Pengalaman berhasil dihapus.');
+    }
+
+    public function detail_mahasiswa()
+    {
+        return view('dosen.mahasiswa-bimbingan.detail-mahasiswa'); 
     }
 
 
