@@ -32,6 +32,8 @@
     @include('layout.navbar')
     @if (Request::is('mahasiswa/*'))
         @include('layout.topbar-mahasiswa')
+    @elseif (Request::is('dosen/*'))
+            @include('layout.topbar-dosen')
     @endif
 
     <!--  END NAVBAR  -->
