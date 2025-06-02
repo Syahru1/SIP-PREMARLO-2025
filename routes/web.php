@@ -109,6 +109,9 @@ Route::group(['prefix' => 'dosen'],function () {
     Route::get('/beranda', [MasterController::class, 'dosen'])->name('beranda.dosen');
 
     Route::get('/profil', [DosenController::class, 'profil'])->name('profil.dosen');
+    Route::get('/lomba', [DosenController::class, 'lomba'])->name('lomba.dosen');
+    Route::get('/mahasiswa-bimbingan', [DosenController::class, 'mahasiswa_bimbingan'])->name('mahasiswa-bimbingan');
+    Route::get('/detail-mahasiswa', [DosenController::class, 'detail_mahasiswa'])->name('detail-mahasiswa');
     Route::get('/sertifikat', [DosenController::class, 'sertifikat'])->name('sertifikat.dosen');
     Route::get('/create-sertifikat', [DosenController::class, 'create_sertifikat'])->name('sertifikat.create.dosen');
     Route::get('/bidang-keahlian', [DosenController::class, 'bidang_keahlian'])->name('bidang-keahlian-dosen');
