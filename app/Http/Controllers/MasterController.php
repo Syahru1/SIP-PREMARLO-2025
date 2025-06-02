@@ -8,7 +8,7 @@ class MasterController extends Controller
 {
     public function dosen()
     {
-        return view('dosen.beranda',[
+        return view('dosen.beranda.index',[
             "title" => "Dashboard"
         ]);
         // if (auth()->user()->role == 'Owner') {
