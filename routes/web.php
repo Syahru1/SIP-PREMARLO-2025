@@ -31,7 +31,7 @@ Route::post('/logout', function () {
 
 Route::group(['prefix' => 'admin'],function () {
     // Beranda
-    Route::get('/beranda', [MasterController::class, 'admin'])->name('beranda.admin');
+    Route::get('/beranda', [MasterController::class, 'admin'])->name('beranda');
     
     // Kelola Data Lomba
     Route::get('/kelola-data-lomba', [AdminController::class, 'kelolaDataLombaIndex'])->name('kelolaDataLomba.index');
@@ -90,4 +90,16 @@ Route::group(['prefix' => 'mahasiswa'],function () {
     Route::get('/notifikasi', [MahasiswaController::class, 'notifikasi'])->name('notifikasi');
     Route::get('/detail-prestasi', [MahasiswaController::class, 'detail_prestasi'])->name('detail-prestasi');
     Route::get('/detail-lomba', [MahasiswaController::class, 'detail_lomba'])->name('detail-lomba');
+    Route::get('/sertifikat', [MahasiswaController::class, 'sertifikat'])->name('sertifikat');
+    Route::get('/create-sertifikat', [MahasiswaController::class, 'create_sertifikat'])->name('sertifikat.create');
+    Route::get('/minat', [MahasiswaController::class, 'minat'])->name('minat');
+    Route::get('/create-minat', [MahasiswaController::class, 'create_minat'])->name('minat.create');
+    Route::get('/bidang-keahlian', [MahasiswaController::class, 'bidang_keahlian'])->name('bidang-keahlian');
+    Route::get('/create-bidang-keahlian', [MahasiswaController::class, 'create_bidang_keahlian'])->name('bidang-keahlian.create');
+    Route::get('/pengalaman', [MahasiswaController::class, 'pengalaman'])->name('pengalaman');
+    Route::get('/create-pengalaman', [MahasiswaController::class, 'create_pengalaman'])->name('pengalaman.create');
+    Route::delete('/profil/minat/{id}', [MahasiswaController::class, 'delete']);
+    Route::delete('/profil/bidang-keahlian/{id}', [MahasiswaController::class, 'delete']);
+    Route::get('/edit-profil', [MahasiswaController::class, 'edit_profil'])->name('edit-profil');
+
 });

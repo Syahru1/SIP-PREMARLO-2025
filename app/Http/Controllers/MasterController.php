@@ -30,7 +30,7 @@ class MasterController extends Controller
 
     public function mahasiswa()
     {
-        return view('mahasiswa.beranda',[
+        return view('mahasiswa.beranda.index',[
             "title" => "Dashboard"
         ]);
         // if (auth()->user()->role == 'Kasir') {
