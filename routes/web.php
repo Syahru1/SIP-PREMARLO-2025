@@ -4,8 +4,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\MahasiswaController;
+use App\Http\Controllers\DosenController;
 use App\Http\Controllers\MasterController;
-use App\Http\Controllers\HalamanUtamaController;
 use App\Http\Controllers\AuthController;
 
 /*
@@ -83,7 +83,6 @@ Route::group(['prefix' => 'mahasiswa'],function () {
     // Beranda
     Route::get('/beranda', [MasterController::class, 'mahasiswa'])->name('beranda.mahasiswa');
 
-    // Route::get('/beranda', [MahasiswaController::class, 'beranda'])->name('beranda');
     Route::get('/prestasi', [MahasiswaController::class, 'prestasi'])->name('prestasi');
     Route::get('/lomba', [MahasiswaController::class, 'lomba'])->name('lomba');
     Route::get('/profil', [MahasiswaController::class, 'profil'])->name('profil');
@@ -102,4 +101,25 @@ Route::group(['prefix' => 'mahasiswa'],function () {
     Route::delete('/profil/bidang-keahlian/{id}', [MahasiswaController::class, 'delete']);
     Route::get('/edit-profil', [MahasiswaController::class, 'edit_profil'])->name('edit-profil');
 
+});
+
+
+Route::group(['prefix' => 'dosen'],function () {
+    // Beranda
+    Route::get('/beranda', [MasterController::class, 'dosen'])->name('beranda.dosen');
+
+    Route::get('/profil', [DosenController::class, 'profil'])->name('profil.dosen');
+    Route::get('/lomba', [DosenController::class, 'lomba'])->name('lomba.dosen');
+    Route::get('/notifikasi', [DosenController::class, 'notifikasi'])->name('notifikasi.dosen');
+    Route::get('/mahasiswa-bimbingan', [DosenController::class, 'mahasiswa_bimbingan'])->name('mahasiswa-bimbingan');
+    Route::get('/detail-mahasiswa', [DosenController::class, 'detail_mahasiswa'])->name('detail-mahasiswa');
+    Route::get('/sertifikat', [DosenController::class, 'sertifikat'])->name('sertifikat.dosen');
+    Route::get('/create-sertifikat', [DosenController::class, 'create_sertifikat'])->name('sertifikat.create.dosen');
+    Route::get('/bidang-keahlian', [DosenController::class, 'bidang_keahlian'])->name('bidang-keahlian-dosen');
+    Route::get('/create-bidang-keahlian', [DosenController::class, 'create_bidang_keahlian'])->name('bidang-keahlian.create.dosen');
+    Route::get('/pengalaman', [DosenController::class, 'pengalaman'])->name('pengalaman.dosen');
+    Route::get('/create-pengalaman', [DosenController::class, 'create_pengalaman'])->name('pengalaman.create.dosen');
+    Route::delete('/profil/minat/{id}', [DosenController::class, 'delete']);
+    Route::delete('/profil/bidang-keahlian/{id}', [DosenController::class, 'delete']);
+    Route::get('/edit-profil', [DosenController::class, 'edit_profil'])->name('edit-profil.dosen');
 });

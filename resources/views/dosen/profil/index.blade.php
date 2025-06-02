@@ -1,15 +1,12 @@
 @extends('layout.template')
+
 @php
     // Dummy user jika tidak tersedia dari controller
     $user = (object)[
         'name' => 'Draco Malfoy',
-        'nim' => '202310001',
-        'prodi' => 'D-IV Teknik Informatika',
-        'lokasi' => 'Malang, Jawa Timur',
+        'nidn' => '202310001',
         'email' => 'draco@example.com',
         'photo' => null,
-        'angkatan' => '2023',
-        'periode' => '2024/2025 Genap',
         'password' => '*****'
     ];
 @endphp
@@ -24,64 +21,44 @@
     </div>
 
     <div class="card component-card_4 mb-4 p-4">
-    <div class="d-flex align-items-center justify-content-between">
-        <!-- Foto Profil -->
-        <div class="me-4" style="margin-left: 1rem;">
-            <img src="{{ $user->photo ? asset('storage/' . $user->photo) : 'https://via.placeholder.com/80x80.png?text=Foto' }}"
-                 alt="Foto Profil"
-                 class="rounded-circle border border-2 border-dark"
-                 width="80" height="80">
-        </div>
+        <div class="d-flex align-items-center justify-content-between">
+            <!-- Foto Profil -->
+            <div class="me-4" style="margin-left: 1rem;">
+                <img src="{{ $user->photo ? asset('storage/' . $user->photo) : 'https://via.placeholder.com/80x80.png?text=Foto' }}"
+                    alt="Foto Profil"
+                    class="rounded-circle border border-2 border-dark"
+                    width="80" height="80">
+            </div>
 
-        <!-- Informasi Mahasiswa (2 baris, masing-masing 2 kolom) -->
-         <div class="flex-grow-1" style="text-align:left; margin-left: 8rem;">
-            <div class="container px-0">
-                <!-- Baris 1 -->
-                <div class="row mb-2 ">
-                    <div class="col-md-4 ">
-                        <div class="text-muted">Nama</div>
-                        <div class="text-black">{{ $user->name ?? '-' }}</div>
+            <!-- Informasi Dosen -->
+            <div class="flex-grow-1" style="text-align:left; margin-left: 8rem;">
+                <div class="container px-0">
+                    <!-- Baris 1 -->
+                    <div class="row mb-2">
+                        <div class="col-md-4">
+                            <div class="text-muted">Nama</div>
+                            <div class="text-black">{{ $user->name ?? '-' }}</div>
+                        </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="text-muted">Prodi</div>
-                        <div class="text-black">{{ $user->prodi ?? '-' }}</div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="text-muted">Email</div>
-                        <div class="text-black">
-                            <a href="mailto:{{ $user->email }}" class="text-black">{{ $user->email }}</a>
+
+                    <!-- Baris 2 -->
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="text-muted">NIDN</div>
+                            <div class="text-black">{{ $user->nidn ?? '-' }}</div>
                         </div>
                     </div>
                 </div>
-
-                <!-- Baris 2 -->
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="text-muted">NIM</div>
-                        <div class="text-black">{{ $user->nim ?? '-' }}</div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="text-muted">Periode</div>
-                        <div class="text-black">{{ $user->periode ?? '-' }}</div>
-                    </div>
-                     <div class="col-md-4">
-                        <div class="text-muted">Lokasi</div>
-                        <div class="text-black">{{ $user->lokasi ?? '-' }}</div>
-                    </div>
-                </div>
             </div>
+
+            <!-- Tombol Edit -->
+            <a href="{{ url('dosen/edit-profil') }}" class="btn btn-primary mb-2 mr-2">Edit</a>
         </div>
-
-        <!-- Tombol Edit -->
-        <a href="{{ url('mahasiswa/edit-profil') }}" class="btn btn-primary mb-2 mr-2">Edit</a>
-
     </div>
-</div>
 
     <div class="card component-card_4">
         <div class="card-body">
-
-
+            <!-- Tab Menu -->
             <ul class="nav nav-tabs mb-3" id="lineTab" role="tablist">
                 <li class="nav-item">
                     <a class="nav-link active" id="underline-home-tab" data-toggle="tab" href="#underline-home" role="tab" aria-controls="underline-home" aria-selected="true">Kompetensi</a>
@@ -91,47 +68,23 @@
                 </li>
             </ul>
 
-            <div class="tab-content" id="lineTabContent-3">
+            <!-- Tab Content -->
+            <div class="tab-content" id="lineTabContent">
+
+                <!-- Tab 1: Kompetensi -->
                 <div class="tab-pane fade show active" id="underline-home" role="tabpanel" aria-labelledby="underline-home-tab">
-                    <div class="mb-4 card">
-                        <div class="card-header d-flex justify-content-between align-items-center">
-                            <h5 class="card-title mb-0 text-black" style="font-weight: bold !important;">Minat</h5>
-                            <div class="d-flex align-items-center">
 
-                             <a href="{{ url('mahasiswa/minat') }}" class="btn btn-secondary mb-2 mr-2">Detail</a>
-
-
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="skill-item mb-3">
-                                <div class="text-black">Isi detail minat ditampilkan di sini...</div>
-                                <div role="separator" class="specialist-divider mt-2"></div>
-                            </div>
-
-                            <div class="skill-item mb-3">
-                                <div class="text-black">Isi detail minat ditampilkan di sini...</div>
-                                <div role="separator" class="specialist-divider mt-2"></div>
-                            </div>
-                        </div>
-                    </div>
-
+                    <!-- Bidang Keahlian -->
                     <div class="mb-4 card">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h5 class="card-title mb-0 text-black" style="font-weight: bold !important;">Bidang Keahlian</h5>
-                            <div class="d-flex align-items-center">
-
-                            <a href="{{ url('mahasiswa/bidang-keahlian') }}" class="btn btn-secondary mb-2 mr-2">Detail</a>
-
-
-                            </div>
+                            <a href="{{ url('dosen/bidang-keahlian') }}" class="btn btn-secondary mb-2 mr-2">Detail</a>
                         </div>
                         <div class="card-body">
                             <div class="skill-item mb-3">
                                 <div class="text-black">Isi detail keahlian ditampilkan di sini...</div>
                                 <div role="separator" class="specialist-divider mt-2"></div>
                             </div>
-
                             <div class="skill-item mb-3">
                                 <div class="text-black">Isi detail keahlian ditampilkan di sini...</div>
                                 <div role="separator" class="specialist-divider mt-2"></div>
@@ -139,21 +92,17 @@
                         </div>
                     </div>
 
+                    <!-- Sertifikasi -->
                     <div class="mb-4 card">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h5 class="card-title mb-0 text-black" style="font-weight: bold !important;">Sertifikasi</h5>
-                            <div class="d-flex align-items-center">
-                           <a href="{{ url('mahasiswa/sertifikat') }}" class="btn btn-secondary mb-2 mr-2">Detail</a>
-
-                           
-                            </div>
+                            <a href="{{ url('dosen/sertifikat') }}" class="btn btn-secondary mb-2 mr-2">Detail</a>
                         </div>
                         <div class="card-body">
                             <div class="skill-item mb-3">
                                 <div class="text-black">Isi sertifikasi ditampilkan di sini...</div>
                                 <div role="separator" class="specialist-divider mt-2"></div>
                             </div>
-
                             <div class="skill-item mb-3">
                                 <div class="text-black">Isi sertifikasi ditampilkan di sini...</div>
                                 <div role="separator" class="specialist-divider mt-2"></div>
@@ -161,28 +110,26 @@
                         </div>
                     </div>
 
+                    <!-- Pengalaman -->
                     <div class="mb-4 card">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h5 class="card-title mb-0 text-black" style="font-weight: bold !important;">Pengalaman</h5>
-                            <div class="d-flex align-items-center">
-                             <a href="{{ url('mahasiswa/pengalaman') }}" class="btn btn-secondary mb-2 mr-2">Detail</a>
-                            </div>
+                            <a href="{{ url('dosen/pengalaman') }}" class="btn btn-secondary mb-2 mr-2">Detail</a>
                         </div>
                         <div class="card-body">
                             <div class="skill-item mb-3">
                                 <div class="text-black">Isi pengalaman ditampilkan di sini...</div>
                                 <div role="separator" class="specialist-divider mt-2"></div>
                             </div>
-
                             <div class="skill-item mb-3">
                                 <div class="text-black">Isi pengalaman ditampilkan di sini...</div>
                                 <div role="separator" class="specialist-divider mt-2"></div>
                             </div>
                         </div>
                     </div>
-
                 </div>
 
+                <!-- Tab 2: Informasi Akun -->
                 <div class="tab-pane fade" id="underline-profile" role="tabpanel" aria-labelledby="underline-profile-tab">
                     <div class="card">
                         <div class="card-body">
@@ -194,28 +141,12 @@
                                             <td class="text-black" style="width: 60%;">{{ $user->name ?? '-' }}</td>
                                         </tr>
                                         <tr>
-                                            <td class="text-muted">NIM</td>
-                                            <td class="text-black">{{ $user->nim ?? '-' }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-muted">Prodi</td>
-                                            <td class="text-black">{{ $user->prodi ?? '-' }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-muted">Periode</td>
-                                            <td class="text-black">{{ $user->periode ?? '-' }}</td>
+                                            <td class="text-muted">NIDN</td>
+                                            <td class="text-black">{{ $user->nidn ?? '-' }}</td>
                                         </tr>
                                         <tr>
                                             <td class="text-muted">Email</td>
                                             <td class="text-black">{{ $user->email ?? '-' }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-muted">Lokasi</td>
-                                            <td class="text-black">{{ $user->lokasi ?? '-' }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-muted">Angkatan</td>
-                                            <td class="text-black">{{ $user->angkatan ?? '-' }}</td>
                                         </tr>
                                         <tr>
                                             <td class="text-muted">Password</td>
@@ -228,15 +159,13 @@
                     </div>
                 </div>
 
-            </div>
+            </div> <!-- end tab-content -->
 
         </div>
     </div>
 
 </div>
-
 @endsection
-
 
 <style>
     .nav-tabs .nav-link {
