@@ -75,8 +75,8 @@
                 <p><strong>Keterangan Lomba:</strong> Lomba desain UI/UX tingkat nasional yang diselenggarakan oleh ABC University</p>
                 <p><strong>Proposal:</strong> <a href="#">Download Proposal</a></p>
 
-                <div class="mb-3">
-                    <label for="catatan" class="form-label">Catatan Dosen (opsional):</label>
+                <div class="mb-3"><br>
+                    <label for="catatan" class="form-label text-black">Catatan Dosen (opsional):</label>
                     <textarea class="form-control" name="catatan" id="catatan" rows="3" placeholder="Tulis catatan tambahan di sini..."></textarea>
                 </div>
             </div>

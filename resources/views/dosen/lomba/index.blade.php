@@ -124,7 +124,7 @@
                                         <thead>
                                             <tr>
                                                 <th class="text-secondary"> # </th>
-                                                <th class="text-secondary">Prestasi</th>
+                                                <th class="text-secondary">Nama Lomba</th>
                                                 <th class="text-secondary">Tingkat</th>
                                                 <th class="text-secondary">Tahun</th>
                                                 <th class="text-secondary">Status</th>

@@ -5,7 +5,7 @@
 
     <div class="page-header">
         <div class="page-title">
-            <h3>Lomba</h3>
+            <h3>Mahasiswa Bimbingan</h3>
         </div>
     </div>
 
@@ -63,50 +63,38 @@
                                     </div>                  
                                 </div>
                             </div>
-                            <div class="widget-content widget-content-area">
-                                <div class="table-responsive mb-4">
-                                    <table id="column-filter" class="table">
-                                        <thead>
-                                            <tr>
-                                                <th class="text-secondary"> # </th>
-                                                <th class="text-secondary">Prestasi</th>
-                                                <th class="text-secondary">Tingkat</th>
-                                                <th class="text-secondary">Tahun</th>
-                                                <th class="text-secondary">Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td class="checkbox-column"> 1 </td>
-                                                <td>Juara 1 Cyber Security ABC</td>
-                                                <td>Nasional</td>
-                                                <td>2025</td>
-                                                <td><span class="shadow-none badge badge-success">Disetujui</span></td>
-                                                <td class="text-center"><button class="btn btn-primary">Detail</button></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="checkbox-column"> 2 </td>
-                                                <td>Juara 1 Cyber Security ABC</td>
-                                                <td>Nasional</td>
-                                                <td>2025</td>
-                                                <td><span class="shadow-none badge badge-warning">Proses</span></td>
-                                                <td class="text-center"><button class="btn btn-primary">Detail</button></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="checkbox-column"> 3 </td>
-                                                <td>Juara 1 Cyber Security ABC</td>
-                                                <td>Nasional</td>
-                                                <td>2025</td>
-                                                <td><span class="shadow-none badge badge-danger">Ditolak</span></td>
-                                                <td class="text-center"><button class="btn btn-primary">Detail</button></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                            <div class="card p-3 mb-3">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <strong>Mahasiswa A</strong><span class="badge badge-success ml-2">Selesai</span><br>
+                                    Keterangan: Mengikuti Lomba Cyber Security ABC
                                 </div>
+                                <a href="{{ url('/dosen/detail-mahasiswa') }}" class="btn btn-sm btn-primary">Detail</a>
                             </div>
                         </div>
+
+                        <div class="card p-3 mb-3">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <strong>Mahasiswa B</strong><span class="badge badge-warning ml-2">Proses</span><br>
+                                    Keterangan: Mengikuti Lomba UI/UX Competition
+                                </div>
+                                <a href="{{ url('/dosen/detail-mahasiswa') }}" class="btn btn-sm btn-primary">Detail</a>
+                            </div>
+                        </div>
+
+                        <div class="card p-3 mb-3">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <strong>Mahasiswa C</strong><span class="badge badge-danger ml-2">Ditolak</span><br>
+                                    Keterangan: Mengikuti Lomba Programming Contest
+                                </div>
+                                <a href="{{ url('/dosen/detail-mahasiswa') }}" class="btn btn-sm btn-primary">Detail</a>
+                            </div>
+                        </div>
+                        </div>
                     </div>
-                </div>
+                
                     </p>
                 </div>
             </div>
