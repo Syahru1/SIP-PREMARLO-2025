@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id('id_penyelenggara');
             $table->string('kode_penyelenggara')->unique();
             $table->string('nama_penyelenggara');
+            $table->integer('skor');
             $table->timestamps();
         });
     }

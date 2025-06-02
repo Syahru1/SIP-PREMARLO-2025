@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('kode_hadiah')->unique();
             $table->string('nama_hadiah');
             $table->string('deskripsi_hadiah')->nullable();
+            $table->integer('skor');
             $table->timestamps();
         });
     }
