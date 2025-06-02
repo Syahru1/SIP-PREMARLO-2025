@@ -73,9 +73,8 @@
         </div>
 
         <!-- Tombol Edit -->
-        <div  style="margin-right: 1rem;">
-            <button class="btn btn-secondary mb-2">Edit</button>
-        </div>
+        <a href="{{ url('mahasiswa/edit-profil') }}" class="btn btn-primary mb-2 mr-2">Edit</a>
+
     </div>
 </div>
 
@@ -99,8 +98,7 @@
                             <h5 class="card-title mb-0 text-black" style="font-weight: bold !important;">Minat</h5>
                             <div class="d-flex align-items-center">
 
-                            <button class="btn btn-primary mb-2 mr-2">Tambah</button>
-                            <button class="btn btn-secondary mb-2 mr-2">Edit</button>
+                             <a href="{{ url('mahasiswa/minat') }}" class="btn btn-secondary mb-2 mr-2">Detail</a>
 
 
                             </div>
@@ -123,8 +121,7 @@
                             <h5 class="card-title mb-0 text-black" style="font-weight: bold !important;">Bidang Keahlian</h5>
                             <div class="d-flex align-items-center">
 
-                            <button class="btn btn-primary mb-2 mr-2">Tambah</button>
-                            <button class="btn btn-secondary mb-2 mr-2">Edit</button>
+                            <a href="{{ url('mahasiswa/bidang-keahlian') }}" class="btn btn-secondary mb-2 mr-2">Detail</a>
 
 
                             </div>
@@ -146,8 +143,9 @@
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h5 class="card-title mb-0 text-black" style="font-weight: bold !important;">Sertifikasi</h5>
                             <div class="d-flex align-items-center">
-                            <button class="btn btn-primary mb-2 mr-2">Tambah</button>
-                            <button class="btn btn-secondary mb-2 mr-2">Edit</button>
+                           <a href="{{ url('mahasiswa/sertifikat') }}" class="btn btn-secondary mb-2 mr-2">Detail</a>
+
+                           
                             </div>
                         </div>
                         <div class="card-body">
@@ -167,8 +165,7 @@
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h5 class="card-title mb-0 text-black" style="font-weight: bold !important;">Pengalaman</h5>
                             <div class="d-flex align-items-center">
-                            <button class="btn btn-primary mb-2 mr-2">Tambah</button>
-                            <button class="btn btn-secondary mb-2 mr-2">Edit</button>
+                             <a href="{{ url('mahasiswa/pengalaman') }}" class="btn btn-secondary mb-2 mr-2">Detail</a>
                             </div>
                         </div>
                         <div class="card-body">
@@ -240,6 +237,7 @@
     </div>
 
 </div>
+
 @endsection
 
 
