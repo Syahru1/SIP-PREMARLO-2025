@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id('id_tingkat_kompetisi');
             $table->string('kode_tingkat_kompetisi')->unique();
             $table->string('nama_tingkat_kompetisi');
+            $table->integer('skor');
             $table->timestamps();
         });
     }

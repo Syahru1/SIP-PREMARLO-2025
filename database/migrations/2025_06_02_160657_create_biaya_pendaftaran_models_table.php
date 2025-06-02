@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id('id_biaya_pendaftaran');
             $table->string('kode_biaya_pendaftaran')->unique;
             $table->string('nama_biaya_pendaftaran');
+            $table->integer('skor');
             $table->timestamps();
         });
     }

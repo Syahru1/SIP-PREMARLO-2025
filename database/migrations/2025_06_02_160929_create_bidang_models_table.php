@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('id_bidang');
             $table->string('kode_bidang')->unique();
             $table->string('nama_bidang');
-            $table->string('skor');
+            $table->integer('skor');
             $table->timestamps();
         });
     }
