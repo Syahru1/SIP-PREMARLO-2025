@@ -1,94 +1,7 @@
 @extends('layout.template')
 
 @section('content')
-<style>
-    .page-title {
-        background-color: #3F00FF;
-        width: 100%;
-        padding: 50px;
-    }
-
-    .page-title h4 {
-        color: white;
-        font-weight: bold;
-        font-size: 36px;
-        margin: 0;
-    }
-
-    .card {
-        border: 3px solid #007bff;
-        font-family: 'Poppins', sans-serif;
-    }
-
-    .form-label,
-    .form-group label {
-        color: black;
-        font-weight: bold;
-        font-size: 20px;
-    }
-
-    .form-control {
-        font-size: 20px;
-        padding: 10px;
-    }
-
-    .btn-danger,
-    .btn-success {
-        padding: 10px 20px;
-        font-weight: bold;
-        font-size: 20px;
-    }
-
-    .btn-danger {
-        background-color: #dc3545;
-        border-color: #dc3545;
-        color: white;
-        text-decoration: none;
-    }
-
-    .btn-success {
-        background-color: #28a745;
-        border-color: #28a745;
-        color: white;
-        text-decoration: none;
-    }
-
-    .btn-danger:hover,
-    .btn-success:hover {
-        opacity: 0.9;
-    }
-
-    .gap-2 > * + * {
-        margin-left: 0.5rem !important;
-    }
-
-    @media (max-width: 768px) {
-        .page-title {
-            padding: 30px 15px;
-        }
-
-        .page-title h4 {
-            font-size: 24px;
-        }
-
-        .form-label,
-        .form-group label {
-            font-size: 16px;
-        }
-
-        .form-control {
-            font-size: 16px;
-            padding: 8px;
-        }
-
-        .btn-danger,
-        .btn-success {
-            font-size: 16px;
-            padding: 8px 15px;
-        }
-    }
-</style>
-
+<!-- BEGIN CONTENT AREA -->
 <div class="layout-px-spacing">
 
     <div class="page-header">
@@ -97,46 +10,45 @@
         </div>
     </div>
 
-    <!-- CONTENT AREA -->
-    <div class="container mt-3">
-        <div class="row justify-content-center">
-            <div class="col-12 mx-auto" style="max-width: 1140px;">
-                <div class="card">
-                    <div class="card-body">
-                        <form>
-                            <div class="mb-3">
-                                <label for="nama" class="form-label">Nama Admin</label>
-                                <input type="text" class="form-control" id="nama" placeholder="Masukkan Nama Admin">
-                            </div>
-                            <div class="mb-3">
-                                <label for="nidn" class="form-label">NIDN</label>
-                                <input type="text" class="form-control" id="nidn" placeholder="Masukkan NIDN">
-                            </div>
+    <div class="card component-card_4">
+        <div class="card-body">
+            <div class="tab-content" id="lineTabContent-3">
+                <div class="tab-pane fade show active" id="tambah-admin" role="tabpanel" aria-labelledby="tambah-tab">
+                    <form>
 
-                            <div class="form-group mb-3">
-                                <label for="jabatan">Jabatan</label>
-                                <select id="jabatan" name="jabatan" class="form-control">
-                                    <option selected>Admin Prodi TI</option>
-                                    <option>Admin Prodi SIB</option>
-                                    <option>Admin Jurusan</option>
-                                </select>
-                            </div>
+                        <div class="form-group mb-4">
+                            <label class="text-black" for="nama">Nama Admin</label>
+                            <input type="text" class="form-control border border-secondary text-dark bg-white" id="nama" name="nama" placeholder="Masukkan Nama Admin">
+                        </div>
 
-                            <div class="mb-3">
-                                <label for="password" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="password" placeholder="Masukkan Password">
-                            </div>
+                        <div class="form-group mb-4">
+                            <label class="text-black" for="nidn">NIDN</label>
+                            <input type="text" class="form-control border border-secondary text-dark bg-white" id="nidn" name="nidn" placeholder="Masukkan NIDN">
+                        </div>
 
-                            <div class="d-flex justify-content-end gap-2 mt-3">
-                                <a href="{{ route('admin.kelolaAdmin.index') }}" class="btn btn-danger">Batal</a>
-                                <button type="submit" class="btn btn-success">Simpan</button>
-                            </div>
-                        </form>
-                    </div>
+                        <div class="form-group mb-4">
+                            <label class="text-black" for="jabatan">Jabatan</label>
+                            <select id="jabatan" name="jabatan" class="form-control border border-secondary text-dark bg-white">
+                                <option selected>Admin Prodi TI</option>
+                                <option>Admin Prodi SIB</option>
+                                <option>Admin Jurusan</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group mb-4">
+                            <label class="text-black" for="password">Password</label>
+                            <input type="password" class="form-control border border-secondary text-dark bg-white" id="password" name="password" placeholder="Masukkan Password">
+                        </div>
+
+                        <div class="d-flex justify-content-end gap-3 mt-4">
+                            <a href="{{ url('admin/kelola-pengguna-admin') }}" class="btn btn-danger">Batal</a>
+                            <button type="submit" class="btn btn-success">Simpan</button>
+                        </div>
+
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-    <!-- CONTENT AREA -->
 </div>
 @endsection

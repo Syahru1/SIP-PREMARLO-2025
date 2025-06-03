@@ -1,119 +1,7 @@
 @extends('layout.template')
 
 @section('content')
-<style>
-    .page-title {
-        background-color: #3F00FF;
-        width: 100%;
-        padding: 50px;
-    }
-
-    .page-title h4 {
-        color: white;
-        font-weight: bold;
-        font-size: 36px;
-        margin: 0;
-    }
-
-    .card {
-        border: 3px solid #007bff;
-    }
-
-    .form-label,
-    .form-group label {
-        color: black;
-        font-weight: bold;
-        font-size: 20px;
-    }
-
-    .form-control {
-        font-size: 20px;
-        padding: 10px;
-    }
-
-    .btn-danger,
-    .btn-success {
-        padding: 10px 20px;
-        font-weight: bold;
-        font-size: 20px;
-    }
-
-    .btn-danger {
-        background-color: #dc3545;
-        border-color: #dc3545;
-        color: white;
-        text-decoration: none;
-    }
-
-    .btn-success {
-        background-color: #28a745;
-        border-color: #28a745;
-        color: white;
-        text-decoration: none;
-    }
-
-    .btn-danger:hover,
-    .btn-success:hover {
-        opacity: 0.9;
-    }
-
-    .gap-2 > * + * {
-        margin-left: 0.5rem !important;
-    }
-
-    @media (max-width: 768px) {
-        .page-title {
-            padding: 30px 20px;
-        }
-        .page-title h4 {
-            font-size: 28px;
-        }
-        .form-label,
-        .form-group label {
-            font-size: 16px;
-        }
-        .form-control {
-            font-size: 16px;
-            padding: 8px;
-        }
-        .btn-danger,
-        .btn-success {
-            font-size: 16px;
-            padding: 8px 16px;
-        }
-        .container {
-            padding-left: 15px;
-            padding-right: 15px;
-        }
-    }
-
-    @media (max-width: 480px) {
-        .page-title {
-            padding: 20px 10px;
-        }
-        .page-title h4 {
-            font-size: 22px;
-        }
-        .form-label,
-        .form-group label {
-            font-size: 14px;
-        }
-        .form-control {
-            font-size: 14px;
-            padding: 6px;
-        }
-        .btn-danger,
-        .btn-success {
-            font-size: 14px;
-            padding: 6px 12px;
-        }
-        .container {
-            padding-left: 10px;
-            padding-right: 10px;
-        }
-    }
-</style>
-
+<!-- BEGIN CONTENT AREA -->
 <div class="layout-px-spacing">
 
     <div class="page-header">
@@ -122,36 +10,32 @@
         </div>
     </div>
 
-    <!-- CONTENT AREA -->
-    <div class="container mt-3">
-        <div class="row justify-content-center">
-            <div class="col-12 mx-auto" style="max-width: 1140px;">
-                <div class="card">
-                    <div class="card-body">
-                        <form>
-                            <div class="mb-3">
-                                <label for="tahunAjaran" class="form-label">Tahun Ajaran</label>
-                                <input type="text" class="form-control" id="tahunAjaran" placeholder="Masukkan Tahun Ajaran">
-                            </div>
+    <div class="card component-card_4">
+        <div class="card-body">
+            <div class="tab-content" id="lineTabContent-3">
+                <div class="tab-pane fade show active" id="tambah-periode" role="tabpanel" aria-labelledby="tambah-tab">
+                    <form>
+                        <div class="form-group mb-4">
+                            <label class="text-black" for="tahunAjaran">Tahun Ajaran</label>
+                            <input type="text" class="form-control border border-secondary text-dark bg-white" id="tahunAjaran" name="tahunAjaran" placeholder="Masukkan Tahun Ajaran">
+                        </div>
 
-                            <div class="form-group mb-3">
-                                <label for="semester">Semester</label>
-                                <select id="semester" name="semester" class="form-control">
-                                    <option selected>Ganjil</option>
-                                    <option>Genap</option>
-                                </select>
-                            </div>
+                        <div class="form-group mb-4">
+                            <label class="text-black" for="semester">Semester</label>
+                            <select id="semester" name="semester" class="form-control border border-secondary text-dark bg-white">
+                                <option selected>Ganjil</option>
+                                <option>Genap</option>
+                            </select>
+                        </div>
 
-                            <div class="d-flex justify-content-end gap-2 mt-3">
-                                <a href="{{ route('admin.kelolaPeriode.index') }}" class="btn btn-danger">Batal</a>
-                                <button type="submit" class="btn btn-success">Simpan</button>
-                            </div>
-                        </form>
-                    </div>
+                        <div class="d-flex justify-content-end gap-3 mt-4">
+                            <a href="{{ url('admin/kelola-periode') }}" class="btn btn-danger">Batal</a>
+                            <button type="submit" class="btn btn-success">Simpan</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-    <!-- CONTENT AREA -->
 </div>
 @endsection

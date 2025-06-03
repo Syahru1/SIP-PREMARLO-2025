@@ -1,99 +1,7 @@
 @extends('layout.template')
 
 @section('content')
-<style>
-    :root {
-        --font-base: 16px;
-        --font-label: 20px;
-        --font-title: 28px;
-        --btn-padding: 10px 20px;
-    }
-
-    .page-title {
-        background-color: #3F00FF;
-        width: 100%;
-        padding: 32px 16px;
-        text-align: left;
-    }
-
-    .page-title h4 {
-        color: white;
-        font-weight: bold;
-        font-size: var(--font-title);
-        margin: 0;
-    }
-
-    .card {
-        border: 3px solid #007bff;
-        font-family: 'Poppins', sans-serif;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
-    }
-
-    .form-group label {
-        color: black;
-        font-weight: bold;
-        font-size: var(--font-base);
-    }
-
-    .form-control {
-        font-size: var(--font-base);
-        padding: 10px; /* setara dengan 0.6rem */
-    }
-
-    .btn-danger, .btn-success {
-        padding: var(--btn-padding);
-        font-weight: bold;
-        font-size: var(--font-base);
-        border-radius: 6px;
-    }
-
-    .btn-danger {
-        background-color: #dc3545;
-        border-color: #dc3545;
-        color: white;
-        text-decoration: none;
-    }
-
-    .btn-success {
-        background-color: #28a745;
-        border-color: #28a745;
-        color: white;
-        text-decoration: none;
-    }
-
-    .btn-danger:hover,
-    .btn-success:hover {
-        opacity: 0.9;
-    }
-
-    .gap-3 > * + * {
-        margin-left: 16px !important;
-    }
-
-     @media (max-width: 576px) {
-        .page-title h4 {
-            font-size: 21px;
-        }
-
-        .form-group label,
-        .form-control,
-        .btn-danger,
-        .btn-success {
-            font-size: 15px;
-        }
-
-        .btn-danger, .btn-success {
-            padding: 8px 16px;
-        }
-
-        .d-flex.justify-content-end {
-            flex-direction: column;
-            gap: 8px;
-            align-items: stretch;
-        }
-    }
-</style>
-
+<!-- BEGIN CONTENT AREA -->
 <div class="layout-px-spacing">
 
     <div class="page-header">
@@ -102,74 +10,71 @@
         </div>
     </div>
 
-    <!-- CONTENT AREA -->
-    <div class="container mt-3">
-        <div class="row justify-content-center">
-            <div class="col-12 mx-auto" style="max-width: 1140px;">
-                <div class="card">
-                    <div class="card-body">
-                        <form>
-                            <div class="form-group mb-3">
-                                <label for="namaLomba">Nama Lomba</label>
-                                <input type="text" id="namaLomba" name="namaLomba" class="form-control" value="Kompetisi Robot Pintar">
-                            </div>
+    <div class="card component-card_4">
+        <div class="card-body">
+            <div class="tab-content" id="lineTabContent-3">
+                <div class="tab-pane fade show active" id="edit-lomba" role="tabpanel" aria-labelledby="edit-tab">
+                    <form>
 
-                            <div class="form-group mb-3">
-                                <label for="kategori">Kategori</label>
-                                <select id="kategori" name="kategori" class="form-control">
-                                    <option selected>IT</option>
-                                    <option>Akademik</option>
-                                    <option>Soft Skill</option>
-                                    <option>Teknologi</option>
-                                </select>
-                            </div>
+                        <div class="form-group mb-4">
+                            <label class="text-black" for="namaLomba">Nama Lomba</label>
+                            <input type="text" class="form-control border border-secondary text-dark bg-white" id="namaLomba" name="namaLomba" value="Kompetisi Robot Pintar">
+                        </div>
 
-                            <div class="form-group mb-3">
-                                <label for="penyelenggara">Penyelenggara</label>
-                                <input type="text" id="penyelenggara" name="penyelenggara" class="form-control" value="Puspresnas">
-                            </div>
+                        <div class="form-group mb-4">
+                            <label class="text-black" for="kategori">Kategori</label>
+                            <select id="kategori" name="kategori" class="form-control border border-secondary text-dark bg-white">
+                                <option {{ 'IT' == 'IT' ? 'selected' : '' }}>IT</option>
+                                <option {{ 'IT' == 'Akademik' ? 'selected' : '' }}>Akademik</option>
+                                <option {{ 'IT' == 'Soft Skill' ? 'selected' : '' }}>Soft Skill</option>
+                                <option {{ 'IT' == 'Teknologi' ? 'selected' : '' }}>Teknologi</option>
+                            </select>
+                        </div>
 
-                            <div class="form-group mb-3">
-                                <label for="tingkatKompetisi">Tingkat Kompetisi</label>
-                                <select id="tingkatKompetisi" name="tingkatKompetisi" class="form-control">
-                                    <option selected>Nasional</option>
-                                    <option>Internasional</option>
-                                    <option>Provinsi</option>
-                                    <option>Kabupaten</option>
-                                </select>
-                            </div>
+                        <div class="form-group mb-4">
+                            <label class="text-black" for="penyelenggara">Penyelenggara</label>
+                            <input type="text" class="form-control border border-secondary text-dark bg-white" id="penyelenggara" name="penyelenggara" value="Puspresnas">
+                        </div>
 
-                            <div class="form-group mb-3">
-                                <label for="link">Link Pendaftaran</label>
-                                <input type="url" id="link" name="link" class="form-control" value="https://infolomba.id/info-fopesco-2025-626">
-                            </div>
+                        <div class="form-group mb-4">
+                            <label class="text-black" for="tingkatKompetisi">Tingkat Kompetisi</label>
+                            <select id="tingkatKompetisi" name="tingkatKompetisi" class="form-control border border-secondary text-dark bg-white">
+                                <option {{ 'Nasional' == 'Nasional' ? 'selected' : '' }}>Nasional</option>
+                                <option {{ 'Nasional' == 'Internasional' ? 'selected' : '' }}>Internasional</option>
+                                <option {{ 'Nasional' == 'Provinsi' ? 'selected' : '' }}>Provinsi</option>
+                                <option {{ 'Nasional' == 'Kabupaten' ? 'selected' : '' }}>Kabupaten</option>
+                            </select>
+                        </div>
 
-                            <div class="form-group mb-3">
-                                <label for="bidang">Bidang Keahlian</label>
-                                <input type="text" id="bidang" name="bidang" class="form-control" value="Artificial Intellegence">
-                            </div>
+                        <div class="form-group mb-4">
+                            <label class="text-black" for="link">Link Pendaftaran</label>
+                            <input type="url" class="form-control border border-secondary text-dark bg-white" id="link" name="link" value="https://infolomba.id/info-fopesco-2025-626">
+                        </div>
 
-                            <div class="form-group mb-3">
-                                <label for="dibuka" class="form-label">Tanggal Pendaftaran Dibuka</label>
-                                <input type="date" class="form-control" id="dibuka" value="2025-05-02">
-                            </div>
+                        <div class="form-group mb-4">
+                            <label class="text-black" for="bidang">Bidang Keahlian</label>
+                            <input type="text" class="form-control border border-secondary text-dark bg-white" id="bidang" name="bidang" value="Artificial Intellegence">
+                        </div>
 
-                            <div class="form-group mb-3">
-                                <label for="ditutup" class="form-label">Tanggal Pendaftaran Ditutup</label>
-                                <input type="date" class="form-control" id="ditutup" value="2025-06-01">
-                            </div>
+                        <div class="form-group mb-4">
+                            <label class="text-black" for="dibuka">Tanggal Pendaftaran Dibuka</label>
+                            <input type="date" class="form-control border border-secondary text-dark bg-white" id="dibuka" name="dibuka" value="2025-05-02">
+                        </div>
 
-                            <div class="d-flex justify-content-end gap-3 mt-3">
-                                <a href="{{ route('admin.kelolaDataLomba.index') }}" class="btn btn-danger">Batal</a>
-                                <button type="submit" class="btn btn-success">Simpan</button>
-                            </div>
-                        </form>
-                    </div>
+                        <div class="form-group mb-4">
+                            <label class="text-black" for="ditutup">Tanggal Pendaftaran Ditutup</label>
+                            <input type="date" class="form-control border border-secondary text-dark bg-white" id="ditutup" name="ditutup" value="2025-06-01">
+                        </div>
+
+                        <div class="d-flex justify-content-end gap-3 mt-4">
+                            <a href="{{ url('admin/kelola-data-lomba') }}" class="btn btn-danger">Batal</a>
+                            <button type="submit" class="btn btn-success">Simpan</button>
+                        </div>
+
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-    <!-- CONTENT AREA -->
-
 </div>
 @endsection
