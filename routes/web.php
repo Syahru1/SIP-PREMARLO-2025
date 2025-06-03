@@ -42,7 +42,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/kelola-pengguna-mahasiswa', [AdminController::class, 'kelolaMahasiswaIndex'])->name('kelolaMahasiswa.index');
     Route::get('/kelola-pengguna-mahasiswa/tambah', [AdminController::class, 'kelolaMahasiswaTambah'])->name('kelolaMahasiswa.tambah');
     Route::get('/kelola-pengguna-mahasiswa/edit', [AdminController::class, 'kelolaMahasiswaEdit'])->name('kelolaMahasiswa.edit');
-    
+
     // Kelola Periode
     Route::get('/kelola-periode', [AdminController::class, 'kelolaPeriodeIndex'])->name('kelolaPeriode.index');
     Route::get('/kelola-periode/tambah', [AdminController::class, 'kelolaPeriodeTambah'])->name('kelolaPeriode.tambah');
