@@ -11,9 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::dropIfExists('prestasi');
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
         Schema::create('prestasi', function (Blueprint $table) {
             $table->id('id_prestasi');
-            $table->string('nama_anggota');
+            $table->unsignedBigInteger('nama');
             $table->unsignedBigInteger('id_prodi')->index();
             $table->string('nama_kompetisi');
             $table->enum('posisi', ['Ketua', 'Anggota'])->default('Anggota');
@@ -33,6 +41,11 @@ return new class extends Migration
             $table->timestamps();
 
             // Foreign key constraints
+            $table->foreign('nama')
+                ->references('id_mahasiswa')
+                ->on('mahasiswa')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
             $table->foreign('id_prodi')
                 ->references('id_prodi')
                 ->on('prodi')
@@ -49,13 +62,5 @@ return new class extends Migration
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
         });
-    }
-
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::dropIfExists('prestasi');
     }
 };
