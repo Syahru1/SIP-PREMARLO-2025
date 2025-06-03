@@ -19,7 +19,7 @@ class MasterController extends Controller
 
     public function admin()
     {
-        return view('admin.beranda',[
+        return view('admin.beranda.index',[
             "title" => "Dashboard"
         ]);
         // if (auth()->user()->role == 'Admin') {
