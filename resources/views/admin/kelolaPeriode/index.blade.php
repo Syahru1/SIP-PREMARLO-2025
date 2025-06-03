@@ -2,7 +2,7 @@
 
 @section('content')
 @php
-    // Contoh data periode
+
     $dataPeriode = collect([
         (object)[
             'id' => 1,
@@ -35,14 +35,14 @@
                     </div>
                 </div>
 
-                <div class="widget-content widget-content-area">
+                <!-- Table untuk menampilkan Periode -->
+                <div class="widget-content widget-content-area" id="table_periode">
                     <div class="table-responsive mb-4">
                         <table class="table mb-0">
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>Tahun Ajaran</th>
-                                    <th>Angkatan</th>
+                                    <th>No</th>
+                                    <th>Tahun Periode</th>
                                     <th class="text-center">Aksi</th>
                                 </tr>
                             </thead>
@@ -50,7 +50,6 @@
                                 @foreach ($dataPeriode as $index => $periode)
                                 <tr>
                                     <td>{{ $index + 1 }}</td>
-                                    <td>{{ $periode->tahun_ajaran }}</td>
                                     <td>{{ $periode->angkatan }}</td>
                                     <td class="text-center">
                                         <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editPeriodeModal{{ $periode->id }}">Edit</button>
@@ -78,3 +77,34 @@
 @include('admin.kelolaPeriode.tambahPeriode')
 
 @endsection
+
+@push('js')
+<script>
+    $(document).ready(function() {
+        $('#tambahPeriodeModal').on('shown.bs.modal', function () {
+            $('#tahun_ajaran').focus();
+        });
+    });
+
+    var tablePeriode;
+
+    $(document).ready(function(){
+        tablePeriode = $('#table_periode').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: "{{ url('admin/kelola-periode/data') }}",
+                type: 'json',
+                data: function (d) {
+                    d._token = "{{ csrf_token() }}";
+                }
+            },
+            columns: [
+                { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
+                { data: 'tahun_ajaran', name: 'tahun_ajaran' },
+                { data: 'action', name: 'action', orderable: false, searchable: false }
+            ],
+        })
+    })
+</script>
+@endpush
