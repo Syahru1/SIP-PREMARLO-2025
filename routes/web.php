@@ -32,7 +32,7 @@ Route::post('/logout', function () {
 Route::group(['prefix' => 'admin'],function () {
     // Beranda
     Route::get('/beranda', [MasterController::class, 'admin'])->name('beranda');
-    
+
     // Kelola Data Lomba
     Route::get('/kelola-data-lomba', [AdminController::class, 'kelolaDataLombaIndex'])->name('kelolaDataLomba.index');
     Route::get('/kelola-data-lomba/tambah', [AdminController::class, 'kelolaDataLombaTambah'])->name('kelolaDataLomba.tambah');
@@ -65,6 +65,7 @@ Route::group(['prefix' => 'admin'],function () {
 
     // Laporan Analisis Prestasi
     Route::get('/laporan-analisis-prestasi', [AdminController::class, 'laporanAnalisisPrestasiIndex'])->name('laporanAnalisisPrestasi.index');
+    Route::get('/laporan-analisis-prestasi/detail', [AdminController::class, 'laporanAnalisisPrestasiDetail'])->name('laporan.detail');
 
     // Profile
     Route::get('/profile', [AdminController::class, 'profileIndex'])->name('profile.index');
