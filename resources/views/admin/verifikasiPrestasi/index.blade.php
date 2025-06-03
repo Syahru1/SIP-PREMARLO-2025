@@ -1,11 +1,55 @@
 @extends('layout.template')
 
 @section('content')
-<!-- BEGIN CONTENT AREA -->
+@php
+    $dataPrestasi = collect([
+        (object)[
+            'id' => 1,
+            'nim' => '2341******',
+            'nama' => 'Syahrul',
+            'angkatan' => '2023',
+            'prodi' => 'D-IV TEKNIK INFORMATIKA',
+            'status' => 'Pending'
+        ],
+        (object)[
+            'id' => 2,
+            'nim' => '2341******',
+            'nama' => 'Dewita',
+            'angkatan' => '2024',
+            'prodi' => 'D-IV SISTEM INFORMASI BISNIS',
+            'status' => 'Pending'
+        ],
+        (object)[
+            'id' => 3,
+            'nim' => '2341******',
+            'nama' => 'Ghaffar',
+            'angkatan' => '2023',
+            'prodi' => 'D-IV TEKNIK INFORMATIKA',
+            'status' => 'Pending'
+        ],
+        (object)[
+            'id' => 4,
+            'nim' => '2341******',
+            'nama' => 'Afifah',
+            'angkatan' => '2024',
+            'prodi' => 'D-IV TEKNIK INFORMATIKA',
+            'status' => 'Pending'
+        ],
+        (object)[
+            'id' => 5,
+            'nim' => '2341******',
+            'nama' => 'Agil',
+            'angkatan' => '2023',
+            'prodi' => 'D-IV TEKNIK INFORMATIKA',
+            'status' => 'Pending'
+        ],
+    ]);
+@endphp
+
 <div class="layout-px-spacing">
     <div class="page-header">
         <div class="page-title">
-            <h3>Prestasi Mahasiswa</h3>
+            <h3>Data Prestasi Mahasiswa</h3>
         </div>
     </div>
 
@@ -14,11 +58,7 @@
             <div class="statbox widget box box-shadow">
                 <div class="widget-header">
                     <div class="row">
-                        <div class="col-sm-12 col-md-6">
-                            <div class="dataTables_length" id="column-filter_length">
-                                <!-- Optional control -->
-                            </div>
-                        </div>
+                        <div class="col-sm-12 col-md-6"></div>
                     </div>
                 </div>
 
@@ -27,65 +67,31 @@
                         <table class="table mb-0">
                             <thead>
                                 <tr>
-                                    <th class="text-secondary"> # </th>
+                                    <th>#</th>
                                     <th>NIM</th>
                                     <th>Nama Mahasiswa</th>
                                     <th>Angkatan</th>
                                     <th>Program Studi</th>
-                                    <th class="text-center">Action</th>
+                                    <th>Status</th>
+                                    <th class="text-center">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach ($dataPrestasi as $index => $mhs)
                                 <tr>
-                                    <td>1</td>
-                                    <td>2341******</td>
-                                    <td>Syahrul</td>
-                                    <td>2023</td>
-                                    <td>D-IV TEKNIK INFORMATIKA</td>
+                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ $mhs->nim }}</td>
+                                    <td>{{ $mhs->nama }}</td>
+                                    <td>{{ $mhs->angkatan }}</td>
+                                    <td>{{ $mhs->prodi }}</td>
+                                    <td>
+                                        <span class="badge badge-primary">{{ $mhs->status }}</span>
+                                    </td>
                                     <td class="text-center">
-                                        <a href="{{ url('/admin/verifikasi-prestasi/detail') }}" class="btn btn-outline-primary btn-sm">Lihat Detail Lomba</a>
+                                        <a href="{{ url('/admin/verifikasi-prestasi/detail') }}" class="btn btn-outline-primary btn-sm" data-id="{{ $mhs->id }}">Lihat Detail Prestasi</a>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>2341******</td>
-                                    <td>Dewita</td>
-                                    <td>2024</td>
-                                    <td>D-IV SISTEM INFORMASI BISNIS</td>
-                                    <td class="text-center">
-                                        <a href="{{ url('/admin/verifikasi-prestasi/detail') }}" class="btn btn-outline-primary btn-sm">Lihat Detail Lomba</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>2341******</td>
-                                    <td>Ghaffar</td>
-                                    <td>2023</td>
-                                    <td>D-IV TEKNIK INFORMATIKA</td>
-                                    <td class="text-center">
-                                        <a href="{{ url('/admin/verifikasi-prestasi/detail') }}" class="btn btn-outline-primary btn-sm">Lihat Detail Lomba</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>2341******</td>
-                                    <td>Afifah</td>
-                                    <td>2024</td>
-                                    <td>D-IV TEKNIK INFORMATIKA</td>
-                                    <td class="text-center">
-                                        <a href="{{ url('/admin/verifikasi-prestasi/detail') }}" class="btn btn-outline-primary btn-sm">Lihat Detail Lomba</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td>2341******</td>
-                                    <td>Agil</td>
-                                    <td>2023</td>
-                                    <td>D-IV TEKNIK INFORMATIKA</td>
-                                    <td class="text-center">
-                                        <a href="{{ url('/admin/verifikasi-prestasi/detail') }}" class="btn btn-outline-primary btn-sm">Lihat Detail Prestasi</a>
-                                    </td>
-                                </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

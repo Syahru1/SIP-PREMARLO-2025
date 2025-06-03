@@ -1,7 +1,25 @@
 @extends('layout.template')
 
 @section('content')
-<!-- BEGIN CONTENT AREA -->
+@php
+    $dataDosen = collect([
+        (object)[
+            'id' => 1,
+            'nidn' => '1907******',
+            'nama' => 'Muhammad Syahrul Gunawan',
+            'jabatan' => 'Dosen',
+            'password' => '123456'
+        ],
+        (object)[
+            'id' => 2,
+            'nidn' => '1907******',
+            'nama' => 'Siti Rahma',
+            'jabatan' => 'Dosen',
+            'password' => '123456'
+        ]
+    ]);
+@endphp
+
 <div class="layout-px-spacing">
     <div class="page-header">
         <div class="page-title">
@@ -15,7 +33,7 @@
                 <div class="widget-header">
                     <div class="row">
                         <div class="col-sm-12 col-md-6">
-                            <a href="{{ url('admin/kelola-pengguna-admin/tambah') }}" class="btn btn-success btn-sm">Tambah Dosen</a>
+                            <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#tambahDosenModal">Tambah Dosen</button>
                         </div>
                     </div>
                 </div>
@@ -25,7 +43,7 @@
                         <table class="table mb-0">
                             <thead>
                                 <tr>
-                                    <th class="text-secondary">#</th>
+                                    <th>#</th>
                                     <th>NIDN</th>
                                     <th>Nama Dosen</th>
                                     <th>Jabatan</th>
@@ -33,26 +51,26 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach ($dataDosen as $index => $dosen)
                                 <tr>
-                                    <td>1</td>
-                                    <td>1907******</td>
-                                    <td>Muhammad Syahrul Gunawan</td>
-                                    <td>Dosen</td>
+                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ $dosen->nidn }}</td>
+                                    <td>{{ $dosen->nama }}</td>
+                                    <td>{{ $dosen->jabatan }}</td>
                                     <td class="text-center">
-                                        <a href="{{ url('admin/kelola-pengguna-dosen/edit') }}" class="btn btn-warning btn-sm">Edit</a>
-                                        <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus?')">Hapus</button>
+                                        <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editDosenModal{{ $dosen->id }}">Edit</button>
+
+                                        <form action="{{ url('admin/kelola-pengguna-dosen/delete/'.$dosen->id) }}" method="POST" class="d-inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus?')">Hapus</button>
+                                        </form>
+
+                                        {{-- Include modal edit per dosen --}}
+                                        @include('admin.kelolaPenggunaDosen.editDosen', ['dosen' => $dosen])
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>1907******</td>
-                                    <td>Siti Rahma</td>
-                                    <td>Dosen</td>
-                                    <td class="text-center">
-                                        <a href="{{ url('admin/kelola-pengguna-dosen/edit') }}" class="btn btn-warning btn-sm">Edit</a>
-                                        <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus?')">Hapus</button>
-                                    </td>
-                                </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -61,4 +79,8 @@
         </div>
     </div>
 </div>
+
+{{-- Modal tambah dosen --}}
+@include('admin.kelolaPenggunaDosen.tambahDosen')
+
 @endsection

@@ -1,7 +1,33 @@
 @extends('layout.template')
 
 @section('content')
-<!-- BEGIN CONTENT AREA -->
+@php
+    $dataLomba = collect([
+        (object)[
+            'id' => 1,
+            'nama_lomba' => 'UI / UX Competition 2025',
+            'kategori' => 'IT',
+            'penyelenggara' => 'Universitas Indonesia',
+            'tingkat_kompetisi' => 'Internasional',
+            'link_pendaftaran' => 'https://infolomba.id/info-fopesco-2025-626',
+            'bidang_keahlian' => 'UI / UX',
+            'tanggal_pendaftaran_dibuka' => '2025-06-05',
+            'tanggal_pendaftaran_ditutup' => '2025-07-05',
+        ],
+        (object)[
+            'id' => 2,
+            'nama_lomba' => 'Programing Competition 2025',
+            'kategori' => 'IT',
+            'penyelenggara' => 'Universitas Brawijaya',
+            'tingkat_kompetisi' => 'Nasional',
+            'link_pendaftaran' => 'https://infolomba.id/info-fopesco-2025-626',
+            'bidang_keahlian' => 'Programing',
+            'tanggal_pendaftaran_dibuka' => '2025-05-15',
+            'tanggal_pendaftaran_ditutup' => '2025-06-01',
+        ],
+    ]);
+@endphp
+
 <div class="layout-px-spacing">
     <div class="page-header">
         <div class="page-title">
@@ -15,9 +41,7 @@
                 <div class="widget-header">
                     <div class="row">
                         <div class="col-sm-12 col-md-6">
-                            <div class="dataTables_length" id="column-filter_length">
-                                <a href="{{ url('admin/kelola-data-lomba/tambah') }}" class="btn btn-success btn-sm">Tambah Lomba</a>
-                            </div>
+                            <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#tambahLombaModal">Tambah Lomba</button>
                         </div>
                     </div>
                 </div>
@@ -27,7 +51,7 @@
                         <table class="table mb-0">
                             <thead>
                                 <tr>
-                                    <th class="text-secondary">#</th>
+                                    <th>#</th>
                                     <th>Nama Lomba</th>
                                     <th>Kategori</th>
                                     <th>Penyelenggara</th>
@@ -40,36 +64,30 @@
                                 </tr>
                             </thead>
                             <tbody>
+                            @foreach ($dataLomba as $index => $lomba)
                                 <tr>
-                                    <td>1</td>
-                                    <td>UI / UX Competition 2025</td>
-                                    <td>IT</td>
-                                    <td>Universitas Indonesia</td>
-                                    <td>Internasional</td>
-                                    <td><a href="https://infolomba.id/info-fopesco-2025-626" target="_blank" rel="noopener noreferrer">https://infolomba.id/info-fopesco-2025-626</a></td>
-                                    <td>UI / UX</td>
-                                    <td>2025-06-05</td>
-                                    <td>2025-07-05</td>
+                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ $lomba->nama_lomba }}</td>
+                                    <td>{{ $lomba->kategori }}</td>
+                                    <td>{{ $lomba->penyelenggara }}</td>
+                                    <td>{{ $lomba->tingkat_kompetisi }}</td>
+                                    <td><a href="{{ $lomba->link_pendaftaran }}" target="_blank" rel="noopener noreferrer">{{ $lomba->link_pendaftaran }}</a></td>
+                                    <td>{{ $lomba->bidang_keahlian }}</td>
+                                    <td>{{ $lomba->tanggal_pendaftaran_dibuka }}</td>
+                                    <td>{{ $lomba->tanggal_pendaftaran_ditutup }}</td>
                                     <td class="text-center">
-                                        <a href="{{ url('admin/kelola-data-lomba/edit') }}" class="btn btn-warning btn-sm">Edit</a>
-                                        <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus?')">Hapus</button>
+                                        <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editLombaModal{{ $lomba->id }}">Edit</button>
+
+                                        <form action="{{ url('admin/kelola-data-lomba/delete/'.$lomba->id) }}" method="POST" class="d-inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus?')">Hapus</button>
+                                        </form>
+
+                                        @include('admin.kelolaDataLomba.editLomba', ['lomba' => $lomba])
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Programing Competition 2025</td>
-                                    <td>IT</td>
-                                    <td>Universitas Brawijaya</td>
-                                    <td>Nasional</td>
-                                    <td><a href="https://infolomba.id/info-fopesco-2025-626" target="_blank" rel="noopener noreferrer">https://infolomba.id/info-fopesco-2025-626</a></td>
-                                    <td>Programing</td>
-                                    <td>2025-05-15</td>
-                                    <td>2025-06-01</td>
-                                    <td class="text-center">
-                                        <a href="{{ url('admin/kelola-data-lomba/edit') }}" class="btn btn-warning btn-sm">Edit</a>
-                                        <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus?')">Hapus</button>
-                                    </td>
-                                </tr>
+                            @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -78,4 +96,7 @@
         </div>
     </div>
 </div>
+
+@include('admin.kelolaDataLomba.tambahLomba')
+
 @endsection

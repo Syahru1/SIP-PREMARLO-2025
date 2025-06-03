@@ -1,46 +1,42 @@
-@extends('layout.template')
+<div class="modal fade" id="editPeriodeModal{{ $periode->id }}" tabindex="-1" role="dialog" aria-labelledby="editPeriodeLabel{{ $periode->id }}" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <form action="{{ url('admin/kelola-periode/' . $periode->id) }}" method="POST">
+            @csrf
+            @method('PUT')
+            <div class="modal-content">
 
-@section('content')
-<!-- BEGIN CONTENT AREA -->
-<div class="layout-px-spacing">
-
-    <div class="page-header">
-        <div class="page-title">
-            <h4 class="mb-0">Edit Data Periode</h4>
-        </div>
-    </div>
-
-    <div class="card component-card_4">
-        <div class="card-body">
-            <div class="tab-content" id="lineTabContent-3">
-                <div class="tab-pane fade show active" id="edit-periode" role="tabpanel" aria-labelledby="edit-tab">
-                    <form>
-                        <div class="form-group mb-4">
-                            <label class="text-black" for="tahunAjaran">Tahun Ajaran</label>
-                            <select id="tahunAjaran" name="tahunAjaran" class="form-control border border-secondary text-dark bg-white">
-                                <option selected>2021/2022</option>
-                                <option>2022/2023</option>
-                                <option>2023/2024</option>
-                                <option>2024/2025</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group mb-4">
-                            <label class="text-black" for="semester">Semester</label>
-                            <select id="semester" name="semester" class="form-control border border-secondary text-dark bg-white">
-                                <option selected>Ganjil</option>
-                                <option>Genap</option>
-                            </select>
-                        </div>
-
-                        <div class="d-flex justify-content-end gap-3 mt-4">
-                            <a href="{{ url('admin/kelola-periode') }}" class="btn btn-danger">Batal</a>
-                            <button type="submit" class="btn btn-success">Simpan</button>
-                        </div>
-                    </form>
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Data Periode</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Tutup">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
+
+                <div class="modal-body">
+                    <div class="form-group mb-3">
+                        <label style="text-align:left; display:block;">Tahun Ajaran</label>
+                        <select name="tahun_ajaran" class="form-control" required>
+                            @foreach (['2021/2022', '2022/2023', '2023/2024', '2024/2025'] as $tahun)
+                                <option value="{{ $tahun }}" {{ $periode->tahun_ajaran == $tahun ? 'selected' : '' }}>{{ $tahun }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label style="text-align:left; display:block;">Semester</label>
+                        <select name="angkatan" class="form-control" required>
+                            <option value="Ganjil" {{ $periode->angkatan == 'Ganjil' ? 'selected' : '' }}>Ganjil</option>
+                            <option value="Genap" {{ $periode->angkatan == 'Genap' ? 'selected' : '' }}>Genap</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-success">Simpan</button>
+                </div>
+
             </div>
-        </div>
+        </form>
     </div>
 </div>
-@endsection

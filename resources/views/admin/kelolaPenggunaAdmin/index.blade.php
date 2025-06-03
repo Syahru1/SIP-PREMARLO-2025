@@ -1,7 +1,25 @@
 @extends('layout.template')
 
 @section('content')
-<!-- BEGIN CONTENT AREA -->
+@php
+    $dataAdmin = collect([
+        (object)[
+            'id' => 1,
+            'nidn' => '1907******',
+            'nama' => 'Muhammad Syahrul Gunawan',
+            'jabatan' => 'Admin',
+            'password' => '123456'
+        ],
+        (object)[
+            'id' => 2,
+            'nidn' => '1907******',
+            'nama' => 'Siti Rahma',
+            'jabatan' => 'Admin',
+            'password' => '123456'
+        ]
+    ]);
+@endphp
+
 <div class="layout-px-spacing">
     <div class="page-header">
         <div class="page-title">
@@ -15,7 +33,7 @@
                 <div class="widget-header">
                     <div class="row">
                         <div class="col-sm-12 col-md-6">
-                            <a href="{{ url('admin/kelola-pengguna-admin/tambah') }}" class="btn btn-success btn-sm">Tambah Mahasiswa</a>
+                            <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#tambahAdminModal">Tambah Admin</button>
                         </div>
                     </div>
                 </div>
@@ -25,7 +43,7 @@
                         <table class="table mb-0">
                             <thead>
                                 <tr>
-                                    <th class="text-secondary">#</th>
+                                    <th>#</th>
                                     <th>NIDN</th>
                                     <th>Nama Admin</th>
                                     <th>Jabatan</th>
@@ -33,26 +51,25 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach ($dataAdmin as $index => $admin)
                                 <tr>
-                                    <td>1</td>
-                                    <td>1907******</td>
-                                    <td>Muhammad Syahrul Gunawan</td>
-                                    <td>Admin</td>
+                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ $admin->nidn }}</td>
+                                    <td>{{ $admin->nama }}</td>
+                                    <td>{{ $admin->jabatan }}</td>
                                     <td class="text-center">
-                                        <a href="{{ url('admin/kelola-pengguna-admin/edit') }}" class="btn btn-warning btn-sm">Edit</a>
-                                        <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus?')">Hapus</button>
+                                        <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editAdminModal{{ $admin->id }}">Edit</button>
+
+                                        <form action="{{ url('admin/kelola-pengguna-admin/delete/'.$admin->id) }}" method="POST" class="d-inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus?')">Hapus</button>
+                                        </form>
+
+                                        @include('admin.kelolaPenggunaAdmin.editAdmin', ['admin' => $admin])
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>1907******</td>
-                                    <td>Siti Rahma</td>
-                                    <td>Admin</td>
-                                    <td class="text-center">
-                                        <a href="{{ url('admin/kelola-pengguna-admin/edit') }}" class="btn btn-warning btn-sm">Edit</a>
-                                        <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus?')">Hapus</button>
-                                    </td>
-                                </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -61,4 +78,7 @@
         </div>
     </div>
 </div>
+
+@include('admin.kelolaPenggunaAdmin.tambahAdmin')
+
 @endsection

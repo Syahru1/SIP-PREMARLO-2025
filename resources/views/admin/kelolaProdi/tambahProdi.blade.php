@@ -1,39 +1,33 @@
-@extends('layout.template')
-
-@section('content')
-<!-- BEGIN CONTENT AREA -->
-<div class="layout-px-spacing">
-
-    <div class="page-header">
-        <div class="page-title">
-            <h4 class="mb-0">Tambah Data Program Studi</h4>
-        </div>
-    </div>
-
-    <div class="card component-card_4">
-        <div class="card-body">
-            <div class="tab-content" id="lineTabContent-3">
-                <div class="tab-pane fade show active" id="tambah-prodi" role="tabpanel" aria-labelledby="tambah-tab">
-                    <form action="{{ url('admin/kelola-prodi') }}" method="POST">
-                        @csrf
-                        <div class="form-group mb-4">
-                            <label class="text-black" for="kodeProdi">Kode Program Studi</label>
-                            <input type="text" class="form-control border border-secondary text-dark bg-white" id="kodeProdi" name="kodeProdi" placeholder="Masukkan Kode Program Studi">
-                        </div>
-
-                        <div class="form-group mb-4">
-                            <label class="text-black" for="prodi">Nama Program Studi</label>
-                            <input type="text" class="form-control border border-secondary text-dark bg-white" id="prodi" name="prodi" placeholder="Masukkan Nama Program Studi">
-                        </div>
-
-                        <div class="d-flex justify-content-end gap-3 mt-4">
-                            <a href="{{ url('admin/kelola-prodi') }}" class="btn btn-danger">Batal</a>
-                            <button type="submit" class="btn btn-success">Simpan</button>
-                        </div>
-                    </form>
+<!-- Modal Tambah Prodi -->
+<div class="modal fade" id="tambahProdiModal" tabindex="-1" role="dialog" aria-labelledby="tambahProdiModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="{{ url('admin/kelola-prodi') }}" method="POST">
+                @csrf
+                <div class="modal-header">
+                    <h5 class="modal-title" id="tambahProdiModalLabel">Tambah Program Studi</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Tutup">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-            </div>
+
+                <div class="modal-body">
+                    <div class="form-group mb-4">
+                        <label for="kode_prodi" class="text-black">Kode Program Studi</label>
+                        <input type="text" class="form-control" id="kode_prodi" name="kode_prodi" placeholder="Masukkan Kode Program Studi" required>
+                    </div>
+
+                    <div class="form-group mb-4">
+                        <label for="nama_prodi" class="text-black">Nama Program Studi</label>
+                        <input type="text" class="form-control" id="nama_prodi" name="nama_prodi" placeholder="Masukkan Nama Program Studi" required>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-success">Simpan</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
-@endsection

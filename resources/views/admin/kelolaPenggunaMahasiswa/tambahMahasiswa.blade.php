@@ -1,65 +1,58 @@
-@extends('layout.template')
-
-@section('content')
-<!-- BEGIN CONTENT AREA -->
-<div class="layout-px-spacing">
-
-    <div class="page-header">
-        <div class="page-title">
-            <h4 class="mb-0">Tambah Data Mahasiswa</h4>
+<!-- Modal Tambah Mahasiswa -->
+<div class="modal fade" id="tambahMahasiswaModal" tabindex="-1" aria-labelledby="tambahMahasiswaLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <form method="POST" action="{{ url('admin/kelola-pengguna-mahasiswa') }}">
+      @csrf
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="tambahMahasiswaLabel">Tambah Data Mahasiswa</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Tutup">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
-    </div>
+        <div class="modal-body">
 
-    <div class="card component-card_4">
-        <div class="card-body">
-            <div class="tab-content" id="lineTabContent-3">
-                <div class="tab-pane fade show active" id="tambah-mahasiswa" role="tabpanel" aria-labelledby="tambah-tab">
-                    <form>
+          <div class="mb-3">
+            <label for="nama" class="form-label">Nama Mahasiswa</label>
+            <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukkan Nama Mahasiswa" required>
+          </div>
 
-                        <div class="form-group mb-4">
-                            <label class="text-black" for="nama">Nama Mahasiswa</label>
-                            <input type="text" class="form-control border border-secondary text-dark bg-white" id="nama" name="nama" placeholder="Masukkan Nama Mahasiswa">
-                        </div>
+          <div class="mb-3">
+            <label for="nim" class="form-label">NIM</label>
+            <input type="text" class="form-control" id="nim" name="nim" placeholder="Masukkan NIM" required>
+          </div>
 
-                        <div class="form-group mb-4">
-                            <label class="text-black" for="nim">NIM</label>
-                            <input type="text" class="form-control border border-secondary text-dark bg-white" id="nim" name="nim" placeholder="Masukkan NIM">
-                        </div>
+          <div class="mb-3">
+            <label for="angkatan" class="form-label">Angkatan</label>
+            <select id="angkatan" name="angkatan" class="form-control" required>
+              <option value="2021" selected>2021</option>
+              <option value="2022">2022</option>
+              <option value="2023">2023</option>
+              <option value="2024">2024</option>
+              <option value="2025">2025</option>
+            </select>
+          </div>
 
-                        <div class="form-group mb-4">
-                            <label class="text-black" for="angkatan">Angkatan</label>
-                            <select id="angkatan" name="angkatan" class="form-control border border-secondary text-dark bg-white">
-                                <option selected>2021</option>
-                                <option>2022</option>
-                                <option>2023</option>
-                                <option>2024</option>
-                                <option>2025</option>
-                            </select>
-                        </div>
+          <div class="mb-3">
+            <label for="prodi" class="form-label">Program Studi</label>
+            <select id="prodi" name="prodi" class="form-control" required>
+              <option value="D-2 Pengembangan Piranti Lunak Situs" selected>D-2 Pengembangan Piranti Lunak Situs</option>
+              <option value="D-4 Teknik Informatika">D-4 Teknik Informatika</option>
+              <option value="D-4 Sistem Informasi Bisnis">D-4 Sistem Informasi Bisnis</option>
+            </select>
+          </div>
 
-                        <div class="form-group mb-4">
-                            <label class="text-black" for="prodi">Program Studi</label>
-                            <select id="prodi" name="prodi" class="form-control border border-secondary text-dark bg-white">
-                                <option selected>D-2 Pengembangan Piranti Lunak Situs</option>
-                                <option>D-4 Teknik Informatika</option>
-                                <option>D-4 Sistem Informasi Bisnis</option>
-                            </select>
-                        </div>
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Masukkan Password" required>
+          </div>
 
-                        <div class="form-group mb-4">
-                            <label class="text-black" for="password">Password</label>
-                            <input type="password" class="form-control border border-secondary text-dark bg-white" id="password" name="password" placeholder="Masukkan Password">
-                        </div>
-
-                        <div class="d-flex justify-content-end gap-3 mt-4">
-                            <a href="{{ url('admin/kelola-pengguna-mahasiswa') }}" class="btn btn-danger">Batal</a>
-                            <button type="submit" class="btn btn-success">Simpan</button>
-                        </div>
-
-                    </form>
-                </div>
-            </div>
         </div>
-    </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+          <button type="submit" class="btn btn-success">Simpan</button>
+        </div>
+      </div>
+    </form>
+  </div>
 </div>
-@endsection
