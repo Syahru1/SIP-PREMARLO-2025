@@ -108,6 +108,11 @@ class AdminController extends Controller
         return view('admin.laporanAnalisisPrestasi.index');
     }
 
+    public function laporanAnalisisPrestasiDetail()
+    {
+        return view('admin.laporanAnalisisPrestasi.detailPrestasi');
+    }
+
     // Profile
     public function profileIndex()
     {
