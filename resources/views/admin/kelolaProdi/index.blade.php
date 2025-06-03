@@ -1,146 +1,88 @@
 @extends('layout.template')
 
 @section('content')
-<style>
-    .card,
-    .card-header,
-    .card-body,
-    table {
-    }
-
-    .card-header {
-        background-color: #afc0ef;
-        color: white;
-        text-align: center;
-        padding: 40px 15px 60px 15px;
-    }
-
-    .card-header h2 {
-        font-weight: bold;
-        font-size: 34px;
-        color: black;
-        margin: 0;
-        white-space: nowrap;
-    }
-
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        table-layout: auto;
-        white-space: nowrap;
-    }
-
-    table th,
-    table td {
-        border: 1px solid #dee2e6;
-        padding: 24px !important;
-        vertical-align: middle;
-        white-space: nowrap;
-    }
-
-    thead th {
-        background-color: #f8f9fa;
-        font-size: 18px !important;
-        font-weight: bold;
-        text-align: center;
-        color: black !important;
-    }
-
-    tbody td {
-        font-size: 14px !important;
-        font-weight: bold;
-        text-align: center;
-        color: #28a745f !important;
-    }
-
-    .btn-sm {
-        font-size: 14px !important;
-        font-weight: bold;
-        text-align: center;
-        padding: 0.25rem 0.5rem;
-    }
-
-    .btn-success {
-        background-color: #28a745;
-        border-color: #28a745;
-        color: white;
-        text-decoration: none;
-    }
-
-    .btn-warning {
-        background-color: #ffc107;
-        border-color: #ffc107;
-        color: black;
-        text-decoration: none;
-    }
-
-    .btn-danger {
-        background-color: #dc3545;
-        border-color: #dc3545;
-        color: white;
-        border: none;
-        cursor: pointer;
-    }
-
-    .btn-success:hover,
-    .btn-warning:hover,
-    .btn-danger:hover {
-        opacity: 0.8;
-    }
-</style>
+@php
+    // Example data for programs
+    $dataProdi = collect([
+        (object)[
+            'id' => 1,
+            'kode_prodi' => 'KPTI01',
+            'nama_prodi' => 'D-4 Teknik Informatika',
+        ],
+        (object)[
+            'id' => 2,
+            'kode_prodi' => 'KPTI02',
+            'nama_prodi' => 'D-4 Sistem Informasi Bisnis',
+        ],
+        (object)[
+            'id' => 3,
+            'kode_prodi' => 'KPTI03',
+            'nama_prodi' => 'D-2 Pengembangan Piranti Lunak Situs',
+        ]
+    ]);
+@endphp
 
 <div class="layout-px-spacing">
     <div class="page-header">
+        <div class="page-title">
+            <h3>Data Program Studi</h3>
+        </div>
     </div>
 
-    <!-- CONTENT AREA -->
-    <div class="container" style="max-width: 100%;">
-        <div class="card mt-3">
-            <div class="card-header">
-                <h2 class="fw-bold">Data Program Studi</h2>
-            </div>
-            <div class="card-body p-0">
-                <table class="table mb-0">
-                    <thead>
-                        <tr>
-                            <th>Kode Prodi</th>
-                            <th>Nama Program Studi</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>KPTI01</td>
-                            <td>D-4 Teknik Informatika</td>
-                            <td>
-                                <a href="{{ route('admin.kelolaProdi.tambah') }}" class="btn btn-success btn-sm">Tambah</a>
-                                <a href="{{ route('admin.kelolaProdi.edit') }}" class="btn btn-warning btn-sm">Edit</a>
-                                <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus?')">Hapus</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>KPTI02</td>
-                            <td>D-4 Sistem Informasi Bisnis</td>
-                            <td>
-                                <a href="{{ route('admin.kelolaProdi.tambah') }}" class="btn btn-success btn-sm">Tambah</a>
-                                <a href="{{ route('admin.kelolaProdi.edit') }}" class="btn btn-warning btn-sm">Edit</a>
-                                <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus?')">Hapus</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>KPTI03</td>
-                            <td>D-2 Pengembangan Piranti Lunak Situs</td>
-                            <td>
-                                <a href="{{ route('admin.kelolaProdi.tambah') }}" class="btn btn-success btn-sm">Tambah</a>
-                                <a href="{{ route('admin.kelolaProdi.edit') }}" class="btn btn-warning btn-sm">Edit</a>
-                                <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus?')">Hapus</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+    <div class="row layout-spacing">
+        <div class="col-lg-12">
+            <div class="statbox widget box box-shadow">
+                <div class="widget-header">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                            <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#tambahProdiModal">Tambah Prodi</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="widget-content widget-content-area">
+                    <div class="table-responsive mb-4">
+                        <table class="table mb-0">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Kode Prodi</th>
+                                    <th>Nama Program Studi</th>
+                                    <th class="text-center">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($dataProdi as $index => $prodi)
+                                <tr>
+                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ $prodi->kode_prodi }}</td>
+                                    <td>{{ $prodi->nama_prodi }}</td>
+                                    <td class="text-center">
+                                        <!-- Button to open modal for editing program -->
+                                        <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editProdiModal{{ $prodi->id }}">Edit</button>
+
+                                        <!-- Form for deleting program -->
+                                        <form action="{{ url('admin/kelola-prodi/delete/'.$prodi->id) }}" method="POST" class="d-inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus?')">Hapus</button>
+                                        </form>
+
+                                        {{-- Include modal edit for each program --}}
+                                        @include('admin.kelolaProdi.editProdi', ['prodi' => $prodi])
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <!-- CONTENT AREA -->
 </div>
+
+{{-- Modal for adding new program --}}
+@include('admin.kelolaProdi.tambahProdi')
+
 @endsection

@@ -41,16 +41,7 @@
             </li>
 
             <li class="menu">
-                <a href="{{ url('admin/profile') }}" aria-expanded="{{ Request::is('admin/profile*') ? 'true' : 'false' }}" class="dropdown-toggle">
-                    <div>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="feather feather-user" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M5.5 21v-2a4.5 4.5 0 0 1 9 0v2"/><path d="M20 21v-2a4 4 0 0 0-3-3.87"/></svg>
-                        <span>Profil</span>
-                    </div>
-                </a>
-            </li>
-
-            <li class="menu">
-                <a href="#kelolaAkun" data-toggle="collapse" aria-expanded="{{ Request::is('kelolaAkun*') ? 'true' : 'false' }}" class="dropdown-toggle">
+                <a href="#kelolaAkun" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle">
                     <div>
                         <svg xmlns="http://www.w3.org/2000/svg" class="feather feather-users" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-3-3.87"/><path d="M7 21v-2a4 4 0 0 1 3-3.87"/><circle cx="12" cy="7" r="4"/></svg>
                         <span>Kelola Akun</span>

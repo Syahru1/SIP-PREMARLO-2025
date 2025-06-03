@@ -1,140 +1,46 @@
-@extends('layout.template')
+<div class="modal fade" id="editDosenModal{{ $dosen->id }}" tabindex="-1" role="dialog" aria-labelledby="editDosenLabel{{ $dosen->id }}" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <form action="{{ url('admin/kelola-pengguna-dosen/' . $dosen->id) }}" method="POST">
+            @csrf
+            @method('PUT')
+            <div class="modal-content">
 
-@section('content')
-<style>
-    .page-title {
-        background-color: #3F00FF;
-        width: 100%;
-        padding: 50px;
-    }
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Data Dosen</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Tutup">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
 
-    .page-title h4 {
-        color: white;
-        font-weight: bold;
-        font-size: 36px;
-        margin: 0;
-    }
+                <div class="modal-body">
 
-    .card {
-        border: 3px solid #007bff;
-    }
-
-    .form-group label {
-        color: black;
-        font-weight: bold;
-        font-size: 20px;
-    }
-
-    .form-control {
-        font-size: 20px;
-        padding: 10px;
-    }
-
-    .btn-danger, .btn-success {
-        padding: 10px 20px;
-        font-weight: bold;
-        font-size: 20px;
-    }
-
-    .btn-danger {
-        background-color: #dc3545;
-        border-color: #dc3545;
-        color: white;
-        text-decoration: none;
-    }
-
-    .btn-success {
-        background-color: #28a745;
-        border-color: #28a745;
-        color: white;
-        text-decoration: none;
-    }
-
-    .btn-danger:hover,
-    .btn-success:hover {
-        opacity: 0.9;
-    }
-
-    .gap-3 > * + * {
-        margin-left: 1rem !important;
-    }
-
-    @media (max-width: 768px) {
-        .page-title {
-            padding: 30px 15px;
-        }
-
-        .page-title h4 {
-            font-size: 24px;
-        }
-
-        .form-group label {
-            font-size: 16px;
-        }
-
-        .form-control {
-            font-size: 16px;
-            padding: 8px;
-        }
-
-        .btn-danger,
-        .btn-success {
-            font-size: 16px;
-            padding: 8px 15px;
-        }
-
-        .gap-3 > * + * {
-            margin-left: 0.5rem !important;
-        }
-    }
-</style>
-
-<div class="layout-px-spacing">
-
-    <div class="page-header">
-        <div class="page-title">
-            <h4 class="mb-0">Edit Data Dosen</h4>
-        </div>
-    </div>
-
-    <!-- CONTENT AREA -->
-    <div class="container mt-3">
-        <div class="row justify-content-center">
-            <div class="col-12 mx-auto" style="max-width: 1140px;">
-                <div class="card">
-                    <div class="card-body">
-                        <form>
-                            <div class="form-group mb-3">
-                                <label for="nama">Nama Dosen</label>
-                                <input type="text" id="nama" name="nama" class="form-control" value="Syahrul">
-                            </div>
-
-                            <div class="form-group mb-3">
-                                <label for="nidn">NIDN</label>
-                                <input type="text" id="nidn" name="nidn" class="form-control" value="1907*****">
-                            </div>
-
-                            <div class="form-group mb-3">
-                                <label for="jabatan">Jabatan</label>
-                                <input type="text" id="jabatan" name="jabatan" class="form-control" value="Dosen">
-                            </div>
-
-                            <div class="form-group mb-4">
-                                <label for="password">Password</label>
-                                <input type="password" id="password" name="password" class="form-control" value="1907*****">
-                            </div>
-
-                            <div class="d-flex justify-content-end gap-3 mt-3">
-                                <a href="{{ route('admin.kelolaDosen.index') }}" class="btn btn-danger">Batal</a>
-                                <button type="submit" class="btn btn-success">Simpan</button>
-                            </div>
-                        </form>
+                    <div class="form-group">
+                        <label style="text-align:left; display:block;">Nama Dosen</label>
+                        <input type="text" name="nama" class="form-control" value="{{ old('nama', $dosen->nama) }}" required>
                     </div>
+
+                    <div class="form-group">
+                        <label style="text-align:left; display:block;">NIDN</label>
+                        <input type="text" name="nidn" class="form-control" value="{{ old('nidn', $dosen->nidn) }}" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label style="text-align:left; display:block;">Jabatan</label>
+                        <input type="text" name="jabatan" class="form-control" value="{{ old('jabatan', $dosen->jabatan) }}" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label style="text-align:left; display:block;">Password</label>
+                        <input type="password" name="password" class="form-control" value="{{ old('password', $dosen->password) }}" required>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-success">Simpan</button>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
-    <!-- CONTENT AREA -->
-
 </div>
-@endsection

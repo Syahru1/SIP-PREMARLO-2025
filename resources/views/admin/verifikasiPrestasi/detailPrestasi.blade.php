@@ -1,187 +1,73 @@
 @extends('layout.template')
 
 @section('content')
-<style>
-    .page-title {
-        background-color: #3F00FF;
-        width: 100%;
-        padding: 50px;
-    }
-
-    .page-title h4 {
-        color: white;
-        font-weight: bold;
-        font-size: 36px;
-        margin: 0;
-    }
-
-    .card {
-        border: 3px solid #007bff;
-    }
-
-    .form-group label {
-        color: black;
-        font-weight: bold;
-        font-size: 20px;
-    }
-
-    .form-control {
-        font-size: 20px;
-        padding: 10px;
-    }
-
-    .btn-danger, .btn-success {
-        padding: 10px 20px;
-        font-weight: bold;
-        font-size: 20px;
-    }
-
-    .btn-danger {
-        background-color: #dc3545;
-        border-color: #dc3545;
-        color: white;
-        text-decoration: none;
-    }
-
-    .btn-success {
-        background-color: #28a745;
-        border-color: #28a745;
-        color: white;
-        text-decoration: none;
-    }
-
-    .btn-danger:hover,
-    .btn-success:hover {
-        opacity: 0.9;
-    }
-
-    .gap-3 > * + * {
-        margin-left: 1rem !important;
-    }
-
-    @media (max-width: 991.98px) {
-        .page-title {
-            padding: 30px 20px;
-        }
-
-        .page-title h4 {
-            font-size: 28px;
-        }
-
-        .form-group label {
-            font-size: 18px;
-        }
-
-        .form-control {
-            font-size: 18px;
-            padding: 8px;
-        }
-
-        .btn-danger, .btn-success {
-            font-size: 18px;
-            padding: 8px 16px;
-        }
-
-        .card {
-            border-width: 2px;
-        }
-    }
-
-    @media (max-width: 575.98px) {
-        .page-title {
-            padding: 20px 15px;
-        }
-
-        .page-title h4 {
-            font-size: 22px;
-        }
-
-        .form-group label {
-            font-size: 16px;
-        }
-
-        .form-control {
-            font-size: 16px;
-            padding: 6px;
-        }
-
-        .btn-danger, .btn-success {
-            font-size: 16px;
-            padding: 6px 12px;
-        }
-
-        .d-flex.justify-content-end.gap-3.mt-4 {
-            flex-direction: column;
-            gap: 10px !important;
-        }
-        .d-flex.justify-content-end.gap-3.mt-4 .btn {
-            width: 100%;
-            text-align: center;
-        }
-    }
-</style>
+@php
+    $detailPrestasi = (object)[
+        'nama_lomba' => 'Lomba Debat Mahasiswa',
+        'kategori' => 'Akademik',
+        'tingkat' => 'Nasional',
+        'penyelenggara' => 'Puspresnas',
+        'tahun' => '2023',
+        'file_url' => asset('assets/img/image.png'),
+        'catatan' => 'File Tidak Bisa Dibuka'
+    ];
+@endphp
 
 <div class="layout-px-spacing">
-
     <div class="page-header">
         <div class="page-title">
-            <h4 class="mb-0">Edit Data Prestasi</h4>
+            <h3>Detail Prestasi</h3>
         </div>
     </div>
 
-    <!-- CONTENT AREA -->
-    <div class="container mt-3">
-        <div class="row justify-content-center">
-            <div class="col-12 mx-auto" style="max-width: 800px;">
-                <div class="card">
-                    <div class="card-body">
-                        <form>
-                            <div class="form-group mb-3">
-                                <label for="namaLomba">Nama Lomba</label>
-                                <input type="text" id="namaLomba" name="namaLomba" class="form-control" value="Lomba Debat Mahasiswa" readonly>
-                            </div>
+    <div class="card component-card_4">
+        <div class="card-body">
+            <div class="tab-content" id="lineTabContent-3">
+                <div class="tab-pane fade show active" id="detail-prestasi" role="tabpanel" aria-labelledby="detail-tab">
+                    <form>
+                        <div class="form-group mb-4">
+                            <label class="text-black" for="namaLomba">Nama Lomba</label>
+                            <input type="text" class="form-control border border-secondary text-dark bg-white" id="namaLomba" value="{{ $detailPrestasi->nama_lomba }}" readonly>
+                        </div>
 
-                            <div class="form-group mb-3">
-                                <label for="kategori">Kategori</label>
-                                <input type="text" id="kategori" name="kategori" class="form-control" value="Akademik" readonly>
-                            </div>
+                        <div class="form-group mb-4">
+                            <label class="text-black" for="kategori">Kategori</label>
+                            <input type="text" class="form-control border border-secondary text-dark bg-white" id="kategori" value="{{ $detailPrestasi->kategori }}" readonly>
+                        </div>
 
-                            <div class="form-group mb-3">
-                                <label for="tingkat">Tingkat</label>
-                                <input type="text" id="tingkat" name="tingkat" class="form-control" value="Nasional" readonly>
-                            </div>
+                        <div class="form-group mb-4">
+                            <label class="text-black" for="tingkat">Tingkat</label>
+                            <input type="text" class="form-control border border-secondary text-dark bg-white" id="tingkat" value="{{ $detailPrestasi->tingkat }}" readonly>
+                        </div>
 
-                            <div class="form-group mb-3">
-                                <label for="penyelenggara">Penyelenggara</label>
-                                <input type="text" id="penyelenggara" name="penyelenggara" class="form-control" value="Puspresnas" readonly>
-                            </div>
+                        <div class="form-group mb-4">
+                            <label class="text-black" for="penyelenggara">Penyelenggara</label>
+                            <input type="text" class="form-control border border-secondary text-dark bg-white" id="penyelenggara" value="{{ $detailPrestasi->penyelenggara }}" readonly>
+                        </div>
 
-                            <div class="form-group mb-3">
-                                <label for="tahun">Tahun</label>
-                                <input type="text" id="tahun" name="tahun" class="form-control" value="2023" readonly>
-                            </div>
+                        <div class="form-group mb-4">
+                            <label class="text-black" for="tahun">Tahun</label>
+                            <input type="text" class="form-control border border-secondary text-dark bg-white" id="tahun" value="{{ $detailPrestasi->tahun }}" readonly>
+                        </div>
 
-                            <div class="form-group mb-3">
-                                <label for="buktiLomba">Bukti Prestasi (PDF/PNG/JPG)</label><br>
-                                <a href="#" class="btn btn-primary" id="btnDownload">Download File</a>
-                            </div>
+                        <div class="form-group mb-4">
+                            <label class="text-black" for="buktiLomba">Bukti Prestasi (PDF/PNG/JPG)</label><br>
+                            <a href="{{ $detailPrestasi->file_url }}" class="btn btn-primary" id="btnDownload" download>Download File</a>
+                        </div>
 
-                            <div class="form-group mb-3">
-                                <label for="catatan">Catatan</label>
-                                <input type="text" id="catatan" name="catatan" class="form-control" value="File Tidak Bisa Dibuka">
-                            </div>
+                        <div class="form-group mb-4">
+                            <label class="text-black" for="catatan">Catatan</label>
+                            <input type="text" class="form-control border border-secondary text-dark bg-white" id="catatan" value="{{ $detailPrestasi->catatan }}">
+                        </div>
 
-                            <div class="d-flex justify-content-end gap-3 mt-4">
-                                <a href="index" class="btn btn-danger">Tolak</a>
-                                <button type="submit" class="btn btn-success">Terima</button>
-                            </div>
-                        </form>
-                    </div>
+                        <div class="d-flex justify-content-end gap-3 mt-4">
+                            <button type="button" class="btn btn-danger" onclick="window.location.href='{{ url('/admin/verifikasi-prestasi') }}'">Tolak</button>
+                            <button type="button" class="btn btn-success" onclick="window.location.href='{{ url('/admin/verifikasi-prestasi') }}'">Terima</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-    <!-- CONTENT AREA -->
-
 </div>
 @endsection

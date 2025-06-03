@@ -1,167 +1,63 @@
-@extends('layout.template')
+<div class="modal fade" id="editMahasiswaModal{{ $mahasiswa->id }}" tabindex="-1" role="dialog" aria-labelledby="editMahasiswaLabel{{ $mahasiswa->id }}" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <form action="{{ url('admin/kelola-pengguna-mahasiswa/' . $mahasiswa->id) }}" method="POST">
+            @csrf
+            @method('PUT')
+            <div class="modal-content">
 
-@section('content')
-<style>
-    .page-title {
-        background-color: #3F00FF;
-        width: 100%;
-        padding: 50px;
-        text-align: center;
-    }
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editMahasiswaLabel{{ $mahasiswa->id }}">Edit Data Mahasiswa</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Tutup">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
 
-    .page-title h4 {
-        color: white;
-        font-weight: bold;
-        font-size: 36px;
-        margin: 0;
-    }
+                <div class="modal-body">
 
-    .card {
-        border: 3px solid #007bff;
-        border-radius: 10px;
-        padding: 30px;
-        margin-top: 30px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    }
-
-    .form-group label {
-        color: black;
-        font-weight: bold;
-        font-size: 20px;
-        margin-bottom: 8px;
-        display: block;
-    }
-
-    .form-control {
-        font-size: 20px;
-        padding: 10px;
-        width: 100%;
-        box-sizing: border-box;
-        border-radius: 5px;
-        border: 1px solid #ced4da;
-    }
-
-    .btn-danger,
-    .btn-success {
-        padding: 10px 20px;
-        font-weight: bold;
-        font-size: 20px;
-        border-radius: 6px;
-    }
-
-    .btn-danger {
-        background-color: #dc3545;
-        border-color: #dc3545;
-        color: white;
-        text-decoration: none;
-    }
-
-    .btn-success {
-        background-color: #28a745;
-        border-color: #28a745;
-        color: white;
-        text-decoration: none;
-    }
-
-    .btn-danger:hover,
-    .btn-success:hover {
-        opacity: 0.9;
-    }
-
-    .gap-3 {
-        display: flex;
-        gap: 1rem;
-        flex-wrap: wrap;
-    }
-
-    @media (max-width: 768px) {
-        .page-title {
-            padding: 30px 20px;
-        }
-
-        .page-title h4 {
-            font-size: 24px;
-        }
-
-        .card {
-            padding: 20px;
-        }
-
-        .form-group label,
-        .form-control,
-        .btn-danger,
-        .btn-success {
-            font-size: 16px;
-        }
-
-        .btn-danger,
-        .btn-success {
-            padding: 8px 16px;
-        }
-    }
-</style>
-
-<div class="layout-px-spacing">
-
-    <div class="page-header">
-        <div class="page-title">
-            <h4 class="mb-0">Edit Data Mahasiswa</h4>
-        </div>
-    </div>
-
-    <!-- CONTENT AREA -->
-    <div class="container mt-3">
-        <div class="row justify-content-center">
-            <div class="col-12 mx-auto" style="max-width: 1140px;">
-                <div class="card">
-                    <div class="card-body">
-                        <form>
-                            <div class="form-group mb-3">
-                                <label for="nama">Nama Mahasiswa</label>
-                                <input type="text" id="nama" name="nama" class="form-control" value="Syahrul">
-                            </div>
-
-                            <div class="form-group mb-3">
-                                <label for="nim">NIM</label>
-                                <input type="text" id="nim" name="nim" class="form-control" value="23417*****">
-                            </div>
-
-                            <div class="form-group mb-3">
-                                <label for="angkatan">Angkatan</label>
-                                <select id="angkatan" name="angkatan" class="form-control">
-                                    <option selected>2021</option>
-                                    <option>2022</option>
-                                    <option>2023</option>
-                                    <option>2024</option>
-                                    <option>2025</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group mb-3">
-                                <label for="prodi">Program Studi</label>
-                                <select id="prodi" name="prodi" class="form-control">
-                                    <option selected>D-2 Pengembangan Piranti Lunak Situs</option>
-                                    <option>D-4 Teknik Informatika</option>
-                                    <option>D-4 Sistem Informasi Bisnis</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group mb-4">
-                                <label for="password">Password</label>
-                                <input type="password" id="password" name="password" class="form-control" value="1907*****">
-                            </div>
-
-                            <div class="d-flex justify-content-end gap-3 mt-3">
-                                <a href="{{ route('admin.kelolaMahasiswa.index') }}" class="btn btn-danger">Batal</a>
-                                <button type="submit" class="btn btn-success">Simpan</button>
-                            </div>
-                        </form>
+                    <div class="form-group">
+                        <label style="text-align:left; display:block;">Nama Mahasiswa</label>
+                        <input type="text" name="nama" class="form-control" value="{{ old('nama', $mahasiswa->nama) }}" required>
                     </div>
+
+                    <div class="form-group">
+                        <label style="text-align:left; display:block;">NIM</label>
+                        <input type="text" name="nim" class="form-control" value="{{ old('nim', $mahasiswa->nim) }}" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label style="text-align:left; display:block;">Angkatan</label>
+                        <select name="angkatan" class="form-control" required>
+                            @foreach (['2021', '2022', '2023', '2024', '2025'] as $tahun)
+                                <option value="{{ $tahun }}" {{ old('angkatan', $mahasiswa->angkatan) == $tahun ? 'selected' : '' }}>{{ $tahun }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label style="text-align:left; display:block;">Program Studi</label>
+                        <select name="prodi" class="form-control" required>
+                            @foreach ([
+                                'D-2 Pengembangan Piranti Lunak Situs',
+                                'D-4 Teknik Informatika',
+                                'D-4 Sistem Informasi Bisnis'
+                            ] as $prodi)
+                                <option value="{{ $prodi }}" {{ old('prodi', $mahasiswa->prodi) == $prodi ? 'selected' : '' }}>{{ $prodi }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label style="text-align:left; display:block;">Password</label>
+                        <input type="password" name="password" class="form-control" value="{{ old('password', $mahasiswa->password) }}" required>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-success">Simpan</button>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
-    <!-- CONTENT AREA -->
-
 </div>
-@endsection

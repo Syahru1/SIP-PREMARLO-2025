@@ -1,175 +1,73 @@
-@extends('layout.template')
+<div class="modal fade" id="editLombaModal{{ $lomba->id }}" tabindex="-1" role="dialog" aria-labelledby="editLombaLabel{{ $lomba->id }}" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <form action="{{ url('admin/kelola-data-lomba/' . $lomba->id) }}" method="POST">
+            @csrf
+            @method('PUT')
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Data Lomba</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Tutup">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
 
-@section('content')
-<style>
-    :root {
-        --font-base: 16px;
-        --font-label: 20px;
-        --font-title: 28px;
-        --btn-padding: 10px 20px;
-    }
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label style="text-align:left; display:block;">Nama Lomba</label>
+                        <input type="text" name="nama_lomba" class="form-control" value="{{ old('nama_lomba', $lomba->nama_lomba) }}" required>
+                    </div>
 
-    .page-title {
-        background-color: #3F00FF;
-        width: 100%;
-        padding: 32px 16px;
-        text-align: left;
-    }
+                    <div class="form-group">
+                        <label style="text-align:left; display:block;">Kategori</label>
+                        <select name="kategori" class="form-control" required>
+                            <option value="IT" {{ old('kategori', $lomba->kategori) == 'IT' ? 'selected' : '' }}>IT</option>
+                            <option value="Akademik" {{ old('kategori', $lomba->kategori) == 'Akademik' ? 'selected' : '' }}>Akademik</option>
+                            <option value="Soft Skill" {{ old('kategori', $lomba->kategori) == 'Soft Skill' ? 'selected' : '' }}>Soft Skill</option>
+                            <option value="Teknologi" {{ old('kategori', $lomba->kategori) == 'Teknologi' ? 'selected' : '' }}>Teknologi</option>
+                        </select>
+                    </div>
 
-    .page-title h4 {
-        color: white;
-        font-weight: bold;
-        font-size: var(--font-title);
-        margin: 0;
-    }
+                    <div class="form-group">
+                        <label style="text-align:left; display:block;">Penyelenggara</label>
+                        <input type="text" name="penyelenggara" class="form-control" value="{{ old('penyelenggara', $lomba->penyelenggara) }}" required>
+                    </div>
 
-    .card {
-        border: 3px solid #007bff;
-        font-family: 'Poppins', sans-serif;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
-    }
+                    <div class="form-group">
+                        <label style="text-align:left; display:block;">Tingkat Kompetisi</label>
+                        <select name="tingkat_kompetisi" class="form-control" required>
+                            <option value="Nasional" {{ old('tingkat_kompetisi', $lomba->tingkat_kompetisi) == 'Nasional' ? 'selected' : '' }}>Nasional</option>
+                            <option value="Internasional" {{ old('tingkat_kompetisi', $lomba->tingkat_kompetisi) == 'Internasional' ? 'selected' : '' }}>Internasional</option>
+                            <option value="Provinsi" {{ old('tingkat_kompetisi', $lomba->tingkat_kompetisi) == 'Provinsi' ? 'selected' : '' }}>Provinsi</option>
+                            <option value="Kabupaten" {{ old('tingkat_kompetisi', $lomba->tingkat_kompetisi) == 'Kabupaten' ? 'selected' : '' }}>Kabupaten</option>
+                        </select>
+                    </div>
 
-    .form-group label {
-        color: black;
-        font-weight: bold;
-        font-size: var(--font-base);
-    }
+                    <div class="form-group">
+                        <label style="text-align:left; display:block;">Link Pendaftaran</label>
+                        <input type="url" name="link_pendaftaran" class="form-control" value="{{ old('link_pendaftaran', $lomba->link_pendaftaran) }}" required>
+                    </div>
 
-    .form-control {
-        font-size: var(--font-base);
-        padding: 10px; /* setara dengan 0.6rem */
-    }
+                    <div class="form-group">
+                        <label style="text-align:left; display:block;">Bidang Keahlian</label>
+                        <input type="text" name="bidang_keahlian" class="form-control" value="{{ old('bidang_keahlian', $lomba->bidang_keahlian) }}" required>
+                    </div>
 
-    .btn-danger, .btn-success {
-        padding: var(--btn-padding);
-        font-weight: bold;
-        font-size: var(--font-base);
-        border-radius: 6px;
-    }
+                    <div class="form-group">
+                        <label style="text-align:left; display:block;">Tanggal Pendaftaran Dibuka</label>
+                        <input type="date" name="tanggal_pendaftaran_dibuka" class="form-control" value="{{ old('tanggal_pendaftaran_dibuka', $lomba->tanggal_pendaftaran_dibuka) }}" required>
+                    </div>
 
-    .btn-danger {
-        background-color: #dc3545;
-        border-color: #dc3545;
-        color: white;
-        text-decoration: none;
-    }
-
-    .btn-success {
-        background-color: #28a745;
-        border-color: #28a745;
-        color: white;
-        text-decoration: none;
-    }
-
-    .btn-danger:hover,
-    .btn-success:hover {
-        opacity: 0.9;
-    }
-
-    .gap-3 > * + * {
-        margin-left: 16px !important;
-    }
-
-     @media (max-width: 576px) {
-        .page-title h4 {
-            font-size: 21px;
-        }
-
-        .form-group label,
-        .form-control,
-        .btn-danger,
-        .btn-success {
-            font-size: 15px;
-        }
-
-        .btn-danger, .btn-success {
-            padding: 8px 16px;
-        }
-
-        .d-flex.justify-content-end {
-            flex-direction: column;
-            gap: 8px;
-            align-items: stretch;
-        }
-    }
-</style>
-
-<div class="layout-px-spacing">
-
-    <div class="page-header">
-        <div class="page-title">
-            <h4 class="mb-0">Edit Data Lomba</h4>
-        </div>
-    </div>
-
-    <!-- CONTENT AREA -->
-    <div class="container mt-3">
-        <div class="row justify-content-center">
-            <div class="col-12 mx-auto" style="max-width: 1140px;">
-                <div class="card">
-                    <div class="card-body">
-                        <form>
-                            <div class="form-group mb-3">
-                                <label for="namaLomba">Nama Lomba</label>
-                                <input type="text" id="namaLomba" name="namaLomba" class="form-control" value="Kompetisi Robot Pintar">
-                            </div>
-
-                            <div class="form-group mb-3">
-                                <label for="kategori">Kategori</label>
-                                <select id="kategori" name="kategori" class="form-control">
-                                    <option selected>IT</option>
-                                    <option>Akademik</option>
-                                    <option>Soft Skill</option>
-                                    <option>Teknologi</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group mb-3">
-                                <label for="penyelenggara">Penyelenggara</label>
-                                <input type="text" id="penyelenggara" name="penyelenggara" class="form-control" value="Puspresnas">
-                            </div>
-
-                            <div class="form-group mb-3">
-                                <label for="tingkatKompetisi">Tingkat Kompetisi</label>
-                                <select id="tingkatKompetisi" name="tingkatKompetisi" class="form-control">
-                                    <option selected>Nasional</option>
-                                    <option>Internasional</option>
-                                    <option>Provinsi</option>
-                                    <option>Kabupaten</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group mb-3">
-                                <label for="link">Link Pendaftaran</label>
-                                <input type="url" id="link" name="link" class="form-control" value="https://infolomba.id/info-fopesco-2025-626">
-                            </div>
-
-                            <div class="form-group mb-3">
-                                <label for="bidang">Bidang Keahlian</label>
-                                <input type="text" id="bidang" name="bidang" class="form-control" value="Artificial Intellegence">
-                            </div>
-
-                            <div class="form-group mb-3">
-                                <label for="dibuka" class="form-label">Tanggal Pendaftaran Dibuka</label>
-                                <input type="date" class="form-control" id="dibuka" value="2025-05-02">
-                            </div>
-
-                            <div class="form-group mb-3">
-                                <label for="ditutup" class="form-label">Tanggal Pendaftaran Ditutup</label>
-                                <input type="date" class="form-control" id="ditutup" value="2025-06-01">
-                            </div>
-
-                            <div class="d-flex justify-content-end gap-3 mt-3">
-                                <a href="{{ route('admin.kelolaDataLomba.index') }}" class="btn btn-danger">Batal</a>
-                                <button type="submit" class="btn btn-success">Simpan</button>
-                            </div>
-                        </form>
+                    <div class="form-group">
+                        <label style="text-align:left; display:block;">Tanggal Pendaftaran Ditutup</label>
+                        <input type="date" name="tanggal_pendaftaran_ditutup" class="form-control" value="{{ old('tanggal_pendaftaran_ditutup', $lomba->tanggal_pendaftaran_ditutup) }}" required>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-    <!-- CONTENT AREA -->
 
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-success">Simpan</button>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
-@endsection

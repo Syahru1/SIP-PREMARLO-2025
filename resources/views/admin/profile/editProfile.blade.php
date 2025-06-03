@@ -1,224 +1,89 @@
 @extends('layout.template')
 
 @section('content')
-<style>
-    .page-title {
-        background-color: #3F00FF;
-        width: 100%;
-        padding: 50px;
-    }
 
-    .page-title h4 {
-        color: white;
-        font-weight: bold;
-        font-size: 36px;
-        margin: 0;
-    }
+@php
+    $akun = collect([
+        'foto' => asset('assets/img/image.png'),
+        'nama_dosen' => 'Draco Malfoy',
+        'nidn' => '1907******',
+        'jabatan' => 'Admin Jurusan'
+    ]);
+@endphp
 
-    .edit-profile-card {
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 30px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        border-radius: 20px;
-        background-color: white;
-    }
-
-    .profile-image-container {
-        text-align: center;
-        margin-right: 50px;
-    }
-
-    .profile-img-edit {
-        width: 150px;
-        height: 150px;
-        border-radius: 50%;
-        object-fit: cover;
-        border: 2px solid #ccc;
-        margin-bottom: 15px;
-    }
-
-    .upload-photo-btn {
-        background-color: #2b2929;
-        border: 1px solid #8e4040;
-        padding: 8px 15px;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 14px;
-        color: #ffffff;
-    }
-    .upload-photo-btn:hover {
-        background-color: #b9adad;
-    }
-
-    .form-group label {
-        font-weight: bold;
-        color: #333;
-        margin-bottom: 5px;
-        display: block;
-        font-size: 18px;
-    }
-
-    .form-control {
-        border-radius: 5px;
-        border: 1px solid #ddd;
-        padding: 10px;
-        width: 100%;
-        margin-bottom: 20px;
-        font-size: 18px;
-    }
-
-    .form-control:focus {
-        border-color: #80bdff;
-        outline: 0;
-        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-    }
-
-    .action-buttons {
-        text-align: right;
-        margin-top: 30px;
-    }
-
-    .btn-cancel {
-        background-color: #dc3545;
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 5px;
-        font-weight: bold;
-        margin-right: 10px;
-        cursor: pointer;
-        font-size: 18px;
-    }
-    .btn-cancel:hover {
-        background-color: #c82333;
-    }
-
-    .btn-save {
-        background-color: #28a745;
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 5px;
-        font-weight: bold;
-        cursor: pointer;
-        font-size: 18px;
-    }
-    .btn-save:hover {
-        background-color: #218838;
-    }
-
-    @media (max-width: 992px) {
-        .edit-profile-card {
-            padding: 20px;
-        }
-        .profile-image-container {
-            margin-right: 30px;
-        }
-        .page-title {
-            padding: 40px 20px;
-        }
-        .page-title h4 {
-            font-size: 28px;
-        }
-        .form-group label,
-        .form-control,
-        .btn-cancel,
-        .btn-save,
-        .upload-photo-btn {
-            font-size: 16px;
-        }
-    }
-
-    @media (max-width: 576px) {
-        .edit-profile-card {
-            padding: 15px;
-        }
-        .page-title {
-            padding: 30px 15px;
-        }
-        .page-title h4 {
-            font-size: 22px;
-        }
-        .d-flex.align-items-start {
-            flex-direction: column;
-            align-items: center !important;
-        }
-        .profile-image-container {
-            margin-right: 0;
-            margin-bottom: 20px;
-            width: 100%;
-        }
-        .profile-img-edit {
-            width: 120px;
-            height: 120px;
-        }
-        .flex-grow-1.ms-4 {
-            margin-left: 0 !important;
-            width: 100%;
-        }
-        .form-group label,
-        .form-control,
-        .btn-cancel,
-        .btn-save,
-        .upload-photo-btn {
-            font-size: 14px;
-        }
-        .btn-cancel,
-        .btn-save {
-            padding: 8px 15px;
-        }
-    }
-</style>
-
+<!-- BEGIN CONTENT AREA -->
 <div class="layout-px-spacing">
+
     <div class="page-header">
         <div class="page-title">
             <h4 class="mb-0">Informasi Akun</h4>
         </div>
     </div>
 
-    <!-- CONTENT AREA -->
-    <div class="container mt-4">
-        <div class="edit-profile-card">
-            <form action="#" method="POST" enctype="multipart/form-data">
-                @csrf
-                <div class="d-flex align-items-start">
-                    <div class="profile-image-container d-flex flex-column align-items-center">
-                        <img src="{{ asset('assets/img/image.png') }}" alt="Foto Profil" class="profile-img-edit">
-                        <div class="mt-2">
-                            <button type="button" class="upload-photo-btn">Ubah Foto</button>
-                        </div>
-                    </div>
-                    <div class="flex-grow-1 ms-4">
-                        <div class="form-group">
-                            <label for="nama_dosen">Nama Dosen</label>
-                            <input type="text" class="form-control" id="nama_dosen" name="nama_dosen" value="Draco Malfoy" required>
+    <div class="card component-card_4">
+        <div class="card-body">
+            <div class="tab-content" id="editProfileTab">
+                <div class="tab-pane fade show active" id="edit-profile" role="tabpanel">
+
+                    <form action="#" method="POST" enctype="multipart/form-data">
+                        @csrf
+
+                        <div class="text-center mb-4">
+                            <img src="{{ $akun['foto'] }}" alt="Foto Profil" class="rounded-circle" width="120" height="120" id="preview-img">
+                            <input type="file" id="upload-photo" name="foto" accept="image/*" class="d-none" onchange="previewImage(event)">
+                            <div class="mt-2">
+                                <button type="button" class="btn btn-sm btn-outline-primary" onclick="openFileExplorer()">Ubah Foto</button>
+                            </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="nidn">NIDN</label>
-                            <input type="text" class="form-control" id="nidn" name="nidn" value="1907******" required>
+                        <div class="form-group mb-4">
+                            <label class="text-black" for="nama_dosen">Nama Dosen</label>
+                            <input type="text" class="form-control border border-secondary text-dark bg-white" id="nama_dosen" name="nama_dosen" value="{{ $akun['nama_dosen'] }}" required>
                         </div>
 
-                        <div class="form-group">
-                            <label for="jabatan">Jabatan</label>
-                            <select class="form-control" id="jabatan" name="jabatan" required>
-                                <option value="Admin Prodi TI" {{ old('jabatan', 'Admin Jurusan') == 'Admin Prodi TI' ? 'selected' : '' }}>Admin Prodi TI</option>
-                                <option value="Admin Prodi SIB" {{ old('jabatan', 'Admin Jurusan') == 'Admin Prodi SIB' ? 'selected' : '' }}>Admin Prodi SIB</option>
-                                <option value="Admin Jurusan" {{ old('jabatan', 'Admin Jurusan') == 'Admin Jurusan' ? 'selected' : '' }}>Admin Jurusan</option>
+                        <div class="form-group mb-4">
+                            <label class="text-black" for="nidn">NIDN</label>
+                            <input type="text" class="form-control border border-secondary text-dark bg-white" id="nidn" name="nidn" value="{{ $akun['nidn'] }}" required>
+                        </div>
+
+                        <div class="form-group mb-4">
+                            <label class="text-black" for="jabatan">Jabatan</label>
+                            <select class="form-control border border-secondary text-dark bg-white" id="jabatan" name="jabatan" required>
+                                <option value="Admin Prodi TI" {{ $akun['jabatan'] == 'Admin Prodi TI' ? 'selected' : '' }}>Admin Prodi TI</option>
+                                <option value="Admin Prodi SIB" {{ $akun['jabatan'] == 'Admin Prodi SIB' ? 'selected' : '' }}>Admin Prodi SIB</option>
+                                <option value="Admin Jurusan" {{ $akun['jabatan'] == 'Admin Jurusan' ? 'selected' : '' }}>Admin Jurusan</option>
                             </select>
                         </div>
-                    </div>
-                </div>
 
-                <div class="action-buttons">
-                    <a href="{{ route('admin.profile.index') }}" class="btn btn-warning btn-sm btn-cancel">Batal</a>
-                    <button type="submit" class="btn-save">Simpan</button>
+                        <div class="d-flex justify-content-end gap-3 mt-4">
+                            <a href="{{ url('admin/profile') }}" class="btn btn-danger">Batal</a>
+                            <button type="submit" class="btn btn-success">Simpan</button>
+                        </div>
+
+                    </form>
+
                 </div>
-            </form>
+            </div>
         </div>
     </div>
-    <!-- CONTENT AREA -->
 </div>
 @endsection
+
+<script>
+    function openFileExplorer() {
+        document.getElementById('upload-photo').click();
+    }
+
+    function previewImage(event) {
+        const input = event.target;
+        const reader = new FileReader();
+
+        reader.onload = function() {
+            document.getElementById('preview-img').src = reader.result;
+        }
+
+        if (input.files && input.files[0]) {
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>

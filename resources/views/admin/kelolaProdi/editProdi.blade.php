@@ -1,105 +1,45 @@
-@extends('layout.template')
+<!-- Modal Edit Program Studi -->
+<div class="modal fade" id="editProdiModal{{ $prodi->id }}" tabindex="-1" role="dialog" aria-labelledby="editProdiLabel{{ $prodi->id }}" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <form action="{{ url('admin/kelola-prodi/' . $prodi->id) }}" method="POST">
+            @csrf
+            @method('PUT')
+            <div class="modal-content">
 
-@section('content')
-<style>
-    .page-title {
-        background-color: #3F00FF;
-        width: 100%;
-        padding: 50px;
-    }
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editProdiLabel{{ $prodi->id }}">Edit Data Program Studi</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Tutup">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
 
-    .page-title h4 {
-        color: white;
-        font-weight: bold;
-        font-size: 36px;
-        margin: 0;
-    }
+                <div class="modal-body">
+                    <!-- Kode Prodi -->
+                    <div class="form-group">
+                        <label for="kode_prodi" class="text-left d-block">Kode Program Studi</label>
+                        <input type="text" id="kode_prodi" name="kode_prodi"
+                               class="form-control border border-secondary text-dark bg-white"
+                               value="{{ old('kode_prodi', $prodi->kode_prodi) }}" required>
+                    </div>
 
-    .card {
-        border: 3px solid #007bff;
-    }
-
-    .form-group label {
-        color: black;
-        font-weight: bold;
-        font-size: 20px;
-    }
-
-    .form-control {
-        font-size: 20px;
-        padding: 10px;
-    }
-
-    .btn-danger, .btn-success {
-        padding: 10px 20px;
-        font-weight: bold;
-        font-size: 20px;
-    }
-
-    .btn-danger {
-        background-color: #dc3545;
-        border-color: #dc3545;
-        color: white;
-        text-decoration: none;
-    }
-
-    .btn-success {
-        background-color: #28a745;
-        border-color: #28a745;
-        color: white;
-        text-decoration: none;
-    }
-
-    .btn-danger:hover,
-    .btn-success:hover {
-        opacity: 0.9;
-    }
-
-    .gap-3 > * + * {
-        margin-left: 1rem !important;
-    }
-</style>
-
-<div class="layout-px-spacing">
-
-    <div class="page-header">
-        <div class="page-title">
-            <h4 class="mb-0">Edit Data Program Studi</h4>
-        </div>
-    </div>
-
-    <!-- CONTENT AREA -->
-    <div class="container mt-3">
-        <div class="row justify-content-center">
-            <div class="col-12 mx-auto" style="max-width: 1140px;">
-                <div class="card">
-                    <div class="card-body">
-                        <form>
-                            <div class="form-group mb-3">
-                                <label for="kodeProdi">Kode Program Studi</label>
-                                <input type="text" id="kodeProdi" name="kodeProdi" class="form-control" value="KPTI01">
-                            </div>
-
-                            <div class="form-group mb-3">
-                                <label for="namaProdi">Nama Program Studi</label>
-                                <select id="namaProdi" name="namaProdi" class="form-control">
-                                    <option selected>D-4 Teknik Informatika</option>
-                                    <option>D-4 Sistem Informasi Bisnis</option>
-                                    <option>D-2 Pengembangan Piranti Lunak Situs</option>
-                                </select>
-                            </div>
-
-                            <div class="d-flex justify-content-end gap-3 mt-3">
-                                <a href="{{ route('admin.kelolaProdi.index') }}" class="btn btn-danger">Batal</a>
-                                <button type="submit" class="btn btn-success">Simpan</button>
-                            </div>
-                        </form>
+                    <!-- Nama Prodi -->
+                    <div class="form-group">
+                        <label for="nama_prodi" class="text-left d-block">Nama Program Studi</label>
+                        <select id="nama_prodi" name="nama_prodi"
+                                class="form-control border border-secondary text-dark bg-white" required>
+                            <option value="D-4 Teknik Informatika" {{ old('nama_prodi', $prodi->nama_prodi) == 'D-4 Teknik Informatika' ? 'selected' : '' }}>D-4 Teknik Informatika</option>
+                            <option value="D-4 Sistem Informasi Bisnis" {{ old('nama_prodi', $prodi->nama_prodi) == 'D-4 Sistem Informasi Bisnis' ? 'selected' : '' }}>D-4 Sistem Informasi Bisnis</option>
+                            <option value="D-2 Pengembangan Piranti Lunak Situs" {{ old('nama_prodi', $prodi->nama_prodi) == 'D-2 Pengembangan Piranti Lunak Situs' ? 'selected' : '' }}>D-2 Pengembangan Piranti Lunak Situs</option>
+                        </select>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-    <!-- CONTENT AREA -->
 
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-success">Simpan</button>
+                </div>
+
+            </div>
+        </form>
+    </div>
 </div>
-@endsection

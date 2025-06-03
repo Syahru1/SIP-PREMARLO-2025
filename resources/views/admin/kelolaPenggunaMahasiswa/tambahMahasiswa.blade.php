@@ -1,187 +1,58 @@
-@extends('layout.template')
-
-@section('content')
-<style>
-    .page-title {
-        background-color: #3F00FF;
-        width: 100%;
-        padding: 50px;
-    }
-
-    .page-title h4 {
-        color: white;
-        font-weight: bold;
-        font-size: 36px;
-        margin: 0;
-    }
-
-    .card {
-        border: 3px solid #007bff;
-    }
-
-    .form-label,
-    .form-group label {
-        color: black;
-        font-weight: bold;
-        font-size: 20px;
-    }
-
-    .form-control {
-        font-size: 20px;
-        padding: 10px;
-    }
-
-    .btn-danger,
-    .btn-success {
-        padding: 10px 20px;
-        font-weight: bold;
-        font-size: 20px;
-    }
-
-    .btn-danger {
-        background-color: #dc3545;
-        border-color: #dc3545;
-        color: white;
-        text-decoration: none;
-    }
-
-    .btn-success {
-        background-color: #28a745;
-        border-color: #28a745;
-        color: white;
-        text-decoration: none;
-    }
-
-    .btn-danger:hover,
-    .btn-success:hover {
-        opacity: 0.9;
-    }
-
-    .gap-2 > * + * {
-        margin-left: 0.5rem !important;
-    }
-
-    /* RESPONSIVE ADJUSTMENTS */
-    @media (max-width: 768px) {
-        .page-title {
-            padding: 30px 20px;
-        }
-
-        .page-title h4 {
-            font-size: 24px;
-        }
-
-        .form-label,
-        .form-group label {
-            font-size: 16px;
-        }
-
-        .form-control {
-            font-size: 16px;
-            padding: 8px;
-        }
-
-        .btn-danger,
-        .btn-success {
-            padding: 8px 16px;
-            font-size: 16px;
-        }
-
-        .card {
-            border-width: 2px;
-        }
-    }
-
-    @media (max-width: 480px) {
-        .page-title {
-            padding: 20px 15px;
-        }
-
-        .page-title h4 {
-            font-size: 20px;
-        }
-
-        .form-label,
-        .form-group label {
-            font-size: 14px;
-        }
-
-        .form-control {
-            font-size: 14px;
-            padding: 6px;
-        }
-
-        .btn-danger,
-        .btn-success {
-            padding: 6px 12px;
-            font-size: 14px;
-        }
-
-        .card {
-            border-width: 1.5px;
-        }
-    }
-</style>
-
-<div class="layout-px-spacing">
-
-    <div class="page-header">
-        <div class="page-title">
-            <h4 class="mb-0">Tambah Data Mahasiswa</h4>
+<!-- Modal Tambah Mahasiswa -->
+<div class="modal fade" id="tambahMahasiswaModal" tabindex="-1" aria-labelledby="tambahMahasiswaLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <form method="POST" action="{{ url('admin/kelola-pengguna-mahasiswa') }}">
+      @csrf
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="tambahMahasiswaLabel">Tambah Data Mahasiswa</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Tutup">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
-    </div>
+        <div class="modal-body">
 
-    <!-- CONTENT AREA -->
-    <div class="container mt-3">
-        <div class="row justify-content-center">
-            <div class="col-12 mx-auto" style="max-width: 1140px;">
-                <div class="card">
-                    <div class="card-body">
-                        <form>
-                            <div class="mb-3">
-                                <label for="nama" class="form-label">Nama Mahasiswa</label>
-                                <input type="text" class="form-control" id="nama" placeholder="Masukkan Nama Mahasiswa">
-                            </div>
-                            <div class="mb-3">
-                                <label for="nim" class="form-label">NIM</label>
-                                <input type="text" class="form-control" id="nim" placeholder="Masukkan NIM">
-                            </div>
+          <div class="mb-3">
+            <label for="nama" class="form-label">Nama Mahasiswa</label>
+            <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukkan Nama Mahasiswa" required>
+          </div>
 
-                            <div class="form-group mb-3">
-                                <label for="angkatan">Angkatan</label>
-                                <select id="angkatan" name="angkatan" class="form-control">
-                                    <option selected>2021</option>
-                                    <option>2022</option>
-                                    <option>2023</option>
-                                    <option>2024</option>
-                                    <option>2025</option>
-                                </select>
-                            </div>
+          <div class="mb-3">
+            <label for="nim" class="form-label">NIM</label>
+            <input type="text" class="form-control" id="nim" name="nim" placeholder="Masukkan NIM" required>
+          </div>
 
-                            <div class="form-group mb-3">
-                                <label for="prodi">Program Studi</label>
-                                <select id="prodi" name="prodi" class="form-control">
-                                    <option selected>D-2 Pengembangan Piranti Lunak Situs</option>
-                                    <option>D-4 Teknik Informatika</option>
-                                    <option>D-4 Sistem Informasi Bisnis</option>
-                                </select>
-                            </div>
+          <div class="mb-3">
+            <label for="angkatan" class="form-label">Angkatan</label>
+            <select id="angkatan" name="angkatan" class="form-control" required>
+              <option value="2021" selected>2021</option>
+              <option value="2022">2022</option>
+              <option value="2023">2023</option>
+              <option value="2024">2024</option>
+              <option value="2025">2025</option>
+            </select>
+          </div>
 
-                            <div class="mb-3">
-                                <label for="password" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="password" placeholder="Masukkan Password">
-                            </div>
+          <div class="mb-3">
+            <label for="prodi" class="form-label">Program Studi</label>
+            <select id="prodi" name="prodi" class="form-control" required>
+              <option value="D-2 Pengembangan Piranti Lunak Situs" selected>D-2 Pengembangan Piranti Lunak Situs</option>
+              <option value="D-4 Teknik Informatika">D-4 Teknik Informatika</option>
+              <option value="D-4 Sistem Informasi Bisnis">D-4 Sistem Informasi Bisnis</option>
+            </select>
+          </div>
 
-                            <div class="d-flex justify-content-end gap-2 mt-3">
-                                <a href="{{ route('admin.kelolaMahasiswa.index') }}" class="btn btn-danger">Batal</a>
-                                <button type="submit" class="btn btn-success">Simpan</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Masukkan Password" required>
+          </div>
+
         </div>
-    </div>
-    <!-- CONTENT AREA -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+          <button type="submit" class="btn btn-success">Simpan</button>
+        </div>
+      </div>
+    </form>
+  </div>
 </div>
-@endsection
