@@ -32,7 +32,7 @@
 
         <ul class="list-unstyled menu-categories" id="accordionExample">
             <li class="menu">
-                <a href="" aria-expanded="{{ Request::is('admin/beranda*') ? 'true' : 'false' }}" class="dropdown-toggle">
+                <a href="{{ url('admin/beranda') }}" aria-expanded="{{ Request::is('admin/beranda*') ? 'true' : 'false' }}" class="dropdown-toggle">
                     <div>
                         <svg xmlns="http://www.w3.org/2000/svg" class="feather feather-home" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
                         <span>Beranda</span>
@@ -41,12 +41,11 @@
             </li>
 
             <li class="menu">
-                <a href="#kelolaAkun" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle">
+                <a href="#kelolaAkun" class="dropdown-toggle" aria-expanded="{{ Request::is('admin/kelola-pengguna-*') ? 'true' : 'false' }}" data-toggle="collapse">
                     <div>
                         <svg xmlns="http://www.w3.org/2000/svg" class="feather feather-users" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-3-3.87"/><path d="M7 21v-2a4 4 0 0 1 3-3.87"/><circle cx="12" cy="7" r="4"/></svg>
                         <span>Kelola Akun</span>
                     </div>
-                    <svg class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
                 </a>
                 <ul class="collapse submenu list-unstyled" id="kelolaAkun" data-parent="#accordionExample">
                     <li><a href="{{ url('admin/kelola-pengguna-admin') }}">Akun Admin</a></li>
@@ -101,7 +100,7 @@
             </li>
 
             <li class="menu">
-                <a href="" class="dropdown-toggle" aria-expanded="{{ Request::is('admin/beranda*') ? 'true' : 'false' }}">
+                <a href="" class="dropdown-toggle" aria-expanded="{{ Request::is('admin/rekomendasi-lomba*') ? 'true' : 'false' }}">
                     <div>
                         <svg class="feather feather-thumbs-up" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 9V5a3 3 0 0 0-6 0v4H5a2 2 0 0 0 0 4h3v7h6l3-6v-5z"/><path d="M23 10h-4v12h4z"/></svg>
                         <span>Rekomendasi Lomba</span>
