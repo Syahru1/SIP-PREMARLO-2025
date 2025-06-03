@@ -34,7 +34,7 @@
             <h3>Daftar Data Lomba</h3>
         </div>
     </div>
-
+    
     <div class="row layout-spacing">
         <div class="col-lg-12">
             <div class="statbox widget box box-shadow">
