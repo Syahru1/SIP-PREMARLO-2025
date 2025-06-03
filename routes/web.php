@@ -29,11 +29,10 @@ Route::post('/logout', function () {
     return redirect('/login');
 })->name('logout');
 
-// Route::middleware(['auth'])->group(function () {
     Route::get('/', [MasterController::class, 'index']);
 
     // ADMIN
-    // Route::middleware(['auth:admin', 'authorize:ADM'])->group(function () {
+    Route::middleware(['auth:admin'])->group(function () {
         Route::group(['prefix' => 'admin'],function () {
             // Beranda
             Route::get('/beranda', [MasterController::class, 'admin'])->name('beranda');
@@ -83,10 +82,10 @@ Route::post('/logout', function () {
             Route::get('/verifikasi-prestasi', [AdminController::class, 'verifikasiPrestasiIndex'])->name('verifikasiPrestasi.index');
             Route::get('/verifikasi-prestasi/detail', [AdminController::class, 'verifikasiPrestasiDetail'])->name('verifikasiPrestasi.detail');
         });
-    // });
+    });
 
     // MAHASISWA
-    // Route::middleware(['auth:mahasiswa', 'authorize:MHS'])->group(function () {
+    Route::middleware(['auth:mahasiswa', 'authorize:MHS'])->group(function () {
         Route::group(['prefix' => 'mahasiswa'],function () {
             // Beranda
             Route::get('/beranda', [MasterController::class, 'mahasiswa'])->name('beranda.mahasiswa');
@@ -110,10 +109,10 @@ Route::post('/logout', function () {
             Route::get('/edit-profil', [MahasiswaController::class, 'edit_profil'])->name('edit-profil');
         
         });
-    // });
+    });
 
     // DOSEN
-    // Route::middleware(['auth:dosen', 'authorize:DSN'])->group(function () {
+    Route::middleware(['auth:dosen', 'authorize:DSN'])->group(function () {
         Route::group(['prefix' => 'dosen'],function () {
             // Beranda
             Route::get('/beranda', [MasterController::class, 'dosen'])->name('beranda.dosen');
@@ -133,5 +132,4 @@ Route::post('/logout', function () {
             Route::delete('/profil/bidang-keahlian/{id}', [DosenController::class, 'delete']);
             Route::get('/edit-profil', [DosenController::class, 'edit_profil'])->name('edit-profil.dosen');
         });
-    // });
-// });
+    });
