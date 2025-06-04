@@ -28,11 +28,23 @@
 <body class="alt-menu sidebar-noneoverflow">
 
     <!--  BEGIN NAVBAR  -->
-    @include('layout.navbar')
-    @if (Request::is('mahasiswa/*'))
-        @include('layout.topbar-mahasiswa')
+    @php
+        $user = null;
+        if (Auth::guard('admin')->check()) {
+            $user = Auth::guard('admin')->user();
+        } elseif (Auth::guard('mahasiswa')->check()) {
+            $user = Auth::guard('mahasiswa')->user();
+        } elseif (Auth::guard('dosen')->check()) {
+            $user = Auth::guard('dosen')->user();
+        }
+    @endphp
+
+    @if (Request::is('admin/*'))
+        @include('layout.navbar')
     @elseif (Request::is('dosen/*'))
-            @include('layout.topbar-dosen')
+        @include('layout.topbar-dosen')
+    @elseif (Request::is('mahasiswa/*'))
+        @include('layout.topbar-mahasiswa')
     @endif
 
     <!--  END NAVBAR  -->

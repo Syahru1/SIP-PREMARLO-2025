@@ -91,7 +91,7 @@ Route::post('/logout', function () {
     });
 
     // MAHASISWA
-    Route::middleware(['auth:mahasiswa', 'authorize:MHS'])->group(function () {
+    Route::middleware(['auth:mahasiswa'])->group(function () {
         Route::group(['prefix' => 'mahasiswa'],function () {
             // Beranda
             Route::get('/beranda', [MasterController::class, 'mahasiswa'])->name('beranda.mahasiswa');
@@ -118,7 +118,7 @@ Route::post('/logout', function () {
     });
 
     // DOSEN
-    Route::middleware(['auth:dosen', 'authorize:DSN'])->group(function () {
+    Route::middleware(['auth:dosen'])->group(function () {
         Route::group(['prefix' => 'dosen'],function () {
             // Beranda
             Route::get('/beranda', [MasterController::class, 'dosen'])->name('beranda.dosen');
