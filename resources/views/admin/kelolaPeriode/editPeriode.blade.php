@@ -23,7 +23,7 @@
 <!-- Modal Edit -->
 {{-- <div class="modal fade" id="editPeriodeModal{{ $periode->id_periode }}" tabindex="-1" role="dialog" aria-labelledby="editPeriodeLabel{{ $periode->id_periode }}" aria-hidden="true"> --}}
     <div class="modal-dialog modal-md">
-        <form action="{{ url('admin/periode/update/' . $periode->id_periode ) }}" method="POST" id="form-edit">
+        <form action="{{ url('admin/kelola-periode/update/' . $periode->id_periode ) }}" method="POST" id="form-edit">
             @csrf
             @method('PUT')
             <div class="modal-content">

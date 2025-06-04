@@ -80,25 +80,24 @@ class AdminController extends Controller
     }
 
     public function kelolaPeriodeList(Request $request)
-{
-    $periode = PeriodeModel::select('id_periode', 'nama_periode');
+    {
+        $periode = PeriodeModel::select('id_periode', 'nama_periode');
 
-    return DataTables::of($periode)
-        ->addColumn('aksi', function ($periode) {
-            $btn = '
-                <button onclick="modalAction(\'' . url('admin/periode/edit/' . $periode->id_periode . '') . '\')" class="btn btn-warning btn-sm" data-toggle="modal">Edit</button>
-                ';
-            $btn .= '<form class="d-inline-block" method="POST" action="' . url('admin/periode/' . $periode->id_periode) . '">
-                    ' . csrf_field() . method_field('DELETE') . '
+        return DataTables::of($periode)
+            ->addIndexColumn()
+            ->addColumn('aksi', function ($periode) {
+                $btn = '<button onclick="modalAction(\'' . url('admin/kelola-periode/edit/' . $periode->id_periode) . '\')" class="btn btn-warning btn-sm" data-toggle="modal">Edit</button>';
+                $btn .= '<form class="d-inline-block" method="POST" action="' . url('admin/kelola-periode/' . $periode->id_periode) . '">'
+                    . csrf_field() . method_field('DELETE') . '
                     <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Apakah Anda yakin menghapus data ini?\');">
                         Hapus
                     </button>
                 </form>';
-            return $btn;
-        })
-        ->rawColumns(['aksi'])
-        ->make(true);
-}
+                return $btn;
+            })
+            ->rawColumns(['aksi'])
+            ->make(true);
+    }
 
 
 
@@ -110,9 +109,7 @@ class AdminController extends Controller
 
     public function kelolaPeriodeStore(Request $request)
     {
-
-
-            // Simpan data hanya dengan field yang divalidasi
+        // Simpan data hanya dengan field yang divalidasi
             PeriodeModel::create([
                 'nama_periode' => $request->input('nama_periode'),
             ]);
@@ -122,7 +119,7 @@ class AdminController extends Controller
                 'message' => 'Data periode berhasil disimpan',
             ]);
 
-        return redirect('admin/periode');
+        return redirect('admin/kelola-periode');
     }
 
     public function kelolaPeriodeEdit(string $id)
@@ -141,21 +138,6 @@ class AdminController extends Controller
 
     public function kelolaPeriodeUpdate(Request $request, string $id)
     {
-        // if ($request->ajax() || $request->wantsJson()) {
-        //     // Validasi inputan
-        //     $rules = [
-        //         'nama_periode' => 'required|string|max:255'
-        //     ];
-
-        //     $validator = Validator::make($request->all(), $rules);
-
-        //     if ($validator->fails()) {
-        //         return response()->json([
-        //             'status' => false,
-        //             'message' => 'Validasi Gagal',
-        //             'msgField' => $validator->errors(),
-        //         ]);
-        //     }
 
             $periode = PeriodeModel::find($id);
             if (!$periode) {
@@ -174,9 +156,8 @@ class AdminController extends Controller
                 'status' => true,
                 'message' => 'Data periode berhasil diperbarui',
             ]);
-        // }
 
-        return redirect('admin/periode');
+        return redirect('admin/kelola-periode');
     }
 
 
@@ -204,10 +185,19 @@ class AdminController extends Controller
             }
         }
 
-        return redirect('admin/periode');
+        return redirect('admin/kelola-periode');
     }
 
-
+    public function kelolaPeriodeDestroy(string $id)
+    {
+        $periode = PeriodeModel::find($id);
+        if ($periode) {
+            $periode->delete();
+            return redirect('admin/kelola-periode')->with('success', 'Data periode berhasil dihapus');
+        } else {
+            return redirect('admin/kelola-periode')->with('error', 'Data periode tidak ditemukan');
+        }
+    }
 
 
     // Kelola Prodi

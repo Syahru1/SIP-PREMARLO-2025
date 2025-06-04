@@ -33,7 +33,7 @@ Route::post('/logout', function () {
     Route::get('/', [MasterController::class, 'index']);
 
     // ADMIN
-    Route::middleware(['auth:admin'])->group(function () {
+    // Route::middleware(['auth:admin'])->group(function () {
         Route::group(['prefix' => 'admin'],function () {
             // Beranda
             Route::get('/beranda', [MasterController::class, 'admin'])->name('beranda');
@@ -59,20 +59,20 @@ Route::post('/logout', function () {
             Route::get('/kelola-pengguna-mahasiswa/edit', [AdminController::class, 'kelolaMahasiswaEdit'])->name('kelolaMahasiswa.edit');
 
             // Kelola Periode
-            Route::get('/periode', [AdminController::class, 'kelolaPeriodeIndex']);
-            Route::post('/periode/list', [AdminController::class, 'kelolaPeriodeList'])->name('periode.list');
-            Route::get('/periode/tambah', [AdminController::class, 'kelolaPeriodeTambah']);
-            Route::post('/periode/store', [AdminController::class, 'kelolaPeriodeStore']);
-            Route::get('/periode/edit/{id}', [AdminController::class, 'kelolaPeriodeEdit']);
-            Route::put('/periode/update/{id}', [AdminController::class, 'kelolaPeriodeUpdate'])->name('periode.update');
-            Route::get('/periode/delete/{id}', [AdminController::class, 'kelolaPeriodeConfirm']);
-            Route::delete('/periode/delete/{id}', [AdminController::class, 'kelolaPeriodeDelete']);
-            Route::delete('/periode/{id}', [AdminController::class, 'kelolaPeriodeDestroy']);
+            Route::get('/kelola-periode', [AdminController::class, 'kelolaPeriodeIndex']);
+            Route::post('/kelola-periode/list', [AdminController::class, 'kelolaPeriodeList'])->name('kelola-periode.list');
+            Route::get('/kelola-periode/tambah', [AdminController::class, 'kelolaPeriodeTambah']);
+            Route::post('/kelola-periode/store', [AdminController::class, 'kelolaPeriodeStore']);
+            Route::get('/kelola-periode/edit/{id}', [AdminController::class, 'kelolaPeriodeEdit']);
+            Route::put('/kelola-periode/update/{id}', [AdminController::class, 'kelolaPeriodeUpdate'])->name('kelola-periode.update');
+            Route::get('/kelola-periode/delete/{id}', [AdminController::class, 'kelolaPeriodeConfirm']);
+            Route::delete('/kelola-periode/delete/{id}', [AdminController::class, 'kelolaPeriodeDelete']);
+            Route::delete('/kelola-periode/{id}', [AdminController::class, 'kelolaPeriodeDestroy']);
 
             // Kelola Prodi
-            Route::get('/prodi', [AdminController::class, 'kelolaProdiIndex'])->name('kelolaProdi.index');
-            Route::get('/prodi/tambah', [AdminController::class, 'kelolaProdiTambah'])->name('kelolaProdi.tambah');
-            Route::get('/prodi/edit', [AdminController::class, 'kelolaProdiEdit'])->name('kelolaProdi.edit');
+            Route::get('/kelola-prodi', [AdminController::class, 'kelolaProdiIndex'])->name('kelolaProdi.index');
+            Route::get('/kelola-prodi/tambah', [AdminController::class, 'kelolaProdiTambah'])->name('kelolaProdi.tambah');
+            Route::get('/kelola-prodi/edit', [AdminController::class, 'kelolaProdiEdit'])->name('kelolaProdi.edit');
 
             // Laporan Analisis Prestasi
             Route::get('/laporan-analisis-prestasi', [AdminController::class, 'laporanAnalisisPrestasiIndex'])->name('laporanAnalisisPrestasi.index');
@@ -89,7 +89,7 @@ Route::post('/logout', function () {
             Route::get('/verifikasi-prestasi', [AdminController::class, 'verifikasiPrestasiIndex'])->name('verifikasiPrestasi.index');
             Route::get('/verifikasi-prestasi/detail', [AdminController::class, 'verifikasiPrestasiDetail'])->name('verifikasiPrestasi.detail');
         });
-    });
+    // });
 
     // MAHASISWA
     Route::middleware(['auth:mahasiswa'])->group(function () {

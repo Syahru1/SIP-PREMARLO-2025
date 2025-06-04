@@ -1,7 +1,7 @@
 <!-- Modal Tambah Periode -->
 {{-- <div class="modal fade" id="tambahPeriodeModal" tabindex="-1" aria-labelledby="tambahPeriodeLabel" aria-hidden="true"> --}}
   <div class="modal-dialog modal-lg">
-    <form method="POST" action="{{ url('admin/periode/store') }}" id="form-tambah">
+    <form method="POST" action="{{ url('admin/kelola-periode/store') }}" id="form-tambah">
       @csrf
       <div class="modal-content">
         <div class="modal-header">

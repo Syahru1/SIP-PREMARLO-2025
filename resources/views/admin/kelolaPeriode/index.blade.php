@@ -9,13 +9,17 @@
     </div>
 
     <div class="row layout-spacing">
+        @if (session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
+        @if (session('error'))
+            <div class="alert alert-danger">{{ session('error') }}</div>
+        @endif
         <div class="col-lg-12">
             <div class="statbox widget box box-shadow">
                 <div class="widget-header">
-                    <button onclick="modalAction('{{ url('admin/periode/tambah') }}')" class="btn btn-sm btn-success mt-1">Tambah Periode</button>
-                    {{-- <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#tambahPeriodeModal">Tambah Periode</button> --}}
+                    <button onclick="modalAction('{{ url('admin/kelola-periode/tambah') }}')" class="btn btn-sm btn-success mt-1">Tambah Periode</button>
                 </div>
-
                 <div class="widget-content widget-content-area">
                     <div class="table-responsive mb-4">
                         <table class="table mb-0" id="table_periode">
@@ -29,15 +33,13 @@
                         </table>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
 </div>
 
-{{-- Modal tambah periode --}}
-{{-- @include('admin.kelolaPeriode.tambahPeriode') --}}
-<div id="myModal" class="modal fade show" tabindex="-1" role="dialog" aria-hidden="true"></div>
+{{-- Modal --}}
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
 @endsection
 
 @push('js')
@@ -51,42 +53,36 @@
     var dataPeriode;
     $(document).ready(function() {
         dataPeriode = $('#table_periode').DataTable({
-                serverSide: true,
-                ajax: {
-                    "url": "{{ url('admin/periode/list') }}",
-                    "dataType": "json",
-                    "type": "POST",
-                    "data": function(d) {
-                        d._token = "{{ csrf_token() }}";
-                        d.id_periode = $('#id_periode').val();
-                    }
-                },
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: "{{ url('admin/kelola-periode/list') }}",
+                type: "POST",
+                data: function(d) {
+                    d._token = "{{ csrf_token() }}";
+                }
+            },
             columns: [
                 {
-                    data: null,
+                    data: 'DT_RowIndex',
+                    name: 'DT_RowIndex',
                     className: "text-center",
-                    width: "5%",
                     orderable: false,
-                    searchable: true,
-                    render: function (data, type, row, meta) {
-                        return meta.row + 1; // nomor urut
-                    }
+                    searchable: false
                 },
                 {
                     data: "nama_periode",
-                    className: "text-center",
+                    name: "nama_periode",
+                    className: "text-center"
                 },
                 {
                     data: "aksi",
+                    name: "aksi",
                     className: "text-center",
                     orderable: false,
-                    searchable: true
+                    searchable: false
                 }
             ]
-        });
-
-        $('#id_periode').on('change', function() {
-            dataPeriode.ajax.reload();
         });
     });
 </script>

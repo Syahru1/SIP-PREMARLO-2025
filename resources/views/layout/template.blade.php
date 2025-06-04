@@ -27,13 +27,14 @@
     <link href="{{ asset('plugins/table/datatable/dt-global_style.css') }}" rel="stylesheet" type="text/css" />
 
     <!-- END GLOBAL MANDATORY STYLES -->
+
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->
     <link href="{{ asset('assets/css/users/user-profile.css') }}" rel="stylesheet" type="text/css" />
     <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
 </head>
 <body class="alt-menu sidebar-noneoverflow">
 
-    <!--  BEGIN NAVBAR  -->
+    <!-- BEGIN NAVBAR -->
     @php
         $user = null;
         if (Auth::guard('admin')->check()) {
@@ -44,20 +45,12 @@
             $user = Auth::guard('dosen')->user();
         }
     @endphp
-
-    @if (Request::is('admin/*'))
-        @include('layout.navbar')
-    @elseif (Request::is('dosen/*'))
-        @include('layout.topbar-dosen')
-    @elseif (Request::is('mahasiswa/*'))
-        @include('layout.topbar-mahasiswa')
-    <!-- BEGIN NAVBAR -->
-    @include('layout.navbar')
     @if (Request::is('mahasiswa/*'))
-        @include('layout.topbar-mahasiswa')
+    @include('layout.topbar-mahasiswa')
     @elseif (Request::is('dosen/*'))
-        @include('layout.topbar-dosen')
+    @include('layout.topbar-dosen')
     @endif
+    @include('layout.navbar')
     <!-- END NAVBAR -->
 
     <!-- BEGIN MAIN CONTAINER -->
@@ -86,11 +79,10 @@
     <!-- END MAIN CONTAINER -->
 
     <script src="{{ asset('assets/js/libs/jquery-3.1.1.min.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/jquery.validation/1.19.5/jquery.validate.min.js"></script>
-    <script src="{{ asset('assets/js/app.js') }}"></script>
     <script src="{{ asset('bootstrap/js/popper.min.js') }}"></script>
     <script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('plugins/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
+    <script src="{{ asset('assets/js/app.js') }}"></script>
 
     <!-- DataTables core JS -->
     <script src="{{ asset('plugins/table/datatable/datatables.js') }}"></script>
@@ -112,23 +104,15 @@
             });
         });
     </script>
-<<<<<<< Updated upstream
-    <script src="{{asset('assets/js/custom.js')}}"></script>
-
-    @yield('scripts')
-    <!-- END GLOBAL MANDATORY SCRIPTS -->
-=======
->>>>>>> Stashed changes
 
     <script src="{{ asset('assets/js/custom.js') }}"></script>
+
     <script>
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-    </script>
-    <script>
 
         function formatNumber(num) {
             return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
