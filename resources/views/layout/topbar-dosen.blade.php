@@ -17,7 +17,7 @@
          style="gap: 12px; cursor:pointer; white-space: nowrap;">
 
       <!-- Nama pengguna -->
-      <span class="user-name font-weight-bold" style="white-space: nowrap;">Alan Green</span>
+      <span class="user-name font-weight-bold" style="white-space: nowrap;">{{ $user->nama_dosen }}</span>
 
       <!-- Foto profil -->
       <img src="assets/img/90x90.jpg" alt="avatar" class="rounded-circle" 

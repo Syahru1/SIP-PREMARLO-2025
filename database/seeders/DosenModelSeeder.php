@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class DosenModelSeeder extends Seeder
 {
@@ -15,12 +15,30 @@ class DosenModelSeeder extends Seeder
     {
         $data = [
             [
-                'id_dosen' => 1,
-                'nidn' => '1234567890',
-                'nama_dosen' => 'Dosen Utama',
+                'username' => 'DSN001',
+                'nama_dosen' => 'Joko',
                 'email' => 'G5Lb0@example.com',
-                'password' => Hash::make('password'),
-            ]
+                'password' => bcrypt('12345'),
+                'id_role' => '3',
+                'foto' => 'pp_dosen.png',
+            ],
+            [
+                'username' => 'DSN002',
+                'nama_dosen' => 'Reni',
+                'email' => 'G5Lb1@example.com',
+                'password' => bcrypt('12345'),
+                'id_role' => '3',
+                'foto' => 'pp_dosen.png',
+            ],
+            [
+                'username' => 'DSN003',
+                'nama_dosen' => 'Vacha',
+                'email' => 'G5Lb2@example.com',
+                'password' => bcrypt('12345'),
+                'id_role' => '3',
+                'foto' => 'pp_dosen.png',
+            ],
         ];
+        DB::table('dosen')->insert($data);
     }
 }

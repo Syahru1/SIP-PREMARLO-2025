@@ -1,8 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Yajra\DataTables\Facades\DataTables;
+use App\Models\AdminModel;
+use App\Models\PeriodeModel;
+use App\Models\ProdiModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
 {
@@ -76,15 +80,126 @@ class AdminController extends Controller
         return view('admin.kelolaPeriode.index');
     }
 
-    public function kelolaPeriodeTambah()
+    public function kelolaPeriodeList(Request $request)
     {
-        return view('admin.kelolaPeriode.tambahPeriode');
+        $periode = PeriodeModel::select('id_periode', 'nama_periode');
+
+        return DataTables::of($periode)
+            ->addIndexColumn()
+            ->addColumn('aksi', function ($periode) {
+                $btn = '<button onclick="modalAction(\'' . url('admin/kelola-periode/edit/' . $periode->id_periode) . '\')" class="btn btn-warning btn-sm" data-toggle="modal">Edit</button>';
+                $btn .= '<form class="d-inline-block" method="POST" action="' . url('admin/kelola-periode/' . $periode->id_periode) . '">'
+                    . csrf_field() . method_field('DELETE') . '
+                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Apakah Anda yakin menghapus data ini?\');">
+                        Hapus
+                    </button>
+                </form>';
+                return $btn;
+            })
+            ->rawColumns(['aksi'])
+            ->make(true);
     }
 
-    public function kelolaPeriodeEdit()
+
+
+    public function kelolaPeriodeTambah()
     {
-        return view('admin.kelolaPeriode.editPeriode');
+        $periode = PeriodeModel::select('id_periode', 'nama_periode')->get();
+        return view('admin.kelolaPeriode.tambahPeriode')->with('periode', $periode);
     }
+
+    public function kelolaPeriodeStore(Request $request)
+    {
+        // Simpan data hanya dengan field yang divalidasi
+            PeriodeModel::create([
+                'nama_periode' => $request->input('nama_periode'),
+            ]);
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Data periode berhasil disimpan',
+            ]);
+
+        return redirect('admin/kelola-periode');
+    }
+
+    public function kelolaPeriodeEdit(string $id)
+    {
+        $periode = PeriodeModel::find($id);
+
+        if (!$periode) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Data periode tidak ditemukan',
+            ]);
+        }
+
+        return view('admin.kelolaPeriode.editPeriode', ['periode' => $periode]);
+    }
+
+    public function kelolaPeriodeUpdate(Request $request, string $id)
+    {
+
+            $periode = PeriodeModel::find($id);
+            if (!$periode) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Data periode tidak ditemukan',
+                ]);
+            }
+
+            // Update periode
+            $periode->update([
+                'nama_periode' => $request->input('nama_periode'),
+            ]);
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Data periode berhasil diperbarui',
+            ]);
+
+        return redirect('admin/kelola-periode');
+    }
+
+
+    public function kelolaPeriodeConfirm(string $id){
+        $periode = PeriodeModel::find($id);
+
+        return view('admin.kelolaPeriode.confirmPeriode', ['periode' => $periode]);
+    }
+
+    public function kelolaPeriodeDelete(string $id)
+    {
+        if (request()->ajax() || request()->wantsJson()) {
+            $periode = PeriodeModel::find($id);
+            if ($periode) {
+                $periode->delete();
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Data periode berhasil dihapus'
+                ]);
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Data periode tidak ditemukan'
+                ]);
+            }
+        }
+
+        return redirect('admin/kelola-periode');
+    }
+
+    public function kelolaPeriodeDestroy(string $id)
+    {
+        $periode = PeriodeModel::find($id);
+        if ($periode) {
+            $periode->delete();
+            return redirect('admin/kelola-periode')->with('success', 'Data periode berhasil dihapus');
+        } else {
+            return redirect('admin/kelola-periode')->with('error', 'Data periode tidak ditemukan');
+        }
+    }
+
 
     // Kelola Prodi
     public function kelolaProdiIndex()
@@ -92,14 +207,126 @@ class AdminController extends Controller
         return view('admin.kelolaProdi.index');
     }
 
-    public function kelolaProdiTambah()
+    public function kelolaProdiList(Request $request)
     {
-        return view('admin.kelolaProdi.tambahProdi');
+        $prodi = ProdiModel::select('id_prodi', 'kode_prodi', 'nama_prodi');
+
+        return DataTables::of($prodi)
+            ->addIndexColumn()
+            ->addColumn('aksi', function ($prodi) {
+                $btn = '<button onclick="modalAction(\'' . url('admin/kelola-prodi/edit/' . $prodi->id_prodi) . '\')" class="btn btn-warning btn-sm" data-toggle="modal">Edit</button>';
+                $btn .= '<form class="d-inline-block" method="POST" action="' . url('admin/kelola-prodi/' . $prodi->id_prodi) . '">'
+                    . csrf_field() . method_field('DELETE') . '
+                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Apakah Anda yakin menghapus data ini?\');">
+                        Hapus
+                    </button>
+                </form>';
+                return $btn;
+            })
+            ->rawColumns(['aksi'])
+            ->make(true);
     }
 
-    public function kelolaProdiEdit()
+
+
+    public function kelolaProdiTambah()
     {
-        return view('admin.kelolaProdi.editProdi');
+        $prodi = ProdiModel::select('id_prodi', 'kode_prodi', 'nama_prodi')->get();
+        return view('admin.kelolaProdi.tambahProdi')->with('prodi', $prodi);
+    }
+
+    public function kelolaProdiStore(Request $request)
+    {
+        // Simpan data hanya dengan field yang divalidasi
+            ProdiModel::create([
+                'kode_prodi' => $request->input('kode_prodi'),
+                'nama_prodi' => $request->input('nama_prodi'),
+            ]);
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Data prodi berhasil disimpan',
+            ]);
+
+        return redirect('admin/kelola-prodi');
+    }
+
+    public function kelolaProdiEdit(string $id)
+    {
+        $prodi = ProdiModel::find($id);
+
+        if (!$prodi) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Data prodi tidak ditemukan',
+            ]);
+        }
+
+        return view('admin.kelolaProdi.editProdi', ['prodi' => $prodi]);
+    }
+
+    public function kelolaProdiUpdate(Request $request, string $id)
+    {
+
+            $prodi = ProdiModel::find($id);
+            if (!$prodi) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Data prodi tidak ditemukan',
+                ]);
+            }
+
+            // Update prodi
+            $prodi->update([
+                'kode_prodi' => $request->input('kode_prodi'),
+                'nama_prodi' => $request->input('nama_prodi'),
+            ]);
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Data prodi berhasil diperbarui',
+            ]);
+
+        return redirect('admin/kelola-prodi');
+    }
+
+
+    public function kelolaProdiConfirm(string $id){
+        $prodi = ProdiModel::find($id);
+
+        return view('admin.kelolaProdi.confirmProdi', ['prodi' => $prodi]);
+    }
+
+    public function kelolaProdiDelete(string $id)
+    {
+        if (request()->ajax() || request()->wantsJson()) {
+            $prodi = ProdiModel::find($id);
+            if ($prodi) {
+                $prodi->delete();
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Data prodi berhasil dihapus'
+                ]);
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Data prodi tidak ditemukan'
+                ]);
+            }
+        }
+
+        return redirect('admin/kelola-prodi');
+    }
+
+    public function kelolaProdiDestroy(string $id)
+    {
+        $prodi = ProdiModel::find($id);
+        if ($prodi) {
+            $prodi->delete();
+            return redirect('admin/kelola-prodi')->with('success', 'Data prodi berhasil dihapus');
+        } else {
+            return redirect('admin/kelola-prodi')->with('error', 'Data prodi tidak ditemukan');
+        }
     }
 
      // Laporan Analisis Prestasi
