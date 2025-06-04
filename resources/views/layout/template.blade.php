@@ -76,6 +76,8 @@
         });
     </script>
     <script src="{{asset('assets/js/custom.js')}}"></script>
+
+    @yield('scripts')
     <!-- END GLOBAL MANDATORY SCRIPTS -->
 
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->

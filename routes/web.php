@@ -29,6 +29,7 @@ Route::post('/logout', function () {
     return redirect('/login');
 })->name('logout');
 
+
     Route::get('/', [MasterController::class, 'index']);
 
     // ADMIN
@@ -36,48 +37,53 @@ Route::post('/logout', function () {
         Route::group(['prefix' => 'admin'],function () {
             // Beranda
             Route::get('/beranda', [MasterController::class, 'admin'])->name('beranda');
-            
+
             // Kelola Data Lomba
             Route::get('/kelola-data-lomba', [AdminController::class, 'kelolaDataLombaIndex'])->name('kelolaDataLomba.index');
             Route::get('/kelola-data-lomba/tambah', [AdminController::class, 'kelolaDataLombaTambah'])->name('kelolaDataLomba.tambah');
             Route::get('/kelola-data-lomba/edit', [AdminController::class, 'kelolaDataLombaEdit'])->name('kelolaDataLomba.edit');
-        
+
             // Kelola Pengguna Admin
             Route::get('/kelola-pengguna-admin', [AdminController::class, 'kelolaAdminIndex'])->name('kelolaAdmin.index');
             Route::get('/kelola-pengguna-admin/tambah', [AdminController::class, 'kelolaAdminTambah'])->name('kelolaAdmin.tambah');
             Route::get('/kelola-pengguna-admin/edit', [AdminController::class, 'kelolaAdminEdit'])->name('kelolaAdmin.edit');
-        
+
             // Kelola Pengguna Dosen
             Route::get('/kelola-pengguna-dosen', [AdminController::class, 'kelolaDosenIndex'])->name('kelolaDosen.index');
             Route::get('/kelola-pengguna-dosen/tambah', [AdminController::class, 'kelolaDosenTambah'])->name('kelolaDosen.tambah');
             Route::get('/kelola-pengguna-dosen/edit', [AdminController::class, 'kelolaDosenEdit'])->name('kelolaDosen.edit');
-        
+
             // Kelola Pengguna Mahasiswa
             Route::get('/kelola-pengguna-mahasiswa', [AdminController::class, 'kelolaMahasiswaIndex'])->name('kelolaMahasiswa.index');
             Route::get('/kelola-pengguna-mahasiswa/tambah', [AdminController::class, 'kelolaMahasiswaTambah'])->name('kelolaMahasiswa.tambah');
             Route::get('/kelola-pengguna-mahasiswa/edit', [AdminController::class, 'kelolaMahasiswaEdit'])->name('kelolaMahasiswa.edit');
-        
+
             // Kelola Periode
             Route::get('/kelola-periode', [AdminController::class, 'kelolaPeriodeIndex'])->name('kelolaPeriode.index');
             Route::get('/kelola-periode/tambah', [AdminController::class, 'kelolaPeriodeTambah'])->name('kelolaPeriode.tambah');
             Route::get('/kelola-periode/edit', [AdminController::class, 'kelolaPeriodeEdit'])->name('kelolaPeriode.edit');
-        
+
             // Kelola Prodi
             Route::get('/kelola-prodi', [AdminController::class, 'kelolaProdiIndex'])->name('kelolaProdi.index');
             Route::get('/kelola-prodi/tambah', [AdminController::class, 'kelolaProdiTambah'])->name('kelolaProdi.tambah');
             Route::get('/kelola-prodi/edit', [AdminController::class, 'kelolaProdiEdit'])->name('kelolaProdi.edit');
-        
+
             // Laporan Analisis Prestasi
             Route::get('/laporan-analisis-prestasi', [AdminController::class, 'laporanAnalisisPrestasiIndex'])->name('laporanAnalisisPrestasi.index');
-        
+            Route::get('/laporan-analisis-prestasi/detail', [AdminController::class, 'laporanAnalisisPrestasiDetail'])->name('laporan.detail');
+
+            // Rekomendasi lomba
+            Route::get('/rekomendasi-lomba', [AdminController::class, 'rekomendasiLombaIndex'])->name('admin.rekomendasiLomba.index');
+            Route::get('/rekomendasi-lomba/lihat', [AdminController::class, 'rekomendasiLombaLihat'])->name('rekomendasi.lomba.lihat');
+
             // Profile
             Route::get('/profile', [AdminController::class, 'profileIndex'])->name('profile.index');
             Route::get('/profile/edit', [AdminController::class, 'profileEdit'])->name('profile.edit');
-        
+
             // Verifikasi Lomba
             Route::get('/verifikasi-lomba', [AdminController::class, 'verifikasiLombaIndex'])->name('verifikasiLomba.index');
             Route::get('/verifikasi-lomba/detail', [AdminController::class, 'verifikasiLombaDetail'])->name('verifikasiLomba.detail');
-        
+
             // Verifikasi Prestasi
             Route::get('/verifikasi-prestasi', [AdminController::class, 'verifikasiPrestasiIndex'])->name('verifikasiPrestasi.index');
             Route::get('/verifikasi-prestasi/detail', [AdminController::class, 'verifikasiPrestasiDetail'])->name('verifikasiPrestasi.detail');
@@ -89,7 +95,7 @@ Route::post('/logout', function () {
         Route::group(['prefix' => 'mahasiswa'],function () {
             // Beranda
             Route::get('/beranda', [MasterController::class, 'mahasiswa'])->name('beranda.mahasiswa');
-        
+
             Route::get('/prestasi', [MahasiswaController::class, 'prestasi'])->name('prestasi');
             Route::get('/lomba', [MahasiswaController::class, 'lomba'])->name('lomba');
             Route::get('/profil', [MahasiswaController::class, 'profil'])->name('profil');
@@ -107,7 +113,7 @@ Route::post('/logout', function () {
             Route::delete('/profil/minat/{id}', [MahasiswaController::class, 'delete']);
             Route::delete('/profil/bidang-keahlian/{id}', [MahasiswaController::class, 'delete']);
             Route::get('/edit-profil', [MahasiswaController::class, 'edit_profil'])->name('edit-profil');
-        
+
         });
     });
 
@@ -116,7 +122,7 @@ Route::post('/logout', function () {
         Route::group(['prefix' => 'dosen'],function () {
             // Beranda
             Route::get('/beranda', [MasterController::class, 'dosen'])->name('beranda.dosen');
-        
+
             Route::get('/profil', [DosenController::class, 'profil'])->name('profil.dosen');
             Route::get('/lomba', [DosenController::class, 'lomba'])->name('lomba.dosen');
             Route::get('/notifikasi', [DosenController::class, 'notifikasi'])->name('notifikasi.dosen');
