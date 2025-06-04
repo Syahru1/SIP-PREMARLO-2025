@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 
 class AdminModelSeeder extends Seeder
 {
@@ -15,9 +14,9 @@ class AdminModelSeeder extends Seeder
     public function run(): void
     {
         $data = [
-            ['id_admin' => 1, 'username' => 'ADM001', 'password' => Hash::make('12345'), 'nama_admin' => 'Admin Utama', 'foto_admin' => 'pp_admin.png', 'id_role' => '1'],
-            ['id_admin' => 2, 'username' => 'ADM002', 'password' => Hash::make('12345'), 'nama_admin' => 'Admin Pendukung', 'foto_admin' => 'pp_admin.png', 'id_role' => '1'],
-            ['id_admin' => 3, 'username' => 'ADM003', 'password' => Hash::make('12345'), 'nama_admin' => 'Admin Cadangan', 'foto_admin' => 'pp_admin.png', 'id_role' => '1'],
+            ['id_admin' => 1, 'username' => 'ADM001', 'password' => bcrypt('12345'), 'nama_admin' => 'Admin Utama', 'foto_admin' => 'pp_admin.png', 'id_role' => '1'],
+            ['id_admin' => 2, 'username' => 'ADM002', 'password' => bcrypt('12345'), 'nama_admin' => 'Admin Pendukung', 'foto_admin' => 'pp_admin.png', 'id_role' => '1'],
+            ['id_admin' => 3, 'username' => 'ADM003', 'password' => bcrypt('12345'), 'nama_admin' => 'Admin Cadangan', 'foto_admin' => 'pp_admin.png', 'id_role' => '1'],
         ];
         DB::table('admin')->insert($data);
     }
