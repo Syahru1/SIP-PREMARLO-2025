@@ -17,8 +17,16 @@ return new class extends Migration
             $table->string('nama_dosen');
             $table->string('email')->unique();
             $table->string('password');
+            $table->unsignedBigInteger('id_role')->index();
             $table->string('foto');
             $table->timestamps();
+
+            //foreign key constraints
+            $table->foreign('id_role')
+                ->references('id_role')
+                ->on('role')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
         });
     }
 
