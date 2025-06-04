@@ -67,6 +67,10 @@ Route::group(['prefix' => 'admin'],function () {
     Route::get('/laporan-analisis-prestasi', [AdminController::class, 'laporanAnalisisPrestasiIndex'])->name('laporanAnalisisPrestasi.index');
     Route::get('/laporan-analisis-prestasi/detail', [AdminController::class, 'laporanAnalisisPrestasiDetail'])->name('laporan.detail');
 
+    // Rekomendasi lomba
+    Route::get('/rekomendasi-lomba', [App\Http\Controllers\AdminController::class, 'rekomendasiLombaIndex'])->name('admin.rekomendasiLomba.index');
+    Route::get('/rekomendasi-lomba/lihat', [AdminController::class, 'rekomendasiLombaLihat'])->name('rekomendasi.lomba.lihat');
+
     // Profile
     Route::get('/profile', [AdminController::class, 'profileIndex'])->name('profile.index');
     Route::get('/profile/edit', [AdminController::class, 'profileEdit'])->name('profile.edit');
