@@ -43,26 +43,35 @@
                     type: form.method,
                     data: $(form).serialize(),
                     success: function (response) {
-                        console.log(response);  // Untuk memverifikasi response
                         if (response.status) {
                             $('#myModal').modal('hide');
                             Swal.fire({
                                 icon: 'success',
-                                title: 'Berhasil',
-                                text: response.message
+                                title: 'Sukses',
+                                text: response.message || 'Data periode berhasil ditambahkan.',
+                                showConfirmButton: false,
+                                timer: 1500
                             });
                             dataPeriode.ajax.reload();
                         } else {
+                            // Tampilkan error validasi jika ada
                             $('.error-text').text('');
                             $.each(response.msgField, function (prefix, val) {
                                 $('#error-' + prefix).text(val[0]);
                             });
                             Swal.fire({
                                 icon: 'error',
-                                title: 'Terjadi Kesalahan',
-                                text: response.message
+                                title: 'Gagal Menambahkan',
+                                text: response.message || 'Gagal menyimpan data. Periksa kembali isian Anda.'
                             });
                         }
+                    },
+                    error: function (xhr) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Kesalahan Server',
+                            text: 'Terjadi kesalahan saat menyimpan data. Coba lagi nanti.'
+                        });
                     }
                 });
                 return false;
