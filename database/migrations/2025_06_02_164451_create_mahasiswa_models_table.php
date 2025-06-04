@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_prodi')->index();
             $table->unsignedBigInteger('id_periode')->index();
             $table->unsignedBigInteger('id_preferensi_lomba')->index();
-            $table->string('nim')->unique();
+            $table->string('username')->unique();
             $table->string('nama');
             $table->string('password');
             $table->string('angkatan');
