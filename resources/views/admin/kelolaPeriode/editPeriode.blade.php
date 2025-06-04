@@ -1,6 +1,29 @@
-<div class="modal fade" id="editPeriodeModal{{ $periode->id }}" tabindex="-1" role="dialog" aria-labelledby="editPeriodeLabel{{ $periode->id }}" aria-hidden="true">
-    <div class="modal-dialog modal-md" role="document">
-        <form action="{{ url('admin/kelola-periode/' . $periode->id) }}" method="POST">
+@empty($periode)
+<!-- Modal Edit -->
+{{-- <div class="modal fade" id="editPeriodeModal{{ $periode->id_periode }}" tabindex="-1" role="dialog" aria-labelledby="editPeriodeLabel{{ $periode->id_periode }}" aria-hidden="true"> --}}
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Kesalahan</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-danger">
+                    <h5><i class="icon fas fa-ban"></i> Kesalahan!!!</h5>
+                    Data yang anda cari tidak ditemukan
+                </div>
+                <button type="button" class="btn btn-warning" data-dismiss="modal">Kembali</button>
+            </div>
+        </div>
+    </div>
+{{-- </div> --}}
+@else
+<!-- Modal Edit -->
+{{-- <div class="modal fade" id="editPeriodeModal{{ $periode->id_periode }}" tabindex="-1" role="dialog" aria-labelledby="editPeriodeLabel{{ $periode->id_periode }}" aria-hidden="true"> --}}
+    <div class="modal-dialog modal-md">
+        <form action="{{ url('admin/kelola-periode/update/' . $periode->id_periode ) }}" method="POST" id="form-edit">
             @csrf
             @method('PUT')
             <div class="modal-content">
@@ -13,22 +36,8 @@
                 </div>
 
                 <div class="modal-body">
-                    <div class="form-group mb-3">
-                        <label style="text-align:left; display:block;">Tahun Ajaran</label>
-                        <select name="tahun_ajaran" class="form-control" required>
-                            @foreach (['2021/2022', '2022/2023', '2023/2024', '2024/2025'] as $tahun)
-                                <option value="{{ $tahun }}" {{ $periode->tahun_ajaran == $tahun ? 'selected' : '' }}>{{ $tahun }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <div class="form-group mb-3">
-                        <label style="text-align:left; display:block;">Semester</label>
-                        <select name="angkatan" class="form-control" required>
-                            <option value="Ganjil" {{ $periode->angkatan == 'Ganjil' ? 'selected' : '' }}>Ganjil</option>
-                            <option value="Genap" {{ $periode->angkatan == 'Genap' ? 'selected' : '' }}>Genap</option>
-                        </select>
-                    </div>
+                    <label for="namaPeriode{{ $periode->id_periode }}" class="form-label">Nama Periode</label>
+                    <input type="text" class="form-control" id="namaPeriode{{ $periode->id_periode }}" name="nama_periode" value="{{ $periode->nama_periode }}" required>
                 </div>
 
                 <div class="modal-footer">
@@ -39,4 +48,5 @@
             </div>
         </form>
     </div>
-</div>
+{{-- </div> --}}
+@endempty
