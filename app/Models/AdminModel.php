@@ -47,6 +47,6 @@ class AdminModel extends Authenticatable
      */
     public function getRole()
     {
-        return 'admin';
+        return $this->role->kode_role;
     }
 }
