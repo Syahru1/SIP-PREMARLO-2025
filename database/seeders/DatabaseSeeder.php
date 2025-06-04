@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
             RoleModelSeeder::class,
             PeriodeModelSeeder::class,
             ProdiModelSeeder::class,
-            PrestasiModelSeeder::class,
+            DosenModelSeeder::class,      
             BiayaPendaftaranModelSeeder::class,
             BidangModelSeeder::class,
             TingkatKompetisiModelSeeder::class,
@@ -25,7 +25,8 @@ class DatabaseSeeder extends Seeder
             LombaModelSeeder::class,
             AdminModelSeeder::class,
             PreferensiLombaModelSeeder::class,
-            MahasiswaModelSeeder::class,            
+            MahasiswaModelSeeder::class,      
+            PrestasiModelSeeder::class,
         ]);
         // \App\Models\User::factory(10)->create();
 
