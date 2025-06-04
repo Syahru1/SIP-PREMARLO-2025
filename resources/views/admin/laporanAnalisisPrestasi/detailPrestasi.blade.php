@@ -4,10 +4,10 @@
 
 @php
     $mahasiswa = (object)[
-        'nama' => 'Andi Wijaya',
-        'program_studi' => 'Teknik Informatika',
-        'nim' => 'TI2023001',
-        'email' => 'andi.wijaya@example.com',
+        'nama' => 'Syahrul',
+        'program_studi' => 'D-4 Teknik Informatika',
+        'nim' => '2341720002',
+        'email' => 'gunawan.wanwan@example.com',
         'prestasi' => collect([
             (object)[
                 'nama_prestasi' => 'Juara 1 Olimpiade Matematika',

@@ -32,7 +32,7 @@
 
         <ul class="list-unstyled menu-categories" id="accordionExample">
             <li class="menu">
-                <a href="" aria-expanded="{{ Request::is('admin/beranda*') ? 'true' : 'false' }}" class="dropdown-toggle">
+                <a href="{{ url('admin/beranda') }}" aria-expanded="{{ Request::is('admin/beranda*') ? 'true' : 'false' }}" class="dropdown-toggle">
                     <div>
                         <svg xmlns="http://www.w3.org/2000/svg" class="feather feather-home" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
                         <span>Beranda</span>
@@ -101,7 +101,7 @@
             </li>
 
             <li class="menu">
-                <a href="" class="dropdown-toggle" aria-expanded="{{ Request::is('admin/beranda*') ? 'true' : 'false' }}">
+                <a href="{{ url('admin/rekomendasi-lomba') }}" class="dropdown-toggle" aria-expanded="{{ Request::is('admin/beranda*') ? 'true' : 'false' }}">
                     <div>
                         <svg class="feather feather-thumbs-up" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 9V5a3 3 0 0 0-6 0v4H5a2 2 0 0 0 0 4h3v7h6l3-6v-5z"/><path d="M23 10h-4v12h4z"/></svg>
                         <span>Rekomendasi Lomba</span>

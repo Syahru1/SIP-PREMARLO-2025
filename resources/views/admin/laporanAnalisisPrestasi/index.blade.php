@@ -5,24 +5,24 @@
 @php
     $laporanPrestasi = collect([
         (object)[
-            'nama' => 'Andi Wijaya',
-            'program_studi' => 'Teknik Informatika',
+            'nama' => 'Syahrul',
+            'program_studi' => 'D-4 Teknik Informatika',
             'kategori' => 'Akademik',
             'tingkat' => 'Nasional',
             'industri' => 'Teknologi',
             'tahun' => '2023/2024',
         ],
         (object)[
-            'nama' => 'Siti Rahma',
-            'program_studi' => 'Manajemen',
+            'nama' => 'Afifah',
+            'program_studi' => 'D-4 Sistem Informasi Bisnis',
             'kategori' => 'Non-Akademik',
             'tingkat' => 'Internasional',
             'industri' => 'Bisnis',
             'tahun' => '2024/2025',
         ],
         (object)[
-            'nama' => 'Budi Santoso',
-            'program_studi' => 'Teknik Elektro',
+            'nama' => 'Dewita',
+            'program_studi' => 'D-2 PPLS',
             'kategori' => 'Akademik',
             'tingkat' => 'Provinsi',
             'industri' => 'Energi',
