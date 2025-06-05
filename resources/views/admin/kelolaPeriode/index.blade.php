@@ -57,9 +57,10 @@
             serverSide: true,
             ajax: {
                 url: "{{ url('admin/kelola-periode/list') }}",
+                dataType: "json",
                 type: "POST",
                 data: function(d) {
-                    d._token = "{{ csrf_token() }}";
+                    d.id_periode = $('#id_periode').val();
                 }
             },
             columns: [
@@ -84,6 +85,16 @@
                 }
             ]
         });
+
+        // Reload table when modal closed (existing)
+        $('#myModal').on('hidden.bs.modal', function () {
+            dataPeriode.ajax.reload();
+        });
+
+        // Realtime update: polling every 5 seconds
+        setInterval(function() {
+            dataPeriode.ajax.reload(null, false); // false to keep current page
+        }, 5000);
     });
 </script>
 @endpush

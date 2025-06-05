@@ -41,7 +41,9 @@
                 $.ajax({
                     url: form.action,
                     type: form.method,
-                    data: $(form).serialize(),
+                    data: new formData(form),
+                    contentType: false,
+                    processData: false, 
                     success: function (response) {
                         if (response.status) {
                             $('#myModal').modal('hide');
