@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('preferensi_lomba', function (Blueprint $table) {
             $table->id('id_preferensi_lomba');
-            $table->unsignedBigInteger('id_bidang')->index();
             $table->unsignedBigInteger('id_penyelenggara')->index();
             $table->unsignedBigInteger('id_biaya_pendaftaran')->index();
             $table->unsignedBigInteger('id_tingkat_kompetisi')->index();
@@ -21,10 +20,6 @@ return new class extends Migration
             $table->timestamps();
 
             //foreign keys
-            $table->foreign('id_bidang')
-                ->references('id_bidang')
-                ->on('c_bidang')
-                ->onDelete('cascade');
             $table->foreign('id_penyelenggara')
                 ->references('id_penyelenggara')
                 ->on('c_penyelenggara')
