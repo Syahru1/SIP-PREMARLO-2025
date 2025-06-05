@@ -13,24 +13,29 @@
         <div class="modal-body">
 
           <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" class="form-control" id="username" name="username" placeholder="Masukkan Username" required>
+          </div>
+
+          <div class="mb-3">
             <label for="nama" class="form-label">Nama Dosen</label>
             <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukkan Nama Dosen" required>
           </div>
 
           <div class="mb-3">
-            <label for="nidn" class="form-label">NIDN</label>
-            <input type="text" class="form-control" id="nidn" name="nidn" placeholder="Masukkan NIDN" required>
-          </div>
-
-          <div class="mb-3">
-            <label for="jabatan" class="form-label">Jabatan</label>
-            <input type="text" class="form-control" id="jabatan" name="jabatan" placeholder="Masukkan Jabatan" required>
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="Masukkan Email" required>
           </div>
 
           <div class="mb-3">
             <label for="password" class="form-label">Password</label>
             <input type="password" class="form-control" id="password" name="password" placeholder="Masukkan Password" required>
           </div>
+
+        <div class="mb-3">
+            <label for="foto" class="form-label">Foto</label>
+            <input type="file" class="form-control" id="foto" name="foto" accept="image/*" required>
+        </div>
 
         </div>
         <div class="modal-footer">

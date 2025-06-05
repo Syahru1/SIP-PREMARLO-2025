@@ -4,7 +4,7 @@
 <div class="layout-px-spacing">
     <div class="page-header">
         <div class="page-title">
-            <h3>Data Periode</h3>
+            <h3>Data Admin</h3>
         </div>
     </div>
 
@@ -18,15 +18,16 @@
         <div class="col-lg-12">
             <div class="statbox widget box box-shadow">
                 <div class="widget-header">
-                    <button onclick="modalAction('{{ url('admin/kelola-periode/tambah') }}')" class="btn btn-sm btn-success mt-1">Tambah Periode</button>
+                    <button onclick="modalAction('{{ url('admin/kelola-admin/tambah') }}')" class="btn btn-sm btn-success mt-1">Tambah Admin</button>
                 </div>
                 <div class="widget-content widget-content-area">
                     <div class="table-responsive mb-4">
-                        <table class="table mb-0" id="table_periode">
+                        <table class="table mb-0" id="table_admin">
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th class="text-center">Tahun Periode</th>
+                                    <th class="text-center">Username</th>
+                                    <th class="text-center">Nama Admin</th>
                                     <th class="text-center">Aksi</th>
                                 </tr>
                             </thead>
@@ -52,15 +53,14 @@
 
     var dataPeriode;
     $(document).ready(function() {
-        dataPeriode = $('#table_periode').DataTable({
+        dataPeriode = $('#table_admin').DataTable({
             processing: true,
             serverSide: true,
             ajax: {
-                url: "{{ url('admin/kelola-periode/list') }}",
-                dataType: "json",
+                url: "{{ url('admin/kelola-admin/list') }}",
                 type: "POST",
                 data: function(d) {
-                    d.id_periode = $('#id_periode').val();
+                    d._token = "{{ csrf_token() }}";
                 }
             },
             columns: [
@@ -72,8 +72,13 @@
                     searchable: false
                 },
                 {
-                    data: "nama_periode",
-                    name: "nama_periode",
+                    data: "username",
+                    name: "username",
+                    className: "text-center"
+                },
+                {
+                    data: "nama_admin",
+                    name: "nama_admin",
                     className: "text-center"
                 },
                 {
@@ -85,16 +90,6 @@
                 }
             ]
         });
-
-        // Reload table when modal closed (existing)
-        $('#myModal').on('hidden.bs.modal', function () {
-            dataPeriode.ajax.reload();
-        });
-
-        // Realtime update: polling every 5 seconds
-        setInterval(function() {
-            dataPeriode.ajax.reload(null, false); // false to keep current page
-        }, 5000);
     });
 </script>
 @endpush
