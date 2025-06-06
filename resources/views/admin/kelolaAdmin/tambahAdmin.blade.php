@@ -1,7 +1,7 @@
 <!-- Modal Tambah Admin -->
 <div class="modal fade" id="tambahAdminModal" tabindex="-1" aria-labelledby="tambahAdminLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
-    <form method="POST" action="{{ url('admin/kelola-pengguna-admin') }}">
+    <form method="POST" action="{{ url('admin/kelola-admin') }}">
       @csrf
       <div class="modal-content">
         <div class="modal-header">
@@ -13,29 +13,24 @@
         <div class="modal-body">
 
           <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" class="form-control" id="username" name="username" placeholder="Masukkan Username" required>
+          </div>
+
+          <div class="mb-3">
             <label for="nama" class="form-label">Nama Admin</label>
-            <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukkan Nama Admin" required>
-          </div>
-
-          <div class="mb-3">
-            <label for="nidn" class="form-label">NIDN</label>
-            <input type="text" class="form-control" id="nidn" name="nidn" placeholder="Masukkan NIDN" required>
-          </div>
-
-          <div class="mb-3">
-            <label for="jabatan" class="form-label">Jabatan</label>
-            <select id="jabatan" name="jabatan" class="form-control" required>
-              <option value="">-- Pilih Jabatan --</option>
-              <option value="Admin Prodi TI">Admin Prodi TI</option>
-              <option value="Admin Prodi SIB">Admin Prodi SIB</option>
-              <option value="Admin Jurusan">Admin Jurusan</option>
-            </select>
+            <input type="text" class="form-control" id="nama" name="nama_admin" placeholder="Masukkan Nama Admin" required>
           </div>
 
           <div class="mb-3">
             <label for="password" class="form-label">Password</label>
             <input type="password" class="form-control" id="password" name="password" placeholder="Masukkan Password" required>
           </div>
+
+        <div class="mb-3">
+            <label for="foto_admin" class="form-label">Foto_admin</label>
+            <input type="file" class="form-control" id="foto_admin" name="foto_admin" accept="image/*" required>
+        </div>
 
         </div>
         <div class="modal-footer">

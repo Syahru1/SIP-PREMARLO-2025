@@ -41,16 +41,16 @@
             </li>
 
             <li class="menu">
-                <a href="#kelolaAkun" class="dropdown-toggle" aria-expanded="{{ Request::is('admin/kelola-pengguna-*') ? 'true' : 'false' }}" data-toggle="collapse">
+                <a href="#kelolaAkun" class="dropdown-toggle" aria-expanded="{{ Request::is('admin/kelola-*') ? 'true' : 'false' }}" data-toggle="collapse">
                     <div>
                         <svg xmlns="http://www.w3.org/2000/svg" class="feather feather-users" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-3-3.87"/><path d="M7 21v-2a4 4 0 0 1 3-3.87"/><circle cx="12" cy="7" r="4"/></svg>
                         <span>Kelola Akun</span>
                     </div>
                 </a>
                 <ul class="collapse submenu list-unstyled" id="kelolaAkun" data-parent="#accordionExample">
-                    <li><a href="{{ url('admin/kelola-pengguna-admin') }}">Akun Admin</a></li>
-                    <li><a href="{{ url('admin/kelola-pengguna-dosen') }}">Akun Dosen</a></li>
-                    <li><a href="{{ url('admin/kelola-pengguna-mahasiswa') }}">Akun Mahasiswa</a></li>
+                    <li><a href="{{ url('admin/kelola-admin') }}">Akun Admin</a></li>
+                    <li><a href="{{ url('admin/kelola-dosen') }}">Akun Dosen</a></li>
+                    <li><a href="{{ url('admin/kelola-mahasiswa') }}">Akun Mahasiswa</a></li>
                 </ul>
             </li>
 

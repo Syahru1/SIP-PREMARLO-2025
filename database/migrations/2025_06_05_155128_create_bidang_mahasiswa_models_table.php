@@ -11,27 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('c_lomba', function (Blueprint $table) {
-            $table->id('id_lomba');
-            $table->string('kode_lomba')->unique();
-            $table->string('nama_lomba');
-            $table->unsignedBigInteger('id_tingkat_kompetisi')->index();
+        Schema::create('preferensi_mahasiswa', function (Blueprint $table) {
+            $table->id('id_preferensi_mahasiswa');
+            $table->unsignedBigInteger('id_mahasiswa')->index();
             $table->unsignedBigInteger('id_penyelenggara')->index();
             $table->unsignedBigInteger('id_biaya_pendaftaran')->index();
+            $table->unsignedBigInteger('id_tingkat_kompetisi')->index();
             $table->unsignedBigInteger('id_hadiah')->index();
-            $table->date('tanggal_mulai_pendaftaran');
-            $table->date('tanggal_akhir_pendaftaran');
-            $table->string('lokasi_lomba')->nullable();
-            $table->string('link_pendaftaran');
-            $table->text('deskripsi_lomba')->nullable();
-            $table->enum('status_lomba', ['Masih Berlangsung', 'Selesai'])->default('Masih Berlangsung');
-            $table->string('gambar_lomba');
             $table->timestamps();
 
-            // Foreign key constraints
-            $table->foreign('id_tingkat_kompetisi')
-                ->references('id_tingkat_kompetisi')
-                ->on('c_tingkat_kompetisi')
+            //foreign keys
+            $table->foreign('id_mahasiswa')
+                ->references('id_mahasiswa')
+                ->on('mahasiswa')
                 ->onDelete('cascade');
             $table->foreign('id_penyelenggara')
                 ->references('id_penyelenggara')
@@ -40,6 +32,10 @@ return new class extends Migration
             $table->foreign('id_biaya_pendaftaran')
                 ->references('id_biaya_pendaftaran')
                 ->on('c_biaya_pendaftaran')
+                ->onDelete('cascade');
+            $table->foreign('id_tingkat_kompetisi')
+                ->references('id_tingkat_kompetisi')
+                ->on('c_tingkat_kompetisi')
                 ->onDelete('cascade');
             $table->foreign('id_hadiah')
                 ->references('id_hadiah')
@@ -53,6 +49,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('c_lomba');
+        Schema::dropIfExists('preferensi_mahasiswa');
     }
 };

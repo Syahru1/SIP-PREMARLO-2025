@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Yajra\DataTables\Facades\DataTables;
 use App\Models\AdminModel;
+use App\Models\DosenModel;
 use App\Models\PeriodeModel;
 use App\Models\ProdiModel;
 use Illuminate\Http\Request;
@@ -29,23 +30,161 @@ class AdminController extends Controller
     // Kelola Pengguna Admin
     public function kelolaAdminIndex()
     {
-        return view('admin.kelolaPenggunaAdmin.index');
+        return view('admin.kelolaAdmin.index');
     }
+
+    public function kelolaAdminList()
+    {
+        $admin = AdminModel::select('id_admin', 'username', 'nama_admin', 'password', 'foto_admin', 'id_role')
+            ->where('id_role', 1);
+
+        return DataTables::of($admin)
+            ->addIndexColumn()
+            ->addColumn('aksi', function ($admin) {
+                $btn = '<button onclick="modalAction(\'' . url('admin/kelola-admin/edit/' . $admin->id_admin) . '\')" class="btn btn-warning btn-sm" data-toggle="modal">Edit</button>';
+                $btn .= '<form class="d-inline-block" method="POST" action="' . url('admin/kelola-admin/' . $admin->id_admin) . '">'
+                    . csrf_field() . method_field('DELETE') . '
+                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Apakah Anda yakin menghapus data ini?\');">
+                        Hapus
+                    </button>
+                </form>';
+                return $btn;
+            })
+            ->rawColumns(['aksi'])
+            ->make(true);
+    }
+
+
 
     public function kelolaAdminTambah()
     {
-        return view('admin.kelolaPenggunaAdmin.tambahAdmin');
+        $admin = AdminModel::select( 'username', 'nama_admin', 'password', 'foto_admin', 'id_role')
+            ->where('id_role', 1)->get();
+
+        return view('admin.kelolaAdmin.tambahAdmin')->with('admin', $admin);
     }
 
-    public function kelolaAdminEdit()
+    public function kelolaAdminStore(Request $request)
     {
-        return view('admin.kelolaPenggunaAdmin.editAdmin');
+        // Simpan data hanya dengan field yang divalidasi
+            AdminModel::create([
+                'username' => $request->input('username'),
+                'nama_admin' => $request->input('nama_admin'),
+                'password' => bcrypt($request->input('password')), // Enkripsi password
+                'foto_admin' => $request->input('foto_admin'), // Pastikan ini adalah path atau URL foto yang valid
+                'id_role' => 1, // Pastikan id_role sesuai dengan admin
+            ]);
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Data admin berhasil disimpan',
+            ]);
+
+        return redirect('admin/kelola-admin');
+    }
+
+    public function kelolaAdminEdit(string $id)
+    {
+        $admin = AdminModel::find($id);
+
+        if (!$admin) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Data admin tidak ditemukan',
+            ]);
+        }
+
+        return view('admin.kelolaAdmin.editAdmin', ['admin' => $admin]);
+    }
+
+    public function kelolaAdminUpdate(Request $request, string $id)
+    {
+
+            $admin = AdminModel::find($id);
+            if (!$admin) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Data admin tidak ditemukan',
+                ]);
+            }
+
+            // Update admin
+            $admin->update([
+                'nama_admin' => $request->input('nama_admin'),
+            ]);
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Data admin berhasil diperbarui',
+            ]);
+
+        return redirect('admin/kelola-admin');
+    }
+
+
+    public function kelolaAdminConfirm(string $id){
+        $admin = AdminModel::find($id);
+
+        return view('admin.kelolaAdmin.confirmadmin', ['admin' => $admin]);
+    }
+
+    public function kelolaAdminDelete(string $id)
+    {
+        if (request()->ajax() || request()->wantsJson()) {
+            $admin = AdminModel::find($id);
+            if ($admin) {
+                $admin->delete();
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Data admin berhasil dihapus'
+                ]);
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Data admin tidak ditemukan'
+                ]);
+            }
+        }
+
+        return redirect('admin/kelola-admin');
+    }
+
+    public function kelolaAdminDestroy(string $id)
+    {
+        $admin = AdminModel::find($id);
+        if ($admin) {
+            $admin->delete();
+            return redirect('admin/kelola-admin')->with('success', 'Data admin berhasil dihapus');
+        } else {
+            return redirect('admin/kelola-admin')->with('error', 'Data admin tidak ditemukan');
+        }
     }
 
     // Kelola Pengguna Dosen
     public function kelolaDosenIndex()
     {
-        return view('admin.kelolaPenggunaDosen.index');
+        return view('admin.kelolaDosen.index');
+    }
+
+    public function kelolaDosenList()
+    {
+        $dosen = DosenModel::select('id_dosen', 'username', 'nama_dosen', 'email', 'password', 'foto', 'id_role')
+            ->where('id_role', 3); // Hanya mengambil dosen dengan id_role 3
+
+        return DataTables::of($dosen)
+            ->addIndexColumn()
+            ->addColumn('aksi', function ($dosen) {
+                $btn = '<button onclick="modalAction(\'' . url('dosen/kelola-dosen/edit/' . $dosen->id_dosen) . '\')" class="btn btn-warning btn-sm" data-toggle="modal">Edit</button>';
+                $btn .= '<form class="d-inline-block" method="POST" action="' . url('dosen/kelola-dosen/' . $dosen->id_dosen) . '">'
+                    . csrf_field() . method_field('DELETE') . '
+                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Apakah Anda yakin menghapus data ini?\');">
+                        Hapus
+                    </button>
+                </form>';
+                return $btn;
+            })
+            ->rawColumns(['aksi'])
+            ->make(true);
     }
 
     public function kelolaDosenTambah()
@@ -111,15 +250,15 @@ class AdminController extends Controller
     public function kelolaPeriodeStore(Request $request)
     {
         // Simpan data hanya dengan field yang divalidasi
-            PeriodeModel::create([
-                'nama_periode' => $request->input('nama_periode'),
-            ]);
+        // if (request()->ajax() || request()->wantsJson()) {
+            $data = $request->all();
+            PeriodeModel::create($data);
 
-            return response()->json([
-                'status' => true,
-                'message' => 'Data periode berhasil disimpan',
-            ]);
-
+        //     return response()->json([
+        //         'status' => true,
+        //         'message' => 'Data periode berhasil disimpan',
+        //     ]);
+        // }
         return redirect('admin/kelola-periode');
     }
 
