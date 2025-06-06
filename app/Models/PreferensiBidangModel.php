@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PreferensiLombaModel extends Model
+class PreferensiBidangModel extends Model
 {
     use HasFactory;
 }

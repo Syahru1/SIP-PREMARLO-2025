@@ -11,14 +11,36 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('bidang_mahasiswa', function (Blueprint $table) {
-            $table->id('id_bidang_mahasiswa');
-            $table->unsignedBigInteger('id_preferensi_lomba')->index();
-            $table->unsignedBigInteger('id_bidang');
+        Schema::create('preferensi_mahasiswa', function (Blueprint $table) {
+            $table->id('id_preferensi_mahasiswa');
+            $table->unsignedBigInteger('id_mahasiswa')->index();
+            $table->unsignedBigInteger('id_penyelenggara')->index();
+            $table->unsignedBigInteger('id_biaya_pendaftaran')->index();
+            $table->unsignedBigInteger('id_tingkat_kompetisi')->index();
+            $table->unsignedBigInteger('id_hadiah')->index();
             $table->timestamps();
 
-            $table->foreign('id_preferensi_lomba')->references('id_preferensi_lomba')->on('preferensi_lomba')->onDelete('cascade');
-            $table->foreign('id_bidang')->references('id_bidang')->on('c_bidang')->onDelete('cascade');
+            //foreign keys
+            $table->foreign('id_mahasiswa')
+                ->references('id_mahasiswa')
+                ->on('mahasiswa')
+                ->onDelete('cascade');
+            $table->foreign('id_penyelenggara')
+                ->references('id_penyelenggara')
+                ->on('c_penyelenggara')
+                ->onDelete('cascade');
+            $table->foreign('id_biaya_pendaftaran')
+                ->references('id_biaya_pendaftaran')
+                ->on('c_biaya_pendaftaran')
+                ->onDelete('cascade');
+            $table->foreign('id_tingkat_kompetisi')
+                ->references('id_tingkat_kompetisi')
+                ->on('c_tingkat_kompetisi')
+                ->onDelete('cascade');
+            $table->foreign('id_hadiah')
+                ->references('id_hadiah')
+                ->on('c_hadiah')
+                ->onDelete('cascade');
         });
     }
 
@@ -27,6 +49,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('bidang_mahasiswa_models');
+        Schema::dropIfExists('preferensi_mahasiswa');
     }
 };
