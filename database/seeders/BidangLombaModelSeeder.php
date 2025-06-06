@@ -18,12 +18,6 @@ class BidangLombaModelSeeder extends Seeder
             // Lomba 1: UI/UX Nasional (bidang 1 dan 4)
             [
                 'id_lomba' => 1,
-                'id_bidang' => 1,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ],
-            [
-                'id_lomba' => 1,
                 'id_bidang' => 4,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
@@ -36,6 +30,18 @@ class BidangLombaModelSeeder extends Seeder
             ],
             [
                 'id_lomba' => 2,
+                'id_bidang' => 2,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'id_lomba' => 3,
+                'id_bidang' => 5,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'id_lomba' => 4,
                 'id_bidang' => 7,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
