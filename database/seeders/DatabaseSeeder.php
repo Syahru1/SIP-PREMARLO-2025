@@ -3,6 +3,11 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\LombaModel;
+use App\Models\SPKBobotModel;
+use App\Models\SPKNilaiOptimasiModel;
+use App\Models\SPKNormalisasiModel;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,20 +18,37 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            RoleModelSeeder::class,
+            //tables periode and prodi
             PeriodeModelSeeder::class,
             ProdiModelSeeder::class,
-            DosenModelSeeder::class,      
+
+            //tables users
+            RoleModelSeeder::class,
+            AdminModelSeeder::class,
+            DosenModelSeeder::class,
+            MahasiswaModelSeeder::class,
+
+            //tables criteria
             BiayaPendaftaranModelSeeder::class,
             BidangModelSeeder::class,
             TingkatKompetisiModelSeeder::class,
             HadiahModelSeeder::class,
             PenyelenggaraModelSeeder::class,
-            LombaModelSeeder::class,
-            AdminModelSeeder::class,
-            PreferensiLombaModelSeeder::class,
-            MahasiswaModelSeeder::class,      
+
+            //tables in profile mahasiswa
             PrestasiModelSeeder::class,
+            PreferensiMahasiswaModelSeeder::class,
+            PreferensiBidangModelSeeder::class,
+
+            //tables SPK
+            SPKMatriksModelSeeder::class,
+            SPKNormalisasiSeeder::class,
+            SPKBobotModelSeeder::class,
+            SPKNilaiOptimasiModelSeeder::class,
+
+            //tables lomba
+            LombaModelSeeder::class,
+            BidangLombaModelSeeder::class,
         ]);
         // \App\Models\User::factory(10)->create();
 

@@ -14,7 +14,7 @@ class BidangModelSeeder extends Seeder
     public function run(): void
     {
         $data =  [
-            ['id_bidang' => 1, 'kode_bidang' => 'BID001', 'nama_bidang' => 'Pemrogramani', 'skor'=> 1],
+            ['id_bidang' => 1, 'kode_bidang' => 'BID001', 'nama_bidang' => 'Pemrograman', 'skor'=> 1],
             ['id_bidang' => 2, 'kode_bidang' => 'BID002', 'nama_bidang' => 'Cyber Security', 'skor'=> 1],
             ['id_bidang' => 3, 'kode_bidang' => 'BID003', 'nama_bidang' => 'Kecerdasan Buatan', 'skor'=> 1],
             ['id_bidang' => 4, 'kode_bidang' => 'BID004', 'nama_bidang' => 'UI/UX Design', 'skor'=> 1],

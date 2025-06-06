@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id('id_lomba');
             $table->string('kode_lomba')->unique();
             $table->string('nama_lomba');
-            $table->unsignedBigInteger('id_bidang')->index();
             $table->unsignedBigInteger('id_tingkat_kompetisi')->index();
             $table->unsignedBigInteger('id_penyelenggara')->index();
             $table->unsignedBigInteger('id_biaya_pendaftaran')->index();
@@ -25,15 +24,11 @@ return new class extends Migration
             $table->string('lokasi_lomba')->nullable();
             $table->string('link_pendaftaran');
             $table->text('deskripsi_lomba')->nullable();
-            $table->boolean('status_lomba')->default(true);
+            $table->enum('status_lomba', ['Masih Berlangsung', 'Selesai'])->default('Masih Berlangsung');
             $table->string('gambar_lomba');
             $table->timestamps();
 
             // Foreign key constraints
-            $table->foreign('id_bidang')
-                ->references('id_bidang')
-                ->on('c_bidang')
-                ->onDelete('cascade');
             $table->foreign('id_tingkat_kompetisi')
                 ->references('id_tingkat_kompetisi')
                 ->on('c_tingkat_kompetisi')

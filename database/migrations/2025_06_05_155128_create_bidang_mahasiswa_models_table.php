@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('preferensi_lomba', function (Blueprint $table) {
-            $table->id('id_preferensi_lomba');
-            $table->unsignedBigInteger('id_bidang')->index();
+        Schema::create('preferensi_mahasiswa', function (Blueprint $table) {
+            $table->id('id_preferensi_mahasiswa');
+            $table->unsignedBigInteger('id_mahasiswa')->index();
             $table->unsignedBigInteger('id_penyelenggara')->index();
             $table->unsignedBigInteger('id_biaya_pendaftaran')->index();
             $table->unsignedBigInteger('id_tingkat_kompetisi')->index();
@@ -21,9 +21,9 @@ return new class extends Migration
             $table->timestamps();
 
             //foreign keys
-            $table->foreign('id_bidang')
-                ->references('id_bidang')
-                ->on('c_bidang')
+            $table->foreign('id_mahasiswa')
+                ->references('id_mahasiswa')
+                ->on('mahasiswa')
                 ->onDelete('cascade');
             $table->foreign('id_penyelenggara')
                 ->references('id_penyelenggara')
@@ -49,6 +49,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('preferensi_lomba');
+        Schema::dropIfExists('preferensi_mahasiswa');
     }
 };

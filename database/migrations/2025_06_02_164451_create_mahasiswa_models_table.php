@@ -16,7 +16,6 @@ return new class extends Migration
             $table->unsignedBigInteger('id_role')->index();
             $table->unsignedBigInteger('id_prodi')->index();
             $table->unsignedBigInteger('id_periode')->index();
-            $table->unsignedBigInteger('id_preferensi_lomba')->index()->nullable();
             $table->string('username')->unique();
             $table->string('nama');
             $table->string('password');
@@ -38,11 +37,6 @@ return new class extends Migration
             $table->foreign('id_periode')
                 ->references('id_periode')
                 ->on('periode')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
-            $table->foreign('id_preferensi_lomba')
-                ->references('id_preferensi_lomba')
-                ->on('preferensi_lomba')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
         });
