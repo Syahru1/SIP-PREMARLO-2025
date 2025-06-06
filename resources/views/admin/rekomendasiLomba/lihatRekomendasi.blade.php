@@ -30,7 +30,6 @@
             </ul>
            {{-- TAB CONTENT --}}
             <div class="tab-content" id="justify-pills-tabContent">
-                {{-- Include semua perhitungan dan data di sini --}}
                 @php
                     $mahasiswa = [
                         'id' => 1,
@@ -245,7 +244,6 @@
     </div>
 </div>
 
-{{-- SCRIPT --}}
 <script>
     function toggleStep(stepId) {
         document.querySelectorAll('.step-section').forEach(el => el.style.display = 'none');
