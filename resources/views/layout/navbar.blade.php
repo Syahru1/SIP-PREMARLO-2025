@@ -13,7 +13,7 @@
                             <div class="media mx-auto">
                                 <img src="assets/img/90x90.jpg" class="img-fluid mr-2" alt="avatar">
                                 <div class="media-body">
-                                    <h5>{{ $user->nama_admin }}</h5>
+                                    {{-- <h5>{{ $user->nama_admin }}</h5> --}}
                                     <p>Admin Jurusan</p>
                                 </div>
                             </div>
