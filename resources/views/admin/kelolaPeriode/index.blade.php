@@ -9,12 +9,6 @@
     </div>
 
     <div class="row layout-spacing">
-        @if (session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
-        @if (session('error'))
-            <div class="alert alert-danger">{{ session('error') }}</div>
-        @endif
         <div class="col-lg-12">
             <div class="statbox widget box box-shadow">
                 <div class="widget-header">
@@ -43,6 +37,7 @@
 @endsection
 
 @push('js')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     function modalAction(url = '') {
         $('#myModal').load(url, function() {
@@ -57,10 +52,9 @@
             serverSide: true,
             ajax: {
                 url: "{{ url('admin/kelola-periode/list') }}",
-                dataType: "json",
                 type: "POST",
                 data: function(d) {
-                    d.id_periode = $('#id_periode').val();
+                    d._token = "{{ csrf_token() }}";
                 }
             },
             columns: [
@@ -86,15 +80,103 @@
             ]
         });
 
-        // Reload table when modal closed (existing)
+        // Reload saat modal ditutup
         $('#myModal').on('hidden.bs.modal', function () {
-            dataPeriode.ajax.reload();
+            dataPeriode.ajax.reload(null, false);
         });
+    });
 
-        // Realtime update: polling every 5 seconds
-        setInterval(function() {
-            dataPeriode.ajax.reload(null, false); // false to keep current page
-        }, 5000);
+    // Submit Tambah & Edit AJAX 
+    $(document).on('submit', '.ajax-form', function(e) {
+    e.preventDefault();
+    let form = this;
+    let formData = new FormData(form);
+
+    $('.error-text').text(''); // Bersihkan error lama
+
+    $.ajax({
+        url: form.action,
+        type: form.method,
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(res) {
+            if (res.status) {
+                // Tampilkan SweetAlert
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil',
+                    text: res.message,
+                    timer: 1500,
+                    showConfirmButton: false
+                });
+
+                // Tutup modal setelah delay
+                setTimeout(() => {
+                    $('#myModal').modal('hide');
+                    dataPeriode.ajax.reload(null, false);
+                }, 1500);
+            }
+        },
+        error: function(xhr) {
+            if (xhr.status === 422) {
+                let errors = xhr.responseJSON.errors;
+                $.each(errors, function(key, val) {
+                    $('#error-' + key).text(val[0]);
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Gagal',
+                    text: 'Terjadi kesalahan saat menyimpan data.'
+                });
+            }
+        }
+    });
+
+    //Confirm Delete
+    $(document).on('submit', '.ajax-delete-form', function(e) {
+    e.preventDefault();
+    let form = this;
+
+    Swal.fire({
+        title: 'Yakin ingin menghapus?',
+        text: "Data yang dihapus tidak dapat dikembalikan!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Ya, hapus!',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: form.action,
+                method: 'POST',
+                data: $(form).serialize(),
+                success: function(res) {
+                    if (res.status) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil',
+                            text: res.message,
+                            timer: 1500,
+                            showConfirmButton: false
+                        });
+                        $('#myModal').modal('hide');
+                        dataPeriode.ajax.reload(null, false);
+                    } else {
+                        Swal.fire('Gagal', res.message, 'error');
+                    }
+                },
+                error: function() {
+                    Swal.fire('Gagal', 'Terjadi kesalahan server.', 'error');
+                }
+            });
+        }
+    });
+    });
+
     });
 </script>
 @endpush

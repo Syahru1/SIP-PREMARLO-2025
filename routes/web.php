@@ -73,7 +73,7 @@ Route::post('/logout', function () {
             Route::post('/kelola-periode/store', [AdminController::class, 'kelolaPeriodeStore']);
             Route::get('/kelola-periode/edit/{id}', [AdminController::class, 'kelolaPeriodeEdit']);
             Route::put('/kelola-periode/update/{id}', [AdminController::class, 'kelolaPeriodeUpdate'])->name('kelola-periode.update');
-            Route::get('/kelola-periode/delete/{id}', [AdminController::class, 'kelolaPeriodeConfirm']);
+            Route::get('/kelola-periode/confirm-delete/{id}', [AdminController::class, 'kelolaPeriodeConfirmDelete']);
             Route::delete('/kelola-periode/delete/{id}', [AdminController::class, 'kelolaPeriodeDelete']);
             Route::delete('/kelola-periode/{id}', [AdminController::class, 'kelolaPeriodeDestroy']);
 
