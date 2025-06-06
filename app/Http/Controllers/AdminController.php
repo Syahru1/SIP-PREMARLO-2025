@@ -200,7 +200,6 @@ class AdminController extends Controller
         }
     }
 
-
     // Kelola Prodi
     public function kelolaProdiIndex()
     {
