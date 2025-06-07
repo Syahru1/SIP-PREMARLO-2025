@@ -9,16 +9,10 @@
     </div>
 
     <div class="row layout-spacing">
-        @if (session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
-        @if (session('error'))
-            <div class="alert alert-danger">{{ session('error') }}</div>
-        @endif
         <div class="col-lg-12">
             <div class="statbox widget box box-shadow">
                 <div class="widget-header">
-                    <button onclick="modalAction('{{ url('admin/kelola-admin/tambah') }}')" class="btn btn-sm btn-success mt-1">Tambah Dosen</button>
+                    <button onclick="modalAction('{{ url('admin/kelola-dosen/tambah') }}')" class="btn btn-sm btn-success mt-1">Tambah Dosen</button>
                 </div>
                 <div class="widget-content widget-content-area">
                     <div class="table-responsive mb-4">
@@ -40,11 +34,12 @@
     </div>
 </div>
 
-{{-- Modal --}}
+{{-- Modal container --}}
 <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
 @endsection
 
 @push('js')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     function modalAction(url = '') {
         $('#myModal').load(url, function() {
@@ -52,9 +47,9 @@
         });
     }
 
-    var dataPeriode;
+    var dataDosen;
     $(document).ready(function() {
-        dataPeriode = $('#table_dosen').DataTable({
+        dataDosen = $('#table_dosen').DataTable({
             processing: true,
             serverSide: true,
             ajax: {
@@ -65,38 +60,120 @@
                 }
             },
             columns: [
-                {
-                    data: 'DT_RowIndex',
-                    name: 'DT_RowIndex',
-                    className: "text-center",
-                    orderable: false,
-                    searchable: false
+                { 
+                    data: 'DT_RowIndex', 
+                    name: 'DT_RowIndex', 
+                    className: "text-center", 
+                    orderable: false, 
+                    searchable: false 
                 },
-                {
-                    data: "username",
-                    name: "username",
-                    className: "text-center"
+                { 
+                    data: "username", 
+                    name: "username", 
+                    className: "text-center" 
                 },
-                {
-                    data: "nama_dosen",
-                    name: "nama_dosen",
-                    className: "text-center"
+                { 
+                    data: "nama_dosen", 
+                    name: "nama_dosen", 
+                    className: "text-center" 
                 },
-                {
-                    data: "email",
-                    name: "email",
-                    className: "text-center"
+                { 
+                    data: "email", 
+                    name: "email", 
+                    className: "text-center" 
                 },
-                {
-                    data: "aksi",
-                    name: "aksi",
-                    className: "text-center",
-                    orderable: false,
-                    searchable: false
+                { 
+                    data: "aksi", 
+                    name: "aksi", 
+                    className: "text-center", 
+                    orderable: false, 
+                    searchable: false 
                 }
             ]
+        });
+
+        $('#myModal').on('hidden.bs.modal', function () {
+            dataDosen.ajax.reload(null, false);
+            $(this).find('form')[0]?.reset();
+            $('.error-text').text('');
+        });
+    });
+
+    // Simpan Tambah / Edit
+    $(document).on('submit', '.ajax-form', function(e) {
+        e.preventDefault();
+        let form = this;
+        let formData = new FormData(form);
+
+        $('.error-text').text('');
+
+        $.ajax({
+            url: form.action,
+            method: form.method,
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(res) {
+                if (res.status) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Berhasil',
+                        text: res.message,
+                        showConfirmButton: false,
+                        timer: 1500,
+                        didClose: () => {
+                            $('#myModal').modal('hide');
+                        }
+                    });
+                }
+            },
+            error: function(xhr) {
+                if (xhr.status === 422) {
+                    let errors = xhr.responseJSON.errors;
+                    $.each(errors, function(key, val) {
+                        $('#error-' + key).text(val[0]);
+                    });
+                } else {
+                    Swal.fire('Error', 'Gagal menyimpan data', 'error');
+                }
+            }
+        });
+    });
+
+    // Hapus
+    $(document).on('submit', '.ajax-delete-form', function(e) {
+        e.preventDefault();
+        let form = this;
+
+        Swal.fire({
+            title: 'Yakin ingin menghapus?',
+            text: "Data yang dihapus tidak bisa dikembalikan!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Ya, hapus!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: form.action,
+                    method: 'POST',
+                    data: $(form).serialize(),
+                    success: function(res) {
+                        if (res.status) {
+                            Swal.fire('Berhasil', res.message, 'success');
+                            $('#myModal').modal('hide');
+                            dataDosen.ajax.reload(null, false);
+                        } else {
+                            Swal.fire('Gagal', res.message, 'error');
+                        }
+                    },
+                    error: function() {
+                        Swal.fire('Error', 'Gagal menghapus data', 'error');
+                    }
+                });
+            }
         });
     });
 </script>
 @endpush
-

@@ -49,8 +49,10 @@
     @include('layout.topbar-mahasiswa')
     @elseif (Request::is('dosen/*'))
     @include('layout.topbar-dosen')
+    @elseif (Request::is('admin/*'))
+    @include('layout.topbar-admin')
     @endif
-    @include('layout.navbar')
+    
     <!-- END NAVBAR -->
 
     <!-- BEGIN MAIN CONTAINER -->
