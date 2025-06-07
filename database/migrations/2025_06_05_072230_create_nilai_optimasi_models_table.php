@@ -15,11 +15,7 @@ return new class extends Migration
             $table->id('id_matriks');
             $table->unsignedBigInteger('id_mahasiswa')->index();
             $table->unsignedBigInteger('id_lomba')->index();
-            $table->decimal('bidang', 10, 5)->default(0.00000)->nullable();
-            $table->decimal('penyelenggara', 10, 5)->default(0.00000)->nullable();
-            $table->decimal('biaya_pendaftaran', 10, 5)->default(0.00000)->nullable();
-            $table->decimal('tingkat_kompetisi', 10, 5)->default(0.00000)->nullable();
-            $table->decimal('hadiah', 10, 5)->default(0.00000)->nullable();
+            $table->decimal('nilai_optimasi', 10, 5)->default(0.00000)->nullable();
             $table->timestamps();
 
             //foreign keys

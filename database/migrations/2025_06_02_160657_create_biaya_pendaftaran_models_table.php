@@ -13,10 +13,13 @@ return new class extends Migration
     {
         Schema::create('c_biaya_pendaftaran', function (Blueprint $table) {
             $table->id('id_biaya_pendaftaran');
+            $table->unsignedBigInteger('id_criteria')->index();
             $table->string('kode_biaya_pendaftaran')->unique;
             $table->string('nama_biaya_pendaftaran');
             $table->integer('skor');
             $table->timestamps();
+            
+            $table->foreign('id_criteria')->references('id_criteria')->on('criteria')->onDelete('cascade');
         });
     }
 
