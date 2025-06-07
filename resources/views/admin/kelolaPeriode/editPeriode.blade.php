@@ -1,43 +1,39 @@
 @empty($periode)
-<!-- Modal Edit -->
-{{-- <div class="modal fade" id="editPeriodeModal{{ $periode->id_periode }}" tabindex="-1" role="dialog" aria-labelledby="editPeriodeLabel{{ $periode->id_periode }}" aria-hidden="true"> --}}
+    <!-- Jika data tidak ditemukan -->
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Kesalahan</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <h5 class="modal-title">Kesalahan</h5>
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
             </div>
             <div class="modal-body">
                 <div class="alert alert-danger">
                     <h5><i class="icon fas fa-ban"></i> Kesalahan!!!</h5>
-                    Data yang anda cari tidak ditemukan
+                    Data yang anda cari tidak ditemukan.
                 </div>
                 <button type="button" class="btn btn-warning" data-dismiss="modal">Kembali</button>
             </div>
         </div>
     </div>
-{{-- </div> --}}
 @else
-<!-- Modal Edit -->
-{{-- <div class="modal fade" id="editPeriodeModal{{ $periode->id_periode }}" tabindex="-1" role="dialog" aria-labelledby="editPeriodeLabel{{ $periode->id_periode }}" aria-hidden="true"> --}}
+    <!-- Modal Edit Periode -->
     <div class="modal-dialog modal-md">
-        <form action="{{ url('admin/kelola-periode/update/' . $periode->id_periode ) }}" method="POST" id="form-edit">
+        <form action="{{ url('admin/kelola-periode/update/' . $periode->id_periode) }}" method="POST" class="ajax-form">
             @csrf
             @method('PUT')
             <div class="modal-content">
 
                 <div class="modal-header">
                     <h5 class="modal-title">Edit Data Periode</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Tutup">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
                 </div>
 
                 <div class="modal-body">
-                    <label for="namaPeriode{{ $periode->id_periode }}" class="form-label">Nama Periode</label>
-                    <input type="text" class="form-control" id="namaPeriode{{ $periode->id_periode }}" name="nama_periode" value="{{ $periode->nama_periode }}" required>
+                    <div class="form-group">
+                        <label for="nama_periode">Nama Periode</label>
+                        <input type="text" class="form-control" name="nama_periode" value="{{ $periode->nama_periode }}" required>
+                        <span class="text-danger error-text" id="error-nama_periode"></span>
+                    </div>
                 </div>
 
                 <div class="modal-footer">
@@ -48,5 +44,4 @@
             </div>
         </form>
     </div>
-{{-- </div> --}}
 @endempty
