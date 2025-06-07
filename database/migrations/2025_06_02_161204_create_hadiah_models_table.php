@@ -13,11 +13,14 @@ return new class extends Migration
     {
         Schema::create('c_hadiah', function (Blueprint $table) {
             $table->id('id_hadiah');
+            $table->unsignedBigInteger('id_criteria')->index();
             $table->string('kode_hadiah')->unique();
             $table->string('nama_hadiah');
             $table->string('deskripsi_hadiah')->nullable();
             $table->integer('skor');
             $table->timestamps();
+            
+            $table->foreign('id_criteria')->references('id_criteria')->on('criteria')->onDelete('cascade');
         });
     }
 

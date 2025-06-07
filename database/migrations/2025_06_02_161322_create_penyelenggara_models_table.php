@@ -13,10 +13,13 @@ return new class extends Migration
     {
         Schema::create('c_penyelenggara', function (Blueprint $table) {
             $table->id('id_penyelenggara');
+            $table->unsignedBigInteger('id_criteria')->index();
             $table->string('kode_penyelenggara')->unique();
             $table->string('nama_penyelenggara');
             $table->integer('skor');
             $table->timestamps();
+            
+            $table->foreign('id_criteria')->references('id_criteria')->on('criteria')->onDelete('cascade');
         });
     }
 

@@ -13,13 +13,18 @@ use App\Models\SPKNilaiOptimasiModel;
 use App\Models\ViewSPKMatriksNormalisasiModel;
 use App\Models\ViewSPKMatriksBobotModel;
 use App\Models\ViewSPKMatriksNilaiOptimasiModel;
+use App\Models\BidangModel;
+use App\Models\PenyelenggaraModel;
+use App\Models\HadiahModel;
+use App\Models\BiayaPendaftaranModel;
+use App\Models\TingkatKompetisiModel;
 use Yajra\DataTables\Facades\DataTables;
 
 class SPKController extends Controller
 {
     public function rekomendasiLombaIndex()
     {
-        
+
         return view('admin.rekomendasiLomba.index');
     }
 
@@ -37,9 +42,8 @@ class SPKController extends Controller
             ->make(true);
     }
 
-    public function rekomendasiLombaLihat(String $id)
+    public function rekomendasiLombaLihat(string $id)
     {
-        // Ambil semua data lomba (SPKMatriksModel) yang sesuai dengan id_mahasiswa yang dikirim
         $lombaList = SPKMatriksModel::where('id_mahasiswa', $id)->get();
 
         if ($lombaList->isEmpty()) {
@@ -49,137 +53,106 @@ class SPKController extends Controller
             ]);
         }
 
-        // Daftar sub kriteria yang digunakan (pastikan sesuai dengan kolom di SPKMatriksModel)
-        $subKriteria = ['bidang', 'penyelenggara', 'biaya_pendaftaran', 'tingkat_kompetisi', 'hadiah'];
+        // === Ambil semua data kriteria dan bobot ===
+        $kriteria = CriteriaModel::all()->keyBy('nama_kriteria');
 
-        // Ambil semua kriteria (pastikan sesuai dengan kolom di CriteriaModel)
-        $kriteria = CriteriaModel::all()->keyBy('kode_kriteria');
+        // === LANGKAH 1: Hitung Pembagi untuk Normalisasi ===
+        $pembagi = [
+            'bidang' => sqrt($lombaList->sum(fn($row) => pow($row->bidang, 2))),
+            'penyelenggara' => sqrt($lombaList->sum(fn($row) => pow($row->penyelenggara, 2))),
+            'biaya_pendaftaran' => sqrt($lombaList->sum(fn($row) => pow($row->biaya_pendaftaran, 2))),
+            'tingkat_kompetisi' => sqrt($lombaList->sum(fn($row) => pow($row->tingkat_kompetisi, 2))),
+            'hadiah' => sqrt($lombaList->sum(fn($row) => pow($row->hadiah, 2))),
+        ];
 
-        // Tahap 1: Matriks Normalisasi per sub kriteria
-        $normalisasi = [];
-        $pembagi = [];
-        foreach ($subKriteria as $sub) {
-            $pembagi[$sub] = sqrt($lombaList->sum(function ($item) use ($sub) {
-                return pow($item->$sub, 2);
-            }));
+        // === LANGKAH 2: Normalisasi Matriks dan Simpan ===
+        foreach ($lombaList as $row) {
+            SPKNormalisasiModel::updateOrCreate([
+                'id_mahasiswa' => $id,
+                'id_lomba' => $row->id_lomba,
+            ], [
+                'bidang' => $row->bidang / ($pembagi['bidang'] ?: 1),
+                'penyelenggara' => $row->penyelenggara / ($pembagi['penyelenggara'] ?: 1),
+                'biaya_pendaftaran' => $row->biaya_pendaftaran / ($pembagi['biaya_pendaftaran'] ?: 1),
+                'tingkat_kompetisi' => $row->tingkat_kompetisi / ($pembagi['tingkat_kompetisi'] ?: 1),
+                'hadiah' => $row->hadiah / ($pembagi['hadiah'] ?: 1),
+            ]);
         }
 
-        // Insert/update ke tabel normalisasi SEKALI per lomba, tiap kolom sub kriteria
-        foreach ($lombaList as $lomba) {
-            $dataNormalisasi = [];
-            foreach ($subKriteria as $sub) {
-                $nilaiNormalisasi = $pembagi[$sub] != 0 ? $lomba->$sub / $pembagi[$sub] : 0;
-                $normalisasi[$lomba->id_lomba][$sub] = $nilaiNormalisasi;
-                $dataNormalisasi[$sub] = $nilaiNormalisasi;
-            }
-            // Insert/update ke tabel normalisasi (kolom: bidang, penyelenggara, biaya_pendaftaran, tingkat_kompetisi, hadiah)
-            SPKNormalisasiModel::updateOrCreate(
-                [
-                    'id_mahasiswa' => $lomba->id_mahasiswa,
-                    'id_lomba' => $lomba->id_lomba,
-                ],
-                $dataNormalisasi
-            );
+        // === LANGKAH 3: Normalisasi Terbobot ===
+        foreach ($lombaList as $row) {
+            $n = SPKNormalisasiModel::where([
+                'id_mahasiswa' => $id,
+                'id_lomba' => $row->id_lomba,
+            ])->first();
+
+            SPKBobotModel::updateOrCreate([
+                'id_mahasiswa' => $id,
+                'id_lomba' => $row->id_lomba,
+            ], [
+                'bidang' => $n->bidang * $kriteria['Bidang']->bobot_kriteria,
+                'penyelenggara' => $n->penyelenggara * $kriteria['Penyelenggara']->bobot_kriteria,
+                'biaya_pendaftaran' => $n->biaya_pendaftaran * $kriteria['Biaya Pendaftaran']->bobot_kriteria,
+                'tingkat_kompetisi' => $n->tingkat_kompetisi * $kriteria['Tingkat Kompetisi']->bobot_kriteria,
+                'hadiah' => $n->hadiah * $kriteria['Hadiah']->bobot_kriteria,
+            ]);
         }
 
-        // Tahap 2: Matriks Normalisasi Terbobot (mengalikan normalisasi dengan bobot per sub kriteria)
-        $normalisasiTerbobot = [];
-        foreach ($lombaList as $lomba) {
-            $dataBobot = [];
-            foreach ($subKriteria as $sub) {
-                $bobot = isset($kriteria[$sub]) ? $kriteria[$sub]->bobot : 1;
-                $nilaiTerbobot = $normalisasi[$lomba->id_lomba][$sub] * $bobot;
-                $normalisasiTerbobot[$lomba->id_lomba][$sub] = $nilaiTerbobot;
-                $dataBobot[$sub] = $nilaiTerbobot;
-            }
-            // Insert/update ke tabel bobot (kolom: bidang, penyelenggara, biaya_pendaftaran, tingkat_kompetisi, hadiah)
-            SPKBobotModel::updateOrCreate(
-                [
-                    'id_mahasiswa' => $lomba->id_mahasiswa,
-                    'id_lomba' => $lomba->id_lomba,
-                ],
-                $dataBobot
-            );
-        }
+        // === LANGKAH 4: Hitung Nilai Optimasi MOORA ===
+        foreach ($lombaList as $row) {
+            $b = SPKBobotModel::where([
+                'id_mahasiswa' => $id,
+                'id_lomba' => $row->id_lomba,
+            ])->first();
 
-        // Tahap 3: Hitung Nilai Optimasi (Yi) dan Pemeringkatan
-        $hasilMoora = [];
-        foreach ($lombaList as $lomba) {
             $benefit = 0;
             $cost = 0;
-            foreach ($subKriteria as $sub) {
-                $value = $normalisasiTerbobot[$lomba->id_lomba][$sub];
-                $atribut = isset($kriteria[$sub]) ? $kriteria[$sub]->atribut : 'benefit';
-                if ($atribut == 'benefit') {
-                    $benefit += $value;
+
+            foreach (['Bidang', 'Penyelenggara', 'Tingkat Kompetisi', 'Hadiah'] as $key) {
+                if ($kriteria[$key]->jenis_kriteria == 'Benefit') {
+                    $benefit += $b->$key;
                 } else {
-                    $cost += $value;
+                    $cost += $b->$key;
                 }
             }
-            $nilai = $benefit - $cost;
-            $hasilMoora[] = [
-                'lomba' => $lomba,
-                'nilai' => $nilai,
-            ];
 
-            // Insert/update ke tabel nilai optimasi (kolom: nilai)
-            SPKNilaiOptimasiModel::updateOrCreate(
-                [
-                    'id_mahasiswa' => $lomba->id_mahasiswa,
-                    'id_lomba' => $lomba->id_lomba,
-                ],
-                [
-                    'nilai' => $nilai,
-                ]
-            );
+            if ($kriteria['Biaya Pendaftaran']->jenis_kriteria == 'Cost') {
+                $cost += $b->biaya_pendaftaran;
+            } else {
+                $benefit += $b->biaya_pendaftaran;
+            }
+
+            $nilaiOptimasi = $benefit - $cost;
+
+            SPKNilaiOptimasiModel::updateOrCreate([
+                'id_mahasiswa' => $id,
+                'id_lomba' => $row->id_lomba,
+            ], [
+                'nilai_optimasi' => $nilaiOptimasi,
+            ]);
         }
 
-        // Pemeringkatan: urutkan hasil Moora
-        usort($hasilMoora, function ($a, $b) {
-            return $b['nilai'] <=> $a['nilai'];
-        });
-
-        // Tambahkan ranking ke hasilMoora
-        foreach ($hasilMoora as $i => &$row) {
-            $row['ranking'] = $i + 1;
-        }
-
+        // === Ambil hasil view ===
         $spkNormalisasi = ViewSPKMatriksNormalisasiModel::where('id_mahasiswa', $id)->get();
-
-        if ($spkNormalisasi->isEmpty()) {
-            return response()->json([
-                'status' => false,
-                'message' => 'Data lomba tidak ditemukan untuk mahasiswa ini',
-            ]);
-        }
-        
         $spkBobot = ViewSPKMatriksBobotModel::where('id_mahasiswa', $id)->get();
-
-        if ($spkBobot->isEmpty()) {
-            return response()->json([
-                'status' => false,
-                'message' => 'Data lomba tidak ditemukan untuk mahasiswa ini',
-            ]);
-        }
-
         $spkNilaiOptimasi = ViewSPKMatriksNilaiOptimasiModel::where('id_mahasiswa', $id)->get();
+        $spkNilaiOptimasi = $spkNilaiOptimasi->sortByDesc('nilai_optimasi');
 
-        if ($spkNilaiOptimasi->isEmpty()) {
+        if ($spkNormalisasi->isEmpty() || $spkBobot->isEmpty() || $spkNilaiOptimasi->isEmpty()) {
             return response()->json([
                 'status' => false,
-                'message' => 'Data lomba tidak ditemukan untuk mahasiswa ini',
+                'message' => 'Data hasil perhitungan belum tersedia.',
             ]);
         }
-        // Kirim data tahap perhitungan ke view
+
         return view('admin.rekomendasiLomba.lihatRekomendasi', [
             'lombaList' => $lombaList,
             'kriteria' => $kriteria,
-            'subKriteria' => $subKriteria,
-            'pembagi' => $pembagi,
             'spkNormalisasi' => $spkNormalisasi,
             'spkBobot' => $spkBobot,
             'spkNilaiOptimasi' => $spkNilaiOptimasi,
-            'hasilMoora' => $hasilMoora,
+            'pembagi' => $pembagi,
+            'hasilMoora' => $spkNilaiOptimasi,
         ]);
     }
 }

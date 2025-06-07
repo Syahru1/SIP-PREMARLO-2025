@@ -15,10 +15,6 @@ class SPKNilaiOptimasiModel extends Model
         'id_matriks',
         'id_mahasiswa',
         'id_lomba',
-        'bidang',
-        'penyelenggara',
-        'biaya_pendaftaran',
-        'tingkat_kompetisi',
-        'hadiah',
+        'nilai_optimasi',
     ];
 }

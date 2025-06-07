@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class PenyelenggaraModel extends Model
 {
     use HasFactory;
+
+    protected $table = 'c_penyelenggara';
+    protected $primaryKey = 'id_penyelenggara';
+    
+    public function criteria()
+    {
+        return $this->belongsTo(CriteriaModel::class, 'id_criteria'); // sesuaikan nama model & foreign key
+    }
 }

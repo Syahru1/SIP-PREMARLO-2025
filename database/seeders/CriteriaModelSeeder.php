@@ -28,7 +28,7 @@ class CriteriaModelSeeder extends Seeder
             ],
             [
                 'kode_kriteria' => 'CRT003',
-                'nama_kriteria' => 'hadiah',
+                'nama_kriteria' => 'Hadiah',
                 'jenis_kriteria' => 'Benefit',
                 'bobot_kriteria' => 20,
             ],
