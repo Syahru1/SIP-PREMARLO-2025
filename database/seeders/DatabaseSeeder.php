@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
             MahasiswaModelSeeder::class,
 
             //tables criteria
+            CriteriaModelSeeder::class,
             BiayaPendaftaranModelSeeder::class,
             BidangModelSeeder::class,
             TingkatKompetisiModelSeeder::class,
