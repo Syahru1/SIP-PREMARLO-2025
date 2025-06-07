@@ -33,7 +33,7 @@ class DosenModel extends Authenticatable
 
     public function getRoleName(): string
     {
-        return $this->role->nama_role;
+        return $this->role->nama_role ?? '-';
     }
 
     /**
