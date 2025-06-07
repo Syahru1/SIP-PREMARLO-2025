@@ -10,6 +10,7 @@
             <ul>
                 <li><strong>Username:</strong> {{ $dosen->username }}</li>
                 <li><strong>Nama Dosen:</strong> {{ $dosen->nama_dosen }}</li>
+                <li><strong>NIDN:</strong> {{ $dosen->nidn }}</li>
             </ul>
         </div>
 

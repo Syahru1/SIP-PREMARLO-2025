@@ -22,6 +22,7 @@
                                     <th>No</th>
                                     <th class="text-center">Username</th>
                                     <th class="text-center">Nama Mahasiswa</th>
+                                    <th class="text-center">NIM</th>
                                     <th class="text-center">Program Studi</th>
                                     <th class="text-center">Aksi</th>
                                 </tr>
@@ -75,6 +76,11 @@
                 {
                     data: "nama",
                     name: "nama",
+                    className: "text-center"
+                },
+                {
+                    data: "nim",
+                    name: "nim",
                     className: "text-center"
                 },
                 {

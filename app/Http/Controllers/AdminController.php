@@ -189,7 +189,7 @@ class AdminController extends Controller
 
     public function kelolaDosenList()
     {
-        $dosen = DosenModel::select('id_dosen', 'username', 'nama_dosen', 'email', 'password', 'foto', 'id_role')
+        $dosen = DosenModel::select('id_dosen', 'username', 'nama_dosen', 'nidn', 'email', 'password', 'foto', 'id_role')
             ->where('id_role', 3); // Hanya mengambil dosen dengan id_role 3
 
         return DataTables::of($dosen)
@@ -213,6 +213,7 @@ class AdminController extends Controller
         $request->validate([
             'username' => 'required|string|unique:dosen,username',
             'nama_dosen'     => 'required|string',
+            'nidn'     => 'required|string|unique:dosen,nidn',
             'email'    => 'required|email|unique:dosen,email',
             'password' => 'required|string|min:6',
             'foto'     => 'nullable|image|max:2048',
@@ -222,6 +223,7 @@ class AdminController extends Controller
             $dosen = new \App\Models\DosenModel();
             $dosen->username = $request->username;
             $dosen->nama_dosen = $request->nama_dosen;
+            $dosen->nidn = $request->nidn;
             $dosen->email = $request->email;
             $dosen->password = bcrypt($request->password);
 
@@ -257,6 +259,7 @@ class AdminController extends Controller
         $request->validate([
             'username'    => 'required|string|unique:dosen,username,' . $id . ',id_dosen',
             'nama_dosen'  => 'required|string',
+            'nidn'        => 'required|string|unique:dosen,nidn,' . $id . ',id_dosen',
             'email'       => 'required|email|unique:dosen,email,' . $id . ',id_dosen',
             'password'    => 'nullable|string|min:6',
             'foto'        => 'nullable|image|max:2048',
@@ -347,7 +350,7 @@ class AdminController extends Controller
 
     public function kelolaMahasiswaList(Request $request)
     {
-        $mahasiswa = MahasiswaModel::select('id_mahasiswa', 'username', 'nama', 'foto', 'id_prodi', 'id_periode', 'id_role')
+        $mahasiswa = MahasiswaModel::select('id_mahasiswa', 'username', 'nama', 'nim', 'foto', 'id_prodi', 'id_periode', 'id_role')
             ->where('id_role', 2)
             ->with(['periode', 'prodi']);
 
@@ -399,6 +402,7 @@ class AdminController extends Controller
         $request->validate([
             'username' => 'required|string|unique:mahasiswa,username',
             'nama'     => 'required|string',
+            'nim'      => 'required|string|unique:mahasiswa,nim',
             'id_periode' => 'required|exists:periode,id_periode',
             'id_prodi'    => 'required|exists:prodi,id_prodi',
             'password' => 'required|string|min:6',
@@ -409,6 +413,7 @@ class AdminController extends Controller
             $mahasiswa = new MahasiswaModel();
             $mahasiswa->username = $request->username;
             $mahasiswa->nama = $request->nama;
+            $mahasiswa->nim = $request->nim;
             $mahasiswa->id_periode = $request->id_periode;
             $mahasiswa->id_prodi = $request->id_prodi;
             $mahasiswa->password = bcrypt($request->password);
@@ -458,6 +463,7 @@ class AdminController extends Controller
         $request->validate([
             'username'    => 'required|string|unique:mahasiswa,username,' . $id . ',id_mahasiswa',
             'nama'  => 'required|string',
+            'nim'   => 'required|string|unique:mahasiswa,nim,' . $id . ',id_mahasiswa',
             'id_prodi'    => 'required|exists:prodi,id_prodi',
             'id_periode' => 'required|exists:periode,id_periode', // Pastikan ini ada di form
             'password'    => 'nullable|string|min:6',
@@ -475,6 +481,7 @@ class AdminController extends Controller
 
         $mahasiswa->username = $request->username;
         $mahasiswa->nama = $request->nama;
+        $mahasiswa->nim = $request->nim;
         $mahasiswa->id_prodi = $request->id_prodi;
         $mahasiswa->id_periode = $request->id_periode; // Pastikan ini ada di form
 
@@ -561,8 +568,6 @@ class AdminController extends Controller
             ->rawColumns(['aksi'])
             ->make(true);
     }
-
-
 
     public function kelolaPeriodeTambah()
     {
