@@ -102,6 +102,10 @@ Route::post('/logout', function () {
             Route::get('/rekomendasi-lomba', [AdminController::class, 'rekomendasiLombaIndex'])->name('admin.rekomendasiLomba.index');
             Route::get('/rekomendasi-lomba/lihat', [AdminController::class, 'rekomendasiLombaLihat'])->name('rekomendasi.lomba.lihat');
 
+            // Rekomendasi Lomba
+            Route::get('/rekomendasi-lomba', [AdminController::class, 'rekomendasiLombaIndex'])->name('laporanRekomendasiLomba.index');
+            Route::get('/rekomendasi-lomba/lihat', [AdminController::class, 'rekomendasiLombaLihat'])->name('laporanRekomendasiLomba.lihat');
+
             // Profile
             Route::get('/profile', [AdminController::class, 'profileIndex'])->name('profile.index');
             Route::get('/profile/edit', [AdminController::class, 'profileEdit'])->name('profile.edit');
@@ -117,7 +121,7 @@ Route::post('/logout', function () {
     });
 
     // MAHASISWA
-    Route::middleware(['auth:mahasiswa'])->group(function () {
+    // Route::middleware(['auth:mahasiswa'])->group(function () {
         Route::group(['prefix' => 'mahasiswa'],function () {
             // Beranda
             Route::get('/beranda', [MasterController::class, 'mahasiswa'])->name('beranda.mahasiswa');
@@ -141,7 +145,7 @@ Route::post('/logout', function () {
             Route::get('/edit-profil', [MahasiswaController::class, 'edit_profil'])->name('edit-profil');
 
         });
-    });
+    // });
 
     // DOSEN
     Route::middleware(['auth:dosen'])->group(function () {

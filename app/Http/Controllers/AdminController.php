@@ -220,7 +220,7 @@ class AdminController extends Controller
     }
 
     public function kelolaDosenEdit(string $id)
-    {   
+    {
     $dosen = DosenModel::where('id_role', 3)->find($id);
 
     if (!$dosen) {
@@ -318,7 +318,7 @@ class AdminController extends Controller
             return redirect('admin/kelola-dosen')->with('error', 'Data dosen tidak ditemukan');
         }
     }
-    
+
     public function kelolaMahasiswaTambah()
     {
         return view('admin.kelolaPenggunaMahasiswa.tambahMahasiswa');
@@ -464,7 +464,6 @@ class AdminController extends Controller
             return redirect('admin/kelola-periode')->with('error', 'Data periode tidak ditemukan');
         }
     }
-
 
     // Kelola Prodi
     public function kelolaProdiIndex()
