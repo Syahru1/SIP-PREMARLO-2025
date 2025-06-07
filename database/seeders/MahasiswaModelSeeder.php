@@ -21,7 +21,6 @@ class MahasiswaModelSeeder extends Seeder
                 'username' => 'MHS001',
                 'nama' => 'SATRIA PANGESTU ADILAMSYAH',
                 'password' => bcrypt('12345'),
-                'angkatan' => '21',
                 'foto' => 'pp_mahasiswa.png',
             ],
             [
@@ -31,7 +30,6 @@ class MahasiswaModelSeeder extends Seeder
                 'username' => 'MHS002',
                 'nama' => 'DEWI LESTARI',
                 'password' => bcrypt('12345'),
-                'angkatan' => '23',
                 'foto' => 'pp_mahasiswa.png',
             ],
             [
@@ -41,7 +39,6 @@ class MahasiswaModelSeeder extends Seeder
                 'username' => 'DAVID SEPTIAN',
                 'nama' => 'Andi',
                 'password' => bcrypt('12345'),
-                'angkatan' => '23',
                 'foto' => 'pp_mahasiswa.png',
             ],
         ];

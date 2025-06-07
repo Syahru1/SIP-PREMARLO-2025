@@ -5,23 +5,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Models\ProdiModel;
 
 class MahasiswaModel extends Authenticatable
 {
     use HasFactory;
 
-    protected $table = 'mahasiswa'; 
+    protected $table = 'mahasiswa';
     protected $primaryKey = 'id_mahasiswa';
 
     protected $fillable = [
         'id_role',
         'id_periode',
         'id_prodi',
-        'id_preferensi_lomba',
         'username',
         'password',
         'nama',
-        'angkatan',
         'foto',
     ];
 
@@ -53,5 +52,15 @@ class MahasiswaModel extends Authenticatable
     public function getRole()
     {
         return $this->role->kode_role;
+    }
+
+    public function prodi()
+    {
+        return $this->belongsTo(ProdiModel::class, 'id_prodi');
+    }
+
+    public function periode()
+    {
+        return $this->belongsTo(PeriodeModel::class, 'id_periode'); // sesuaikan nama model & foreign key
     }
 }

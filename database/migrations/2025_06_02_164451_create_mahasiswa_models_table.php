@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('username')->unique();
             $table->string('nama');
             $table->string('password');
-            $table->string('angkatan');
             $table->string('foto');
             $table->timestamps();
 
