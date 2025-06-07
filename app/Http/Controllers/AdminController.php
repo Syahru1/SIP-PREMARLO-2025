@@ -174,13 +174,8 @@ class AdminController extends Controller
         return DataTables::of($dosen)
             ->addIndexColumn()
             ->addColumn('aksi', function ($dosen) {
-                $btn = '<button onclick="modalAction(\'' . url('dosen/kelola-dosen/edit/' . $dosen->id_dosen) . '\')" class="btn btn-warning btn-sm" data-toggle="modal">Edit</button>';
-                $btn .= '<form class="d-inline-block" method="POST" action="' . url('dosen/kelola-dosen/' . $dosen->id_dosen) . '">'
-                    . csrf_field() . method_field('DELETE') . '
-                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Apakah Anda yakin menghapus data ini?\');">
-                        Hapus
-                    </button>
-                </form>';
+                $btn = '<button onclick="modalAction(\'' . url('admin/kelola-dosen/edit/' . $dosen->id_dosen) . '\')" class="btn btn-warning btn-sm" data-toggle="modal">Edit</button>';
+                $btn .= '<button class="btn btn-danger btn-sm" onclick="modalAction(\'' . url('admin/kelola-dosen/confirm-delete/' . $dosen->id_dosen) . '\')"><i class="fa fa-trash"></i> Hapus</button>';
                 return $btn;
             })
             ->rawColumns(['aksi'])
@@ -189,20 +184,141 @@ class AdminController extends Controller
 
     public function kelolaDosenTambah()
     {
-        return view('admin.kelolaPenggunaDosen.tambahDosen');
+    return view('admin.kelolaDosen.tambahDosen');
     }
 
-    public function kelolaDosenEdit()
+    public function kelolaDosenStore(Request $request)
     {
-        return view('admin.kelolaPenggunaDosen.editDosen');
+    $request->validate([
+        'username' => 'required|string|unique:dosen,username',
+        'nama_dosen'     => 'required|string',
+        'email'    => 'required|email|unique:dosen,email',
+        'password' => 'required|string|min:6',
+        'foto'     => 'nullable|image|max:2048',
+    ]);
+
+    try {
+        $dosen = new \App\Models\DosenModel();
+        $dosen->username = $request->username;
+        $dosen->nama_dosen = $request->nama_dosen;
+        $dosen->email = $request->email;
+        $dosen->password = bcrypt($request->password);
+
+        if ($request->hasFile('foto')) {
+            $dosen->foto = $request->file('foto')->store('dosen', 'public');
+        } else {
+            $dosen->foto = 'pp_dosen.png'; // default
+        }
+
+        $dosen->id_role = 3; // Tetapkan role sebagai dosen
+        $dosen->save();
+
+        return response()->json(['status' => true, 'message' => 'Data dosen berhasil disimpan.']);
+    } catch (\Exception $e) {
+        return response()->json(['status' => false, 'message' => 'Terjadi kesalahan: ' . $e->getMessage()]);
+    }
     }
 
-    // Kelola Pengguna Mahasiswa
-    public function kelolaMahasiswaIndex()
+    public function kelolaDosenEdit(string $id)
+    {   
+    $dosen = DosenModel::where('id_role', 3)->find($id);
+
+    if (!$dosen) {
+        return response()->view('admin.kelolaDosen.editDosen', ['dosen' => null]);
+    }
+
+    return view('admin.kelolaDosen.editDosen', ['dosen' => $dosen]);
+    }
+
+
+
+    public function kelolaDosenUpdate(Request $request, string $id)
     {
-        return view('admin.kelolaPenggunaMahasiswa.index');
+    $request->validate([
+        'username'    => 'required|string|unique:dosen,username,' . $id . ',id_dosen',
+        'nama_dosen'  => 'required|string',
+        'email'       => 'required|email|unique:dosen,email,' . $id . ',id_dosen',
+        'password'    => 'nullable|string|min:6',
+        'foto'        => 'nullable|image|max:2048',
+    ]);
+
+    $dosen = DosenModel::where('id_role', 3)->find($id);
+
+    if (!$dosen) {
+        return response()->json([
+            'status' => false,
+            'message' => 'Data dosen tidak ditemukan',
+        ]);
     }
 
+    $dosen->username = $request->username;
+    $dosen->nama_dosen = $request->nama_dosen;
+    $dosen->email = $request->email;
+
+    if ($request->filled('password')) {
+        $dosen->password = bcrypt($request->password);
+    }
+
+    if ($request->hasFile('foto')) {
+        $dosen->foto = $request->file('foto')->store('dosen', 'public');
+    }
+
+    $dosen->save();
+
+    return response()->json([
+        'status' => true,
+        'message' => 'Data dosen berhasil diperbarui',
+    ]);
+    }
+
+    public function kelolaDosenConfirmDelete($id)
+    {
+        $dosen = DosenModel::find($id);
+
+        if (!$dosen) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Data dosen tidak ditemukan',
+            ]);
+        }
+
+        return view('admin.kelolaDosen.confirmDosen', compact('dosen'));
+    }
+
+    // Menghapus data via AJAX
+    public function kelolaDosenDelete(string $id)
+    {
+        if (request()->ajax() || request()->wantsJson()) {
+            $dosen = DosenModel::find($id);
+            if ($dosen) {
+                $dosen->delete();
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Data dosen berhasil dihapus'
+                ]);
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Data dosen tidak ditemukan'
+                ]);
+            }
+        }
+
+        return redirect('admin/kelola-dosen');
+    }
+
+    // Menghapus data via form biasa (non-AJAX)
+    public function kelolaDosenDestroy(string $id)
+    {
+        $dosen = DosenModel::find($id);
+        if ($dosen) {
+            $dosen->delete();
+            return redirect('admin/kelola-dosen')->with('success', 'Data dosen berhasil dihapus');
+        } else {
+            return redirect('admin/kelola-dosen')->with('error', 'Data dosen tidak ditemukan');
+        }
+    }
+    
     public function kelolaMahasiswaTambah()
     {
         return view('admin.kelolaPenggunaMahasiswa.tambahMahasiswa');
@@ -227,12 +343,7 @@ class AdminController extends Controller
             ->addIndexColumn()
             ->addColumn('aksi', function ($periode) {
                 $btn = '<button onclick="modalAction(\'' . url('admin/kelola-periode/edit/' . $periode->id_periode) . '\')" class="btn btn-warning btn-sm" data-toggle="modal">Edit</button>';
-                $btn .= '<form class="d-inline-block" method="POST" action="' . url('admin/kelola-periode/' . $periode->id_periode) . '">'
-                    . csrf_field() . method_field('DELETE') . '
-                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Apakah Anda yakin menghapus data ini?\');">
-                        Hapus
-                    </button>
-                </form>';
+                $btn .= '<button onclick="modalAction(\'' . url('admin/kelola-periode/confirm-delete/' . $periode->id_periode) . '\')" class="btn btn-danger btn-sm">Hapus</button>';
                 return $btn;
             })
             ->rawColumns(['aksi'])
@@ -249,63 +360,78 @@ class AdminController extends Controller
 
     public function kelolaPeriodeStore(Request $request)
     {
-        // Simpan data hanya dengan field yang divalidasi
-        // if (request()->ajax() || request()->wantsJson()) {
-            $data = $request->all();
-            PeriodeModel::create($data);
+    if ($request->ajax()) {
+        $request->validate([
+            'nama_periode' => 'required|string|max:255',
+        ]);
 
-        //     return response()->json([
-        //         'status' => true,
-        //         'message' => 'Data periode berhasil disimpan',
-        //     ]);
-        // }
-        return redirect('admin/kelola-periode');
+        $periode = PeriodeModel::create([
+            'nama_periode' => $request->nama_periode
+        ]);
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Data periode berhasil disimpan.'
+        ]);
     }
+
+    return redirect('admin/kelola-periode');
+    }
+
 
     public function kelolaPeriodeEdit(string $id)
     {
-        $periode = PeriodeModel::find($id);
+    $periode = PeriodeModel::find($id);
 
-        if (!$periode) {
-            return response()->json([
-                'status' => false,
-                'message' => 'Data periode tidak ditemukan',
-            ]);
-        }
+    if (!$periode) {
+        return response()->json([
+            'status' => false,
+            'message' => 'Data periode tidak ditemukan',
+        ]);
+    }
 
-        return view('admin.kelolaPeriode.editPeriode', ['periode' => $periode]);
+    return view('admin.kelolaPeriode.editPeriode', ['periode' => $periode]);
     }
 
     public function kelolaPeriodeUpdate(Request $request, string $id)
     {
+    $request->validate([
+        'nama_periode' => 'required|string|max:255',
+    ]);
 
-            $periode = PeriodeModel::find($id);
-            if (!$periode) {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Data periode tidak ditemukan',
-                ]);
-            }
+    $periode = PeriodeModel::find($id);
+    if (!$periode) {
+        return response()->json([
+            'status' => false,
+            'message' => 'Data periode tidak ditemukan',
+        ]);
+    }
 
-            // Update periode
-            $periode->update([
-                'nama_periode' => $request->input('nama_periode'),
-            ]);
+    $periode->update([
+        'nama_periode' => $request->input('nama_periode'),
+    ]);
 
-            return response()->json([
-                'status' => true,
-                'message' => 'Data periode berhasil diperbarui',
-            ]);
-
-        return redirect('admin/kelola-periode');
+    return response()->json([
+        'status' => true,
+        'message' => 'Data periode berhasil diperbarui',
+    ]);
     }
 
 
-    public function kelolaPeriodeConfirm(string $id){
-        $periode = PeriodeModel::find($id);
+    public function kelolaPeriodeConfirmDelete($id)
+    {
+    $periode = PeriodeModel::find($id);
 
-        return view('admin.kelolaPeriode.confirmPeriode', ['periode' => $periode]);
+    if (!$periode) {
+        return response()->json([
+            'status' => false,
+            'message' => 'Data periode tidak ditemukan',
+        ]);
     }
+
+    return view('admin.kelolaPeriode.confirmDelete', compact('periode'));
+    }
+
 
     public function kelolaPeriodeDelete(string $id)
     {
