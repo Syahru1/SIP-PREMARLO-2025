@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
 
-    <title>SIRLO - Landing</title>
+    <title>CompQuest</title>
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon.ico') }}"/>
 
     <!-- Styles -->
@@ -31,7 +31,7 @@
         <div class="container">
             <h1 class="fw-bold display-4 text-dark">Selamat Datang di <span class="text-custom" style="color: #4337F1;">COMPQUEST</span></h1>
             <p class="lead text-secondary">Empower Your Vision. Drive Your Success</p>
-           
+
         </div>
     </section>
 
@@ -42,7 +42,7 @@
         Tentang <span class="text-custom" style="color: #4337F1;">COMPQUEST</span>
         </h1>
         <p class="lead text-secondary mb-4" style="max-width: 700px; line-height: 1.6;">
-        COMPQUEST adalah platform inovatif yang membantu Anda mewujudkan visi dan mencapai kesuksesan.  
+        COMPQUEST adalah platform inovatif yang membantu Anda mewujudkan visi dan mencapai kesuksesan.
         Kami berkomitmen memberikan solusi terbaik untuk kebutuhan Anda dengan teknologi terkini dan pendekatan yang tepat sasaran.<br><br>
         Didukung oleh <strong>JTI Polinema</strong>, kami siap menjadi partner andalan Anda.
         </p>

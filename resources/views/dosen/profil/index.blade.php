@@ -51,13 +51,6 @@
                 </div>
             </div>
 
-            <!-- Tombol Edit -->
-            <a href="{{ url('dosen/edit-profil') }}" class="btn btn-primary mb-2 mr-2">Edit</a>
-        </div>
-    </div>
-
-    <div class="card component-card_4">
-        <div class="card-body">
             <!-- Tab Menu -->
             <ul class="nav nav-tabs mb-3" id="lineTab" role="tablist">
                 <li class="nav-item">
