@@ -6,8 +6,10 @@ use App\Models\AdminModel;
 use App\Models\DosenModel;
 use App\Models\PeriodeModel;
 use App\Models\ProdiModel;
+use App\Models\MahasiswaModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
 
 class AdminController extends Controller
 {
@@ -240,13 +242,13 @@ class AdminController extends Controller
 
     public function kelolaDosenEdit(string $id)
     {
-    $dosen = DosenModel::where('id_role', 3)->find($id);
+        $dosen = DosenModel::where('id_role', 3)->find($id);
 
-    if (!$dosen) {
-        return response()->view('admin.kelolaDosen.editDosen', ['dosen' => null]);
-    }
+        if (!$dosen) {
+            return response()->view('admin.kelolaDosen.editDosen', ['dosen' => null]);
+        }
 
-    return view('admin.kelolaDosen.editDosen', ['dosen' => $dosen]);
+        return view('admin.kelolaDosen.editDosen', ['dosen' => $dosen]);
     }
 
 
@@ -337,14 +339,206 @@ class AdminController extends Controller
         }
     }
 
-    public function kelolaMahasiswaTambah()
+    // Kelola Pengguna Mahasiswa
+    public function kelolaMahasiswaIndex()
     {
-        return view('admin.kelolaPenggunaMahasiswa.tambahMahasiswa');
+        return view('admin.kelolaMahasiswa.index');
     }
 
-    public function kelolaMahasiswaEdit()
+    public function kelolaMahasiswaList(Request $request)
     {
-        return view('admin.kelolaPenggunaMahasiswa.editMahasiswa');
+        $mahasiswa = MahasiswaModel::select('id_mahasiswa', 'username', 'nama', 'foto', 'id_prodi', 'id_periode', 'id_role')
+            ->where('id_role', 2)
+            ->with(['periode', 'prodi']);
+
+        // Filter berdasarkan id_prodi jika ada
+        if ($request->filled('id_prodi')) {
+            $mahasiswa->where('id_prodi', $request->id_prodi);
+        }
+
+        return DataTables::of($mahasiswa)
+            ->addIndexColumn()
+
+            // Menambahkan kolom nama prodi
+            ->addColumn('prodi', function ($mahasiswa) {
+                return $mahasiswa->prodi->nama_prodi ?? '-';
+            })
+
+            // Supaya pencarian DataTables di kolom prodi
+            ->filterColumn('prodi', function($query, $keyword) {
+                $query->whereHas('prodi', function($q) use ($keyword) {
+                    $q->whereRaw('LOWER(nama_prodi) LIKE ?', ["%".strtolower($keyword)."%"]);
+                });
+            })
+
+            // Kolom Aksi (Edit + Hapus)
+            ->addColumn('aksi', function ($mahasiswa) {
+                $btn = '<button onclick="modalAction(\'' . url('admin/kelola-mahasiswa/edit/' . $mahasiswa->id_mahasiswa) . '\')" class="btn btn-warning btn-sm" data-toggle="modal">Edit</button>';
+                $btn .= '<button class="btn btn-danger btn-sm" onclick="modalAction(\'' . url('admin/kelola-mahasiswa/confirm-delete/' . $mahasiswa->id_mahasiswa) . '\')"><i class="fa fa-trash"></i> Hapus</button>';
+                return $btn;
+            })
+
+            ->rawColumns(['aksi']) // biar button HTML bisa tampil
+            ->make(true);
+    }
+
+
+    public function kelolaMahasiswaTambah()
+    {
+
+        $prodi = ProdiModel::all(); // ambil semua program studi
+        $periode = PeriodeModel::all(); // ambil semua periode
+        return view('admin.kelolaMahasiswa.tambahMahasiswa', [
+            'prodi' => $prodi,
+            'periode' => $periode
+        ]);
+    }
+
+    public function kelolaMahasiswaStore(Request $request)
+    {
+        $request->validate([
+            'username' => 'required|string|unique:mahasiswa,username',
+            'nama'     => 'required|string',
+            'id_periode' => 'required|exists:periode,id_periode',
+            'id_prodi'    => 'required|exists:prodi,id_prodi',
+            'password' => 'required|string|min:6',
+            'foto'     => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
+        ]);
+
+        try {
+            $mahasiswa = new MahasiswaModel();
+            $mahasiswa->username = $request->username;
+            $mahasiswa->nama = $request->nama;
+            $mahasiswa->id_periode = $request->id_periode;
+            $mahasiswa->id_prodi = $request->id_prodi;
+            $mahasiswa->password = bcrypt($request->password);
+
+            if ($request->hasFile('foto')) {
+                $path = $request->file('foto')->store('foto', 'public');
+                $mahasiswa->foto = 'storage/' . $path;
+            } else {
+                $mahasiswa->foto = 'pp_mahasiswa.png'; // Pastikan file ini ada di public/storage
+            }
+
+            $mahasiswa->id_role = 2;
+            $mahasiswa->save();
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Data mahasiswa berhasil disimpan.'
+            ]);
+        } catch (\Exception $e) {
+            dd($e->getMessage()); // Langsung tampilkan error, hapus ini kalau sudah selesai debug
+            Log::error('Gagal simpan mahasiswa: ' . $e->getMessage());
+
+            return response()->json([
+                'status' => false,
+                'message' => 'Terjadi kesalahan: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+
+    public function kelolaMahasiswaEdit(string $id)
+    {
+        $mahasiswa = MahasiswaModel::where('id_role', 2)->where('id_mahasiswa', $id)->first();
+
+        $prodi = ProdiModel::all();
+        $periode = PeriodeModel::all();
+        return view('admin.kelolaMahasiswa.editMahasiswa', [
+            'mahasiswa' => $mahasiswa,
+            'prodi' => $prodi,
+            'periode' => $periode
+        ]);
+    }
+
+
+    public function kelolaMahasiswaUpdate(Request $request, string $id)
+    {
+        $request->validate([
+            'username'    => 'required|string|unique:mahasiswa,username,' . $id . ',id_mahasiswa',
+            'nama'  => 'required|string',
+            'id_prodi'    => 'required|exists:prodi,id_prodi',
+            'id_periode' => 'required|exists:periode,id_periode', // Pastikan ini ada di form
+            'password'    => 'nullable|string|min:6',
+            'foto'        => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
+        ]);
+
+        $mahasiswa = MahasiswaModel::where('id_role', 2)->where('id_mahasiswa', $id)->first();
+
+        if (!$mahasiswa) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Data Mahasiswa tidak ditemukan',
+            ]);
+        }
+
+        $mahasiswa->username = $request->username;
+        $mahasiswa->nama = $request->nama;
+        $mahasiswa->id_prodi = $request->id_prodi;
+        $mahasiswa->id_periode = $request->id_periode; // Pastikan ini ada di form
+
+        if ($request->filled('password')) {
+            $mahasiswa->password = bcrypt($request->password);
+        }
+
+        if ($request->hasFile('foto')) {
+            $mahasiswa->foto = $request->file('foto')->store('foto', 'public');
+        }
+
+        $mahasiswa->save();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Data mahasiswa berhasil diperbarui',
+        ]);
+    }
+
+    public function kelolaMahasiswaConfirmDelete($id)
+    {
+        $mahasiswa = MahasiswaModel::find($id);
+
+        if (!$mahasiswa) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Data mahasiswa tidak ditemukan',
+            ]);
+        }
+
+        return view('admin.kelolaMahasiswa.confirmDelete', compact('mahasiswa'));
+    }
+
+    // Menghapus data via AJAX
+    public function kelolaMahasiswaDelete(string $id)
+    {
+        if (request()->ajax() || request()->wantsJson()) {
+            $mahasiswa = MahasiswaModel::find($id);
+            if ($mahasiswa) {
+                $mahasiswa->delete();
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Data mahasiswa berhasil dihapus'
+                ]);
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Data mahasiswa tidak ditemukan'
+                ]);
+            }
+        }
+
+        return redirect('admin/kelola-mahasiswa');
+    }
+
+    public function kelolaMahasiswaDestroy(string $id)
+    {
+        $mahasiswa = MahasiswaModel::find($id);
+        if ($mahasiswa) {
+            $mahasiswa->delete();
+            return redirect('admin/kelola-mahasiswa')->with('success', 'Data mahasiswa berhasil dihapus');
+        } else {
+            return redirect('admin/kelola-mahasiswa')->with('error', 'Data mahasiswa tidak ditemukan');
+        }
     }
 
     // Kelola Periode
