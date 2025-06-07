@@ -49,8 +49,8 @@
                 </a>
                 <ul class="collapse submenu list-unstyled" id="kelolaAkun" data-parent="#accordionExample">
                     <li><a href="{{ url('admin/kelola-admin') }}">Akun Admin</a></li>
-                    <li><a href="{{ url('admin/kelola-dosen') }}">Akun Dosen</a></li>
-                    <li><a href="{{ url('admin/kelola-mahasiswa') }}">Akun Mahasiswa</a></li>
+                    <li><a href="{{ url('admin/kelola-pengguna-dosen') }}">Akun Dosen</a></li>
+                    <li><a href="{{ url('admin/kelola-pengguna-mahasiswa') }}">Akun Mahasiswa</a></li>
                 </ul>
             </li>
 

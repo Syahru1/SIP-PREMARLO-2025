@@ -1,5 +1,5 @@
 <div class="header-container fixed-top">
-  <header class="header navbar navbar-expand-sm expand-header d-flex align-items-center justify-content-between px-3">
+  <header class="header navbar navbar-expand-sm expand-header">
 
     <!-- Kiri: Hamburger toggle -->
     <a href="javascript:void(0);" class="sidebarCollapse" data-placement="bottom" aria-label="Toggle sidebar">
@@ -17,7 +17,7 @@
          style="gap: 12px; cursor:pointer; white-space: nowrap;">
 
       <!-- Nama pengguna -->
-      {{-- <span class="user-name font-weight-bold" style="white-space: nowrap;">{{ $user->nama }}</span> --}}
+      <span class="user-name font-weight-bold" style="white-space: nowrap;">{{ $user->nama }}</span>
 
       <!-- Foto profil -->
       <img src="assets/img/90x90.jpg" alt="avatar" class="rounded-circle"
@@ -38,5 +38,6 @@
 
     </div>
 
+    </ul>
   </header>
 </div>

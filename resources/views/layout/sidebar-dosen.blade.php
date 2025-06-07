@@ -20,15 +20,6 @@
                         </a>
                     </li>
 
-                    <li class="menu">
-                        <a href="{{ url('dosen/profil') }}" aria-expanded="false" class="dropdown-toggle">
-                            <div class="">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-3-3.87"></path><path d="M4 21v-2a4 4 0 0 1 3-3.87"></path><circle cx="12" cy="7" r="4"></circle>
-                                </svg>
-                                <span> Profil </span>
-                            </div>
-                        </a>
-                    </li>
 
                     <li class="menu">
                     <a href="{{ url ('dosen/mahasiswa-bimbingan') }}" aria-expanded="false" class="dropdown-toggle">
