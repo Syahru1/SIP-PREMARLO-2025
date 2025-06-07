@@ -45,15 +45,14 @@ Route::post('/logout', function () {
 
             // Kelola Pengguna Admin
             Route::get('/kelola-admin', [AdminController::class, 'kelolaAdminIndex'])->name('kelolaAdmin.index');
+            Route::post('/kelola-admin/list', [AdminController::class, 'kelolaAdminList']);
             Route::get('/kelola-admin/tambah', [AdminController::class, 'kelolaAdminTambah'])->name('kelolaAdmin.tambah');
             Route::post('/kelola-admin/store', [AdminController::class, 'kelolaAdminStore']);
-            Route::get('/kelola-admin/edit', [AdminController::class, 'kelolaAdminEdit'])->name('kelolaAdmin.edit');
-            Route::get('/kelola-admin/edit/{id}', [AdminController::class, 'kelolaAdminEdit']);
-            Route::put('/kelola-admin/update/{id}', [AdminController::class, 'kelolaAdminUpdate'])->name('kelola.update');
-            Route::get('/kelola-admin/delete/{id}', [AdminController::class, 'kelolaAdminConfirm']);
+            Route::get('/kelola-admin/edit/{id}', [AdminController::class, 'kelolaAdminEdit'])->name('kelolaAdmin.edit');
+            Route::put('/kelola-admin/update/{id}', [AdminController::class, 'kelolaAdminUpdate'])->name('kelolaAdmin.update');
+            Route::get('/kelola-admin/confirm-delete/{id}', [AdminController::class, 'kelolaAdminConfirmDelete']);
             Route::delete('/kelola-admin/delete/{id}', [AdminController::class, 'kelolaAdminDelete']);
             Route::delete('/kelola-admin/{id}', [AdminController::class, 'kelolaAdminDestroy']);
-            Route::post('/kelola-admin/list', [AdminController::class, 'kelolaAdminList']);
 
             // Kelola Pengguna Dosen
             Route::get('/kelola-pengguna-dosen', [AdminController::class, 'kelolaDosenIndex'])->name('kelolaDosen.index');
@@ -65,7 +64,7 @@ Route::post('/logout', function () {
             Route::get('/kelola-dosen/confirm-delete/{id}', [AdminController::class, 'kelolaDosenConfirmDelete']);
             Route::delete('/kelola-dosen/delete/{id}', [AdminController::class, 'kelolaDosenDelete']);
             Route::delete('/kelola-dosen/{id}', [AdminController::class, 'kelolaDosenDestroy']);
-            
+
 
             // Kelola Pengguna Mahasiswa
             Route::get('/kelola-pengguna-mahasiswa', [AdminController::class, 'kelolaMahasiswaIndex'])->name('kelolaMahasiswa.index');
@@ -90,7 +89,7 @@ Route::post('/logout', function () {
             Route::post('/kelola-prodi/store', [AdminController::class, 'kelolaProdiStore']);
             Route::get('/kelola-prodi/edit/{id}', [AdminController::class, 'kelolaProdiEdit']);
             Route::put('/kelola-prodi/update/{id}', [AdminController::class, 'kelolaProdiUpdate'])->name('kelola-prodi.update');
-            Route::get('/kelola-prodi/delete/{id}', [AdminController::class, 'kelolaProdiConfirm']);
+            Route::get('/kelola-prodi/confirm-delete/{id}', [AdminController::class, 'kelolaProdiConfirmDelete']);
             Route::delete('/kelola-prodi/delete/{id}', [AdminController::class, 'kelolaProdiDelete']);
             Route::delete('/kelola-prodi/{id}', [AdminController::class, 'kelolaProdiDestroy']);
 
