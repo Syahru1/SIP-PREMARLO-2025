@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id('id_dosen');
             $table->string('username')->unique();
             $table->string('nama_dosen');
+            $table->string('nidn')->unique();
             $table->string('email')->unique();
             $table->string('password');
             $table->unsignedBigInteger('id_role')->index();

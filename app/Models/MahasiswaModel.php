@@ -21,6 +21,7 @@ class MahasiswaModel extends Authenticatable
         'username',
         'password',
         'nama',
+        'nim',
         'foto',
     ];
 

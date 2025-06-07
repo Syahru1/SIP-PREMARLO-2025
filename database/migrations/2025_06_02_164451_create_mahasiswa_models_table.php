@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_periode')->index();
             $table->string('username')->unique();
             $table->string('nama');
+            $table->string('nim');
             $table->string('password');
             $table->string('foto');
             $table->timestamps();

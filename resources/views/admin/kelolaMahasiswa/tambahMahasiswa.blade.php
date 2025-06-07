@@ -13,7 +13,7 @@
         <!-- Username -->
         <div class="form-group">
           <label for="username">Username</label>
-          <input id="username" type="text" class="form-control" name="username" required>
+          <input id="username" type="text" class="form-control" name="username" required autocomplete="off">
           <small class="text-danger error-text" id="error-username"></small>
         </div>
 
@@ -22,6 +22,13 @@
           <label for="nama">Nama Mahasiswa</label>
           <input id="nama" type="text" class="form-control" name="nama" required>
           <small class="text-danger error-text" id="error-nama"></small>
+        </div>
+
+        <!-- NIM Mahasiswa -->
+        <div class="form-group">
+          <label for="nim">NIM</label>
+          <input id="nim" type="text" class="form-control" name="nim" required>
+          <small class="text-danger error-text" id="error-nim"></small>
         </div>
 
         <!-- Program Studi -->
@@ -51,7 +58,7 @@
         <!-- Password -->
         <div class="form-group">
           <label for="password">Password</label>
-          <input id="password" type="password" class="form-control" name="password" required>
+          <input id="password" type="password" class="form-control" name="password" required autocomplete="off">
           <small class="text-danger error-text" id="error-password"></small>
         </div>
 

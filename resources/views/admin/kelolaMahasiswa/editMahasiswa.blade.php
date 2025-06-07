@@ -42,6 +42,12 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="nim">NIM</label>
+                    <input type="text" name="nim" class="form-control" value="{{ $mahasiswa->nim }}" required>
+                    <span class="text-danger error-text" id="error-nim"></span>
+                </div>
+
+                <div class="form-group">
                         <label>Program Studi</label>
                         <select name="id_prodi" id="id_prodi" class="form-control" required>
                             <option value="">- Pilih prodi -</option>

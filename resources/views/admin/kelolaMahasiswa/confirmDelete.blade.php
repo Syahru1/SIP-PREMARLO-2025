@@ -10,6 +10,7 @@
             <ul>
                 <li><strong>Username:</strong> {{ $mahasiswa->username }}</li>
                 <li><strong>Nama mahasiswa:</strong> {{ $mahasiswa->nama }}</li>
+                <li><strong>NIM:</strong> {{ $mahasiswa->nim }}</li>
             </ul>
         </div>
 

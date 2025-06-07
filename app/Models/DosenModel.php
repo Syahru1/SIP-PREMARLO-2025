@@ -10,12 +10,13 @@ class DosenModel extends Authenticatable
 {
     use HasFactory;
 
-    protected $table = 'dosen'; 
+    protected $table = 'dosen';
     protected $primaryKey = 'id_dosen';
 
     protected $fillable = [
         'username',
         'nama_dosen',
+        'nidn',
         'email',
         'password',
         'id_role',
