@@ -19,8 +19,8 @@ class PreferensiMahasiswaModelSeeder extends Seeder
                 'id_preferensi_mahasiswa' => 1,
                 'id_mahasiswa' => 1,
                 'id_penyelenggara' => 1,
-                'id_biaya_pendaftaran' => 2,
-                'id_tingkat_kompetisi' => 3,
+                'id_biaya_pendaftaran' => 1,
+                'id_tingkat_kompetisi' => 1,
                 'id_hadiah' => 1,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
@@ -29,7 +29,7 @@ class PreferensiMahasiswaModelSeeder extends Seeder
                 'id_preferensi_mahasiswa' => 2,
                 'id_mahasiswa' => 2,
                 'id_penyelenggara' => 2,
-                'id_biaya_pendaftaran' => 1,
+                'id_biaya_pendaftaran' => 2,
                 'id_tingkat_kompetisi' => 2,
                 'id_hadiah' => 2,
                 'created_at' => Carbon::now(),
@@ -38,9 +38,9 @@ class PreferensiMahasiswaModelSeeder extends Seeder
             [
                 'id_preferensi_mahasiswa' => 3,
                 'id_mahasiswa' => 3,
-                'id_penyelenggara' => 1,
+                'id_penyelenggara' => 3,
                 'id_biaya_pendaftaran' => 3,
-                'id_tingkat_kompetisi' => 1,
+                'id_tingkat_kompetisi' => 3,
                 'id_hadiah' => 3,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()

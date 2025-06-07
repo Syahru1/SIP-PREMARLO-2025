@@ -5,10 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CriteriaModel extends Model
+class ViewSPKMatriksModel extends Model
 {
     use HasFactory;
 
-    protected $table = 'criteria';
-    protected $primaryKey = 'id_criteria';
+    protected $table = 'view_mahasiswa_matriks_spk';
 }

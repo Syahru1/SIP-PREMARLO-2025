@@ -12,50 +12,24 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('spk_bobot', function (Blueprint $table) {
-            $table->id('id_bobot');
-            $table->unsignedBigInteger('id_normalisasi')->index();
+            $table->id('id_matriks');
             $table->unsignedBigInteger('id_mahasiswa')->index();
-            $table->unsignedBigInteger('id_bidang')->index();
-            $table->unsignedBigInteger('id_penyelenggara')->index();
-            $table->unsignedBigInteger('id_biaya_pendaftaran')->index();
-            $table->unsignedBigInteger('id_tingkat_kompetisi')->index();
-            $table->unsignedBigInteger('id_hadiah')->index();
+            $table->unsignedBigInteger('id_lomba')->index();
+            $table->decimal('bidang', 10, 5)->default(0.00000)->nullable();
+            $table->decimal('penyelenggara', 10, 5)->default(0.00000)->nullable();
+            $table->decimal('biaya_pendaftaran', 10, 5)->default(0.00000)->nullable();
+            $table->decimal('tingkat_kompetisi', 10, 5)->default(0.00000)->nullable();
+            $table->decimal('hadiah', 10, 5)->default(0.00000)->nullable();
             $table->timestamps();
 
             //foreign keys
-            $table->foreign('id_normalisasi')
-                ->references('id_normalisasi')
-                ->on('spk_normalisasi')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
             $table->foreign('id_mahasiswa')
                 ->references('id_mahasiswa')
                 ->on('mahasiswa')
                 ->onDelete('cascade');
-            $table->foreign('id_bidang')
-                ->references('id_bidang')
-                ->on('spk_normalisasi')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
-            $table->foreign('id_penyelenggara')
-                ->references('id_penyelenggara')
-                ->on('spk_normalisasi')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
-            $table->foreign('id_biaya_pendaftaran')
-                ->references('id_biaya_pendaftaran')
-                ->on('spk_normalisasi')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
-            $table->foreign('id_tingkat_kompetisi')
-                ->references('id_tingkat_kompetisi')
-                ->on('spk_normalisasi')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
-            $table->foreign('id_hadiah')
-                ->references('id_hadiah')
-                ->on('spk_normalisasi')
-                ->onUpdate('cascade')
+            $table->foreign('id_lomba')
+                ->references('id_lomba')
+                ->on('c_lomba')
                 ->onDelete('cascade');
         });
     }

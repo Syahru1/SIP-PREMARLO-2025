@@ -5,10 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CriteriaModel extends Model
+class ViewSPKMatriksNormalisasiModel extends Model
 {
     use HasFactory;
 
-    protected $table = 'criteria';
-    protected $primaryKey = 'id_criteria';
+    protected $table = 'view_alternatif_matriks_normalisasi_spk';
 }

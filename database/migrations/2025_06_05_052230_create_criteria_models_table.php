@@ -13,34 +13,13 @@ return new class extends Migration
     {
         Schema::create('criteria', function (Blueprint $table) {
             $table->id('id_criteria');
-            $table->unsignedBigInteger('id_bidang')->index();
-            $table->unsignedBigInteger('id_penyelenggara')->index();
-            $table->unsignedBigInteger('id_biaya_pendaftaran')->index();
-            $table->unsignedBigInteger('id_tingkat_kompetisi')->index();
-            $table->unsignedBigInteger('id_hadiah')->index();
+            $table->string('kode_kriteria')->unique();
+            $table->string('nama_kriteria');
+            $table->enum('jenis_kriteria', ['Benefit', 'Cost'])->default('benefit');
+            $table->decimal('bobot_kriteria', 5, 2)->default(0.00);
             $table->timestamps();
 
             //foreign keys
-            $table->foreign('id_bidang')
-                ->references('id_bidang')
-                ->on('c_bidang')
-                ->onDelete('cascade');
-            $table->foreign('id_penyelenggara')
-                ->references('id_penyelenggara')
-                ->on('c_penyelenggara')
-                ->onDelete('cascade');
-            $table->foreign('id_biaya_pendaftaran')
-                ->references('id_biaya_pendaftaran')
-                ->on('c_biaya_pendaftaran')
-                ->onDelete('cascade');
-            $table->foreign('id_tingkat_kompetisi')
-                ->references('id_tingkat_kompetisi')
-                ->on('c_tingkat_kompetisi')
-                ->onDelete('cascade');
-            $table->foreign('id_hadiah')
-                ->references('id_hadiah')
-                ->on('c_hadiah')
-                ->onDelete('cascade');
         });
     }
 
@@ -49,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('criteria_models');
+        Schema::dropIfExists('criteria');
     }
 };

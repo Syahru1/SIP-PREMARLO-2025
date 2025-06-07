@@ -7,6 +7,7 @@ use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\DosenController;
 use App\Http\Controllers\MasterController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\SPKController;
 
 /*
 |--------------------------------------------------------------------------
@@ -103,12 +104,9 @@ Route::post('/logout', function () {
             Route::get('/laporan-analisis-prestasi/detail', [AdminController::class, 'laporanAnalisisPrestasiDetail'])->name('laporan.detail');
 
             // Rekomendasi lomba
-            Route::get('/rekomendasi-lomba', [AdminController::class, 'rekomendasiLombaIndex'])->name('admin.rekomendasiLomba.index');
-            Route::get('/rekomendasi-lomba/lihat', [AdminController::class, 'rekomendasiLombaLihat'])->name('rekomendasi.lomba.lihat');
-
-            // Rekomendasi Lomba
-            Route::get('/rekomendasi-lomba', [AdminController::class, 'rekomendasiLombaIndex'])->name('laporanRekomendasiLomba.index');
-            Route::get('/rekomendasi-lomba/lihat', [AdminController::class, 'rekomendasiLombaLihat'])->name('laporanRekomendasiLomba.lihat');
+            Route::get('/rekomendasi-lomba', [SPKController::class, 'rekomendasiLombaIndex'])->name('admin.rekomendasiLomba.index');
+            Route::get('/rekomendasi-lomba/lihat/{id}', [SPKController::class, 'rekomendasiLombaLihat'])->name('rekomendasi.lomba.lihat');
+            Route::post('/rekomendasi-lomba/list', [SPKController::class, 'rekomendasiListMahasiswa'])->name('rekomendasi-lomba.list');
 
             // Profile
             Route::get('/profile', [AdminController::class, 'profileIndex'])->name('profile.index');
