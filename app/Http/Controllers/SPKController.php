@@ -149,16 +149,14 @@ class SPKController extends Controller
             return response()->json([
                 'status' => false,
                 'message' => 'Data hasil perhitungan belum tersedia.',
-                'message' => 'Data hasil perhitungan belum tersedia.',
             ]);
         }
-
-
+        // Kirim data tahap perhitungan ke view
         return view('admin.rekomendasiLomba.lihatRekomendasi', [
             'lombaList' => $lombaList,
             'spkNormalisasi' => $spkNormalisasi,
             'spkBobot' => $spkBobot,
-            'spkNilaiOptimasi' => $spkNilaiOptimasi,
+            'spkNilaiOptimasi' => $spkNilaiOptimasi
         ]);
     }
 }
