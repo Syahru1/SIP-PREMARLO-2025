@@ -20,7 +20,7 @@
 @else
 <!-- Modal Edit -->
 <div class="modal-dialog modal-md">
-    <form action="{{ url('admin/kelola-prodi/update/' . $prodi->id_prodi ) }}" method="POST" id="form-edit">
+    <form action="{{ url('admin/kelola-prodi/update/'.$prodi->id_prodi) }}" method="POST" class="ajax-form">
         @csrf
         @method('PUT')
         <div class="modal-content">

@@ -1,6 +1,6 @@
 <!-- Modal Tambah Prodi -->
 <div class="modal-dialog modal-lg">
-    <form method="POST" action="{{ url('admin/kelola-prodi/store') }}" id="form-tambah">
+    <form method="POST" action="{{ url('admin/kelola-prodi/store') }}" id="form-tambah" class="ajax-form">
         @csrf
         <div class="modal-content">
         <div class="modal-header">
@@ -31,63 +31,4 @@
     </div>
     </form>
 </div>
-{{-- </div> --}}
-<script>
-    $(document).ready(function () {
-        $("#form-tambah").validate({
-            rules: {
-                kode_prodi: {
-                    required: true,
-                    minlength: 2,
-                    maxlength: 10
-                },
-                nama_prodi: {
-                    required: true,
-                    minlength: 3,
-                    maxlength: 100
-                },
-            },
-            submitHandler: function (form) {
-                $.ajax({
-                    url: form.action,
-                    type: form.method,
-                    data: $(form).serialize(),
-                    success: function (response) {
-                        console.log(response); 
-                        if (response.status) {
-                            $('#myModal').modal('hide');
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Berhasil',
-                                text: response.message
-                            });
-                            dataPeriode.ajax.reload();
-                        } else {
-                            $('.error-text').text('');
-                            $.each(response.msgField, function (prefix, val) {
-                                $('#error-' + prefix).text(val[0]);
-                            });
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Terjadi Kesalahan',
-                                text: response.message
-                            });
-                        }
-                    }
-                });
-                return false;
-            },
-            errorElement: 'span',
-            errorPlacement: function (error, element) {
-                error.addClass('invalid-feedback');
-                element.closest('.form-group').append(error);
-            },
-            highlight: function (element) {
-                $(element).addClass('is-invalid');
-            },
-            unhighlight: function (element) {
-                $(element).removeClass('is-invalid');
-            }
-        });
-    });
-</script>
+
