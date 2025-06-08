@@ -1,19 +1,6 @@
 @extends('layout.template')
 
 @section('content')
-@php
-    $peringkatMahasiswa = collect([
-        ['nama' => 'Syahrul', 'program_studi' => 'D-4 Teknik Informatika', 'jumlah_prestasi' => 8],
-        ['nama' => 'Afifah', 'program_studi' => 'D-4 Sistem Informasi Bisnis', 'jumlah_prestasi' => 6],
-        ['nama' => 'Dewita', 'program_studi' => 'D-2 PPLS', 'jumlah_prestasi' => 5],
-    ]);
-
-    $lombaTerverifikasi = collect([
-        ['nama_lomba' => 'Olimpiade Matematika Nasional', 'kategori' => 'Akademik', 'tanggal' => '2024-10-12'],
-        ['nama_lomba' => 'Business Plan Competition', 'kategori' => 'Non-Akademik', 'tanggal' => '2024-11-05'],
-        ['nama_lomba' => 'Inovasi Teknologi Mahasiswa', 'kategori' => 'Akademik', 'tanggal' => '2025-01-20'],
-    ]);
-@endphp
 
 <div class="layout-px-spacing">
 
@@ -40,14 +27,15 @@
                 @foreach ($peringkatMahasiswa as $index => $mhs)
                     <div class="col-md-4 mb-3">
                         <div class="card shadow-sm h-100">
-                            <div class="card-body d-flex align-items-center">
-                                <div class="usr-img-frame me-3 border border-dark rounded-circle">
-                                    <img alt="avatar" src="{{ asset('assets/img/90x90.jpg') }}" class="img-fluid rounded-circle" width="50" height="50">
+                            <div class="card-body d-flex align-items-start gap-3">
+                                <div class="usr-img-frame border border-dark rounded-circle flex-shrink-0" style="width: 60px; height: 60px;">
+                                    <img alt="avatar" src="{{ asset('assets/img/90x90.jpg') }}" class="img-fluid rounded-circle w-100 h-100 object-fit-cover">
                                 </div>
-                                <div>
-                                    <h6 class="mb-0">{{ $mhs['nama'] }}</h6>
+                                <div class="flex-grow-1">
+                                    <h6 class="mb-1">{{ $mhs['nama'] }}</h6>
                                     <small class="text-muted">{{ $mhs['program_studi'] }}</small><br>
-                                    <span class="badge bg-success mt-1">Prestasi: {{ $mhs['jumlah_prestasi'] }}</span>
+                                    <span class="badge bg-success mt-2 d-inline-block">Prestasi: {{ $mhs['jumlah_prestasi'] }}</span><br>
+                                    <span class="badge bg-primary mt-1 d-inline-block">Skor: {{ $mhs['total_skor'] }}</span>
                                 </div>
                                 <div class="ms-auto fs-5 text-secondary fw-bold">#{{ $index + 1 }}</div>
                             </div>
@@ -59,7 +47,9 @@
         </div>
     </div>
 
-    <!-- Lomba Terverifikasi -->
+
+
+    {{-- <!-- Lomba Terverifikasi -->
     <div class="card component-card_4 mb-4">
         <div class="card-body">
             <h5 class="mb-4 text-center text-dark fw-bold">Lomba yang Telah Diverifikasi</h5>
@@ -81,5 +71,5 @@
 
         </div>
     </div>
-</div>
+</div> --}}
 @endsection
