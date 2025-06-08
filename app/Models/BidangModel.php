@@ -16,4 +16,7 @@ class BidangModel extends Model
     {
         return $this->belongsTo(CriteriaModel::class, 'id_criteria'); // sesuaikan nama model & foreign key
     }
+    public function bidangLomba(){
+        return $this->hasMany(BidangLombaModel::class, 'id_bidang');
+    }
 }

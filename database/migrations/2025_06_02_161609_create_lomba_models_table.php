@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('link_pendaftaran');
             $table->text('deskripsi_lomba')->nullable();
             $table->enum('status_lomba', ['Masih Berlangsung', 'Selesai'])->default('Masih Berlangsung');
+            $table->enum('status_verifikasi', ['Belum Diverifikasi', 'Ditolak', 'Diverivikasi'])->default('Belum Diverifikasi');
             $table->string('gambar_lomba');
             $table->timestamps();
 

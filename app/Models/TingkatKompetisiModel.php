@@ -16,4 +16,9 @@ class TingkatKompetisiModel extends Model
     {
         return $this->belongsTo(CriteriaModel::class, 'id_criteria'); // sesuaikan nama model & foreign key
     }
+
+    public function lomba()
+    {
+        return $this->hasMany(LombaModel::class, 'id_tingkat_kompetisi'); // sesuaikan nama model & foreign key
+    }
 }
