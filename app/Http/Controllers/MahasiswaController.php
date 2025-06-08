@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BidangLombaModel;
+use App\Models\LombaModel;
 use Illuminate\Http\Request;
+use App\Models\SPKMatriksModel;
+use App\Models\ViewSPKMatriksNilaiOptimasiModel;
 
 class MahasiswaController extends Controller
 {
@@ -18,7 +22,31 @@ class MahasiswaController extends Controller
 
     public function lomba()
     {
-        return view('mahasiswa.lomba.index'); 
+        // Get the ID of the logged-in user
+        $id = auth()->id();
+        
+        // Retrieve lomba data for this specific user
+        $lombaList = ViewSPKMatriksNilaiOptimasiModel::where('id_mahasiswa', $id)->get();
+        if ($lombaList->isEmpty()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Data lomba tidak ditemukan untuk mahasiswa ini',
+            ]);
+        }
+        $lombaList = $lombaList->sortByDesc('nilai_optimasi');
+        
+        // Pass the data to the view
+        return view('mahasiswa.lomba.index')->with('lombaList', $lombaList); 
+    }
+
+    public function detail_lomba(String $id)
+    {
+        $detailLomba = LombaModel::where('id_lomba', $id)->first();
+        $detailBidang = BidangLombaModel::where('id_lomba', $id)->get();
+        return view('mahasiswa.lomba.detail-lomba', [
+            'detailLomba' => $detailLomba,
+            'detailBidang' => $detailBidang
+        ]); 
     }
 
     public function profil()
@@ -34,11 +62,6 @@ class MahasiswaController extends Controller
     public function detail_prestasi()
     {
         return view('mahasiswa.prestasi.detail-prestasi'); 
-    }
-
-    public function detail_lomba()
-    {
-        return view('mahasiswa.lomba.detail-lomba'); 
     }
 
     public function edit_profil()

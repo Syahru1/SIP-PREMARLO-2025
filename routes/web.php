@@ -123,13 +123,17 @@ Route::post('/logout', function () {
     });
 
     // MAHASISWA
-    // Route::middleware(['auth:mahasiswa'])->group(function () {
+    Route::middleware(['auth:mahasiswa'])->group(function () {
         Route::group(['prefix' => 'mahasiswa'],function () {
             // Beranda
             Route::get('/beranda', [MasterController::class, 'mahasiswa'])->name('beranda.mahasiswa');
 
             Route::get('/prestasi', [MahasiswaController::class, 'prestasi'])->name('prestasi');
+
+            // Lomba
             Route::get('/lomba', [MahasiswaController::class, 'lomba'])->name('lomba');
+            Route::get('/lomba/detail-lomba/{id}', [MahasiswaController::class, 'detail_lomba'])->name('detail-lomba.mahasiswa');
+
             Route::get('/profil', [MahasiswaController::class, 'profil'])->name('profil');
             Route::get('/notifikasi', [MahasiswaController::class, 'notifikasi'])->name('notifikasi');
             Route::get('/detail-prestasi', [MahasiswaController::class, 'detail_prestasi'])->name('detail-prestasi');
@@ -147,7 +151,7 @@ Route::post('/logout', function () {
             Route::get('/edit-profil', [MahasiswaController::class, 'edit_profil'])->name('edit-profil');
 
         });
-    // });
+    });
 
     // DOSEN
     Route::middleware(['auth:dosen'])->group(function () {

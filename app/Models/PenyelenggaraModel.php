@@ -16,4 +16,9 @@ class PenyelenggaraModel extends Model
     {
         return $this->belongsTo(CriteriaModel::class, 'id_criteria'); // sesuaikan nama model & foreign key
     }
+
+    public function lomba()
+    {
+        return $this->hasMany(LombaModel::class, 'id_penyelenggara'); // sesuaikan nama model & foreign key
+    }
 }
