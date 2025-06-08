@@ -8,6 +8,7 @@ use App\Http\Controllers\DosenController;
 use App\Http\Controllers\MasterController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SPKController;
+use App\Http\Controllers\PrestasiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -117,23 +118,28 @@ Route::post('/logout', function () {
             Route::get('/verifikasi-lomba/detail', [AdminController::class, 'verifikasiLombaDetail'])->name('verifikasiLomba.detail');
 
             // Verifikasi Prestasi
-            Route::get('/verifikasi-prestasi', [AdminController::class, 'verifikasiPrestasiIndex'])->name('verifikasiPrestasi.index');
-            Route::get('/verifikasi-prestasi/detail', [AdminController::class, 'verifikasiPrestasiDetail'])->name('verifikasiPrestasi.detail');
+            Route::get('/verifikasi-prestasi', [PrestasiController::class, 'verifikasiPrestasiIndex'])->name('verifikasiPrestasi.index');
+            Route::post('/verifikasi-prestasi/list', [PrestasiController::class, 'verifikasiPrestasiList'])->name('verifikasiPrestasi.index');
+            Route::get('/verifikasi-prestasi/detail/{id}', [PrestasiController::class, 'verifikasiPrestasiDetail'])->name('verifikasiPrestasi.detail');
+            Route::get('/verifikasi-prestasi/tambah', [PrestasiController::class, 'verifikasiPrestasiTambah']);
+            Route::post('/verifikasi-prestasi/store', [PrestasiController::class, 'verifikasiPrestasiStore']);
+            Route::get('/verifikasi-prestasi/edit/{id}', [PrestasiController::class, 'verifikasiPrestasiEdit']);
+            Route::put('/verifikasi-prestasi/update/{id}', [PrestasiController::class, 'verifikasiPrestasiUpdate'])->name('verifikasi-prestasi.update');
+            Route::get('/verifikasi-prestasi/confirm-delete/{id}', [PrestasiController::class, 'verifikasiPrestasiConfirmDelete']);
+            Route::delete('/verifikasi-prestasi/delete/{id}', [PrestasiController::class, 'verifikasiPrestasiDelete']);
+            Route::delete('/verifikasi-prestasi/{id}', [PrestasiController::class, 'verifikasiPrestasiDestroy']);
+
         });
     });
 
     // MAHASISWA
-    Route::middleware(['auth:mahasiswa'])->group(function () {
+    // Route::middleware(['auth:mahasiswa'])->group(function () {
         Route::group(['prefix' => 'mahasiswa'],function () {
             // Beranda
             Route::get('/beranda', [MasterController::class, 'mahasiswa'])->name('beranda.mahasiswa');
 
             Route::get('/prestasi', [MahasiswaController::class, 'prestasi'])->name('prestasi');
-
-            // Lomba
             Route::get('/lomba', [MahasiswaController::class, 'lomba'])->name('lomba');
-            Route::get('/lomba/detail-lomba/{id}', [MahasiswaController::class, 'detail_lomba'])->name('detail-lomba.mahasiswa');
-
             Route::get('/profil', [MahasiswaController::class, 'profil'])->name('profil');
             Route::get('/notifikasi', [MahasiswaController::class, 'notifikasi'])->name('notifikasi');
             Route::get('/detail-prestasi', [MahasiswaController::class, 'detail_prestasi'])->name('detail-prestasi');
@@ -151,7 +157,7 @@ Route::post('/logout', function () {
             Route::get('/edit-profil', [MahasiswaController::class, 'edit_profil'])->name('edit-profil');
 
         });
-    });
+    // });
 
     // DOSEN
     Route::middleware(['auth:dosen'])->group(function () {
