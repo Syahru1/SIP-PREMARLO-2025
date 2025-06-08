@@ -11,24 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::dropIfExists('prestasi');
-    }
-
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
         Schema::create('prestasi', function (Blueprint $table) {
             $table->id('id_prestasi');
-            $table->unsignedBigInteger('nama');
+            $table->unsignedBigInteger('id_mahasiswa')->index();
             $table->unsignedBigInteger('id_prodi')->index();
             $table->string('nama_kompetisi');
             $table->enum('posisi', ['Ketua', 'Anggota'])->default('Anggota');
             $table->enum('tingkat_kompetisi', ['Regional','Nasional', 'Internasional'])->default('Nasional');
             $table->enum('juara_kompetisi', ['Juara 1', 'Juara 2', 'Juara 3'])->default('Juara 1');
+            $table->enum('jenis_prestasi', ['Sains', 'Olahraga', 'Lain-lain'])->default('Sains');
             $table->string('lokasi_kompetisi');
-            $table->date('tanggal-surat_tugas');
+            $table->date('tanggal_surat_tugas');
             $table->date('tanggal_kompetisi');
             $table->unsignedBigInteger('id_dosen')->index();
             $table->unsignedBigInteger('id_periode')->index();
@@ -36,12 +29,14 @@ return new class extends Migration
             $table->string('nomor_sertifikat');
             $table->string('foto_sertifikat');
             $table->string('link_perlombaan');
-            $table->enum('status', ['Proses', 'Disetujui', 'Ditolak'])->default('Proses');
+            $table->enum('status', ['Belum Diverifikasi', 'Sudah Diverifikasi', 'Ditolak'])->default('Belum Diverifikasi');
+            $table->integer('skor')->nullable();
+            $table->text('catatan')->nullable();
             $table->timestamp('tanggal_pengajuan')->useCurrent();
             $table->timestamps();
 
             // Foreign key constraints
-            $table->foreign('nama')
+            $table->foreign('id_mahasiswa')
                 ->references('id_mahasiswa')
                 ->on('mahasiswa')
                 ->onDelete('cascade')
@@ -62,5 +57,13 @@ return new class extends Migration
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
         });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('prestasi');
     }
 };
