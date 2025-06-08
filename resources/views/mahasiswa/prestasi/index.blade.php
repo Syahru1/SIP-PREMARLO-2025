@@ -9,7 +9,6 @@
         </div>
     </div>
 
-
     <div class="card component-card_4">
         <div class="card-body">
 
@@ -26,113 +25,90 @@
             </ul>
 
             <div class="tab-content" id="lineTabContent-3">
+                {{-- Data Prestasi Tab --}}
                 <div class="tab-pane fade show active" id="underline-home" role="tabpanel" aria-labelledby="underline-home-tab">
-                    <p class="mb-4">
                     <div class="row layout-spacing">
-                    <div class="col-lg-12">
+                        <div class="col-lg-12">
                             <div class="widget-header">
                                 <div class="row">
                                     <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                                    </div>                  
+                                        <h4>Daftar Prestasi</h4>
+                                    </div>
                                 </div>
                             </div>
                             <div class="widget-content widget-content-area">
                                 <div class="table-responsive mb-4">
-                                    <table id="column-filter" class="table">
+                                    <table id="column-filter" class="table table-hover">
                                         <thead>
                                             <tr>
-                                                <th class="text-secondary"> #. </th>
+                                                <th class="text-secondary">#.</th>
                                                 <th class="text-secondary">Prestasi</th>
                                                 <th class="text-secondary">Tingkat</th>
                                                 <th class="text-secondary">Tahun</th>
+                                                <th class="text-center text-secondary">Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td class="checkbox-column"> 1 </td>
+                                                <td class="checkbox-column">1</td>
                                                 <td>Juara 1 Cyber Security ABC</td>
                                                 <td>Nasional</td>
                                                 <td>2025</td>
-                                                <td class="text-center"><button class="btn btn-primary">Detail</button></td>
+                                                <td class="text-center">
+                                                    <a href="{{ url('mahasiswa/detail-prestasi') }}" class="btn btn-primary btn-sm">Detail</a>
+                                                </td>
                                             </tr>
                                             <tr>
-                                                <td class="checkbox-column"> 2 </td>
-                                                <td>Juara 2 Data Analys</td>
+                                                <td class="checkbox-column">2</td>
+                                                <td>Juara 2 Data Analyst Challenge</td>
                                                 <td>Nasional</td>
                                                 <td>2025</td>
-                                                <td class="text-center"><button class="btn btn-primary">Detail</button></td>
+                                                <td class="text-center">
+                                                    <a href="{{ url('mahasiswa/detail-prestasi') }}" class="btn btn-primary btn-sm">Detail</a>
+                                                </td>
                                             </tr>
                                             <tr>
-                                                <td class="checkbox-column"> 3 </td>
-                                                <td>Juara 1 Competitive Programing</td>
+                                                <td class="checkbox-column">3</td>
+                                                <td>Juara 1 Competitive Programming</td>
                                                 <td>Nasional</td>
                                                 <td>2025</td>
-                                                <td class="text-center"><button class="btn btn-primary">Detail</button></td>
+                                                <td class="text-center">
+                                                    <a href="{{ url('mahasiswa/detail-prestasi') }}" class="btn btn-primary btn-sm">Detail</a>
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
-                    </p>
-                </div>
-                <div class="tab-pane fade" id="underline-profile" role="tabpanel" aria-labelledby="underline-profile-tab">
-                    <p class="mb-4">
-                        <form>
-                        <div class="form-group mb-4">
-                            <label class="text-black" for="prestasiInput">Nama Prestasi</label>
-                            <input type="text" class="form-control border border-secondary" id="prestasiInput" >
-                        </div>
-                        <div class="form-group mb-4">
-                        <label class="text-black" for="kategoriInput">Kategori</label>
-                        <div class="input-group">
-                            <!-- Input -->
-                            <input type="text"
-                                class="form-control border-secondary bg-white text-dark"
-                                id="kategoriInput"
-                                aria-label="Text input with segmented dropdown button"
-                                readonly>
-
-                            <!-- Tombol dropdown -->
-                            <div class="input-group-append">
-                                <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                        fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
-                                        <path d="M7.247 11.14 2.451 5.658C1.885 5.012 2.345 4 3.204 4h9.592c.86 0 1.319 1.012.753 1.658l-4.796 5.482a1 1 0 0 1-1.506 0z" />
-                                    </svg>
-                                </button>
-
-                                <!-- Dropdown isi -->
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="javascript:void(0);" onclick="setKategori('Akademik')">Akademik</a>
-                                    <a class="dropdown-item" href="javascript:void(0);" onclick="setKategori('Non-Akademik')">Non-Akademik</a>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+
+                {{-- Pencatatan Prestasi Tab --}}
+                <div class="tab-pane fade" id="underline-profile" role="tabpanel" aria-labelledby="underline-profile-tab">
+                    <form>
+                        <div class="form-group mb-4">
+                            <label class="text-black" for="inputPrestasi">Nama Prestasi</label>
+                            <input type="text" class="form-control border border-secondary" id="inputPrestasi">
                         </div>
                         <div class="form-group mb-4">
-                            <label class="text-black" for="tingkatInput">Tingkat</label>
+                            <label class="text-black" for="inputAnggota">Nama Anggota</label>
+                            <input type="text" class="form-control border border-secondary" id="inputAnggota">
+                        </div>
+                        <div class="form-group mb-4">
+                            <label class="text-black" for="inputPosisi">Posisi</label>
+                            <input type="text" class="form-control border border-secondary" id="inputPosisi">
+                        </div>
+                        <div class="form-group mb-4">
+                            <label class="text-black" for="inputTingkat">Tingkat Kompetisi</label>
                             <div class="input-group">
-                                <!-- Input -->
-                                <input type="text"
-                                    class="form-control border-secondary bg-white text-dark"
-                                    id="tingkatInput"
-                                    aria-label="Text input with segmented dropdown button"
-                                    readonly>
-
-                                <!-- Tombol dropdown -->
+                                <input type="text" class="form-control border-secondary bg-white text-dark" id="inputTingkat" aria-label="Text input with segmented dropdown button" readonly>
                                 <div class="input-group-append">
-                                    <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                            fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                                    <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
                                             <path d="M7.247 11.14 2.451 5.658C1.885 5.012 2.345 4 3.204 4h9.592c.86 0 1.319 1.012.753 1.658l-4.796 5.482a1 1 0 0 1-1.506 0z" />
                                         </svg>
                                     </button>
-
-                                    <!-- Dropdown item -->
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item" href="javascript:void(0);" onclick="setTingkat('Internasional')">Internasional</a>
                                         <a class="dropdown-item" href="javascript:void(0);" onclick="setTingkat('Nasional')">Nasional</a>
@@ -142,54 +118,119 @@
                             </div>
                         </div>
                         <div class="form-group mb-4">
-                            <label class="text-black" for="penyelenggaraInput">Penyelenggara</label>
-                            
+                            <label class="text-black" for="inputJenis">Jenis Kompetisi</label>
                             <div class="input-group">
-                                <!-- Input text -->
-                                <input type="text" class="form-control border border-secondary text-black bg-white" id="penyelenggaraInput" aria-label="Text input with segmented dropdown button" readonly>
-                                
-                                <!-- Dropdown button -->
+                                <input type="text" class="form-control border-secondary bg-white text-dark" id="inputJenis" aria-label="Text input with segmented dropdown button" readonly>
                                 <div class="input-group-append">
                                     <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
-                                            <path d="M7.247 11.14 2.451 5.658C1.885 5.012 2.345 4 3.204 4h9.592c.86 0 1.319 1.012.753 1.658l-4.796 5.482a1 1 0 0 1-1.506 0z"/>
+                                            <path d="M7.247 11.14 2.451 5.658C1.885 5.012 2.345 4 3.204 4h9.592c.86 0 1.319 1.012.753 1.658l-4.796 5.482a1 1 0 0 1-1.506 0z" />
                                         </svg>
                                     </button>
-                                    
-                                    <!-- Dropdown items -->
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="javascript:void(0);" onclick="setPenyelenggara('Non-Lembaga')">Non-Lembaga</a>
-                                        <a class="dropdown-item" href="javascript:void(0);" onclick="setPenyelenggara('Lembaga')">Lembaga</a>
-                                        <a class="dropdown-item" href="javascript:void(0);" onclick="setPenyelenggara('Kementrian')">Kementrian</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" onclick="setJenis('Kompetisi A')">Kompetisi A</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" onclick="setJenis('Kompetisi B')">Kompetisi B</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" onclick="setJenis('Kompetisi C')">Kompetisi C</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group mb-4">
-                            <label class="text-black" for="tahunInput">Tahun</label>
-                            <input type="text" class="form-control border border-secondary" id="tahunInput" >
-                        </div>
-                                                <div class="custom-file-container" data-upload-id="myFirstImage">
-                            <!-- Label deskripsi -->
-                            <label class="text-black" for="buktiInput" class="form-label">
-                                Bukti Prestasi (PNG/JPG) Max : 2MB
-                            </label>
-
-                            <!-- Input file -->
-                            <div style="display: flex; align-items: center; gap: 10px; margin-top: 10px;">
-                                <a href="javascript:void(0)" 
-                                class="custom-file-container__image-clear" 
-                                title="Clear Image">x</a>
-
-                                <div class="custom-file-container__custom-file">
-                                    <input type="file" class="custom-file-container__custom-file__custom-file-input" accept="image/*">
-                                    <input type="hidden" name="MAX_FILE_SIZE" value="2097152" />
-                                    <span class="custom-file-container__custom-file__custom-file-control"></span>
+                            <label class="text-black" for="inputJuara">Juara</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control border-secondary bg-white text-dark" id="inputJuara" aria-label="Text input with segmented dropdown button" readonly>
+                                <div class="input-group-append">
+                                    <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                                            <path d="M7.247 11.14 2.451 5.658C1.885 5.012 2.345 4 3.204 4h9.592c.86 0 1.319 1.012.753 1.658l-4.796 5.482a1 1 0 0 1-1.506 0z" />
+                                        </svg>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="javascript:void(0);" onclick="setJuara('Juara 1')">Juara 1</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" onclick="setJuara('Juara 2')">Juara 2</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" onclick="setJuara('Juara 3')">Juara 3</a>
+                                    </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="form-group mb-4">
+                            <label class="text-black" for="inputLokasi">Lokasi</label>
+                            <input type="text" class="form-control border border-secondary" id="inputLokasi">
+                        </div>
+                        <div class="form-group mb-4">
+                            <label class="text-black" for="inputTanggalSuratTugas">Tanggal Surat Tugas</label>
+                            <input type="date" class="form-control border border-secondary" id="inputTanggalSuratTugas">
+                        </div>
+                        <div class="form-group mb-4">
+                            <label class="text-black" for="inputTanggalKompetisi">Tanggal Kompetisi</label>
+                            <input type="date" class="form-control border border-secondary" id="inputTanggalKompetisi">
+                        </div>
+                        <div class="form-group mb-4">
+                            <label class="text-black" for="inputDosenPembimbing">Dosen Pembimbing</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control border-secondary bg-white text-dark" id="inputDosenPembimbing" aria-label="Text input with segmented dropdown button" readonly>
+                                <div class="input-group-append">
+                                    <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                                            <path d="M7.247 11.14 2.451 5.658C1.885 5.012 2.345 4 3.204 4h9.592c.86 0 1.319 1.012.753 1.658l-4.796 5.482a1 1 0 0 1-1.506 0z" />
+                                        </svg>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="javascript:void(0);" onclick="setDosenPembimbing('Dosen 1')">Dosen 1</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" onclick="setDosenPembimbing('Dosen 2')">Dosen 2</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group mb-4">
+                            <label class="text-black" for="inputNIDN">NIDN</label>
+                            <input type="text" class="form-control border border-secondary" id="inputNIDN">
+                        </div>
+                        <div class="form-group mb-4">
+                            <label class="text-black" for="inputPeriode">Periode</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control border border-secondary text-black bg-white" id="inputPeriode" aria-label="Text input with segmented dropdown button" readonly>
+                                <div class="input-group-append">
+                                    <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                                            <path d="M7.247 11.14 2.451 5.658C1.885 5.012 2.345 4 3.204 4h9.592c.86 0 1.319 1.012.753 1.658l-4.796 5.482a1 1 0 0 1-1.506 0z" />
+                                        </svg>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="javascript:void(0);" onclick="setPeriode('2023/2024 Ganjil')">2023/2024 Ganjil</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" onclick="setPeriode('2024/2025 Genap')">2024/2025 Genap</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" onclick="setPeriode('2025/2026 Ganjil')">2025/2026 Ganjil</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group mb-4">
+                            <label class="text-black" for="inputJumlahUniv">Jumlah Universitas</label>
+                            <input type="number" class="form-control border border-secondary" id="inputJumlahUniv">
+                        </div>
+                        <div class="form-group mb-4">
+                            <label class="text-black" for="inputNomorSertifikat">Nomor Sertifikat</label>
+                            <input type="text" class="form-control border border-secondary" id="inputNomorSertifikat">
+                        </div>
+                        <div class="form-group mb-4">
+                            <label class="text-black" for="inputTanggalPengajuan">Tanggal Pengajuan</label>
+                            <input type="date" class="form-control border border-secondary" id="inputTanggalPengajuan">
+                        </div>
+                        <div class="form-group mb-4">
+                            <label class="text-black" for="inputLinkWeb">Link Web</label>
+                            <input type="url" class="form-control border border-secondary" id="inputLinkWeb">
+                        </div>
 
-                            <!-- Preview -->
-                            <div class="custom-file-container__image-preview" style="margin-top: 10px;"></div>
+                        {{-- File Upload for Certificate --}}
+                        <div class="form-group mb-4">
+                            <label class="text-black" for="inputSertifikat">Bukti File Sertifikat</label>
+                            <div class="custom-file-container" data-upload-id="certificateUpload">
+                                <label class="custom-file-container__custom-file" >
+                                    <input type="file" class="custom-file-container__custom-file__custom-file-input" accept="image/*, application/pdf" aria-label="Choose File" id="inputSertifikat">
+                                    <span class="custom-file-container__custom-file__custom-file-control"></span>
+                                </label>
+                                <div class="custom-file-container__image-preview"></div>
+                            </div>
                         </div>
 
                         <div class="d-flex justify-content-end mt-4">
@@ -197,54 +238,62 @@
                             <input type="submit" name="time" class="btn btn-success" value="Kirim">
                         </div>
                     </form>
-                    </p>
                 </div>
+
+                {{-- Riwayat Tab --}}
                 <div class="tab-pane fade" id="underline-contact" role="tabpanel" aria-labelledby="underline-contact-tab">
-                    <p class="mb-4">
-                         <div class="row layout-spacing">
-                    <div class="col-lg-12">
+                    <div class="row layout-spacing">
+                        <div class="col-lg-12">
                             <div class="widget-header">
                                 <div class="row">
                                     <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                                    </div>                  
+                                        <h4>Riwayat Pengajuan Prestasi</h4>
+                                    </div>
                                 </div>
                             </div>
                             <div class="widget-content widget-content-area">
                                 <div class="table-responsive mb-4">
-                                    <table id="column-filter" class="table">
+                                    <table id="column-filter" class="table table-hover">
                                         <thead>
                                             <tr>
-                                                <th class="text-secondary"> # </th>
+                                                <th class="text-secondary">#.</th>
                                                 <th class="text-secondary">Prestasi</th>
                                                 <th class="text-secondary">Tingkat</th>
                                                 <th class="text-secondary">Tahun</th>
                                                 <th class="text-secondary">Status</th>
+                                                <th class="text-secondary text-center">Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td class="checkbox-column"> 1 </td>
+                                                <td class="checkbox-column">1</td>
                                                 <td>Juara 1 Cyber Security ABC</td>
                                                 <td>Nasional</td>
                                                 <td>2025</td>
                                                 <td><span class="shadow-none badge badge-success">Disetujui</span></td>
-                                                <td class="text-center"><button class="btn btn-primary">Detail</button></td>
+                                                <td class="text-center">
+                                                    <a href="{{ url('mahasiswa/detail-prestasi') }}" class="btn btn-primary btn-sm">Detail</a>
+                                                </td>
                                             </tr>
                                             <tr>
-                                                <td class="checkbox-column"> 2 </td>
-                                                <td>Juara 1 Cyber Security ABC</td>
+                                                <td class="checkbox-column">2</td>
+                                                <td>Juara 1 Data Science Competition</td>
                                                 <td>Nasional</td>
                                                 <td>2025</td>
                                                 <td><span class="shadow-none badge badge-warning">Proses</span></td>
-                                                <td class="text-center"><button class="btn btn-primary">Detail</button></td>
+                                                <td class="text-center">
+                                                    <a href="{{ url('mahasiswa/detail-prestasi') }}" class="btn btn-primary btn-sm">Detail</a>
+                                                </td>
                                             </tr>
                                             <tr>
-                                                <td class="checkbox-column"> 3 </td>
-                                                <td>Juara 1 Cyber Security ABC</td>
+                                                <td class="checkbox-column">3</td>
+                                                <td>Juara 1 Web Development Hackathon</td>
                                                 <td>Nasional</td>
                                                 <td>2025</td>
                                                 <td><span class="shadow-none badge badge-danger">Ditolak</span></td>
-                                                <td class="text-center"><button class="btn btn-primary">Detail</button></td>
+                                                <td class="text-center">
+                                                    <a href="{{ url('mahasiswa/detail-prestasi') }}" class="btn btn-primary btn-sm">Detail</a>
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -252,8 +301,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                    </p>
                 </div>
             </div>
 
@@ -283,18 +330,28 @@
 </style>
 
 <script>
-    var firstUpload = new FileUploadWithPreview('myFirstImage')
-
-    function setPenyelenggara(value) {
-        document.getElementById("penyelenggaraInput").value = value;
-    }
+    // Initialize FileUploadWithPreview for the certificate
+    // Make sure you have the 'file-upload-with-preview.min.js' script loaded in your layout.template
+    var certificateUpload = new FileUploadWithPreview('certificateUpload');
 
     function setTingkat(value) {
-        document.getElementById("tingkatInput").value = value;
+        document.getElementById("inputTingkat").value = value;
     }
 
-    function setKategori(value) {
-        document.getElementById("kategoriInput").value = value;
+    function setJenis(value) {
+        document.getElementById("inputJenis").value = value;
+    }
+
+    function setJuara(value) {
+        document.getElementById("inputJuara").value = value;
+    }
+
+    function setDosenPembimbing(value) {
+        document.getElementById("inputDosenPembimbing").value = value;
+    }
+
+    function setPeriode(value) {
+        document.getElementById("inputPeriode").value = value;
     }
 </script>
 @endsection
