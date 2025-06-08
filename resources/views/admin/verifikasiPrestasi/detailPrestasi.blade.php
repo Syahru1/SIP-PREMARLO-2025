@@ -1,18 +1,21 @@
-@extends('layout.template')
-
-@section('content')
-@php
-    $detailPrestasi = (object)[
-        'nama_lomba' => 'Lomba Debat Mahasiswa',
-        'kategori' => 'Akademik',
-        'tingkat' => 'Nasional',
-        'penyelenggara' => 'Puspresnas',
-        'tahun' => '2023',
-        'file_url' => asset('assets/img/image.png'),
-        'catatan' => 'File Tidak Bisa Dibuka'
-    ];
-@endphp
-
+@empty($prestasi)
+<!-- Modal jika data tidak ditemukan -->
+<div class="modal-dialog modal-md">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Kesalahan</h5>
+            <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+        </div>
+        <div class="modal-body">
+            <div class="alert alert-danger">
+                <h5><i class="icon fas fa-ban"></i> Kesalahan!!!</h5>
+                Data prestasi tidak ditemukan.
+            </div>
+            <button type="button" class="btn btn-warning" data-dismiss="modal">Kembali</button>
+        </div>
+    </div>
+</div>
+@else
 <div class="layout-px-spacing">
     <div class="page-header">
         <div class="page-title">
