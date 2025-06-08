@@ -37,22 +37,22 @@ class PrestasiModel extends Model
 
     public function mahasiswa()
     {
-        return $this->belongsTo(MahasiswaModel::class, 'id_mahasiswa');
+        return $this->belongsTo(MahasiswaModel::class, 'id_mahasiswa', 'id_mahasiswa');
     }
 
     public function prodi()
     {
-        return $this->belongsTo(ProdiModel::class, 'id_prodi');
+        return $this->belongsTo(ProdiModel::class, 'id_prodi', 'id_prodi');
     }
 
     public function periode()
     {
-        return $this->belongsTo(PeriodeModel::class, 'id_periode');
+        return $this->belongsTo(PeriodeModel::class, 'id_periode', 'id_periode');
     }
 
     public function dosen()
     {
-        return $this->belongsTo(DosenModel::class, 'id_dosen');
+        return $this->belongsTo(DosenModel::class, 'id_dosen', 'id_dosen');
     }
 
     public function hitungSkor()

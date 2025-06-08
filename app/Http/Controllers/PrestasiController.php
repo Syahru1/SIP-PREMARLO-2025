@@ -32,8 +32,34 @@ class PrestasiController extends Controller
             ->make(true);
     }
 
-    public function verifikasiPrestasiDetail()
+    public function verifikasiPrestasiDetail($id)
     {
-        
+        $prestasi = PrestasiModel::find($id);
+
+        if (!$prestasi) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Data prestasi tidak ditemukan',
+                ]);
+            }
+
+        return view('admin.verifikasiPrestasi.detailPrestasi', ['prestasi' => $prestasi]);
     }
+
+    public function verifikasiPrestasi(Request $request, $id)
+    {
+        try {
+            $prestasi = PrestasiModel::findOrFail($id);
+
+            $prestasi->status = $request->status;
+            $prestasi->catatan = $request->catatan;
+            $prestasi->save();
+
+            return redirect('/admin/verifikasi-prestasi')->with('success', "Berhasil mengubah status menjadi {$request->status}");
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal melakukan verifikasi.');
+        }
+    }
+
+
 }

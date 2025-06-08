@@ -120,7 +120,7 @@ Route::post('/logout', function () {
 
             // Verifikasi Prestasi
             Route::get('/verifikasi-prestasi', [PrestasiController::class, 'verifikasiPrestasiIndex'])->name('verifikasiPrestasi.index');
-            Route::post('/verifikasi-prestasi/list', [PrestasiController::class, 'verifikasiPrestasiList'])->name('verifikasiPrestasi.index');
+            Route::post('/verifikasi-prestasi/list', [PrestasiController::class, 'verifikasiPrestasiList'])->name('verifikasiPrestasi.list');
             Route::get('/verifikasi-prestasi/detail/{id}', [PrestasiController::class, 'verifikasiPrestasiDetail'])->name('verifikasiPrestasi.detail');
             Route::post('/verifikasi-prestasi/{id}/verifikasi', [PrestasiController::class, 'verifikasiPrestasi']);
             Route::get('/verifikasi-prestasi/tambah', [PrestasiController::class, 'verifikasiPrestasiTambah']);
