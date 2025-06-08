@@ -55,19 +55,4 @@ class PrestasiModel extends Model
         return $this->belongsTo(DosenModel::class, 'id_dosen', 'id_dosen');
     }
 
-    public function hitungSkor()
-    {
-        $skor = 0;
-
-        $tingkat = $this->tingkat_kompetisi;
-        $juara = $this->juara_kompetisi;
-
-        $bobot = [
-            'Internasional' => ['Juara 1' => 100, 'Juara 2' => 80, 'Juara 3' => 60],
-            'Nasional'      => ['Juara 1' => 70, 'Juara 2' => 50, 'Juara 3' => 30],
-            'Regional'      => ['Juara 1' => 40, 'Juara 2' => 30, 'Juara 3' => 20],
-        ];
-
-        return $bobot[$tingkat][$juara] ?? 0;
-    }
 }

@@ -10,73 +10,42 @@
                 </div>
 
 
-                <!-- Leaderboard -->
-                 <div class="card component-card_4">
+                <!-- Leaderboard Mahasiswa Berprestasi -->
+                <div class="card border-0 shadow-sm my-4">
                     <div class="card-body">
-                        <h5 class="mb-4 text-center text-dark fw-bold">Leaderboard Mahasiswa Berprestasi</h5>
-                       <div class="table-responsive">
-                        <table class="table table-bordered table-striped mb-4 align-middle">
-                            <thead>
-                                <tr>
-                                    <th class="text-secondary" style="width: 60px; text-align: center;">#</th>
-                                    <th class="text-secondary">Nama Mahasiswa</th>
-                                    <th class="text-secondary" style="width: 80px; text-align: center;">Poin</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="text-center">1</td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="usr-img-frame me-3 border border-dark rounded-circle">
-                                                <img alt="avatar" class="img-fluid rounded-circle" src="assets/img/90x90.jpg" width="40" height="40">
+                        <h5 class="text-center fw-bold text-primary mb-4">🏆 Leaderboard Mahasiswa Berprestasi</h5>
+                        <div class="table-responsive">
+                            <table class="table table-hover text-center align-middle">
+                                <thead class="table-primary">
+                                    <tr>
+                                        <th style="width: 60px;">#</th>
+                                        <th>Nama Mahasiswa</th>
+                                        <th>Prodi</th>
+                                        <th>Jumlah Prestasi</th>
+                                        <th>Poin</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($peringkatMahasiswa as $index => $mhs)
+                                    <tr>
+                                        <td><strong>{{ $index + 1 }}</strong></td>
+                                        <td class="text-start">
+                                            <div class="d-flex align-items-center">
+                                                <img src="{{ asset('assets/img/90x90.jpg') }}" class="rounded-circle border me-3" width="40" height="40" alt="avatar">
+                                                <span class="fw-semibold text-dark">{{ $mhs['nama'] }}</span>
                                             </div>
-                                            <p class="mb-0" style=" margin-left: 1rem;">Shaun</p>
-                                        </div>
-                                    </td>
-                                    <td class="text-center">320</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center">2</td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="usr-img-frame me-3 border border-dark rounded-circle">
-                                                <img alt="avatar" class="img-fluid rounded-circle" src="assets/img/90x90.jpg" width="40" height="40">
-                                            </div>
-                                            <p class="mb-0" style=" margin-left: 1rem;">Alma</p>
-                                        </div>
-                                    </td>
-                                    <td class="text-center">420</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center">3</td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="usr-img-frame me-3 border border-dark rounded-circle">
-                                                <img alt="avatar" class="img-fluid rounded-circle" src="assets/img/90x90.jpg" width="40" height="40">
-                                            </div>
-                                            <p class="mb-0" style=" margin-left: 1rem;">Kelly</p>
-                                        </div>
-                                    </td>
-                                    <td class="text-center" style=" margin-left: 1rem;">130</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center">4</td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="usr-img-frame me-3 border border-dark rounded-circle">
-                                                <img alt="avatar" class="img-fluid rounded-circle" src="assets/img/90x90.jpg" width="40" height="40">
-                                            </div>
-                                            <p class="mb-0" style=" margin-left: 1rem;">Vincent</p>
-                                        </div>
-                                    </td>
-                                    <td class="text-center">260</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                                        </td>
+                                        <td class="text-dark">{{ $mhs['program_studi'] }}</td>
+                                        <td class="text-dark">{{ $mhs['jumlah_prestasi'] }}</td>
+                                        <td class="fw-bold text-success">{{ $mhs['total_skor'] }}</td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
+                </div>
 
-                
                 <!-- Informasi Lomba -->
 
                         <h5 class="mb-4 text-center text-dark fw-bold">Informasi Lomba Terkini</h5>

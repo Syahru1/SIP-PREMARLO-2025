@@ -53,6 +53,38 @@ class PrestasiController extends Controller
 
             $prestasi->status = $request->status;
             $prestasi->catatan = $request->catatan;
+
+
+            if($request->status == 'Sudah Diverifikasi'){
+                $skor = 0;
+
+                if($prestasi->juara_kompetisi == 'Juara 1' && $prestasi->tingkat_kompetisi == 'Internasional'){
+                    $skor = 100;
+                } elseif($prestasi->juara_kompetisi == 'Juara 2' && $prestasi->tingkat_kompetisi == 'Internasional'){
+                    $skor = 80;
+                } elseif($prestasi->juara_kompetisi == 'Juara 3' && $prestasi->tingkat_kompetisi == 'Internasional'){
+                    $skor = 60;
+                } elseif($prestasi->juara_kompetisi == 'Juara 1' && $prestasi->tingkat_kompetisi == 'Nasional'){
+                    $skor = 70;
+                } elseif($prestasi->juara_kompetisi == 'Juara 2' && $prestasi->tingkat_kompetisi == 'Nasional'){
+                    $skor = 50;
+                } elseif($prestasi->juara_kompetisi == 'Juara 3' && $prestasi->tingkat_kompetisi == 'Nasional'){
+                    $skor = 30;
+                } elseif($prestasi->juara_kompetisi == 'Juara 1' && $prestasi->tingkat_kompetisi == 'Regional'){
+                    $skor = 40;
+                } elseif($prestasi->juara_kompetisi == 'Juara 2' && $prestasi->tingkat_kompetisi == 'Regional'){
+                    $skor = 30;
+                } elseif($prestasi->juara_kompetisi == 'Juara 3' && $prestasi->tingkat_kompetisi == 'Regional'){
+                    $skor = 10;
+                }
+
+                $prestasi->skor = $skor;
+            }
+
+            if($request->status == 'Belum Diverifikasi' || $request->status == 'Ditolak'){
+                $skor = 0;
+                $prestasi->skor = $skor;
+            }
             $prestasi->save();
 
             return redirect('/admin/verifikasi-prestasi')->with('success', "Berhasil mengubah status menjadi {$request->status}");
