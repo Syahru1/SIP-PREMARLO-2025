@@ -149,6 +149,7 @@ Route::post('/logout', function () {
 
             // Lomba
             Route::get('/lomba', [MahasiswaController::class, 'lomba'])->name('lomba');
+            Route::post('/lomba/store', [MahasiswaController::class, 'storeLomba']);
             Route::get('/lomba/detail-lomba/{id}', [MahasiswaController::class, 'detail_lomba'])->name('detail-lomba.mahasiswa');
 
             Route::get('/profil', [MahasiswaController::class, 'profil'])->name('profil');
