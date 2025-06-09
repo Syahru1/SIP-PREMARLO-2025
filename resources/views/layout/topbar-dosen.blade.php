@@ -1,5 +1,5 @@
 <div class="header-container fixed-top">
-  <header class="header navbar navbar-expand-sm expand-header">
+  <header class="header navbar navbar-expand-sm expand-header"  style="height:56px; padding-top:8px; padding-bottom:8px;">
 
     <!-- Sidebar toggle -->
     <a href="javascript:void(0);" class="sidebarCollapse" data-placement="bottom">
