@@ -9,6 +9,8 @@ use App\Http\Controllers\MasterController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SPKController;
 use App\Http\Controllers\PrestasiController;
+use App\Http\Controllers\PersonalisasiController;
+use App\Http\Controllers\UserController;
 
 
 /*
@@ -24,6 +26,10 @@ use App\Http\Controllers\PrestasiController;
 
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/login', [AuthController::class, 'postlogin']);
+
+Route::get('/test-personalisasi', [PersonalisasiController::class,'test']);
+Route::get('/get-bidang', [PersonalisasiController::class,'getBidang'])->name('get.bidang');
+
 
 Route::post('/logout', function () {
     Auth::logout();
@@ -120,7 +126,7 @@ Route::post('/logout', function () {
 
             // Verifikasi Prestasi
             Route::get('/verifikasi-prestasi', [PrestasiController::class, 'verifikasiPrestasiIndex'])->name('verifikasiPrestasi.index');
-            Route::post('/verifikasi-prestasi/list', [PrestasiController::class, 'verifikasiPrestasiList'])->name('verifikasiPrestasi.list');
+            Route::post('/verifikasi-prestasi/list', [PrestasiController::class, 'verifikasiPrestasiList'])->name('verifikasiPrestasi.index');
             Route::get('/verifikasi-prestasi/detail/{id}', [PrestasiController::class, 'verifikasiPrestasiDetail'])->name('verifikasiPrestasi.detail');
             Route::post('/verifikasi-prestasi/{id}/verifikasi', [PrestasiController::class, 'verifikasiPrestasi']);
             Route::get('/verifikasi-prestasi/tambah', [PrestasiController::class, 'verifikasiPrestasiTambah']);
