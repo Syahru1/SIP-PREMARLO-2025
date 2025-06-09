@@ -169,61 +169,6 @@ class MahasiswaController extends Controller
         ]);
     }
 
-    public function storeLomba(Request $request)
-    {
-        $request->validate([
-            'kode_lomba' => 'required',
-            'nama_lomba' => 'required',
-            'tingkat_kompetisi' => 'required',
-            'penyelenggara' => 'required',
-            'biaya_pendaftaran' => 'required',
-            'hadiah' => 'required',
-            'tanggal_pendaftaran' => 'required',
-            'lokasi' => 'required',
-            'link' => 'required',
-            'deskripsi_lomba' => 'required',
-            'bidang' => 'required|array',
-        ]);
-
-        // Pisah tanggal dari flatpickr
-        [$tgl_mulai, $tgl_akhir] = explode(' to ', $request->tanggal_pendaftaran);
-        // Upload gambar (jika ada)
-        $gambar = null;
-        if ($request->hasFile('gambar_lomba')) {
-            $file = $request->file('gambar_lomba');
-            $gambar = time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('uploads/lomba'), $gambar);
-        }
-
-        $bidang_ids_str = implode(',', $request->bidang);
-        
-        // Set default status jika tidak dikirim dari form
-        $statusLomba = $request->status_lomba ?? 'Masih Berlangsung';
-        $statusVerifikasi = $request->status_verifikasi ?? 'Belum Diverifikasi';
-        // dd($statusLomba, $statusVerifikasi);
-
-        // Panggil Stored Procedure
-        DB::statement("CALL sp_insert_lomba_dan_bidang(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", [
-            $request->kode_lomba,
-            $request->nama_lomba,
-            $request->tingkat_kompetisi,
-            $request->penyelenggara,
-            $request->biaya_pendaftaran,
-            $request->hadiah,
-            $tgl_mulai,
-            $tgl_akhir,
-            $request->lokasi,
-            $request->link,
-            $request->deskripsi_lomba,
-            $statusLomba,
-            $statusVerifikasi,
-            $gambar,
-            $bidang_ids_str
-        ]);
-
-        return redirect('mahasiswa/lomba')->with('success', 'Lomba berhasil ditambahkan.');
-    }
-
     public function profil()
     {
         return view('mahasiswa.profil.index');
