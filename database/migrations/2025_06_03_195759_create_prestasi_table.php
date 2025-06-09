@@ -31,7 +31,7 @@ return new class extends Migration
             $table->string('link_perlombaan');
             $table->enum('status', ['Belum Diverifikasi', 'Sudah Diverifikasi', 'Ditolak'])->default('Belum Diverifikasi');
             $table->integer('skor')->nullable();
-            $table->text('catatan')->nullable();
+            $table->string('catatan')->nullable();
             $table->timestamp('tanggal_pengajuan')->useCurrent();
             $table->timestamps();
 
