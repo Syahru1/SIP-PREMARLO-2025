@@ -13,13 +13,21 @@
       </svg>
     </a>
 
-    <!-- Kanan: Profil -->
-    <ul class="navbar-item flex-row ml-auto">
+    <!-- Kanan -->
+    <ul class="navbar-item flex-row ml-auto align-items-center">
 
-    <!-- Notifikasi -->
-      <!-- <li class="nav-item">
+      <!-- Info User -->
+      <li class="nav-item ml-2 d-flex align-items-center">
+        <span class="ml-2 d-none d-md-inline-block font-weight-bold">{{ $user->nama_dosen ?? "Dosen"}}</span>
+        <img src="{{ asset($user->foto ?? 'assets/img/90x90.jpg') }}" class="rounded-circle ml-2 border border-dark"
+             alt="avatar" style="width:35px; height:35px; object-fit:cover;">
+      </li>
+
+
+      <!-- Notifikasi -->
+      <li class="nav-item ml-2">
         <a class="nav-link" href="{{ url('dosen/notifikasi') }}" title="Notifikasi">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
                viewBox="0 0 24 24" fill="none" stroke="currentColor"
                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                class="feather feather-bell">
@@ -27,47 +35,30 @@
             <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
           </svg>
         </a>
-      </li> -->
+      </li>
 
-
-      <!-- Profil -->
-      <li class="nav-item dropdown user-profile-dropdown order-lg-0 order-1">
-        <a href="javascript:void(0);" class="nav-link dropdown-toggle user"
-           id="userProfileDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+      <!-- Pengaturan Profil Saya -->
+      <li class="nav-item mr-2">
+        <a class="nav-link d-flex align-items-center" href="{{ url('dosen/profil') }}">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
                viewBox="0 0 24 24" fill="none" stroke="currentColor"
                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-               class="feather feather-user-check">
-            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-            <circle cx="8.5" cy="7" r="4"></circle>
-            <polyline points="17 11 19 13 23 9"></polyline>
+               class="feather feather-settings mr-1">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 
+                     1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 
+                     1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 
+                     1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 
+                     1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 
+                     2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h.09a1.65 1.65 0 0 0 1-1.51V3a2 2 
+                     0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h.09a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 
+                     2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v.09a1.65 1.65 0 0 0 
+                     1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
           </svg>
+          <span class="d-none d-md-inline font-weight-bold"></span>
         </a>
-        <div class="dropdown-menu position-absolute e-animated e-fadeInUp" aria-labelledby="userProfileDropdown">
-          <div class="user-profile-section px-3 pt-3 pb-2">
-            <div class="media">
-              <img src="{{ asset($user->foto ?? 'assets/img/90x90.jpg') }}" class="img-fluid mr-2 rounded-circle"
-                   style="width:45px; height:45px;" alt="avatar">
-              <div class="media-body">
-                <h6 class="mb-0 font-weight-bold">{{ $user->nama_dosen ?? 'Dosen' }}</h6>
-                <p class="mb-0 text-muted" style="font-size: 13px;">Dosen Informatika</p>
-              </div>
-            </div>
-          </div>
-          <div class="dropdown-item">
-            <a href="{{ url('dosen/profil') }}">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                   viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                   stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                   class="feather feather-user">
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                <circle cx="12" cy="7" r="4"></circle>
-              </svg>
-              <span>Profil Saya</span>
-            </a>
-          </div>
-        </div>
       </li>
+      
 
     </ul>
   </header>

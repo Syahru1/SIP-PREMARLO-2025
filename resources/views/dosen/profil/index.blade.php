@@ -1,13 +1,11 @@
 @extends('layout.template')
-
 @php
-    // Dummy user jika tidak tersedia dari controller
+    // Dummy user dosen dengan field yang disederhanakan
     $user = (object)[
         'name' => 'Draco Malfoy',
         'nidn' => '202310001',
         'email' => 'draco@example.com',
         'photo' => null,
-        'password' => '*****'
     ];
 @endphp
 
@@ -25,49 +23,54 @@
             <!-- Foto Profil -->
             <div class="me-4" style="margin-left: 1rem;">
                 <img src="{{ $user->photo ? asset('storage/' . $user->photo) : 'https://via.placeholder.com/80x80.png?text=Foto' }}"
-                    alt="Foto Profil"
-                    class="rounded-circle border border-2 border-dark"
-                    width="80" height="80">
+                     alt="Foto Profil"
+                     class="rounded-circle border border-2 border-dark"
+                     width="80" height="80">
             </div>
 
             <!-- Informasi Dosen -->
             <div class="flex-grow-1" style="text-align:left; margin-left: 8rem;">
                 <div class="container px-0">
-                    <!-- Baris 1 -->
                     <div class="row mb-2">
                         <div class="col-md-4">
                             <div class="text-muted">Nama</div>
                             <div class="text-black">{{ $user->name ?? '-' }}</div>
                         </div>
-                    </div>
-
-                    <!-- Baris 2 -->
-                    <div class="row">
                         <div class="col-md-4">
                             <div class="text-muted">NIDN</div>
                             <div class="text-black">{{ $user->nidn ?? '-' }}</div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="text-muted">Email</div>
+                            <div class="text-black">
+                                <a href="mailto:{{ $user->email }}" class="text-black">{{ $user->email }}</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Tab Menu -->
+            <!-- Tombol Edit -->
+            <a href="{{ url('dosen/edit-profil') }}" class="btn btn-primary mb-2 mr-2">Edit</a>
+        </div>
+    </div>
+
+    <div class="card component-card_4">
+        <div class="card-body">
+
             <ul class="nav nav-tabs mb-3" id="lineTab" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" id="underline-home-tab" data-toggle="tab" href="#underline-home" role="tab" aria-controls="underline-home" aria-selected="true">Kompetensi</a>
+                    <a class="nav-link active" id="kompetensi-tab" data-toggle="tab" href="#kompetensi" role="tab" aria-controls="kompetensi" aria-selected="true">Kompetensi</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="underline-profile-tab" data-toggle="tab" href="#underline-profile" role="tab" aria-controls="underline-profile" aria-selected="false">Informasi akun</a>
+                    <a class="nav-link" id="info-akun-tab" data-toggle="tab" href="#info-akun" role="tab" aria-controls="info-akun" aria-selected="false">Informasi Akun</a>
                 </li>
             </ul>
 
-            <!-- Tab Content -->
             <div class="tab-content" id="lineTabContent">
-
-                <!-- Tab 1: Kompetensi -->
-                <div class="tab-pane fade show active" id="underline-home" role="tabpanel" aria-labelledby="underline-home-tab">
-
-                    <!-- Bidang Keahlian -->
+                <div class="tab-pane fade show active" id="kompetensi" role="tabpanel" aria-labelledby="kompetensi-tab">
+                    
+                    {{-- Bidang Keahlian --}}
                     <div class="mb-4 card">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h5 class="card-title mb-0 text-black" style="font-weight: bold !important;">Bidang Keahlian</h5>
@@ -85,7 +88,7 @@
                         </div>
                     </div>
 
-                    <!-- Sertifikasi -->
+                    {{-- Sertifikasi --}}
                     <div class="mb-4 card">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h5 class="card-title mb-0 text-black" style="font-weight: bold !important;">Sertifikasi</h5>
@@ -103,7 +106,7 @@
                         </div>
                     </div>
 
-                    <!-- Pengalaman -->
+                    {{-- Pengalaman --}}
                     <div class="mb-4 card">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h5 class="card-title mb-0 text-black" style="font-weight: bold !important;">Pengalaman</h5>
@@ -120,10 +123,10 @@
                             </div>
                         </div>
                     </div>
+
                 </div>
 
-                <!-- Tab 2: Informasi Akun -->
-                <div class="tab-pane fade" id="underline-profile" role="tabpanel" aria-labelledby="underline-profile-tab">
+                <div class="tab-pane fade" id="info-akun" role="tabpanel" aria-labelledby="info-akun-tab">
                     <div class="card">
                         <div class="card-body">
                             <div class="table-responsive">
@@ -131,7 +134,7 @@
                                     <tbody>
                                         <tr>
                                             <td class="text-muted" style="width: 40%;">Nama</td>
-                                            <td class="text-black" style="width: 60%;">{{ $user->name ?? '-' }}</td>
+                                            <td class="text-black">{{ $user->name ?? '-' }}</td>
                                         </tr>
                                         <tr>
                                             <td class="text-muted">NIDN</td>
@@ -141,10 +144,6 @@
                                             <td class="text-muted">Email</td>
                                             <td class="text-black">{{ $user->email ?? '-' }}</td>
                                         </tr>
-                                        <tr>
-                                            <td class="text-muted">Password</td>
-                                            <td class="text-black">{{ $user->password ?? '-' }}</td>
-                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -152,7 +151,7 @@
                     </div>
                 </div>
 
-            </div> <!-- end tab-content -->
+            </div>
 
         </div>
     </div>
