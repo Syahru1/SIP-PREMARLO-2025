@@ -30,6 +30,16 @@
 
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->
     <link href="{{ asset('assets/css/users/user-profile.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/css/scrollspyNav.css') }}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('plugins/select2/select2.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('plugins/bootstrap-select/bootstrap-select.min.css') }}">
+    <link href="{{ asset('plugins/flatpickr/custom-flatpickr.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('plugins/flatpickr/flatpickr.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('plugins/noUiSlider/nouislider.min.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('plugins/noUiSlider/custom-nouiSlider.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('plugins/bootstrap-range-Slider/bootstrap-slider.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('plugins/file-upload/file-upload-with-preview.min.css') }}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/forms/theme-checkbox-radio.css') }}">
     <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
 </head>
 <body class="alt-menu sidebar-noneoverflow">
@@ -106,7 +116,18 @@
             });
         });
     </script>
-
+    <!--  BEGIN CUSTOM SCRIPTS FILE  -->
+    <script src="{{ asset('assets/js/scrollspyNav.js')}}"></script>
+    <script src="{{ asset('plugins/select2/select2.min.js')}}"></script>
+    {{-- <script src="{{ asset('plugins/select2/custom-select2.js')}}"></script>  --}}
+    <script src="{{ asset('plugins/bootstrap-select/bootstrap-select.min.js') }}"></script>
+    <script src="{{ asset('plugins/flatpickr/flatpickr.js')}}"></script>
+    {{-- <script src="{{ asset('plugins/flatpickr/custom-flatpickr.js')}}"></script> --}}
+    <script src="{{ asset('plugins/noUiSlider/nouislider.min.js')}}"></script>
+    {{-- <script src="{{ asset('plugins/noUiSlider/custom-nouiSlider.js')}}"></script> --}}
+    <script src="{{ asset('plugins/bootstrap-range-Slider/bootstrap-rangeSlider.js')}}"></script>
+    <script src="{{ asset('plugins/file-upload/file-upload-with-preview.min.js') }}"></script>
+    <!--  BEGIN CUSTOM SCRIPTS FILE  -->
     <script src="{{ asset('assets/js/custom.js') }}"></script>
 
     <script>

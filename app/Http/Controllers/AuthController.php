@@ -27,9 +27,9 @@ class AuthController extends Controller
 
         if ($validator->fails()) {
             return response()->json([
-            'status' => false,
-            'message' => 'Validasi gagal',
-            'errors' => $validator->errors()
+                'status' => false,
+                'message' => 'Validasi gagal',
+                'errors' => $validator->errors()
             ], 422);
         }
 
@@ -37,24 +37,24 @@ class AuthController extends Controller
         $guards = ['admin', 'mahasiswa', 'dosen'];
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->attempt($credentials)) {
-            $request->session()->regenerate();
-            $redirectUrl = '/beranda';
-            switch ($guard) {
-                case 'admin':
-                $redirectUrl = '/admin/beranda';
-                break;
-                case 'mahasiswa':
-                $redirectUrl = '/mahasiswa/beranda';
-                break;
-                case 'dosen':
-                $redirectUrl = '/dosen/beranda';
-                break;
-            }
-            return response()->json([
-                'status' => true,
-                'message' => 'Login berhasil',
-                'redirect' => $redirectUrl
-            ]);
+                $request->session()->regenerate();
+                $redirectUrl = '/beranda';
+                switch ($guard) {
+                    case 'admin':
+                        $redirectUrl = '/admin/beranda';
+                        break;
+                    case 'mahasiswa':
+                        $redirectUrl = '/mahasiswa/beranda';
+                        break;
+                    case 'dosen':
+                        $redirectUrl = '/dosen/beranda';
+                        break;
+                }
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Login berhasil',
+                    'redirect' => $redirectUrl
+                ]);
             }
         }
 
@@ -66,13 +66,21 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-        foreach (['admin', 'mahasiswa', 'dosen'] as $guard) {
+        // Deteksi guard yang sedang aktif
+        $guards = ['admin', 'mahasiswa', 'dosen'];
+        foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
                 Auth::guard($guard)->logout();
+
+                // Hentikan perulangan setelah logout dari guard yang aktif
+                break;
             }
         }
+
+        // Hapus seluruh sesi dan regenerasi token
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('/login');
+
+        return redirect('/login')->with('status', 'Berhasil logout!');
     }
 }
