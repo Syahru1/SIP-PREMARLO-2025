@@ -35,6 +35,7 @@ class MahasiswaController extends Controller
         // Get the ID of the logged-in user
         $id = auth()->id();
 
+
         // Retrieve lomba data for this specific user
         $lombaList = SPKMatriksModel::where('id_mahasiswa', $id)->get();
 
@@ -238,7 +239,6 @@ class MahasiswaController extends Controller
     {
         return view('mahasiswa.prestasi.detail-prestasi');
     }
-
     public function edit_profil()
     {
         // Data dummy user
@@ -250,6 +250,7 @@ class MahasiswaController extends Controller
 
         return view('mahasiswa.profil.edit-profil', compact('user'));
     }
+
 
 
     public function sertifikat()
