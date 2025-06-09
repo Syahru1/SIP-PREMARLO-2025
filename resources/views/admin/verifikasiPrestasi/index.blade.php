@@ -93,7 +93,15 @@
                 {
                     data: "status",
                     name: "status",
-                    className: "text-center"
+                    className: "text-center",
+                    render: function(data) {
+                        let badgeClass = 'badge-secondary';
+                        if (data === 'Sudah Diverifikasi') badgeClass = 'badge-success';
+                        else if (data === 'Ditolak') badgeClass = 'badge-danger';
+                        else if (data === 'Belum Diverifikasi') badgeClass = 'badge-warning';
+
+                        return `<span class="badge ${badgeClass}">${data}</span>`;
+                    }
                 },
                 {
                     data: "aksi",
