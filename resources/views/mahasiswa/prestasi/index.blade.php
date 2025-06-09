@@ -11,7 +11,6 @@
 
     <div class="card component-card_4">
         <div class="card-body">
-
             <ul class="nav nav-tabs mb-3" id="lineTab" role="tablist">
                 <li class="nav-item">
                     <a class="nav-link active" id="underline-home-tab" data-toggle="tab" href="#underline-home" role="tab" aria-controls="underline-home" aria-selected="true">Data Prestasi</a>
@@ -23,6 +22,7 @@
                     <a class="nav-link" id="underline-contact-tab" data-toggle="tab" href="#underline-contact" role="tab" aria-controls="underline-contact" aria-selected="false">Riwayat</a>
                 </li>
             </ul>
+
 
             <div class="tab-content" id="lineTabContent-3">
                 {{-- Data Prestasi Tab --}}
@@ -36,46 +36,36 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="widget-content widget-content-area">
+                            <div class="tabel_prestasi widget-content-area">
                                 <div class="table-responsive mb-4">
-                                    <table id="column-filter" class="table table-hover">
+                                    <table id="prestasi_mahasiswa" class="table table-hover" >
                                         <thead>
                                             <tr>
-                                                <th class="text-secondary">#.</th>
+                                                <th class="text-secondary">No</th>
                                                 <th class="text-secondary">Prestasi</th>
-                                                <th class="text-secondary">Tingkat</th>
-                                                <th class="text-secondary">Tahun</th>
+                                                <th class="text-center text-secondary">Nama Kompetisi</th>
+                                                <th class="text-center text-secondary">Tingkat Kompetisi</th>
+                                                <th class="text-center text-secondary">Tahun</th>
                                                 <th class="text-center text-secondary">Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td class="checkbox-column">1</td>
-                                                <td>Juara 1 Cyber Security ABC</td>
-                                                <td>Nasional</td>
-                                                <td>2025</td>
-                                                <td class="text-center">
-                                                    <a href="{{ url('mahasiswa/detail-prestasi') }}" class="btn btn-primary btn-sm">Detail</a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="checkbox-column">2</td>
-                                                <td>Juara 2 Data Analyst Challenge</td>
-                                                <td>Nasional</td>
-                                                <td>2025</td>
-                                                <td class="text-center">
-                                                    <a href="{{ url('mahasiswa/detail-prestasi') }}" class="btn btn-primary btn-sm">Detail</a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="checkbox-column">3</td>
-                                                <td>Juara 1 Competitive Programming</td>
-                                                <td>Nasional</td>
-                                                <td>2025</td>
-                                                <td class="text-center">
-                                                    <a href="{{ url('mahasiswa/detail-prestasi') }}" class="btn btn-primary btn-sm">Detail</a>
-                                                </td>
-                                            </tr>
+                                            @forelse ($prestasi as $index => $item)
+                                                <tr>
+                                                    <td>{{ $index + 1 }}</td>
+                                                    <td>{{ $item->juara_kompetisi }}</td>
+                                                    <td class="text-center ">{{ $item->nama_kompetisi }}</td>
+                                                    <td class="text-center">{{ $item->tingkat_kompetisi }}</td>
+                                                    <td class="text-center">{{ $item->periode->nama_periode }}</td>
+                                                    <td class="text-center">
+                                                        <a href="{{ url('mahasiswa/detail-prestasi/'.$item->id_prestasi) }}" class="btn btn-primary btn-sm">Detail</a>
+                                                    </td>
+                                                </tr>
+                                            @empty
+                                                <tr>
+                                                    <td colspan="6" class="text-center">Belum ada prestasi.</td>
+                                                </tr>
+                                            @endforelse
                                         </tbody>
                                     </table>
                                 </div>
@@ -253,48 +243,48 @@
                             </div>
                             <div class="widget-content widget-content-area">
                                 <div class="table-responsive mb-4">
-                                    <table id="column-filter" class="table table-hover">
+                                    <table id="tabel_riwayat" class="table table-hover">
                                         <thead>
                                             <tr>
-                                                <th class="text-secondary">#.</th>
-                                                <th class="text-secondary">Prestasi</th>
-                                                <th class="text-secondary">Tingkat</th>
-                                                <th class="text-secondary">Tahun</th>
-                                                <th class="text-secondary">Status</th>
-                                                <th class="text-secondary text-center">Aksi</th>
+                                                <th class="text-center text-secondary">No</th>
+                                                <th class="text-center text-secondary">Prestasi</th>
+                                                <th class="text-center text-secondary">Nama Kompetisi</th>
+                                                <th class="text-center text-secondary">Tingkat Kompetisi</th>
+                                                <th class="text-center text-secondary">Tahun</th>
+                                                <th class="text-center text-secondary">Status</th>
+                                                <th class="text-center text-secondary text-center">Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td class="checkbox-column">1</td>
-                                                <td>Juara 1 Cyber Security ABC</td>
-                                                <td>Nasional</td>
-                                                <td>2025</td>
-                                                <td><span class="shadow-none badge badge-success">Disetujui</span></td>
-                                                <td class="text-center">
-                                                    <a href="{{ url('mahasiswa/detail-prestasi') }}" class="btn btn-primary btn-sm">Detail</a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="checkbox-column">2</td>
-                                                <td>Juara 1 Data Science Competition</td>
-                                                <td>Nasional</td>
-                                                <td>2025</td>
-                                                <td><span class="shadow-none badge badge-warning">Proses</span></td>
-                                                <td class="text-center">
-                                                    <a href="{{ url('mahasiswa/detail-prestasi') }}" class="btn btn-primary btn-sm">Detail</a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="checkbox-column">3</td>
-                                                <td>Juara 1 Web Development Hackathon</td>
-                                                <td>Nasional</td>
-                                                <td>2025</td>
-                                                <td><span class="shadow-none badge badge-danger">Ditolak</span></td>
-                                                <td class="text-center">
-                                                    <a href="{{ url('mahasiswa/detail-prestasi') }}" class="btn btn-primary btn-sm">Detail</a>
-                                                </td>
-                                            </tr>
+                                            @forelse ($semuaRiwayat as $index => $riwayat)
+                                                <tr>
+                                                    <td class="text-center">{{ $index + 1 }}</td>
+                                                    <td class="text-center">{{ $riwayat->juara_kompetisi }}</td>
+                                                    <td class="text-center">{{ $riwayat->nama_kompetisi }}</td>
+                                                    <td class="text-center">{{ $riwayat->tingkat_kompetisi }}</td>
+                                                    <td class="text-center">{{ $riwayat->periode->nama_periode ?? '-' }}</td>
+                                                    <td class="text-center">
+                                                        @php
+                                                            $badgeClass = match($riwayat->status) {
+                                                                'Sudah Diverifikasi' => 'badge-success',
+                                                                'Ditolak' => 'badge-danger',
+                                                                'Belum Diverifikasi' => 'badge-warning',
+                                                                default => 'badge-secondary'
+                                                            };
+                                                        @endphp
+                                                        <span class="badge {{ $badgeClass }}">{{ $riwayat->status }}</span>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <a href="{{ url('mahasiswa/detail-prestasi/' . $riwayat->id_prestasi) }}" class="btn btn-primary btn-sm">
+                                                            Detail
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            @empty
+                                                <tr>
+                                                    <td colspan="7" class="text-center">Belum ada riwayat pengajuan prestasi.</td>
+                                                </tr>
+                                            @endforelse
                                         </tbody>
                                     </table>
                                 </div>
@@ -353,5 +343,28 @@
     function setPeriode(value) {
         document.getElementById("inputPeriode").value = value;
     }
+
+    $('#tabel_prestasi').DataTable({
+    paging: true,
+    searching: true,
+    ordering: true,
+    responsive: true,
+    columnDefs: [
+        { orderable: false, targets: 5 } // kolom aksi tidak bisa diurutkan
+    ]
+});
+    $('#tabel_riwayat').DataTable({
+    paging: true,
+    searching: true,
+    ordering: true,
+    responsive: true,
+    columnDefs: [
+        { orderable: false, targets: 6 } // kolom aksi tidak bisa diurutkan
+    ]
+});
+
+
+
 </script>
+
 @endsection

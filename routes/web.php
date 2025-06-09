@@ -144,17 +144,21 @@ Route::post('/logout', function () {
         Route::group(['prefix' => 'mahasiswa'],function () {
             // Beranda
             Route::get('/beranda', [MasterController::class, 'mahasiswa'])->name('beranda.mahasiswa');
-
-            Route::get('/prestasi', [MahasiswaController::class, 'prestasi'])->name('prestasi');
+            Route::get('/mahasiswa/prestasi/pencatatan', [MahasiswaController::class, 'pencatatan'])->name('mahasiswa.prestasi.pencatatan');
+            Route::get('/mahasiswa/prestasi/riwayat', [MahasiswaController::class, 'riwayat'])->name('mahasiswa.prestasi.riwayat');
 
             // Lomba
             Route::get('/lomba', [MahasiswaController::class, 'lomba'])->name('lomba');
             Route::post('/lomba/store', [MahasiswaController::class, 'storeLomba']);
             Route::get('/lomba/detail-lomba/{id}', [MahasiswaController::class, 'detail_lomba'])->name('detail-lomba.mahasiswa');
 
+            //prestasi
+            Route::get('/prestasi', [MahasiswaController::class, 'prestasi'])->name('mahasiswa.prestasi');
+            Route::get('/prestasi/riwayat', [MahasiswaController::class, 'riwayat'])->name('mahasiswa.riwayat');
+            Route::get('/detail-prestasi/{id}', [MahasiswaController::class, 'detailPrestasi'])->name('mahasiswa.detail-prestasi');
+
             Route::get('/profil', [MahasiswaController::class, 'profil'])->name('profil');
             Route::get('/notifikasi', [MahasiswaController::class, 'notifikasi'])->name('notifikasi');
-            Route::get('/detail-prestasi', [MahasiswaController::class, 'detail_prestasi'])->name('detail-prestasi');
             Route::get('/detail-lomba', [MahasiswaController::class, 'detail_lomba'])->name('detail-lomba');
             Route::get('/sertifikat', [MahasiswaController::class, 'sertifikat'])->name('sertifikat');
             Route::get('/create-sertifikat', [MahasiswaController::class, 'create_sertifikat'])->name('sertifikat.create');

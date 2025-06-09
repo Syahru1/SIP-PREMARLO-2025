@@ -17,6 +17,7 @@ use App\Models\SPKNilaiOptimasiModel;
 use App\Models\CriteriaModel;
 use Illuminate\Support\Facades\DB;
 use App\Models\ViewSPKMatriksNilaiOptimasiModel;
+use App\Models\PrestasiModel;
 
 class MahasiswaController extends Controller
 {
@@ -27,15 +28,40 @@ class MahasiswaController extends Controller
 
     public function prestasi()
     {
-        return view('mahasiswa.prestasi.index');
+        $id = auth()->guard('mahasiswa')->user()->id_mahasiswa;
+
+        $prestasi = PrestasiModel::with('periode')
+            ->where('id_mahasiswa', $id)
+            ->where('status', 'Sudah Diverifikasi')
+            ->get();
+
+        $semuaRiwayat = PrestasiModel::with('periode')
+            ->where('id_mahasiswa', $id)
+            ->get();
+
+        return view('mahasiswa.prestasi.index', compact('prestasi', 'semuaRiwayat'));
+    }
+
+
+    public function pencatatan()
+    {
+        // misalnya tampilkan form atau draft
+        return view('mahasiswa.prestasi.pencatatan');
+    }
+
+    public function detailPrestasi($id)
+    {
+        $data = PrestasiModel::with([ 'dosen', 'mahasiswa', 'prodi', 'periode']) // sesuaikan relasi
+            ->findOrFail($id);
+
+        return view('mahasiswa.prestasi.detail-prestasi', compact('data'));
     }
 
     public function lomba()
     {
         // Get the ID of the logged-in user
         $id = auth()->id();
-
-
+        
         // Retrieve lomba data for this specific user
         $lombaList = SPKMatriksModel::where('id_mahasiswa', $id)->get();
 
@@ -248,11 +274,10 @@ class MahasiswaController extends Controller
             'photo' => 'foto-profil.jpg', // misal ini file sudah ada di storage
         ];
 
-        return view('mahasiswa.profil.edit-profil', compact('user'));
-    }
+    return view('mahasiswa.profil.edit-profil', compact('user'));
+    }      
 
-
-
+    
     public function sertifikat()
     {
         return view('mahasiswa.profil.sertifikat-page');
