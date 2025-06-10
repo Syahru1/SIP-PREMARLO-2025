@@ -33,7 +33,7 @@ Route::post('/logout', function () {
     Route::get('/', [MasterController::class, 'index']);
 
     // ADMIN
-    Route::middleware(['auth:admin'])->group(function () {
+    // Route::middleware(['auth:admin'])->group(function () {
         Route::group(['prefix' => 'admin'],function () {
             // Beranda
             Route::get('/beranda', [MasterController::class, 'admin'])->name('beranda');
@@ -65,7 +65,7 @@ Route::post('/logout', function () {
             Route::get('/kelola-dosen/confirm-delete/{id}', [AdminController::class, 'kelolaDosenConfirmDelete']);
             Route::delete('/kelola-dosen/delete/{id}', [AdminController::class, 'kelolaDosenDelete']);
             Route::delete('/kelola-dosen/{id}', [AdminController::class, 'kelolaDosenDestroy']);
-            
+
 
             // Kelola Pengguna Mahasiswa
             Route::get('/kelola-pengguna-mahasiswa', [AdminController::class, 'kelolaMahasiswaIndex'])->name('kelolaMahasiswa.index');
@@ -118,7 +118,7 @@ Route::post('/logout', function () {
             Route::get('/verifikasi-prestasi', [AdminController::class, 'verifikasiPrestasiIndex'])->name('verifikasiPrestasi.index');
             Route::get('/verifikasi-prestasi/detail', [AdminController::class, 'verifikasiPrestasiDetail'])->name('verifikasiPrestasi.detail');
         });
-    });
+    // });
 
     // MAHASISWA
     // Route::middleware(['auth:mahasiswa'])->group(function () {
