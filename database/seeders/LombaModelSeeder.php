@@ -15,9 +15,8 @@ class LombaModelSeeder extends Seeder
     public function run(): void
     {
         DB::table('c_lomba')->insert([
-            
             [
-               'kode_lomba' => 'LMB001',
+                'kode_lomba' => 'LMB001',
                 'nama_lomba' => 'UI/UX DESIGN COMPETITION',
                 'id_tingkat_kompetisi' => 1,
                 'id_penyelenggara' => 2,
@@ -542,7 +541,7 @@ class LombaModelSeeder extends Seeder
                 'link_pendaftaran' => 'https://fti.uksw.edu/fit2025/category.html',
                 'deskripsi_lomba' => 'Kompetisi pengembangan web untuk tingkat nasional.',
                 'status_lomba' => 'Masih Berlangsung',
-                'status_verifikasi' => 'Diverifikasi',
+                'status_verifikasi' => 'Belum Diverifikasi',
                 'gambar_lomba' => 'storage/app/public/lomba/fit-webdev.jpg',
                 'catatan' => null,
                 'created_at' => Carbon::now(),
@@ -561,7 +560,7 @@ class LombaModelSeeder extends Seeder
                 'link_pendaftaran' => 'https://fti.uksw.edu/fit2025/category-mobile.html',
                 'deskripsi_lomba' => 'Kompetisi pengembangan aplikasi mobile untuk tingkat nasional.',
                 'status_lomba' => 'Masih Berlangsung',
-                'status_verifikasi' => 'Diverifikasi',
+                'status_verifikasi' => 'Belum Diverifikasi',
                 'gambar_lomba' => 'storage/app/public/lomba/fit-mobile.jpg',
                 'catatan' => null,
                 'created_at' => Carbon::now(),
@@ -580,7 +579,7 @@ class LombaModelSeeder extends Seeder
                 'link_pendaftaran' => 'https://mage-its.id/sideCompeRegist/compeProg',
                 'deskripsi_lomba' => 'Kompetisi pemrograman untuk tingkat nasional.',
                 'status_lomba' => 'Masih Berlangsung',
-                'status_verifikasi' => 'Diverifikasi',
+                'status_verifikasi' => 'Belum Diverifikasi',
                 'gambar_lomba' => 'storage/app/public/lomba/mage-cp.jpg',
                 'catatan' => null,
                 'created_at' => Carbon::now(),
@@ -599,7 +598,7 @@ class LombaModelSeeder extends Seeder
                 'link_pendaftaran' => 'https://mage-its.id/sideCompeRegist/uiux',
                 'deskripsi_lomba' => 'Kompetisi desain UI/UX untuk tingkat nasional.',
                 'status_lomba' => 'Masih Berlangsung',
-                'status_verifikasi' => 'Diverifikasi',
+                'status_verifikasi' => 'Belum Diverifikasi',
                 'gambar_lomba' => 'storage/app/public/lomba/mage-ui_ux.jpg',
                 'catatan' => null,
                 'created_at' => Carbon::now(),
