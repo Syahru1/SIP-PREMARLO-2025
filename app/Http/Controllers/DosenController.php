@@ -23,7 +23,10 @@ class DosenController extends Controller
 
     public function profil()
     {
-        return view('dosen.profil.index'); 
+    $dosen = auth()->user();
+
+    return view('dosen.profil.index', compact('dosen')
+    );
     }
 
     public function notifikasi()
