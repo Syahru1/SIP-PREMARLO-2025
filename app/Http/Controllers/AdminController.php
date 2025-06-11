@@ -75,8 +75,11 @@ class AdminController extends Controller
             $admin->nama_admin = $request->nama_admin;
             $admin->password = bcrypt($request->password);
 
-            if ($request->hasFile('foto')) {
-                $admin->foto_admin = $request->file('foto')->store('admin', 'public');
+            if ($request->hasFile('foto_admin')) {
+                $file = $request->file('foto_admin');
+                $filename = time() . '_' . $file->getClientOriginalName();
+                $file->move(public_path('uploads/profil'), $filename);
+                $admin->foto_admin = $filename;
             } else {
                 $admin->foto_admin = 'pp_admin.png'; // default
             }
@@ -130,7 +133,10 @@ class AdminController extends Controller
         }
 
         if ($request->hasFile('foto_admin')) {
-            $admin->foto = $request->file('foto_admin')->store('admin', 'public');
+            $file = $request->file('foto_admin');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('uploads/profil'), $filename);
+            $admin->foto_admin = $filename;
         }
 
         $admin->save();
@@ -227,7 +233,10 @@ class AdminController extends Controller
             $dosen->password = bcrypt($request->password);
 
             if ($request->hasFile('foto')) {
-                $dosen->foto = $request->file('foto')->store('dosen', 'public');
+                $file = $request->file('foto');
+                $filename = time() . '_' . $file->getClientOriginalName();
+                $file->move(public_path('uploads/profil'), $filename);
+                $dosen->foto = $filename;
             } else {
                 $dosen->foto = 'pp_dosen.png'; // default
             }
@@ -282,7 +291,10 @@ class AdminController extends Controller
         }
 
         if ($request->hasFile('foto')) {
-            $dosen->foto = $request->file('foto')->store('dosen', 'public');
+            $file = $request->file('foto');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('uploads/profil'), $filename);
+            $dosen->foto = $filename;
         }
 
         $dosen->save();
@@ -418,8 +430,10 @@ class AdminController extends Controller
             $mahasiswa->password = bcrypt($request->password);
 
             if ($request->hasFile('foto')) {
-                $path = $request->file('foto')->store('foto', 'public');
-                $mahasiswa->foto = 'storage/' . $path;
+                $file = $request->file('foto');
+                $filename = time() . '_' . $file->getClientOriginalName();
+                $file->move(public_path('uploads/profil'), $filename);
+                $mahasiswa->foto = $filename;
             } else {
                 $mahasiswa->foto = 'pp_mahasiswa.png'; // Pastikan file ini ada di public/storage
             }
@@ -489,7 +503,10 @@ class AdminController extends Controller
         }
 
         if ($request->hasFile('foto')) {
-            $mahasiswa->foto = $request->file('foto')->store('foto', 'public');
+            $file = $request->file('foto');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('uploads/profil'), $filename);
+            $mahasiswa->foto = $filename;
         }
 
         $mahasiswa->save();
