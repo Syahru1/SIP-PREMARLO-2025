@@ -82,15 +82,20 @@
                 <tr>
                     <th>Foto Sertifikat</th>
                     <td>
-                        <a href="{{ asset('storage/sertifikat/' . $data->foto_sertifikat) }}" target="_blank">
-                            <img src="{{ asset('storage/sertifikat/' . $data->foto_sertifikat) }}"
-                                alt="Bukti Sertifikat"
-                                width="200"
-                                class="img-fluid rounded shadow">
-                        </a>
-                        <p class="mt-2 text-muted">Klik gambar untuk melihat ukuran penuh.</p>
+                        @if($data->foto_sertifikat)
+                            <a href="{{ asset($data->foto_sertifikat) }}" target="_blank">
+                                <img src="{{ asset($data->foto_sertifikat) }}"
+                                    alt="Bukti Sertifikat"
+                                    width="200"
+                                    class="img-fluid rounded shadow">
+                            </a>
+                            <p class="mt-2 text-muted">Klik gambar untuk melihat ukuran penuh.</p>
+                        @else
+                            <p class="text-danger">Foto sertifikat belum diunggah.</p>
+                        @endif
                     </td>
                 </tr>
+
                     <th>Catatan</th>
                     <td>{{$data->catatan}}</td>
                 </tr>
