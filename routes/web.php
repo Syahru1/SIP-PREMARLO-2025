@@ -10,6 +10,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SPKController;
 use App\Http\Controllers\PrestasiController;
 use App\Http\Controllers\PersonalisasiController;
+use App\Http\Controllers\LombaController;
 use App\Http\Controllers\UserController;
 
 
@@ -121,8 +122,10 @@ Route::post('/logout', function () {
             Route::get('/profile/edit', [AdminController::class, 'profileEdit'])->name('profile.edit');
 
             // Verifikasi Lomba
-            Route::get('/verifikasi-lomba', [AdminController::class, 'verifikasiLombaIndex'])->name('verifikasiLomba.index');
-            Route::get('/verifikasi-lomba/detail', [AdminController::class, 'verifikasiLombaDetail'])->name('verifikasiLomba.detail');
+            Route::get('/verifikasi-lomba', [LombaController::class, 'index'])->name('verifikasiLomba.index');
+            Route::post('/verifikasi-lomba/{id}/verifikasi', [LombaController::class, 'verifikasiLomba'])->name('verifikasiLomba.index');
+            Route::post('/verifikasi-lomba/list', [LombaController::class, 'verifikasiLombaList'])->name('verifikasiLomba.detail');
+            Route::get('/verifikasi-lomba/detail/{id}', [LombaController::class, 'verifikasiLombaDetail'])->name('verifikasiLomba.detail');
 
             // Verifikasi Prestasi
             Route::get('/verifikasi-prestasi', [PrestasiController::class, 'verifikasiPrestasiIndex'])->name('verifikasiPrestasi.index');

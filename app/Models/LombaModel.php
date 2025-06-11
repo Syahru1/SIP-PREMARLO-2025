@@ -12,11 +12,21 @@ class LombaModel extends Model
     protected $table = 'c_lomba';
     protected $primaryKey = 'id_lomba';
     protected $fillable = [
+        'kode_lomba',
         'nama_lomba',
+        'id_tingkat_kompetisi',
+        'id_penyelenggara',
+        'id_biaya_pendaftaran',
+        'id_hadiah',
+        'tanggal_mulai_pendaftaran',
+        'tanggal_akhir_pendaftaran',
+        'lokasi_lomba',
         'deskripsi',
-        'tanggal_mulai',
-        'tanggal_selesai',
-        'status',
+        'link_pendaftaran',
+        'status_lomba',
+        'status_verifikasi',
+        'gambar_lomba',
+        'catatan',
     ];
     public function tingkatKompetisi()
     {
