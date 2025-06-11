@@ -18,7 +18,10 @@ use App\Models\CriteriaModel;
 use Illuminate\Support\Facades\DB;
 use App\Models\ViewSPKMatriksNilaiOptimasiModel;
 use App\Models\PrestasiModel;
+use App\Models\ProdiModel;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class MahasiswaController extends Controller
 {
@@ -40,7 +43,10 @@ class MahasiswaController extends Controller
             ->where('id_mahasiswa', $id)
             ->get();
 
-        return view('mahasiswa.prestasi.index', compact('prestasi', 'semuaRiwayat'));
+        $dosen = \App\Models\DosenModel::all();
+        $periode = \App\Models\PeriodeModel::all();
+
+        return view('mahasiswa.prestasi.index', compact('prestasi', 'semuaRiwayat', 'dosen', 'periode'));
     }
 
 
@@ -79,7 +85,7 @@ public function editPrestasi($id)
         $request->validate([
             'juara_kompetisi' => 'required|string|max:255',
             'posisi' => 'required|string|max:255',
-            'nama_kompetisi' => 'required|string|max:255',
+            'juara_kompetisi' => 'required|string|max:255',
             'jenis_prestasi' => 'required|string|max:255',
             'tingkat_kompetisi' => 'required|string|max:255',
             'lokasi_kompetisi' => 'required|string|max:255',
@@ -90,7 +96,7 @@ public function editPrestasi($id)
             'jumlah_univ'=> 'required|integer|min:1',
             'nomor_sertifikat' => 'required|string|max:255',
             'link_perlombaan' => 'required|url|max:255',
-            'foto_sertifikat' => 'requirede|file|mimes:jpg,jpeg,png,pdf|max:2048',
+            'foto_sertifikat' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048',
         ]);
 
         $prestasi = PrestasiModel::findOrFail($id);
@@ -115,6 +121,70 @@ public function editPrestasi($id)
         $prestasi->update($request->all());
 
         return redirect('mahasiswa/prestasi?tab=riwayat')->with('success', 'Data prestasi berhasil diperbarui.');
+    }
+
+    public function storePrestasi(Request $request)
+    {
+        $request->validate([
+            'juara_kompetisi' => 'required|string|max:100',
+            'nama_kompetisi' => 'required|string|max:255',
+            'posisi' => 'required|string|max:100',
+            'tingkat_kompetisi' => 'required|string|max:100',
+            'jenis_prestasi' => 'required|string|max:100',
+            'nama_kompetisi' => 'required|string|max:255',
+            'lokasi_kompetisi' => 'required|string|max:255',
+            'tanggal_surat_tugas' => 'required|date',
+            'tanggal_kompetisi' => 'required|date',
+            'id_dosen' => 'required|exists:dosen,id_dosen',
+            'id_periode' => 'required|exists:periode,id_periode',
+            'jumlah_univ' => 'required|integer|min:1',
+            'nomor_sertifikat' => 'required|string|max:255',
+            'link_perlombaan' => 'required|url|max:255',
+            'foto_sertifikat' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048',
+        ]);
+
+        try {
+            $prestasi = new PrestasiModel();
+
+            $prestasi->juara_kompetisi = $request->juara_kompetisi;
+            $prestasi->id_mahasiswa = Auth::guard('mahasiswa')->user()->id_mahasiswa;
+            $prestasi->posisi = $request->posisi;
+            $prestasi->tingkat_kompetisi = $request->tingkat_kompetisi;
+            $prestasi->jenis_prestasi = $request->jenis_prestasi;
+            $prestasi->nama_kompetisi = $request->nama_kompetisi;
+            $prestasi->lokasi_kompetisi = $request->lokasi_kompetisi;
+            $prestasi->tanggal_surat_tugas = $request->tanggal_surat_tugas;
+            $prestasi->tanggal_kompetisi = $request->tanggal_kompetisi;
+            $prestasi->id_dosen = $request->id_dosen;
+            $prestasi->id_periode = $request->id_periode;
+            $prestasi->jumlah_univ = $request->jumlah_univ;
+            $prestasi->nomor_sertifikat = $request->nomor_sertifikat;
+            $prestasi->link_perlombaan = $request->link_perlombaan;
+            $prestasi->id_prodi = ProdiModel::where('id_prodi', Auth::guard('mahasiswa')->user()->id_prodi)->value('id_prodi');
+            $prestasi->status = 'Belum Diverifikasi';
+            $prestasi->skor = 0;
+            $prestasi->catatan = null;
+            $prestasi->tanggal_pengajuan = now();
+
+            // Simpan foto sertifikat
+            if ($request->hasFile('foto_sertifikat')) {
+                $file = $request->file('foto_sertifikat');
+                $gambar = time() . '_' . $file->getClientOriginalName();
+                $file->move(public_path('uploads/prestasi'), $gambar);
+                $prestasi->foto_sertifikat = 'uploads/prestasi/' . $gambar;
+            }
+
+
+            $prestasi->save();
+
+            return redirect('mahasiswa/prestasi')->with('success', 'Data prestasi berhasil ditambahkan.');
+        } catch (\Exception $e) {
+            Log::error('Gagal simpan prestasi: '.$e->getMessage());
+            return response()->json([
+                'status' => false,
+                'message' => 'Terjadi kesalahan: '.$e->getMessage()
+            ], 500);
+        }
     }
 
 

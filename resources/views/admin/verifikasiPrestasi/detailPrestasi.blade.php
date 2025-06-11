@@ -97,9 +97,16 @@
 
                             <div class="form-group mb-4">
                                 <label class="text-black" for="foto_sertifikat">Foto Sertifikat</label><br>
-                                <a href="{{ $prestasi->foto_sertifikat }}" target="_blank">
-                                    <img src="{{ $prestasi->foto_sertifikat }}" alt="Foto Sertifikat" style="max-width: 100%; height: auto; border: 1px solid #ccc; padding: 5px;">
-                                </a>
+                                @if ($prestasi->foto_sertifikat)
+                                    <a href="{{ asset($prestasi->foto_sertifikat) }}" target="_blank">
+                                        <img src="{{ asset($prestasi->foto_sertifikat) }}"
+                                            alt="Foto Sertifikat"
+                                            style="width: 150px; height: auto; border: 1px solid #ccc; padding: 5px;">
+                                    </a>
+                                    <p class="mt-1 text-muted">Klik gambar untuk melihat ukuran penuh.</p>
+                                @else
+                                    <p class="text-danger">Belum ada foto sertifikat.</p>
+                                @endif
                             </div>
 
                             <div class="form-group mb-4">
