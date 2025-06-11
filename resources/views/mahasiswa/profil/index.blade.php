@@ -1,18 +1,4 @@
 @extends('layout.template')
-@php
-    // Dummy user jika tidak tersedia dari controller
-    $user = (object)[
-        'name' => 'Draco Malfoy',
-        'nim' => '202310001',
-        'prodi' => 'D-IV Teknik Informatika',
-        'lokasi' => 'Malang, Jawa Timur',
-        'email' => 'draco@example.com',
-        'photo' => null,
-        'angkatan' => '2023',
-        'periode' => '2024/2025 Genap',
-        'password' => '*****'
-    ];
-@endphp
 
 @section('content')
 <div class="layout-px-spacing">
@@ -27,7 +13,7 @@
     <div class="d-flex align-items-center justify-content-between">
         <!-- Foto Profil -->
         <div class="me-4" style="margin-left: 1rem;">
-            <img src="{{ $user->photo ? asset('storage/' . $user->photo) : 'https://via.placeholder.com/80x80.png?text=Foto' }}"
+            <img src="{{ $mahasiswa->foto ? asset('storage/' . $mahasiswa->foto) : 'https://via.placeholder.com/80x80.png?text=Foto' }}"
                  alt="Foto Profil"
                  class="rounded-circle border border-2 border-dark"
                  width="80" height="80">
@@ -40,17 +26,15 @@
                 <div class="row mb-2 ">
                     <div class="col-md-4 ">
                         <div class="text-muted">Nama</div>
-                        <div class="text-black">{{ $user->name ?? '-' }}</div>
+                        <div class="text-black">{{ $mahasiswa->nama ?? '-' }}</div>
                     </div>
                     <div class="col-md-4">
                         <div class="text-muted">Prodi</div>
-                        <div class="text-black">{{ $user->prodi ?? '-' }}</div>
+                        <div class="text-black">{{ $mahasiswa->prodi->nama_prodi ?? '-' }}</div>
                     </div>
                     <div class="col-md-4">
-                        <div class="text-muted">Email</div>
-                        <div class="text-black">
-                            <a href="mailto:{{ $user->email }}" class="text-black">{{ $user->email }}</a>
-                        </div>
+                        <div class="text-muted">Username</div>
+                        <div class="text-black">{{ $mahasiswa->username ?? '-' }}</div>
                     </div>
                 </div>
 
@@ -58,23 +42,19 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="text-muted">NIM</div>
-                        <div class="text-black">{{ $user->nim ?? '-' }}</div>
+                        <div class="text-black">{{ $mahasiswa->nim ?? '-' }}</div>
                     </div>
                     <div class="col-md-4">
                         <div class="text-muted">Periode</div>
-                        <div class="text-black">{{ $user->periode ?? '-' }}</div>
+                        <div class="text-black">{{ $mahasiswa->periode->nama_periode ?? '-' }}</div>
                     </div>
                      <div class="col-md-4">
                         <div class="text-muted">Lokasi</div>
-                        <div class="text-black">{{ $user->lokasi ?? '-' }}</div>
+                        <div class="text-black">{{ $mahasiswa->lokasi ?? '-' }}</div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <!-- Tombol Edit -->
-        <a href="{{ url('mahasiswa/edit-profil') }}" class="btn btn-primary mb-2 mr-2">Edit</a>
-
     </div>
 </div>
 
@@ -89,36 +69,10 @@
                 <li class="nav-item">
                     <a class="nav-link" id="underline-preference-tab" data-toggle="tab" href="#underline-preference" role="tab" aria-controls="underline-preference" aria-selected="false">Preferensi</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="underline-profile-tab" data-toggle="tab" href="#underline-profile" role="tab" aria-controls="underline-profile" aria-selected="false">Informasi akun</a>
-                </li>
             </ul>
 
             <div class="tab-content" id="lineTabContent-3">
                 <div class="tab-pane fade show active" id="underline-home" role="tabpanel" aria-labelledby="underline-home-tab">
-                    <div class="mb-4 card">
-                        <div class="card-header d-flex justify-content-between align-items-center">
-                            <h5 class="card-title mb-0 text-black" style="font-weight: bold !important;">Minat</h5>
-                            <div class="d-flex align-items-center">
-
-                             <a href="{{ url('mahasiswa/minat') }}" class="btn btn-secondary mb-2 mr-2">Detail</a>
-
-
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="skill-item mb-3">
-                                <div class="text-black">Isi detail minat ditampilkan di sini...</div>
-                                <div role="separator" class="specialist-divider mt-2"></div>
-                            </div>
-
-                            <div class="skill-item mb-3">
-                                <div class="text-black">Isi detail minat ditampilkan di sini...</div>
-                                <div role="separator" class="specialist-divider mt-2"></div>
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="mb-4 card">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h5 class="card-title mb-0 text-black" style="font-weight: bold !important;">Bidang Keahlian</h5>
@@ -194,86 +148,76 @@
                         <form id="formPersonal" method="POST">
                             @csrf
 
-                            {{-- === BIDANG YANG DIMINATI === --}}
+                                  {{-- BIDANG --}}
                             <div class="mb-4">
                                 <label class="form-label fw-semibold text-dark">Bidang yang Kamu Minati</label>
                                 <div class="row">
-                                    @for ($i = 1; $i <= 4; $i++)
-                                    <div class="col-md-6 mb-2">
-                                        <div class="form-check rounded border px-3 py-2 shadow-sm bg-light">
-                                            <input class="form-check-input me-2" type="checkbox" name="bidang[]" value="{{ $i }}" id="bidang{{ $i }}">
-                                            <label class="form-check-label text-dark" for="bidang{{ $i }}">
-                                                Bidang Contoh {{ $i }}
-                                            </label>
-                                        </div>
+                                @foreach ($bidang as $b)
+                                <div class="col-md-6 mb-2">
+                                    <div class="form-check rounded border px-3 py-2 shadow-sm bg-light">
+                                    <input class="form-check-input me-2" type="checkbox" name="bidang[]" value="{{ $b->id_bidang }}" id="bidang{{ $b->id_bidang }}">
+                                    <label class="form-check-label text-dark" for="bidang{{ $b->id_bidang }}">
+                                        {{ $b->nama_bidang }}
+                                    </label>
                                     </div>
-                                    @endfor
+                                </div>
+                                @endforeach
                                 </div>
                             </div>
 
-                            {{-- === BIAYA PENDAFTARAN IDEAL === --}}
+                            {{-- BIAYA --}}
                             <div class="mb-4">
                                 <label class="form-label fw-semibold text-dark">Biaya Pendaftaran Ideal</label>
                                 <div class="input-group rounded shadow-sm">
-                                    <span class="input-group-text bg-white border-end-0">
-                                        <i class="bi bi-cash-stack text-muted"></i>
-                                    </span>
-                                    <select name="biaya_pendaftaran" class="form-select border-start-0">
-                                        <option value="">-- Pilih Rentang Biaya --</option>
-                                        <option value="1">Gratis</option>
-                                        <option value="2">Rp 1.000 - Rp 50.000</option>
-                                        <option value="3">Rp 50.001 - Rp 200.000</option>
-                                    </select>
+                                <span class="input-group-text bg-white border-end-0"><i class="bi bi-cash-stack text-muted"></i></span>
+                                <select name="biaya_pendaftaran" class="form-select border-start-0">
+                                    <option value=""> Pilih Rentang Biaya </option>
+                                    @foreach ($biaya as $b)
+                                    <option value="{{ $b->id_biaya_pendaftaran }}">{{ $b->nama_biaya_pendaftaran }}</option>
+                                    @endforeach
+                                </select>
                                 </div>
                             </div>
 
-                            {{-- === PENYELENGGARA FAVORIT === --}}
+                            {{-- PENYELENGGARA --}}
                             <div class="mb-4">
                                 <label class="form-label fw-semibold text-dark">Penyelenggara Favorit</label>
                                 <div class="input-group rounded shadow-sm">
-                                    <span class="input-group-text bg-white border-end-0">
-                                        <i class="bi bi-building text-muted"></i>
-                                    </span>
-                                    <select name="penyelenggara" class="form-select border-start-0">
-                                        <option value="">-- Pilih Penyelenggara --</option>
-                                        <option value="1">Pusat Prestasi Nasional</option>
-                                        <option value="2">Kemendikbud Ristek</option>
-                                        <option value="3">Lembaga Swasta</option>
-                                    </select>
+                                <span class="input-group-text bg-white border-end-0"><i class="bi bi-building text-muted"></i></span>
+                                <select name="penyelenggara" class="form-select border-start-0">
+                                    <option value=""> Pilih Penyelenggara </option>
+                                    @foreach ($penyelenggara as $p)
+                                    <option value="{{ $p->id_penyelenggara }}">{{ $p->nama_penyelenggara }}</option>
+                                    @endforeach
+                                </select>
                                 </div>
                             </div>
 
-                            {{-- === TINGKAT KOMPETISI === --}}
+                            {{-- TINGKAT --}}
                             <div class="mb-4">
                                 <label class="form-label fw-semibold text-dark">Tingkat Kompetisi</label>
                                 <div class="input-group rounded shadow-sm">
-                                    <span class="input-group-text bg-white border-end-0">
-                                        <i class="bi bi-bar-chart text-muted"></i>
-                                    </span>
-                                    <select name="tingkat" class="form-select border-start-0">
-                                        <option value="">-- Pilih Tingkat --</option>
-                                        <option value="1">Kampus</option>
-                                        <option value="2">Regional</option>
-                                        <option value="3">Nasional</option>
-                                        <option value="4">Internasional</option>
-                                    </select>
+                                <span class="input-group-text bg-white border-end-0"><i class="bi bi-bar-chart text-muted"></i></span>
+                                <select name="tingkat" class="form-select border-start-0">
+                                    <option value=""> Pilih Tingkat </option>
+                                    @foreach ($tingkat as $t)
+                                    <option value="{{ $t->id_tingkat_kompetisi }}">{{ $t->nama_tingkat_kompetisi }}</option>
+                                    @endforeach
+                                </select>
                                 </div>
                             </div>
 
-                            {{-- === HADIAH DIUTAMAKAN === --}}
+                            {{-- HADIAH --}}
                             <div class="mb-4">
                                 <label class="form-label fw-semibold text-dark">Hadiah yang Diutamakan</label>
                                 <div class="input-group rounded shadow-sm">
-                                    <span class="input-group-text bg-white border-end-0">
-                                        <i class="bi bi-gift text-muted"></i>
-                                    </span>
-                                    <select name="hadiah" class="form-select border-start-0">
-                                        <option value="">-- Pilih Hadiah --</option>
-                                        <option value="1">Uang Tunai</option>
-                                        <option value="2">Beasiswa</option>
-                                        <option value="3">Sertifikat</option>
-                                        <option value="4">Laptop / Gadget</option>
-                                    </select>
+                                <span class="input-group-text bg-white border-end-0"><i class="bi bi-gift text-muted"></i></span>
+                                <select name="hadiah" class="form-select border-start-0">
+                                    <option value=""> Pilih Hadiah </option>
+                                    @foreach ($hadiah as $h)
+                                    <option value="{{ $h->id_hadiah }}">{{ $h->nama_hadiah }}</option>
+                                    @endforeach
+                                </select>
                                 </div>
                             </div>
 
@@ -288,54 +232,6 @@
                         </div>           
                     </div>
                 </div>
-
-                <div class="tab-pane fade" id="underline-profile" role="tabpanel" aria-labelledby="underline-profile-tab">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table mb-0" style="border-top: none; table-layout: fixed;">
-                                    <tbody>
-                                        <tr>
-                                            <td class="text-muted" style="width: 40%;">Nama</td>
-                                            <td class="text-black" style="width: 60%;">{{ $user->name ?? '-' }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-muted">NIM</td>
-                                            <td class="text-black">{{ $user->nim ?? '-' }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-muted">Prodi</td>
-                                            <td class="text-black">{{ $user->prodi ?? '-' }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-muted">Periode</td>
-                                            <td class="text-black">{{ $user->periode ?? '-' }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-muted">Email</td>
-                                            <td class="text-black">{{ $user->email ?? '-' }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-muted">Lokasi</td>
-                                            <td class="text-black">{{ $user->lokasi ?? '-' }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-muted">Angkatan</td>
-                                            <td class="text-black">{{ $user->angkatan ?? '-' }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-muted">Password</td>
-                                            <td class="text-black">{{ $user->password ?? '-' }}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
         </div>
     </div>
 
