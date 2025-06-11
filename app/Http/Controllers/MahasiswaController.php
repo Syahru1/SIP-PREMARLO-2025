@@ -18,6 +18,7 @@ use App\Models\CriteriaModel;
 use Illuminate\Support\Facades\DB;
 use App\Models\ViewSPKMatriksNilaiOptimasiModel;
 use App\Models\PrestasiModel;
+use Illuminate\Support\Facades\Storage;
 
 class MahasiswaController extends Controller
 {
@@ -56,6 +57,66 @@ class MahasiswaController extends Controller
 
         return view('mahasiswa.prestasi.detail-prestasi', compact('data'));
     }
+
+
+public function editPrestasi($id)
+{
+    $prestasi = PrestasiModel::with([ 'dosen', 'mahasiswa', 'prodi', 'periode'])
+        ->findOrFail($id);
+
+    $dosen = \App\Models\DosenModel::all();
+    $periode = \App\Models\PeriodeModel::all();
+
+    return view('mahasiswa.prestasi.edit-prestasi', [
+        'prestasi' => $prestasi,
+        'dosen' => $dosen,
+        'periode' => $periode
+    ]);
+}
+
+    public function updatePrestasi(Request $request, $id)
+    {
+        $request->validate([
+            'juara_kompetisi' => 'required|string|max:255',
+            'posisi' => 'required|string|max:255',
+            'nama_kompetisi' => 'required|string|max:255',
+            'jenis_prestasi' => 'required|string|max:255',
+            'tingkat_kompetisi' => 'required|string|max:255',
+            'lokasi_kompetisi' => 'required|string|max:255',
+            'tanggal_surat_tugas' => 'required|date',
+            'tanggal_kompetisi' => 'required|date',
+            'id_dosen' => 'required|exists:dosen,id_dosen',
+            'id_periode' => 'required|exists:periode,id_periode',
+            'jumlah_univ'=> 'required|integer|min:1',
+            'nomor_sertifikat' => 'required|string|max:255',
+            'link_perlombaan' => 'required|url|max:255',
+            'foto_sertifikat' => 'requirede|file|mimes:jpg,jpeg,png,pdf|max:2048',
+        ]);
+
+        $prestasi = PrestasiModel::findOrFail($id);
+
+        // Handle file upload if provided
+        if ($request->hasFile('foto_sertifikat')) {
+            // Delete old file if exists
+            if ($prestasi->foto_sertifikat && Storage::disk('public')->exists('uploads/prestasi/' . $prestasi->foto_sertifikat)) {
+                Storage::disk('public')->delete('uploads/prestasi/' . $prestasi->foto_sertifikat);
+            }
+            $file = $request->file('foto_sertifikat');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->storeAs('uploads/prestasi', $filename, 'public');
+            $request->merge(['foto_sertifikat' => $filename]);
+        } else {
+            // Keep the existing file name if no new file uploaded
+            $request->merge(['foto_sertifikat' => $prestasi->foto_sertifikat]);
+        }
+
+        $request->merge(['id_mahasiswa' => auth()->guard('mahasiswa')->user()->id_mahasiswa]);
+        $prestasi->status = 'Belum Diverifikasi';
+        $prestasi->update($request->all());
+
+        return redirect('mahasiswa/prestasi?tab=riwayat')->with('success', 'Data prestasi berhasil diperbarui.');
+    }
+
 
     public function lomba()
     {
@@ -213,7 +274,7 @@ class MahasiswaController extends Controller
         }
 
         $bidang_ids_str = implode(',', $request->bidang);
-        
+
         // Set default status jika tidak dikirim dari form
         $statusLomba = $request->status_lomba ?? 'Masih Berlangsung';
         $statusVerifikasi = $request->status_verifikasi ?? 'Belum Diverifikasi';
