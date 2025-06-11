@@ -23,7 +23,15 @@
 @endpush
 @section('content')
     <div class="layout-px-spacing">
-
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="page-header">
             <div class="page-title">
                 <h3>Rekomendasi Lomba</h3>
@@ -48,15 +56,6 @@
                             role="tab" aria-controls="underline-contact" aria-selected="false">Riwayat</a>
                     </li>
                 </ul>
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
                 <div class="tab-content" id="lineTabContent-3">
                     <div class="tab-pane fade show active" id="underline-home" role="tabpanel"
                         aria-labelledby="underline-home-tab">
@@ -71,16 +70,38 @@
                     <div class="tab-pane fade" id="underline-contact" role="tabpanel"
                         aria-labelledby="underline-contact-tab">
                         @include('mahasiswa.lomba.riwayat_lomba')
+                    </div>
                 </div>
             </div>
-
         </div>
     </div>
 
-    </div>
 @endsection
 
 @push('js')
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil',
+                text: '{{ session('success') }}',
+                timer: 2000,
+                showConfirmButton: false
+            });
+        </script>
+    @endif
+
+    @if (session('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal',
+                text: '{{ session('error') }}',
+                timer: 2000,
+                showConfirmButton: false
+            });
+        </script>
+    @endif
     {{-- <script>
         var firstUpload = new FileUploadWithPreview('myFirstImage')
     </script> --}}

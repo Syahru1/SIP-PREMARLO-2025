@@ -36,7 +36,7 @@
                             <a href="{{ url('mahasiswa/lomba/detail-lomba/' . $riwayat->id_lomba) }}"
                                 class="btn btn-primary">Detail</a>
                             @if ($riwayat->status_verifikasi == 'Ditolak')
-                                <a href="{{ url('mahasiswa/lomba/riwayat/' . $riwayat->id_lomba) }}"
+                                <a href="{{ url('mahasiswa/lomba/riwayat-lomba/' . $riwayat->id_lomba) }}"
                                     class="btn btn-warning btn-sm">
                                     Edit
                                 </a>

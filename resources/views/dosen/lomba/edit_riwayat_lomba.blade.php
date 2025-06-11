@@ -29,7 +29,7 @@
             <div class="row layout-spacing">
                 <div class="col-lg-12">
                     <form method="POST"
-                        action="{{ url('/mahasiswa/lomba/riwayat-lomba/' . $detailLomba->id_lomba . '/update') }}"
+                        action="{{ url('/dosen/lomba/riwayat-lomba/' . $detailLomba->id_lomba . '/update') }}"
                         enctype="multipart/form-data">
                         @csrf
                         @method('PUT')

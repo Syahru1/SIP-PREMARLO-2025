@@ -1,4 +1,4 @@
-<form method="POST" action="{{ url('/mahasiswa/lomba/store') }}" enctype="multipart/form-data">
+<form method="POST" action="{{ url('/dosen/lomba/store') }}" enctype="multipart/form-data">
     @csrf
     <div class="form-row mb-4">
         <div class="col">

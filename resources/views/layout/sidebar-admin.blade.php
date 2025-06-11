@@ -55,15 +55,6 @@
             </li>
 
             <li class="menu">
-                <a href="{{ url('admin/kelola-data-lomba') }}" class="dropdown-toggle" aria-expanded="{{ Request::is('admin/kelola-data-lomba*') ? 'true' : 'false' }}">
-                    <div>
-                        <svg class="feather feather-database" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.7 4 3 9 3s9-1.3 9-3V5"/><path d="M3 12c0 1.7 4 3 9 3s9-1.3 9-3"/></svg>
-                        <span>Kelola Data Lomba</span>
-                    </div>
-                </a>
-            </li>
-
-            <li class="menu">
                 <a href="{{ url('admin/verifikasi-lomba') }}" class="dropdown-toggle" aria-expanded="{{ Request::is('admin/verifikasi-lomba*') ? 'true' : 'false' }}">
                     <div>
                         <svg class="feather feather-check-circle" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2l4-4"/><circle cx="12" cy="12" r="10"/></svg>
