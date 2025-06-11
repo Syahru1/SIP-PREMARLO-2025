@@ -192,7 +192,15 @@ Route::post('/logout', function () {
             Route::get('/beranda', [MasterController::class, 'dosen'])->name('beranda.dosen');
 
             Route::get('/profil', [DosenController::class, 'profil'])->name('profil.dosen');
+
+            // lomba
             Route::get('/lomba', [DosenController::class, 'lomba'])->name('lomba.dosen');
+            Route::post('/lomba/store', [DosenController::class, 'storelomba'])->name('lomba.dosen');
+            Route::get('/lomba/riwayat-lomba/{id}', [DosenController::class, 'edit_lomba'])->name('lomba');
+            Route::put('/lomba/riwayat-lomba/{id}/update', [DosenController::class, 'update_lomba'])->name('lomba');
+            Route::get('/lomba/detail-lomba/{id}', [DosenController::class, 'detail_lomba'])->name('detail-lomba.mahasiswa');
+
+
             Route::get('/notifikasi', [DosenController::class, 'notifikasi'])->name('notifikasi.dosen');
             Route::get('/mahasiswa-bimbingan', [DosenController::class, 'mahasiswa_bimbingan'])->name('mahasiswa-bimbingan');
             Route::get('/detail-mahasiswa', [DosenController::class, 'detail_mahasiswa'])->name('detail-mahasiswa');
