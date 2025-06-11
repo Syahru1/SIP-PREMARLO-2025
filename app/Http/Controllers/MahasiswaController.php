@@ -338,6 +338,7 @@ class MahasiswaController extends Controller
 
     public function storeLomba(Request $request)
     {
+        try {
         $request->validate([
             'kode_lomba' => 'required',
             'nama_lomba' => 'required',
@@ -350,6 +351,7 @@ class MahasiswaController extends Controller
             'link' => 'required',
             'deskripsi_lomba' => 'required',
             'bidang' => 'required|array',
+            'gambar_lomba' => 'required',
         ]);
 
         // Get NIM of logged in mahasiswa
@@ -370,28 +372,31 @@ class MahasiswaController extends Controller
         // Set default status jika tidak dikirim dari form
         $statusLomba = $request->status_lomba ?? 'Masih Berlangsung';
         $statusVerifikasi = $request->status_verifikasi ?? 'Belum Diverifikasi';
+        
+            // Panggil Stored Procedure dengan NIM mahasiswa
+            DB::statement("CALL sp_insert_lomba_dan_bidang(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", [
+                $request->kode_lomba,
+                $nimMahasiswa,  // NIM mahasiswa yang login
+                $request->nama_lomba,
+                $request->tingkat_kompetisi,
+                $request->penyelenggara,
+                $request->biaya_pendaftaran,
+                $request->hadiah,
+                $tgl_mulai,
+                $tgl_akhir,
+                $request->lokasi,
+                $request->link,
+                $request->deskripsi_lomba,
+                $statusLomba,
+                $statusVerifikasi,
+                $gambar,
+                $bidang_ids_str
+            ]);
 
-        // Panggil Stored Procedure dengan NIM mahasiswa
-        DB::statement("CALL sp_insert_lomba_dan_bidang(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", [
-            $request->kode_lomba,
-            $nimMahasiswa,  // NIM mahasiswa yang login
-            $request->nama_lomba,
-            $request->tingkat_kompetisi,
-            $request->penyelenggara,
-            $request->biaya_pendaftaran,
-            $request->hadiah,
-            $tgl_mulai,
-            $tgl_akhir,
-            $request->lokasi,
-            $request->link,
-            $request->deskripsi_lomba,
-            $statusLomba,
-            $statusVerifikasi,
-            $gambar,
-            $bidang_ids_str
-        ]);
-
-        return redirect('mahasiswa/lomba')->with('success', 'Lomba berhasil ditambahkan.');
+            return redirect()->back()->with('success', 'Lomba berhasil ditambahkan.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal menambahkan lomba');
+        }
     }
 
     public function detail_lomba(String $id)
@@ -427,6 +432,7 @@ class MahasiswaController extends Controller
 
     public function update_lomba(Request $request, String $id)
     {
+        try {
         $request->validate([
             'kode_lomba' => 'required',
             'kode_pemohon' => 'required',
@@ -456,14 +462,12 @@ class MahasiswaController extends Controller
             $gambar = $existingLomba ? $existingLomba->gambar_lomba : null;
         }
 
-        // dd($gambar);
         $bidang_ids_str = implode(',', $request->bidang);
 
         // Set default status jika tidak dikirim dari form
         $statusLomba = $request->status_lomba ?? 'Masih Berlangsung';
         $statusVerifikasi = $request->status_verifikasi ?? 'Belum Diverifikasi';
 
-        try {
             // Panggil Stored Procedure
             DB::statement("CALL sp_update_lomba_dan_bidang(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", [
                 $id,

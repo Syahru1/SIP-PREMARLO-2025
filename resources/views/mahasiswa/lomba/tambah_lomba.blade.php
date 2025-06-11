@@ -12,7 +12,7 @@
                 placeholder="Masukkan Nama Lomba" required>
         </div>
     </div>
-    <div class="form-row mb-4">
+    <div class="form-row mb-5">
         <div class="col">
             <label class="text-black" for="penyelenggara">Penyelenggara</label>
             <select class="selectpicker form-control" data-style="btn btn-outline-secondary" name="penyelenggara"
@@ -103,8 +103,7 @@
     </div>
 
     <div class="d-flex justify-content-end mt-4">
-        <button type="button" class="btn btn-danger mr-2">Batal</button>
-        <button type="submit" class="btn btn-success">Kirim</button>
+        <button type="submit" class="btn btn-success">Simpan</button>
     </div>
 
 </form>

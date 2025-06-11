@@ -20,12 +20,6 @@
         </div>
     @else
         <div class="layout-px-spacing">
-            @if (session('success'))
-                <div class="alert alert-success">{{ session('success') }}</div>
-            @endif
-            @if (session('error'))
-                <div class="alert alert-danger">{{ session('error') }}</div>
-            @endif
             <div class="page-header">
                 <div class="page-title">
                     <h3>Edit Lomba</h3>
@@ -209,8 +203,6 @@
                 </div>
             </div>
         </div>
-        </div>
-        </div>
     @endempty
 
 
@@ -222,21 +214,19 @@
             Swal.fire({
                 icon: 'success',
                 title: 'Berhasil',
-                text: '{{ session('success') }}',
-                timer: 2000,
-                showConfirmButton: false
+                text: '{{ session("success") }}',
+                // timer: 2000,
+                showConfirmButton: true
             });
         </script>
-    @endif
-
-    @if (session('error'))
+    @elseif (session('error'))
         <script>
             Swal.fire({
                 icon: 'error',
                 title: 'Gagal',
-                text: '{{ session('error') }}',
-                timer: 2000,
-                showConfirmButton: false
+                text: '{{ session("error") }}',
+                // timer: 2000,
+                showConfirmButton: true
             });
         </script>
     @endif
