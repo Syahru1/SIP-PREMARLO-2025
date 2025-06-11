@@ -419,4 +419,9 @@ public function editPrestasi($id)
         // Sertifikat::destroy($id); // jika pakai model
         return redirect()->back()->with('success', 'Pengalaman berhasil dihapus.');
     }
+
+    public function bimbingan()
+    {
+        return view('mahasiswa.bimbingan.index');
+    }
 }
