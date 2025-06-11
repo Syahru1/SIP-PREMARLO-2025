@@ -13,7 +13,7 @@
     <div class="d-flex align-items-center justify-content-between">
         <!-- Foto Profil -->
         <div class="me-4" style="margin-left: 1rem;">
-            <img src="{{ $mahasiswa->foto ? asset('storage/' . $mahasiswa->foto) : 'https://via.placeholder.com/80x80.png?text=Foto' }}"
+            <img src="{{ url('uploads/profil/' . $mahasiswa->foto) }}"
                  alt="Foto Profil"
                  class="rounded-circle border border-2 border-dark"
                  width="80" height="80">
@@ -102,7 +102,7 @@
                             <div class="d-flex align-items-center">
                            <a href="{{ url('mahasiswa/sertifikat') }}" class="btn btn-secondary mb-2 mr-2">Detail</a>
 
-                           
+
                             </div>
                         </div>
                         <div class="card-body">
@@ -140,7 +140,7 @@
 
                 </div>
 
-                
+
                 <div class="tab-pane fade" id="underline-preference" role="tabpanel" aria-labelledby="underline-preference-tab">
                     <div class="card">
                         <div class="card-body">
@@ -229,7 +229,7 @@
                             </div>
                         </form>
                         {{-- === END FORM PERSONALISASI (STATIC PREVIEW) === --}}
-                        </div>           
+                        </div>
                     </div>
                 </div>
         </div>

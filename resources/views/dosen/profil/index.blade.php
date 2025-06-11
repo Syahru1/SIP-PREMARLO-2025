@@ -13,7 +13,7 @@
         <div class="d-flex align-items-center justify-content-between">
             <!-- Foto Profil -->
             <div class="me-4" style="margin-left: 1rem;">
-                <img src="{{ $dosen->foto ? asset('storage/' . $dosen->foto) : 'https://via.placeholder.com/80x80.png?text=Foto' }}"
+                <img src="{{ url('uploads/profil/' . $dosen->foto) }}"
                      alt="Foto Profil"
                      class="rounded-circle border border-2 border-dark"
                      width="80" height="80">
@@ -52,7 +52,7 @@
 
             <div class="tab-content" id="lineTabContent">
                 <div class="tab-pane fade show active" id="kompetensi" role="tabpanel" aria-labelledby="kompetensi-tab">
-                    
+
                     {{-- Bidang Keahlian --}}
                     <div class="mb-4 card">
                         <div class="card-header d-flex justify-content-between align-items-center">
