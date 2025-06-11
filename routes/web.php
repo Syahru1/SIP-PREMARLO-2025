@@ -109,8 +109,10 @@ Route::post('/logout', function () {
             Route::delete('/kelola-prodi/{id}', [AdminController::class, 'kelolaProdiDestroy']);
 
             // Laporan Analisis Prestasi
-            Route::get('/laporan-analisis-prestasi', [AdminController::class, 'laporanAnalisisPrestasiIndex'])->name('laporanAnalisisPrestasi.index');
-            Route::get('/laporan-analisis-prestasi/detail', [AdminController::class, 'laporanAnalisisPrestasiDetail'])->name('laporan.detail');
+            Route::get('/laporan-analisis-prestasi', [PrestasiController::class, 'laporanAnalisisPrestasiIndex'])->name('laporanAnalisisPrestasi.index');
+            Route::get('/laporan-analisis-prestasi/detail/{id}', [PrestasiController::class, 'laporanAnalisisPrestasiDetail'])->name('laporan.detail');
+            Route::get('/laporan-analisis-prestasi/export_excel', [PrestasiController::class, 'laporanAnalisisPrestasiExportExcel'])->name('laporanAnalisisPrestasi.exportExcel');
+            Route::get('/laporan-analisis-prestasi/export_pdf', [PrestasiController::class, 'laporanAnalisisPrestasiExportPDF'])->name('laporanAnalisisPrestasi.exportPDF');
 
             // Rekomendasi lomba
             Route::get('/rekomendasi-lomba', [SPKController::class, 'rekomendasiLombaIndex'])->name('admin.rekomendasiLomba.index');

@@ -14,9 +14,9 @@
             <!-- Foto Profil -->
             <div class="me-4" style="margin-left: 1rem;">
                 <img src="{{ url('uploads/profil/' . $dosen->foto) }}"
-                     alt="Foto Profil"
-                     class="rounded-circle border border-2 border-dark"
-                     width="80" height="80">
+                    alt="Foto Profil"
+                    class="rounded-circle border border-2 border-dark"
+                    width="80" height="80">
             </div>
 
             <!-- Informasi Dosen -->
@@ -32,7 +32,7 @@
                             <div class="text-black">{{ $dosen->nidn ?? '-' }}</div>
                         </div>
                         <div class="col-md-4">
-                           <div class="text-muted">Username</div>
+                        <div class="text-muted">Username</div>
                             <div class="text-black">{{ $dosen->username ?? '-' }}</div>
                         </div>
                     </div>
