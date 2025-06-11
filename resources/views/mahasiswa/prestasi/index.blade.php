@@ -274,10 +274,15 @@
                                                         @endphp
                                                         <span class="badge {{ $badgeClass }}">{{ $riwayat->status }}</span>
                                                     </td>
-                                                    <td class="text-center">
+                                                    <td>
                                                         <a href="{{ url('mahasiswa/detail-prestasi/' . $riwayat->id_prestasi) }}" class="btn btn-primary btn-sm">
                                                             Detail
                                                         </a>
+                                                        @if($riwayat->status == 'Ditolak')
+                                                            <a href="{{ url('mahasiswa/edit-prestasi/' . $riwayat->id_prestasi) }}" class="btn btn-warning btn-sm">
+                                                                Edit
+                                                            </a>
+                                                        @endif
                                                     </td>
                                                 </tr>
                                             @empty
@@ -319,52 +324,73 @@
     }
 </style>
 
+<!-- SweetAlert Library -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- Inisialisasi DataTables dan fungsi lainnya -->
 <script>
-    // Initialize FileUploadWithPreview for the certificate
-    // Make sure you have the 'file-upload-with-preview.min.js' script loaded in your layout.template
     var certificateUpload = new FileUploadWithPreview('certificateUpload');
 
     function setTingkat(value) {
         document.getElementById("inputTingkat").value = value;
     }
-
     function setJenis(value) {
         document.getElementById("inputJenis").value = value;
     }
-
     function setJuara(value) {
         document.getElementById("inputJuara").value = value;
     }
-
     function setDosenPembimbing(value) {
         document.getElementById("inputDosenPembimbing").value = value;
     }
-
     function setPeriode(value) {
         document.getElementById("inputPeriode").value = value;
     }
 
     $('#tabel_prestasi').DataTable({
-    paging: true,
-    searching: true,
-    ordering: true,
-    responsive: true,
-    columnDefs: [
-        { orderable: false, targets: 5 } // kolom aksi tidak bisa diurutkan
-    ]
-});
+        paging: true,
+        searching: true,
+        ordering: true,
+        responsive: true,
+        columnDefs: [{ orderable: false, targets: 5 }]
+    });
+
     $('#tabel_riwayat').DataTable({
-    paging: true,
-    searching: true,
-    ordering: true,
-    responsive: true,
-    columnDefs: [
-        { orderable: false, targets: 6 } // kolom aksi tidak bisa diurutkan
-    ]
-});
-
-
-
+        paging: true,
+        searching: true,
+        ordering: true,
+        responsive: true,
+        columnDefs: [{ orderable: false, targets: 6 }]
+    });
 </script>
+
+<!-- SweetAlert ketika ada session success -->
+@if(session('success'))
+<script>
+    Swal.fire({
+        icon: 'success',
+        title: 'Berhasil!',
+        text: '{{ session('success') }}',
+        showConfirmButton: false,
+        timer: 2000
+    });
+</script>
+@endif
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const tab = urlParams.get('tab');
+
+        if (tab === 'riwayat') {
+            const targetTab = document.querySelector('a[href="#underline-contact"]');
+            if (targetTab) {
+                targetTab.click(); // Aktifkan tab Riwayat
+            }
+        }
+    });
+</script>
+
+
 
 @endsection

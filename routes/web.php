@@ -156,6 +156,8 @@ Route::post('/logout', function () {
             Route::get('/prestasi', [MahasiswaController::class, 'prestasi'])->name('mahasiswa.prestasi');
             Route::get('/prestasi/riwayat', [MahasiswaController::class, 'riwayat'])->name('mahasiswa.riwayat');
             Route::get('/detail-prestasi/{id}', [MahasiswaController::class, 'detailPrestasi'])->name('mahasiswa.detail-prestasi');
+            Route::get('/edit-prestasi/{id}', [MahasiswaController::class, 'editPrestasi'])->name('mahasiswa.edit-prestasi');
+            Route::put('/update-prestasi/{id}', [MahasiswaController::class, 'updatePrestasi'])->name('mahasiswa.update-prestasi');
 
             Route::get('/profil', [MahasiswaController::class, 'profil'])->name('profil');
             Route::get('/notifikasi', [MahasiswaController::class, 'notifikasi'])->name('notifikasi');
