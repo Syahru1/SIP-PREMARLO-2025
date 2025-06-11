@@ -384,8 +384,21 @@ public function editPrestasi($id)
 
     public function profil()
     {
-        return view('mahasiswa.profil.index');
+    $mahasiswa = auth()->user();
+
+    // Ambil data referensi untuk tab lainnya
+    $bidang = DB::table('c_bidang')->orderBy('nama_bidang', 'asc')->get();
+    $biaya = DB::table('c_biaya_pendaftaran')->get();
+    $penyelenggara = DB::table('c_penyelenggara')->get();
+    $tingkat = DB::table('c_tingkat_kompetisi')->get();
+    $hadiah = DB::table('c_hadiah')->get();
+
+    return view('mahasiswa.profil.index', compact(
+        'mahasiswa', 'bidang', 'biaya', 'penyelenggara', 'tingkat', 'hadiah'
+    ));
     }
+
+
 
     public function notifikasi()
     {
