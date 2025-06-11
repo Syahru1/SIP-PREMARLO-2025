@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\PrestasiModel;
 use Yajra\DataTables\Facades\DataTables;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class PrestasiController extends Controller
 {
@@ -91,6 +93,116 @@ class PrestasiController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Gagal melakukan verifikasi.');
         }
+    }
+
+         // Laporan Analisis Prestasi
+    public function laporanAnalisisPrestasiIndex()
+    {
+        $prestasi = PrestasiModel::with(['prodi', 'periode', 'mahasiswa', 'dosen'])
+            ->where('status', 'Sudah Diverifikasi')
+            ->get();
+
+        return view('admin.laporanAnalisisPrestasi.index', compact('prestasi'));
+    }
+
+    public function laporanAnalisisPrestasiDetail($id)
+    {
+        $data = PrestasiModel::with([ 'dosen', 'mahasiswa', 'prodi', 'periode']) // sesuaikan relasi
+            ->findOrFail($id);
+
+        return view('admin.laporanAnalisisPrestasi.detailPrestasi', compact('data'));
+    }
+
+    public function laporanAnalisisPrestasiExportExcel()
+    {
+        $prestasi = PrestasiModel::with(['prodi', 'periode', 'mahasiswa', 'dosen'])
+            ->where('status', 'Sudah Diverifikasi')
+            ->get();
+
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->setCellValue('A1', 'No');
+        $sheet->setCellValue('B1', 'Nama Prestasi');
+        $sheet->setCellValue('C1', 'Posisi');
+        $sheet->setCellValue('D1', 'Nama Mahasiswa');
+        $sheet->setCellValue('E1', 'NIM');
+        $sheet->setCellValue('F1', 'Program Studi');
+        $sheet->setCellValue('G1', 'Nama Kompetisi');
+        $sheet->setCellValue('H1', 'Tingkat Kompetisi');
+        $sheet->setCellValue('I1', 'Jenis Prestasi');
+        $sheet->setCellValue('J1', 'Lokasi Kompetisi');
+        $sheet->setCellValue('K1', 'Tanggal Surat Tugas');
+        $sheet->setCellValue('L1', 'Tanggal Kompetisi');
+        $sheet->setCellValue('M1', 'Dosen Pembimbing');
+        $sheet->setCellValue('N1', 'Periode');
+        $sheet->setCellValue('O1', 'Jumlah Universitas Peserta');
+        $sheet->setCellValue('P1', 'Link Pendaftaran');
+        $sheet->setCellValue('Q1', 'Nomor Sertifikat');
+        $sheet->setCellValue('R1', 'Foto Sertifikat');
+        $sheet->setCellValue('S1', 'Status');
+
+
+        $sheet->getStyle('A1:G1')->getFont()->setBold(true);
+
+        $no = 1;
+        $baris = 2;
+        foreach ($prestasi as $item) {
+            $sheet->setCellValue('A' . $baris, $no++);
+            $sheet->setCellValue('B' . $baris, $item->mahasiswa->juara_kompetisi);
+            $sheet->setCellValue('C' . $baris, $item->posisi);
+            $sheet->setCellValue('D' . $baris, $item->mahasiswa->nama);
+            $sheet->setCellValue('E' . $baris, $item->mahasiswa->nim);
+            $sheet->setCellValue('F' . $baris, $item->prodi->nama_prodi);
+            $sheet->setCellValue('G' . $baris, $item->nama_kompetisi);
+            $sheet->setCellValue('H' . $baris, $item->tingkat_kompetisi);
+            $sheet->setCellValue('I' . $baris, $item->jenis_prestasi);
+            $sheet->setCellValue('J' . $baris, $item->lokasi_kompetisi);
+            $sheet->setCellValue('K' . $baris, $item->tanggal_surat_tugas);
+            $sheet->setCellValue('L' . $baris, $item->tanggal_kompetisi);
+            $sheet->setCellValue('M' . $baris, $item->dosen->nama_dosen);
+            $sheet->setCellValue('N' . $baris, $item->periode->nama_periode);
+            $sheet->setCellValue('O' . $baris, $item->jumlah_univ);
+            $sheet->setCellValue('P' . $baris, $item->link_perlombaan);
+            $sheet->setCellValue('Q' . $baris, $item->nomor_sertifikat);
+            $sheet->setCellValue('R' . $baris, $item->foto_sertifikat);
+            $sheet->setCellValue('S' . $baris, $item->status);
+
+            $baris++;
+        }
+
+        foreach (range('A', 'G') as $columnID) {
+            $sheet->getColumnDimension($columnID)->setAutoSize(true);
+        }
+
+        $sheet->setTitle('Laporan Prestasi Mahasiswa');
+
+        $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
+        $filename = 'Laporan Prestasi Mahasiswa ' . date('Y-m-d') . '.xlsx';
+
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment; filename="' . $filename . '"');
+        header('Cache-Control: max-age=0');
+        header('Cache-Control: max-age=1');
+        header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+        header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
+        header('Cache-Control: cache, must-revalidate');
+        header('Pragma: public');
+        $writer->save('php://output');
+        exit;
+    }
+
+    public function laporanAnalisisPrestasiExportPDF()
+    {
+        $prestasi = PrestasiModel::with(['prodi', 'periode', 'mahasiswa', 'dosen'])
+            ->where('status', 'Sudah Diverifikasi')
+            ->get();
+
+        return PDF::loadView('admin.laporanAnalisisPrestasi.export_pdf', compact('prestasi'))
+            ->setPaper('a4', 'portrait')
+            ->setOption(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])
+            ->stream('Laporan Prestasi Mahasiswa ' . date('Y-m-d') . '.pdf', [
+                'Attachment' => false,
+            ]);
     }
 
 }

@@ -836,12 +836,6 @@ class AdminController extends Controller
         }
     }
 
-     // Laporan Analisis Prestasi
-    public function laporanAnalisisPrestasiIndex()
-    {
-        return view('admin.laporanAnalisisPrestasi.index');
-    }
-
     // Rekomendasi Lomba
     public function rekomendasiLombaIndex()
     {
@@ -858,17 +852,6 @@ class AdminController extends Controller
         return view('admin.laporanAnalisisPrestasi.detailPrestasi');
     }
 
-    // Profile
-    public function profileIndex()
-    {
-        return view('admin.profile.index');
-    }
-
-    public function profileEdit()
-    {
-        return view('admin.profile.editProfile');
-    }
-
     // Verifikasi Lomba
     public function verifikasiLombaIndex()
     {
@@ -880,14 +863,4 @@ class AdminController extends Controller
         return view('admin.verifikasiLomba.detailLomba');
     }
 
-    // Verifikasi Prestasi
-    public function verifikasiPrestasiIndex()
-    {
-        return view('admin.verifikasiPrestasi.index');
-    }
-
-    public function verifikasiPrestasiDetail()
-    {
-        return view('admin.verifikasiPrestasi.detailPrestasi');
-    }
 }

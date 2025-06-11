@@ -249,7 +249,7 @@
                                                 <th class="text-center text-secondary">Tingkat Kompetisi</th>
                                                 <th class="text-center text-secondary">Tahun</th>
                                                 <th class="text-center text-secondary">Status</th>
-                                                <th class="text-center text-secondary text-center">Aksi</th>
+                                                <th class="text-center text-secondary">Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>

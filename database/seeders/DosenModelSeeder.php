@@ -16,7 +16,7 @@ class DosenModelSeeder extends Seeder
         $data = [
             [
                 'username' => 'DSN001',
-                'nama_dosen' => 'Dr. Eng. Cahya Rahmad, S.T., M.Kom.',
+                'nama_dosen' => 'Budi Santoso, S.Kom., M.Kom.',
                 'nidn' => '50907856',
                 'email' => 'G5Lb0@example.com',
                 'password' => bcrypt('12345'),
@@ -25,7 +25,7 @@ class DosenModelSeeder extends Seeder
             ],
             [
                 'username' => 'DSN002',
-                'nama_dosen' => 'Muhammad Afif Hendrawan.,S.Kom., MT',
+                'nama_dosen' => 'Yuni Astuti, S.T., M.T.',
                 'nidn' => '50907857',
                 'email' => 'G5Lb1@example.com',
                 'password' => bcrypt('12345'),
@@ -34,7 +34,7 @@ class DosenModelSeeder extends Seeder
             ],
             [
                 'username' => 'DSN003',
-                'nama_dosen' => 'Triana Fatmawati,S.T., M.T.',
+                'nama_dosen' => 'Citra Lestari, S.T., M.T.',
                 'nidn' => '50907858',
                 'email' => 'G5Lb2@example.com',
                 'password' => bcrypt('12345'),
@@ -43,7 +43,7 @@ class DosenModelSeeder extends Seeder
             ],
             [
                 'username' => 'DSN004',
-                'nama_dosen' => 'Satrio Binusa S, SS, M.Pd.',
+                'nama_dosen' => 'Erfan Prasetyo, S.Sos., M.Si.',
                 'nidn' => '50907859',
                 'email' => 'G5Lb3@example.com',
                 'password' => bcrypt('12345'),
@@ -52,7 +52,7 @@ class DosenModelSeeder extends Seeder
             ],
             [
                 'username' => 'DSN005',
-                'nama_dosen' => 'Vivi Nur Wijayaningrum, S.Kom, M.Kom',
+                'nama_dosen' => 'Dewi Anggraini, S.Kom, M.Kom',
                 'nidn' => '50907860',
                 'email' => 'G5Lb4@example.com',
                 'password' => bcrypt('12345'),
@@ -61,7 +61,7 @@ class DosenModelSeeder extends Seeder
             ],
             [
                 'username' => 'DSN006',
-                'nama_dosen' => 'Usman Nurhasan, S.Kom., MT.',
+                'nama_dosen' => 'Rudi Hartono, S.Kom., MT.',
                 'nidn' => '50907861',
                 'email' => 'G5Lb5@example.com',
                 'password' => bcrypt('12345'),

@@ -1,94 +1,119 @@
 @extends('layout.template')
 
 @section('content')
-
-@php
-    $mahasiswa = (object)[
-        'nama' => 'Syahrul',
-        'program_studi' => 'D-4 Teknik Informatika',
-        'nim' => '2341720002',
-        'email' => 'gunawan.wanwan@example.com',
-        'prestasi' => collect([
-            (object)[
-                'nama_prestasi' => 'Juara 1 Olimpiade Matematika',
-                'kategori' => 'Akademik',
-                'tingkat' => 'Nasional',
-                'industri' => 'Teknologi',
-                'tahun' => '2023/2024',
-            ],
-            (object)[
-                'nama_prestasi' => 'Finalis Lomba AI Nasional',
-                'kategori' => 'Akademik',
-                'tingkat' => 'Nasional',
-                'industri' => 'Teknologi',
-                'tahun' => '2023/2024',
-            ]
-        ])
-    ];
-@endphp
-
 <div class="layout-px-spacing">
     <div class="page-header">
-        <div class="page-title mb-2">
-            <h3>Detail Prestasi Mahasiswa</h3>
+        <div class="page-title">
+            <h3>Detail Prestasi</h3>
         </div>
     </div>
-    <div class="text-end">
-        <a href="{{ url()->previous() }}" class="btn btn-secondary btn-sm">Kembali</a>
-    </div>
 
-    <!-- Informasi Mahasiswa -->
-    <div class="card mb-4 shadow-sm">
-        <div class="card-header bg-primary text-white">Informasi Mahasiswa</div>
+    <div class="card component-card_4">
         <div class="card-body">
-            <dl class="row">
-                <dt class="col-sm-3">Nama</dt>
-                <dd class="col-sm-9">{{ $mahasiswa->nama }}</dd>
+            <table class="table table-borderless">
+                <tr>
+                    <th>Nama Prestasi</th>
+                    <td>{{$data->juara_kompetisi}}</td>
+                </tr>
+                <tr>
+                    <th>Nama Anggota</th>
+                    <td>{{$data->mahasiswa->nama}}</td>
+                </tr>
+                <tr>
+                    <th>Posisi</th>
+                    <td>{{$data->posisi}}</td>
+                </tr>
+                <tr>
+                    <th>Nama Kompetisi</th>
+                    <td>{{$data->nama_kompetisi}}</td>
+                </tr>
+                <tr>
+                    <th>Tingkat Kompetisi</th>
+                    <td>{{$data->tingkat_kompetisi}}</td>
+                </tr>
+                <tr>
+                    <th>Jenis Prestasi</th>
+                    <td>{{$data->jenis_prestasi}}</td>
+                </tr>
+                <tr>
+                    <th>Lokasi</th>
+                    <td>{{$data->lokasi_kompetisi}}</td>
+                </tr>
+                <tr>
+                    <th>Tanggal Surat Tugas</th>
+                    <td>{{$data->tanggal_surat_tugas}}</td>
+                </tr>
+                <tr>
+                    <th>Tanggal Kompetisi</th>
+                    <td>{{$data->tanggal_kompetisi}}</td>
+                </tr>
+                <tr>
+                    <th>Dosen Pembimbing</th>
+                    <td>{{$data->dosen->nama_dosen}}</td>
+                </tr>
+                <tr>
+                    <th>NIDN</th>
+                    <td>{{$data->dosen->nidn}}</td>
+                </tr>
+                <tr>
+                    <th>Periode</th>
+                    <td>{{$data->periode->nama_periode}}</td>
+                </tr>
+                <tr>
+                    <th>Jumlah Universitas</th>
+                    <td>{{$data->jumlah_univ}}</td>
+                </tr>
+                <tr>
+                    <th>Nomor Sertifikat</th>
+                    <td>{{$data->nomor_sertifikat}}</td>
+                </tr>
+                <tr>
+                    <th>Tanggal Pengajuan</th>
+                    <td>{{$data->tanggal_pengajuan}}</td>
+                </tr>
+                <tr>
+                    <th>Link Pendaftaran</th>
+                    <td>
+                        <a href="{{ $data->link_perlombaan }}" target="_blank">
+                            {{ $data->link_perlombaan }}
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Foto Sertifikat</th>
+                    <td>
+                        @if($data->foto_sertifikat)
+                            <a href="{{ asset($data->foto_sertifikat) }}" target="_blank">
+                                <img src="{{ asset($data->foto_sertifikat) }}"
+                                    alt="Bukti Sertifikat"
+                                    width="200"
+                                    class="img-fluid rounded shadow">
+                            </a>
+                            <p class="mt-2 text-muted">Klik gambar untuk melihat ukuran penuh.</p>
+                        @else
+                            <p class="text-danger">Foto sertifikat belum diunggah.</p>
+                        @endif
+                    </td>
+                <tr>
+                    <th>Status</th>
+                    <td>
+                        @php
+                            $badgeClass = match($data->status) {
+                                'Sudah Diverifikasi' => 'badge-success',
+                                'Ditolak' => 'badge-danger',
+                                'Belum Diverifikasi' => 'badge-warning',
+                                default => 'badge-secondary'
+                            };
+                        @endphp
+                        <span class="badge {{ $badgeClass }}">{{ $data->status }}</span>
+                    </td>
+                </tr>
 
-                <dt class="col-sm-3">Program Studi</dt>
-                <dd class="col-sm-9">{{ $mahasiswa->program_studi }}</dd>
-
-                <dt class="col-sm-3">NIM</dt>
-                <dd class="col-sm-9">{{ $mahasiswa->nim }}</dd>
-
-                <dt class="col-sm-3">Email</dt>
-                <dd class="col-sm-9">{{ $mahasiswa->email }}</dd>
-            </dl>
-        </div>
-    </div>
-
-    <!-- Daftar Prestasi -->
-    <div class="card mb-4 shadow-sm">
-        <div class="card-header bg-light fw-semibold">Daftar Prestasi</div>
-        <div class="card-body table-responsive">
-            <table class="table table-bordered table-hover">
-                <thead class="table-light">
-                    <tr>
-                        <th>#</th>
-                        <th>Nama Prestasi</th>
-                        <th>Kategori</th>
-                        <th>Tingkat</th>
-                        <th>Industri</th>
-                        <th>Tahun</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse ($mahasiswa->prestasi as $prestasi)
-                        <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ $prestasi->nama_prestasi }}</td>
-                            <td>{{ $prestasi->kategori }}</td>
-                            <td>{{ $prestasi->tingkat }}</td>
-                            <td>{{ $prestasi->industri }}</td>
-                            <td>{{ $prestasi->tahun }}</td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="5" class="text-center">Belum ada prestasi.</td>
-                        </tr>
-                    @endforelse
-                </tbody>
             </table>
+
+            <div class="mt-4 d-flex justify-content-end">
+                <a href="javascript:void(0);" onclick="history.back()" class="btn btn-secondary">Kembali</a>
+            </div>
         </div>
     </div>
 </div>
