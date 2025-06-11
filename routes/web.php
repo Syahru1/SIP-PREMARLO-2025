@@ -155,6 +155,8 @@ Route::post('/logout', function () {
             // Lomba
             Route::get('/lomba', [MahasiswaController::class, 'lomba'])->name('lomba');
             Route::post('/lomba/store', [MahasiswaController::class, 'storeLomba']);
+            Route::get('/lomba/riwayat-lomba/{id}', [MahasiswaController::class, 'edit_lomba'])->name('lomba');
+            Route::put('/lomba/riwayat-lomba/{id}/update', [MahasiswaController::class, 'update_lomba'])->name('lomba');
             Route::get('/lomba/detail-lomba/{id}', [MahasiswaController::class, 'detail_lomba'])->name('detail-lomba.mahasiswa');
 
             //prestasi
