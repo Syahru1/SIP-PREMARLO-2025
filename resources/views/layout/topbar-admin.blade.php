@@ -21,7 +21,7 @@
 
       <!-- Foto profil -->
       <div style="display: flex; align-items: center;">
-        <img src={{ asset('assets/img/image.png')}} alt="avatar" class="rounded-circle"style="width:32px; height:32px; object-fit: cover; border: 1px solid #ccc; flex-shrink: 0; margin-right: 8px;">
+        <img src="{{url('uploads/profil/'. $user->foto_admin)}}" alt="avatar" class="rounded-circle"style="width:32px; height:32px; object-fit: cover; border: 1px solid #ccc; flex-shrink: 0; margin-right: 8px;">
       </div>
 
 

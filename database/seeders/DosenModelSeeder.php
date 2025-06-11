@@ -21,7 +21,7 @@ class DosenModelSeeder extends Seeder
                 'email' => 'G5Lb0@example.com',
                 'password' => bcrypt('12345'),
                 'id_role' => '3',
-                'foto' => 'pp_dosen.png',
+                'foto' => 'profil_dosencowok1.jpg',
             ],
             [
                 'username' => 'DSN002',
@@ -30,7 +30,7 @@ class DosenModelSeeder extends Seeder
                 'email' => 'G5Lb1@example.com',
                 'password' => bcrypt('12345'),
                 'id_role' => '3',
-                'foto' => 'pp_dosen.png',
+                'foto' => 'profil_dosencowok2.jpg',
             ],
             [
                 'username' => 'DSN003',
@@ -39,7 +39,7 @@ class DosenModelSeeder extends Seeder
                 'email' => 'G5Lb2@example.com',
                 'password' => bcrypt('12345'),
                 'id_role' => '3',
-                'foto' => 'pp_dosen.png',
+                'foto' => 'profil_dosenccewek1.jpg',
             ],
             [
                 'username' => 'DSN004',
@@ -48,7 +48,7 @@ class DosenModelSeeder extends Seeder
                 'email' => 'G5Lb3@example.com',
                 'password' => bcrypt('12345'),
                 'id_role' => '3',
-                'foto' => 'pp_dosen.png',
+                'foto' => 'profil_dosencowok3.jpg',
             ],
             [
                 'username' => 'DSN005',
@@ -57,7 +57,7 @@ class DosenModelSeeder extends Seeder
                 'email' => 'G5Lb4@example.com',
                 'password' => bcrypt('12345'),
                 'id_role' => '3',
-                'foto' => 'pp_dosen.png',
+                'foto' => 'profil_dosencewek2.jpg',
             ],
             [
                 'username' => 'DSN006',
@@ -66,7 +66,7 @@ class DosenModelSeeder extends Seeder
                 'email' => 'G5Lb5@example.com',
                 'password' => bcrypt('12345'),
                 'id_role' => '3',
-                'foto' => 'pp_dosen.png',
+                'foto' => 'profil_dosencowok4.jpg',
             ],
         ];
         DB::table('dosen')->insert($data);

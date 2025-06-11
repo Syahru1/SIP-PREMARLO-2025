@@ -22,7 +22,7 @@ class MahasiswaModelSeeder extends Seeder
                 'nama' => 'SATRIA PANGESTU ADILAMSYAH',
                 'nim' => '2241720140',
                 'password' => bcrypt('12345'),
-                'foto' => 'pp_mahasiswa.png',
+                'foto' => 'profil_cowok1.jpg',
             ],
             [
                 'id_role' => 2,
@@ -32,7 +32,7 @@ class MahasiswaModelSeeder extends Seeder
                 'nama' => 'DEWI LESTARI',
                 'nim' => '2241720141',
                 'password' => bcrypt('12345'),
-                'foto' => 'pp_mahasiswa.png',
+                'foto' => 'profil_cewek1.jpg',
             ],
             [
                 'id_role' => 2,
@@ -42,7 +42,7 @@ class MahasiswaModelSeeder extends Seeder
                 'nama' => 'DAVID SEPTIAN',
                 'nim' => '2241720142',
                 'password' => bcrypt('12345'),
-                'foto' => 'pp_mahasiswa.png',
+                'foto' => 'profil_cowok2.jpg',
             ],
         ];
         DB::table('mahasiswa')->insert($data);

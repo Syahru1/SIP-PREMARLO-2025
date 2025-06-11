@@ -25,13 +25,13 @@
                                         <th>Poin</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody>`
                                     @foreach($peringkatMahasiswa as $index => $mhs)
                                     <tr>
                                         <td><strong>{{ $index + 1 }}</strong></td>
                                         <td class="text-start">
                                             <div class="d-flex align-items-center">
-                                                <img src="{{ asset('assets/img/90x90.jpg') }}" class="rounded-circle border me-3" width="40" height="40" alt="avatar">
+                                                <img src="{{url('uploads/profil/'. $mhs['foto'])}}" class="rounded-circle border" width="40" height="40" alt="avatar" style="margin-right: 16px;">
                                                 <span class="fw-semibold text-dark">{{ $mhs['nama'] }}</span>
                                             </div>
                                         </td>
