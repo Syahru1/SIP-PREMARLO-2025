@@ -17,6 +17,7 @@ class LombaModelSeeder extends Seeder
         DB::table('c_lomba')->insert([
             [
                 'kode_lomba' => 'LMB001',
+                'kode_pemohon' => '2241720140',
                 'nama_lomba' => 'UI/UX DESIGN COMPETITION',
                 'id_tingkat_kompetisi' => 1,
                 'id_penyelenggara' => 2,
@@ -36,6 +37,7 @@ class LombaModelSeeder extends Seeder
             ],
             [
                 'kode_lomba' => 'LMB002',
+                'kode_pemohon' => '2241720140',
                 'nama_lomba' => 'IT Festival 2025',
                 'id_tingkat_kompetisi' => 2,
                 'id_penyelenggara' => 2,
@@ -55,6 +57,7 @@ class LombaModelSeeder extends Seeder
             ],
             [
                 'kode_lomba' => 'LMB003',
+                'kode_pemohon' => '2241720140',
                 'nama_lomba' => 'IT Festival 2026',
                 'id_tingkat_kompetisi' => 2,
                 'id_penyelenggara' => 2,
@@ -74,6 +77,7 @@ class LombaModelSeeder extends Seeder
             ],
             [
                 'kode_lomba' => 'LMB004',
+                'kode_pemohon' => '2241720140',
                 'nama_lomba' => 'UKM Cyber Design Competition 2025',
                 'id_tingkat_kompetisi' => 2,
                 'id_penyelenggara' => 2,
@@ -93,6 +97,7 @@ class LombaModelSeeder extends Seeder
             ],
             [
                 'kode_lomba' => 'LMB005',
+                'kode_pemohon' => '2241720140',
                 'nama_lomba' => 'NATIONAL COMPETITION SILOGY EXPO EDUCATION FAIR 2025',
                 'id_tingkat_kompetisi' => 2,
                 'id_penyelenggara' => 2,
@@ -112,6 +117,7 @@ class LombaModelSeeder extends Seeder
             ],
             [
                 'kode_lomba' => 'LMB006',
+                'kode_pemohon' => '2241720140',
                 'nama_lomba' => 'NATIONAL COMPETITION SILOGY EXPO EDUCATION FAIR 2026',
                 'id_tingkat_kompetisi' => 2,
                 'id_penyelenggara' => 2,
@@ -131,6 +137,7 @@ class LombaModelSeeder extends Seeder
             ],
             [
                 'kode_lomba' => 'LMB007',
+                'kode_pemohon' => '2241720140',
                 'nama_lomba' => 'Lomba Digital FESIFO 3.0',
                 'id_tingkat_kompetisi' => 2,
                 'id_penyelenggara' => 2,
@@ -150,6 +157,7 @@ class LombaModelSeeder extends Seeder
             ],
             [
                 'kode_lomba' => 'LMB008',
+                'kode_pemohon' => '2241720141',
                 'nama_lomba' => 'DATATHON 2025',
                 'id_tingkat_kompetisi' => 2,
                 'id_penyelenggara' => 2,
@@ -169,6 +177,7 @@ class LombaModelSeeder extends Seeder
             ],
             [
                 'kode_lomba' => 'LMB009',
+                'kode_pemohon' => '2241720141',
                 'nama_lomba' => 'SIEGA CUP 2025',
                 'id_tingkat_kompetisi' => 2,
                 'id_penyelenggara' => 2,
@@ -188,6 +197,7 @@ class LombaModelSeeder extends Seeder
             ],
             [
                 'kode_lomba' => 'LMB010',
+                'kode_pemohon' => '2241720141',
                 'nama_lomba' => 'INSPACE 2025: INSPACE COMPETITIONS',
                 'id_tingkat_kompetisi' => 2,
                 'id_penyelenggara' => 2,
@@ -207,6 +217,7 @@ class LombaModelSeeder extends Seeder
             ],
             [
                 'kode_lomba' => 'LMB011',
+                'kode_pemohon' => '2241720141',
                 'nama_lomba' => 'WTO Secretariat, GTP & CropLife International Hackathon 2025',
                 'id_tingkat_kompetisi' => 3,
                 'id_penyelenggara' => 2,
@@ -226,6 +237,7 @@ class LombaModelSeeder extends Seeder
             ],
             [
                 'kode_lomba' => 'LMB012',
+                'kode_pemohon' => '2241720141',
                 'nama_lomba' => 'ITSEC: CTF Competition 2025',
                 'id_tingkat_kompetisi' => 2,
                 'id_penyelenggara' => 2,
@@ -245,6 +257,7 @@ class LombaModelSeeder extends Seeder
             ],
             [
                 'kode_lomba' => 'LMB013',
+                'kode_pemohon' => '2241720141',
                 'nama_lomba' => 'DigiNation Competition 2025',
                 'id_tingkat_kompetisi' => 2,
                 'id_penyelenggara' => 1,
@@ -264,6 +277,7 @@ class LombaModelSeeder extends Seeder
             ],
             [
                 'kode_lomba' => 'LMB014',
+                'kode_pemohon' => '2241720141',
                 'nama_lomba' => 'TECHFEST COMPETITION 2025',
                 'id_tingkat_kompetisi' => 2,
                 'id_penyelenggara' => 2,
@@ -283,6 +297,7 @@ class LombaModelSeeder extends Seeder
             ],
             [
                 'kode_lomba' => 'LMB015',
+                'kode_pemohon' => '2241720141',
                 'nama_lomba' => 'UI/UX Mobile Design Competition',
                 'id_tingkat_kompetisi' => 2,
                 'id_penyelenggara' => 2,
@@ -302,6 +317,7 @@ class LombaModelSeeder extends Seeder
             ],
             [
                 'kode_lomba' => 'LMB016',
+                'kode_pemohon' => '50907856',
                 'nama_lomba' => 'Web programming competition 2025',
                 'id_tingkat_kompetisi' => 2,
                 'id_penyelenggara' => 2,
@@ -321,6 +337,7 @@ class LombaModelSeeder extends Seeder
             ],
             [
                 'kode_lomba' => 'LMB017',
+                'kode_pemohon' => '50907856',
                 'nama_lomba' => 'Garuda Hacks 6.0',
                 'id_tingkat_kompetisi' => 2,
                 'id_penyelenggara' => 1,
@@ -340,6 +357,7 @@ class LombaModelSeeder extends Seeder
             ],
             [
                 'kode_lomba' => 'LMB018',
+                'kode_pemohon' => '50907856',
                 'nama_lomba' => 'PEKAN IT 2025',
                 'id_tingkat_kompetisi' => 2,
                 'id_penyelenggara' => 2,
@@ -359,6 +377,7 @@ class LombaModelSeeder extends Seeder
             ],
             [
                 'kode_lomba' => 'LMB019',
+                'kode_pemohon' => '50907856',
                 'nama_lomba' => 'EcoVation',
                 'id_tingkat_kompetisi' => 3,
                 'id_penyelenggara' => 2,
@@ -378,6 +397,7 @@ class LombaModelSeeder extends Seeder
             ],
             [
                 'kode_lomba' => 'LMB020',
+                'kode_pemohon' => '50907856',
                 'nama_lomba' => 'B-STARTION X by.U 2025',
                 'id_tingkat_kompetisi' => 2,
                 'id_penyelenggara' => 1,
@@ -397,6 +417,7 @@ class LombaModelSeeder extends Seeder
             ],
             [
                 'kode_lomba' => 'LMB021',
+                'kode_pemohon' => '50907856',
                 'nama_lomba' => 'GAMESEED 2025',
                 'id_tingkat_kompetisi' => 2,
                 'id_penyelenggara' => 3,
@@ -416,6 +437,7 @@ class LombaModelSeeder extends Seeder
             ],
             [
                 'kode_lomba' => 'LMB022',
+                'kode_pemohon' => '50907856',
                 'nama_lomba' => 'FIT COMPETITION 2025 DATA SCIENCE',
                 'id_tingkat_kompetisi' => 3,
                 'id_penyelenggara' => 2,
@@ -435,6 +457,7 @@ class LombaModelSeeder extends Seeder
             ],
             [
                 'kode_lomba' => 'LMB023',
+                'kode_pemohon' => '50907856',
                 'nama_lomba' => 'Hackathon STEM 2025',
                 'id_tingkat_kompetisi' => 2,
                 'id_penyelenggara' => 2,
@@ -454,6 +477,7 @@ class LombaModelSeeder extends Seeder
             ],
             [
                 'kode_lomba' => 'LMB024',
+                'kode_pemohon' => '50907857',
                 'nama_lomba' => 'BI-OJK Hackathon 2025',
                 'id_tingkat_kompetisi' => 2,
                 'id_penyelenggara' => 2,
@@ -473,6 +497,7 @@ class LombaModelSeeder extends Seeder
             ],
             [
                 'kode_lomba' => 'LMB025',
+                'kode_pemohon' => '50907857',
                 'nama_lomba' => 'International LegalTech Competition 2025: Prompting Challenge',
                 'id_tingkat_kompetisi' => 3,
                 'id_penyelenggara' => 2,
@@ -492,6 +517,7 @@ class LombaModelSeeder extends Seeder
             ],
             [
                 'kode_lomba' => 'LMB026',
+                'kode_pemohon' => '50907857',
                 'nama_lomba' => 'MAGE 11',
                 'id_tingkat_kompetisi' => 2,
                 'id_penyelenggara' => 2,
@@ -511,6 +537,7 @@ class LombaModelSeeder extends Seeder
             ],
             [
                 'kode_lomba' => 'LMB027',
+                'kode_pemohon' => '50907857',
                 'nama_lomba' => 'FIT COMPETITION 2025',
                 'id_tingkat_kompetisi' => 2,
                 'id_penyelenggara' => 2,
@@ -530,6 +557,7 @@ class LombaModelSeeder extends Seeder
             ],
             [
                 'kode_lomba' => 'LMB028',
+                'kode_pemohon' => '2241720140',
                 'nama_lomba' => 'FIT COMPETITION 2025',
                 'id_tingkat_kompetisi' => 2,
                 'id_penyelenggara' => 2,
@@ -549,6 +577,7 @@ class LombaModelSeeder extends Seeder
             ],
             [
                 'kode_lomba' => 'LMB029',
+                'kode_pemohon' => '2241720140',
                 'nama_lomba' => 'FIT COMPETITION 2025',
                 'id_tingkat_kompetisi' => 2,
                 'id_penyelenggara' => 2,
@@ -560,47 +589,9 @@ class LombaModelSeeder extends Seeder
                 'link_pendaftaran' => 'https://fti.uksw.edu/fit2025/category-mobile.html',
                 'deskripsi_lomba' => 'Kompetisi pengembangan aplikasi mobile untuk tingkat nasional.',
                 'status_lomba' => 'Masih Berlangsung',
-                'status_verifikasi' => 'Belum Diverifikasi',
+                'status_verifikasi' => 'Ditolak',
                 'gambar_lomba' => 'fit-mobile.jpg',
-                'catatan' => null,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ],
-            [
-                'kode_lomba' => 'LMB030',
-                'nama_lomba' => 'MAGE 11',
-                'id_tingkat_kompetisi' => 2,
-                'id_penyelenggara' => 2,
-                'id_biaya_pendaftaran' => 3,
-                'id_hadiah' => 3,
-                'tanggal_mulai_pendaftaran' => '2025-06-02',
-                'tanggal_akhir_pendaftaran' => '2025-07-28',
-                'lokasi_lomba' => 'Online',
-                'link_pendaftaran' => 'https://mage-its.id/sideCompeRegist/compeProg',
-                'deskripsi_lomba' => 'Kompetisi pemrograman untuk tingkat nasional.',
-                'status_lomba' => 'Masih Berlangsung',
-                'status_verifikasi' => 'Belum Diverifikasi',
-                'gambar_lomba' => 'mage-cp.jpg',
-                'catatan' => null,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ],
-            [
-                'kode_lomba' => 'LMB031',
-                'nama_lomba' => 'MAGE 11',
-                'id_tingkat_kompetisi' => 2,
-                'id_penyelenggara' => 2,
-                'id_biaya_pendaftaran' => 3,
-                'id_hadiah' => 3,
-                'tanggal_mulai_pendaftaran' => '2025-06-02',
-                'tanggal_akhir_pendaftaran' => '2025-07-28',
-                'lokasi_lomba' => 'Online',
-                'link_pendaftaran' => 'https://mage-its.id/sideCompeRegist/uiux',
-                'deskripsi_lomba' => 'Kompetisi desain UI/UX untuk tingkat nasional.',
-                'status_lomba' => 'Masih Berlangsung',
-                'status_verifikasi' => 'Belum Diverifikasi',
-                'gambar_lomba' => 'mage-ui_ux.jpg',
-                'catatan' => null,
+                'catatan' => 'bidang lomba tidak dipilih',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],

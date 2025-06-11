@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\ViewSPKMatriksNilaiOptimasiModel;
 use App\Models\PrestasiModel;
 use App\Models\ProdiModel;
+use App\Models\MahasiswaModel;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
@@ -58,27 +59,27 @@ class MahasiswaController extends Controller
 
     public function detailPrestasi($id)
     {
-        $data = PrestasiModel::with([ 'dosen', 'mahasiswa', 'prodi', 'periode']) // sesuaikan relasi
+        $data = PrestasiModel::with(['dosen', 'mahasiswa', 'prodi', 'periode']) // sesuaikan relasi
             ->findOrFail($id);
 
         return view('mahasiswa.prestasi.detail-prestasi', compact('data'));
     }
 
 
-public function editPrestasi($id)
-{
-    $prestasi = PrestasiModel::with([ 'dosen', 'mahasiswa', 'prodi', 'periode'])
-        ->findOrFail($id);
+    public function editPrestasi($id)
+    {
+        $prestasi = PrestasiModel::with(['dosen', 'mahasiswa', 'prodi', 'periode'])
+            ->findOrFail($id);
 
-    $dosen = \App\Models\DosenModel::all();
-    $periode = \App\Models\PeriodeModel::all();
+        $dosen = \App\Models\DosenModel::all();
+        $periode = \App\Models\PeriodeModel::all();
 
-    return view('mahasiswa.prestasi.edit-prestasi', [
-        'prestasi' => $prestasi,
-        'dosen' => $dosen,
-        'periode' => $periode
-    ]);
-}
+        return view('mahasiswa.prestasi.edit-prestasi', [
+            'prestasi' => $prestasi,
+            'dosen' => $dosen,
+            'periode' => $periode
+        ]);
+    }
 
     public function updatePrestasi(Request $request, $id)
     {
@@ -93,7 +94,7 @@ public function editPrestasi($id)
             'tanggal_kompetisi' => 'required|date',
             'id_dosen' => 'required|exists:dosen,id_dosen',
             'id_periode' => 'required|exists:periode,id_periode',
-            'jumlah_univ'=> 'required|integer|min:1',
+            'jumlah_univ' => 'required|integer|min:1',
             'nomor_sertifikat' => 'required|string|max:255',
             'link_perlombaan' => 'required|url|max:255',
             'foto_sertifikat' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048',
@@ -179,10 +180,10 @@ public function editPrestasi($id)
 
             return redirect('mahasiswa/prestasi')->with('success', 'Data prestasi berhasil ditambahkan.');
         } catch (\Exception $e) {
-            Log::error('Gagal simpan prestasi: '.$e->getMessage());
+            Log::error('Gagal simpan prestasi: ' . $e->getMessage());
             return response()->json([
                 'status' => false,
-                'message' => 'Terjadi kesalahan: '.$e->getMessage()
+                'message' => 'Terjadi kesalahan: ' . $e->getMessage()
             ], 500);
         }
     }
@@ -306,6 +307,23 @@ public function editPrestasi($id)
             $kd;
         }
         // Pass the data to the view
+        // Get filter parameter from request
+        $nim_filter = request('nim_filter', null);
+
+        // Get the logged-in user's NIM as default
+        $loggedInNim = auth()->guard('mahasiswa')->user()->nim;
+
+        // Use the filtered NIM if provided, otherwise use logged-in user's NIM
+        $filterNim = $nim_filter ?: $loggedInNim;
+
+        // Use NIM for filtering the lomba data
+        $riwayat = LombaModel::where('kode_pemohon', $filterNim)
+            ->orderByRaw("FIELD(status_verifikasi, 'Belum Diverifikasi', 'Ditolak', 'Diverifikasi')")
+            ->get();
+        // dd($riwayat);
+
+        // Continue with existing code...
+
         return view('mahasiswa.lomba.index', [
             'lombaList' => $spkNilaiOptimasi,
             'penyelenggara' => $penyelenggara,
@@ -313,7 +331,8 @@ public function editPrestasi($id)
             'tingkatKompetisi' => $tingkatKompetisi,
             'hadiah' => $hadiah,
             'kodeLomba' => 'LMB' . $kd,
-            'bidang' => $bidang
+            'bidang' => $bidang,
+            'riwayatLomba' => $riwayat // Pass the filter value to view
         ]);
     }
 
@@ -333,6 +352,9 @@ public function editPrestasi($id)
             'bidang' => 'required|array',
         ]);
 
+        // Get NIM of logged in mahasiswa
+        $nimMahasiswa = auth()->guard('mahasiswa')->user()->nim;
+
         // Pisah tanggal dari flatpickr
         [$tgl_mulai, $tgl_akhir] = explode(' to ', $request->tanggal_pendaftaran);
         // Upload gambar (jika ada)
@@ -348,11 +370,11 @@ public function editPrestasi($id)
         // Set default status jika tidak dikirim dari form
         $statusLomba = $request->status_lomba ?? 'Masih Berlangsung';
         $statusVerifikasi = $request->status_verifikasi ?? 'Belum Diverifikasi';
-        // dd($statusLomba, $statusVerifikasi);
 
-        // Panggil Stored Procedure
-        DB::statement("CALL sp_insert_lomba_dan_bidang(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", [
+        // Panggil Stored Procedure dengan NIM mahasiswa
+        DB::statement("CALL sp_insert_lomba_dan_bidang(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", [
             $request->kode_lomba,
+            $nimMahasiswa,  // NIM mahasiswa yang login
             $request->nama_lomba,
             $request->tingkat_kompetisi,
             $request->penyelenggara,
@@ -382,20 +404,112 @@ public function editPrestasi($id)
         ]);
     }
 
+    public function edit_lomba(String $id)
+    {
+        $detailLomba = LombaModel::where('id_lomba', $id)->first();
+        $detailBidang = BidangLombaModel::where('id_lomba', $id)->get();
+        $penyelenggara = PenyelenggaraModel::all();
+        $biayaPendaftaran = BiayaPendaftaranModel::all();
+        $tingkatKompetisi = TingkatKompetisiModel::all();
+        $hadiah = HadiahModel::all();
+        $bidang = BidangModel::all();
+
+        return view('mahasiswa.lomba.edit_riwayat_lomba', [
+            'detailLomba' => $detailLomba,
+            'detailBidang' => $detailBidang,
+            'penyelenggara' => $penyelenggara,
+            'biayaPendaftaran' => $biayaPendaftaran,
+            'tingkatKompetisi' => $tingkatKompetisi,
+            'hadiah' => $hadiah,
+            'bidang' => $bidang
+        ]);
+    }
+
+    public function update_lomba(Request $request, String $id)
+    {
+        $request->validate([
+            'kode_lomba' => 'required',
+            'kode_pemohon' => 'required',
+            'nama_lomba' => 'required',
+            'tingkat_kompetisi' => 'required',
+            'penyelenggara' => 'required',
+            'biaya_pendaftaran' => 'required',
+            'hadiah' => 'required',
+            'tanggal_pendaftaran' => 'required',
+            'lokasi' => 'required',
+            'link' => 'required',
+            'deskripsi_lomba' => 'required',
+            'bidang' => 'required|array',
+        ]);
+        // Pisah tanggal dari flatpickr
+        [$tgl_mulai, $tgl_akhir] = explode(' to ', $request->tanggal_pendaftaran);
+        // Upload gambar (jika ada)
+        $gambar = null;
+        // Check if gambar_lomba is a file input
+        if ($request->hasFile('gambar_lomba')) {
+            $file = $request->file('gambar_lomba');
+            $gambar = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('uploads/lomba'), $gambar);
+        } else {
+            // If not a file input, keep the existing image if there is one
+            $existingLomba = LombaModel::find($id);
+            $gambar = $existingLomba ? $existingLomba->gambar_lomba : null;
+        }
+
+        // dd($gambar);
+        $bidang_ids_str = implode(',', $request->bidang);
+
+        // Set default status jika tidak dikirim dari form
+        $statusLomba = $request->status_lomba ?? 'Masih Berlangsung';
+        $statusVerifikasi = $request->status_verifikasi ?? 'Belum Diverifikasi';
+
+        try {
+            // Panggil Stored Procedure
+            DB::statement("CALL sp_update_lomba_dan_bidang(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", [
+                $id,
+                $request->kode_lomba,
+                $request->kode_pemohon,
+                $request->nama_lomba,
+                $request->tingkat_kompetisi,
+                $request->penyelenggara,
+                $request->biaya_pendaftaran,
+                $request->hadiah,
+                $tgl_mulai,
+                $tgl_akhir,
+                $request->lokasi,
+                $request->link,
+                $request->deskripsi_lomba,
+                $statusLomba,
+                $statusVerifikasi,
+                $gambar,
+                $bidang_ids_str
+            ]);
+
+            return redirect('mahasiswa/lomba')->with('success', 'Lomba berhasil diperbarui.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal melakukan verifikasi.');
+        }
+    }
+
     public function profil()
     {
-    $mahasiswa = auth()->user();
+        $mahasiswa = auth()->user();
 
-    // Ambil data referensi untuk tab lainnya
-    $bidang = DB::table('c_bidang')->orderBy('nama_bidang', 'asc')->get();
-    $biaya = DB::table('c_biaya_pendaftaran')->get();
-    $penyelenggara = DB::table('c_penyelenggara')->get();
-    $tingkat = DB::table('c_tingkat_kompetisi')->get();
-    $hadiah = DB::table('c_hadiah')->get();
+        // Ambil data referensi untuk tab lainnya
+        $bidang = DB::table('c_bidang')->orderBy('nama_bidang', 'asc')->get();
+        $biaya = DB::table('c_biaya_pendaftaran')->get();
+        $penyelenggara = DB::table('c_penyelenggara')->get();
+        $tingkat = DB::table('c_tingkat_kompetisi')->get();
+        $hadiah = DB::table('c_hadiah')->get();
 
-    return view('mahasiswa.profil.index', compact(
-        'mahasiswa', 'bidang', 'biaya', 'penyelenggara', 'tingkat', 'hadiah'
-    ));
+        return view('mahasiswa.profil.index', compact(
+            'mahasiswa',
+            'bidang',
+            'biaya',
+            'penyelenggara',
+            'tingkat',
+            'hadiah'
+        ));
     }
 
 
@@ -418,7 +532,7 @@ public function editPrestasi($id)
             'photo' => 'foto-profil.jpg', // misal ini file sudah ada di storage
         ];
 
-    return view('mahasiswa.profil.edit-profil', compact('user'));
+        return view('mahasiswa.profil.edit-profil', compact('user'));
     }
 
 

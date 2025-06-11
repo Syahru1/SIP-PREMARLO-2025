@@ -38,7 +38,7 @@ class LombaController extends Controller
             return '<span class="badge badge-primary">' . htmlspecialchars($lomba->status) . '</span>';
             })
             ->addColumn('aksi', function ($lomba) {
-            $btn = '<a href="' . url('/admin/verifikasi-lomba/detail/' . $lomba->id_lomba) . '" class="btn btn-outline-primary btn-sm">Lihat Detail Prestasi</a>';
+            $btn = '<a href="' . url('/admin/verifikasi-lomba/detail/' . $lomba->id_lomba) . '" class="btn btn-outline-primary btn-sm">Lihat Detail Lomba</a>';
             return $btn;
             })
             ->rawColumns(['aksi', 'badge'])
