@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\LombaModel;
 use App\Models\BidangLombaModel;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class LombaController extends Controller
@@ -62,6 +63,7 @@ class LombaController extends Controller
             $lomba->status_verifikasi = $request->status_verifikasi;
             $lomba->catatan = $request->catatan;
             $lomba->save();
+            DB::statement('CALL sp_hitung_spk_matriks()');
 
             return redirect('/admin/verifikasi-lomba')->with('success', "Berhasil mengubah status menjadi {$request->status}");
         } catch (\Exception $e) {
