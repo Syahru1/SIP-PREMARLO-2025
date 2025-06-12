@@ -43,7 +43,7 @@ Route::post('/logout', function () {
     Route::get('/', [MasterController::class, 'index']);
 
     // ADMIN
-    // Route::middleware(['auth:admin'])->group(function () {
+    Route::middleware(['auth:admin'])->group(function () {
         Route::group(['prefix' => 'admin'],function () {
             // Beranda
             Route::get('/beranda', [MasterController::class, 'admin'])->name('beranda');
@@ -144,7 +144,7 @@ Route::post('/logout', function () {
             Route::delete('/verifikasi-prestasi/{id}', [PrestasiController::class, 'verifikasiPrestasiDestroy']);
 
         });
-    // });
+    });
 
     Route::middleware(['auth:mahasiswa'])->group(function () {
         Route::group(['prefix' => 'mahasiswa'],function () {
