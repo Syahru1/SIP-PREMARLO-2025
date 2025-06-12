@@ -208,6 +208,8 @@ Route::post('/logout', function () {
             // Pengajuan Dospem
             Route::get('/mahasiswa-bimbingan', [DosenController::class, 'mahasiswa_bimbingan'])->name('mahasiswa-bimbingan');
             Route::get('/detail-mahasiswa/{id}', [DosenController::class, 'detail_mahasiswa'])->name('detail-mahasiswa');
+            Route::get('/detail-mahasiswa-riwayat/{id}', [DosenController::class, 'detail_mahasiswa_riwayat'])->name('detail-mahasiswa');
+            Route::post('/verifikasi-dospem/{id}/verifikasi', [DosenController::class, 'verifikasi_dospem'])->name('verifikasi-dospem');
 
             Route::get('/notifikasi', [DosenController::class, 'notifikasi'])->name('notifikasi.dosen');
             Route::get('/sertifikat', [DosenController::class, 'sertifikat'])->name('sertifikat.dosen');
