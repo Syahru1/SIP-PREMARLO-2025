@@ -28,31 +28,56 @@
                         <div class="card-header fw-bold text-black ">
                             Form Pengajuan Bimbingan Lomba
                         </div>
-                        <form method="POST" action="#" enctype="multipart/form-data">
+                        <form method="POST" action="{{url('mahasiswa/bimbingan/store')}}" enctype="multipart/form-data">
                             @csrf
                             <div class="card-body">
                                 <div class="mb-3">
-                                    <label class="form-label fw-semibold text-black">Nama Lomba</label>
-                                    <input type="text" class="form-control" placeholder="Contoh: UI/UX Nasional 2025" required>
-                                </div>
-                                <div class="mb-3">
                                     <label class="form-label fw-semibold text-black">Nama Tim</label>
-                                    <input type="text" class="form-control" placeholder="Contoh: Tim Kreatif B" required>
+                                    <input type="text" class="form-control" placeholder="Contoh: Tim Kreatif B" name="nama_tim" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label fw-semibold text-black">Anggota Tim</label>
-                                    <textarea rows="2" class="form-control" placeholder="Contoh: Mahasiswa B, Mahasiswa C, Mahasiswa D" required></textarea>
+                                    <label class="form-label fw-semibold text-black">Nama Lomba</label>
+                                    <input type="text" class="form-control" placeholder="Contoh: UI/UX Nasional 2025" name="nama_lomba" required>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label fw-semibold text-black">Deskripsi Lomba</label>
-                                    <textarea rows="3" class="form-control" placeholder="Contoh: Lomba desain UI/UX tingkat nasional..." required></textarea>
+                                    <textarea rows="3" class="form-control" placeholder="Contoh: Lomba desain UI/UX tingkat nasional..." name="deskripsi_lomba" required></textarea>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label fw-semibold text-black">Upload Proposal</label>
-                                    <input type="file" class="form-control" accept=".pdf,.doc,.docx" required>
+                                    <input type="file" class="form-control" accept=".pdf" name="proposal" required>
                                 </div>
-                            </div>
-                            <div class="card-footer d-flex justify-content-end">
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold text-black">Pilih Dosen Pembimbing</label>
+                                    <select name="id_dosen" class="form-control" required>
+                                        <option value="" disabled selected>Pilih Dosen Pembimbing</option>
+                                        @foreach ($dosenList as $dosen)
+                                            <option value="{{ $dosen->id_dosen }}">{{ $dosen->nama_dosen }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <!-- Ketua Tim (otomatis login) -->
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold text-black">Ketua Tim</label>
+                                    <input type="text" class="form-control" value="{{ auth()->user()->nama }}" readonly>
+                                    <input type="hidden" name="ketua_tim" value="{{ auth()->user()->id_mahasiswa }}">
+                                </div>
+
+                                <!-- Anggota 1 - 4 -->
+                                @for ($i = 1; $i <= 4; $i++)
+                                    <div class="mb-3">
+                                        <label class="form-label fw-semibold text-black">Anggota {{ $i }}</label>
+                                        <select name="anggota_{{ $i }}" id="anggota_{{ $i }}" class="form-control anggota-select" {{ $i <= 0 ? 'required' : '' }}>
+                                            <option value="" disabled selected>Pilih Anggota {{ $i }}</option>
+                                            @foreach ($anggotaTim as $anggota)
+                                                @if ($anggota->id_mahasiswa != auth()->user()->id_mahasiswa)
+                                                    <option value="{{ $anggota->id_mahasiswa }}">{{ $anggota->nama }}</option>
+                                                @endif
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                @endfor
                                 <button type="submit" class="btn btn-primary">Ajukan Bimbingan</button>
                             </div>
                         </form>
@@ -71,30 +96,44 @@
                                             <th class="text-center text-secondary">No</th>
                                             <th class="text-center text-secondary">Nama Lomba</th>
                                             <th class="text-center text-secondary">Nama Tim</th>
-                                            <th class="text-center text-secondary">Anggota</th>
-                                            <th class="text-center text-secondary">Tahun</th>
+                                            <th class="text-center text-secondary">Nama Dosen Pembimbing</th>
                                             <th class="text-center text-secondary">Status</th>
                                             <th class="text-center text-secondary">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @forelse ($riwayatBimbinganList as $bimbingan)
                                         <tr>
-                                            <td class="text-center">1</td>
-                                            <td class="text-center">UI/UX Nasional</td>
-                                            <td class="text-center">Tim Kreatif</td>
-                                            <td class="text-center">Mahasiswa A, B, C</td>
-                                            <td class="text-center">2025</td>
+                                            <td class="text-center">{{ $loop->iteration }}</td>
+                                            <td class="text-center">{{ $bimbingan->nama_lomba }}</td>
+                                            <td class="text-center">{{ $bimbingan->tim->nama_tim }}</td>
+                                            <td class="text-center">{{ $bimbingan->dosen->nama_dosen }}</td>
                                             <td class="text-center">
-                                                <span class="badge badge-warning">Belum Diverifikasi</span>
+                                                @php
+                                                    $badgeClass = match($bimbingan->status) {
+                                                        'Disetujui' => 'badge-success',
+                                                        'Ditolak' => 'badge-danger',
+                                                        'Belum Diverifikasi' => 'badge-secondary',
+                                                        default => 'badge-secondary'
+                                                    };
+                                                    @endphp
+                                                    <span class="badge {{ $badgeClass }}">{{ $bimbingan->status }}</span>
                                             </td>
-                                            <td class="text-center">
-                                                <a href="#" class="btn btn-primary btn-sm">Detail</a>
-                                                <a href="#" class="btn btn-warning btn-sm">Edit</a>
+
+                                            <td class="text-left">
+                                                <a href="{{ url('mahasiswa/detail-pengajuan/' . $bimbingan->id_pengajuan_dospem) }}" class="btn btn-primary btn-sm">Detail</a>
+                                                @if($bimbingan->status == 'Ditolak')
+                                                    <a href="{{ url('mahasiswa/edit-pengajuan/' . $bimbingan->id_pengajuan_dospem) }}" class="btn btn-warning btn-sm">
+                                                        Edit
+                                                    </a>
+                                                @endif
                                             </td>
                                         </tr>
+                                        @empty
                                         <tr>
                                             <td colspan="7" class="text-center">Belum ada riwayat pengajuan bimbingan lomba.</td>
                                         </tr>
+                                        @endforelse
                                     </tbody>
                                 </table>
                             </div>
@@ -127,4 +166,58 @@
         color: #5a32a3;
     }
 </style>
+
+<!-- Script untuk menghindari pilihan duplikat -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const selects = document.querySelectorAll('.anggota-select');
+
+        selects.forEach(select => {
+            select.addEventListener('change', updateOptions);
+        });
+
+        function updateOptions() {
+            // Ambil semua value yang sudah dipilih
+            let selectedValues = Array.from(selects).map(s => s.value).filter(v => v);
+
+            selects.forEach(select => {
+                let currentValue = select.value;
+
+                Array.from(select.options).forEach(option => {
+                    if (option.value === "" || option.value === currentValue) {
+                        option.disabled = false;
+                    } else {
+                        option.disabled = selectedValues.includes(option.value);
+                    }
+                });
+            });
+        }
+    });
+</script>
+
+<!-- SweetAlert Library -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- SweetAlert ketika ada session success -->
+@if(session('success'))
+<script>
+    Swal.fire({
+        icon: 'success',
+        title: 'Berhasil!',
+        text: '{{ session('success') }}',
+        showConfirmButton: false,
+        timer: 2000
+    });
+</script>
+@endif
+<!-- SweetAlert ketika ada session error -->
+@if(session('error'))
+<script>
+    Swal.fire({
+        icon: 'error',
+        title: 'Gagal!',
+        text: '{{ session('error') }}',
+        showConfirmButton: true
+    });
+</script>
+@endif
 @endsection
