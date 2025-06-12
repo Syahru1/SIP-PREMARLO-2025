@@ -170,8 +170,9 @@ Route::post('/logout', function () {
             // preferensi
             Route::get('/preferensi', [MahasiswaController::class, 'preferensi'])->name('mahasiswa.preferensi');
             Route::post('/preferensi/store', [MahasiswaController::class, 'storePreferensi'])->name('mahasiswa.preferensi.store');
-            
             Route::get('/profil', [MahasiswaController::class, 'profil'])->name('profil');
+            Route::put('/profil/{id}/update', [MahasiswaController::class, 'updatePreferensi'])->name('profil-edit');
+
             Route::get('/notifikasi', [MahasiswaController::class, 'notifikasi'])->name('notifikasi');
             Route::get('/detail-lomba', [MahasiswaController::class, 'detail_lomba'])->name('detail-lomba');
             Route::get('/sertifikat', [MahasiswaController::class, 'sertifikat'])->name('sertifikat');
