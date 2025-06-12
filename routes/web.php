@@ -173,6 +173,13 @@ Route::post('/logout', function () {
             Route::get('/profil', [MahasiswaController::class, 'profil'])->name('profil');
             Route::put('/profil/{id}/update', [MahasiswaController::class, 'updatePreferensi'])->name('profil-edit');
 
+            //bimbingan
+            Route::get('/bimbingan-form', [MahasiswaController::class, 'bimbingan'])->name('bimbingan');
+            Route::get('/detail-pengajuan/{id}', [MahasiswaController::class, 'detailPengajuanDospem'])->name('bimbingan.detail-pengajuan');
+            Route::post('bimbingan/store', [MahasiswaController::class, 'storePengajuanDospem'])->name('bimbingan.store');
+            Route::get('/edit-pengajuan/{id}', [MahasiswaController::class, 'editPengajuanDospem'])->name('bimbingan.edit-pengajuan');
+            Route::put('/update-pengajuan/{id}', [MahasiswaController::class, 'updatePengajuanDospem'])->name('bimbingan.update-pengajuan');
+
             Route::get('/notifikasi', [MahasiswaController::class, 'notifikasi'])->name('notifikasi');
             Route::get('/detail-lomba', [MahasiswaController::class, 'detail_lomba'])->name('detail-lomba');
             Route::get('/sertifikat', [MahasiswaController::class, 'sertifikat'])->name('sertifikat');
