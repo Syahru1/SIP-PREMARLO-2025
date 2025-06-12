@@ -198,13 +198,6 @@ class MahasiswaController extends Controller
         // Retrieve lomba data for this specific user
         $lombaList = SPKMatriksModel::where('id_mahasiswa', $id)->get();
 
-        if ($lombaList->isEmpty()) {
-            return response()->json([
-                'status' => false,
-                'message' => 'Data lomba tidak ditemukan untuk mahasiswa ini',
-            ]);
-        }
-
         // === Ambil semua data kriteria dan bobot ===
         $kriteria = CriteriaModel::all()->keyBy('nama_kriteria');
 
@@ -321,10 +314,11 @@ class MahasiswaController extends Controller
         $riwayat = LombaModel::where('kode_pemohon', $filterNim)
             ->orderByRaw("FIELD(status_verifikasi, 'Belum Diverifikasi', 'Ditolak', 'Diverifikasi')")
             ->get();
-        // dd($riwayat);
 
         // Continue with existing code...
-
+        $dataLomba = LombaModel::where('status_verifikasi', 'Diverifikasi')
+            ->orderBy('created_at')
+            ->get();
         return view('mahasiswa.lomba.index', [
             'lombaList' => $spkNilaiOptimasi,
             'penyelenggara' => $penyelenggara,
@@ -333,6 +327,7 @@ class MahasiswaController extends Controller
             'hadiah' => $hadiah,
             'kodeLomba' => 'LMB' . $kd,
             'bidang' => $bidang,
+            'dataLomba' => $dataLomba,
             'riwayatLomba' => $riwayat // Pass the filter value to view
         ]);
     }
