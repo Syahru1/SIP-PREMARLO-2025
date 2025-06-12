@@ -68,12 +68,12 @@
 
 
     <!-- Competition Guidance Request -->
-    <div class="container-fluid ">
+<div class="container-fluid">
     <div class="card border-dark shadow-sm">
-        <div class="card-header  text-black  fw-bold border-dark">
+        <div class="card-header text-black fw-bold border-dark">
             Permohonan Bimbingan Lomba
         </div>
-        <form method="POST" action="#">
+        <form method="POST" action="{{ url('dosen/verifikasi-dospem/' . $dospem->id_pengajuan_dospem . '/verifikasi') }}">
             @csrf
             <div class="card-body">
                 <div class="mb-3"><strong>Nama Lomba:</strong> {{$dospem->nama_lomba}}</div>
@@ -87,17 +87,49 @@
                     </ul>
                 </div>
                 <div class="mb-3"><strong>Keterangan Lomba:</strong> {{$dospem->deskripsi_lomba}}</div>
-                <div class="mb-3"><strong>Proposal:</strong> <a href="{{ asset('uploads/proposal/'.$dospem->proposal) }}" class="text-success">Lihat Proposal</a></div>
-                <div class="mb-3">
-                    <label for="catatan" class="form-label fw-bold">Catatan Dosen (opsional):</label>
-                    <textarea class="form-control" name="catatan" id="catatan" rows="3" placeholder="Tulis catatan tambahan di sini..."></textarea>
+                <div class="mb-3"><strong>Proposal:</strong>
+                    <a href="{{ asset('uploads/proposal/'.$dospem->proposal) }}" class="text-success">Lihat Proposal</a>
                 </div>
-            </div>
-            <div class="mt-4 d-flex justify-content-end">
-                <a href="javascript:void(0);" onclick="history.back()" class="btn btn-secondary mr-5">Kembali</a>
+
+                <div class="form-group mt-3">
+                    <label>Catatan (Opsional)</label>
+                    <textarea name="catatan" id="catatan" rows="3" placeholder="Tulis catatan tambahan di sini..." class="form-control">{{ old('catatan', $dospem->catatan) }}</textarea>
+                </div>
+
+                <div class="d-flex gap-2 mt-2">
+                    <button type="submit" name="status" value="Disetujui" class="btn btn-success">Terima</button>
+                    <button type="submit" name="status" value="Ditolak" class="btn btn-danger">Tolak</button>
+                </div>
             </div>
         </form>
     </div>
-    </div>
 </div>
+
+
+<!-- Load SweetAlert library -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+@if(session('success'))
+<script>
+    Swal.fire({
+        icon: 'success',
+        title: 'Berhasil',
+        text: '{{ session("success") }}',
+        timer: 2000,
+        showConfirmButton: false
+    });
+</script>
+@endif
+
+@if(session('error'))
+<script>
+    Swal.fire({
+        icon: 'error',
+        title: 'Gagal',
+        text: '{{ session("error") }}',
+        timer: 2000,
+        showConfirmButton: false
+    });
+</script>
+@endif
 @endsection

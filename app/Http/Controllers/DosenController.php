@@ -36,6 +36,7 @@ class DosenController extends Controller
         return view('dosen.mahasiswa-bimbingan.index', compact('dosen', 'bimbinganMahasiswaList', 'riwayatBimbinganList'));
     }
 
+
     public function profil()
     {
         $dosen = auth()->user();
@@ -316,5 +317,25 @@ class DosenController extends Controller
     {
         $dospem = PengajuanDospemModel::findOrFail($id);
         return view('dosen.mahasiswa-bimbingan.detail-mahasiswa', compact('dospem'));
+    }
+
+    public function detail_mahasiswa_riwayat($id)
+    {
+        $dospem = PengajuanDospemModel::findOrFail($id);
+        return view('dosen.mahasiswa-bimbingan.detail-mahasiswa-riwayat', compact('dospem'));
+    }
+
+    public function verifikasi_dospem(Request $request, $id)
+    {
+        try {
+            $dospem = PengajuanDospemModel::findOrFail($id);
+            $dospem->status = $request->status;
+            $dospem->catatan = $request->catatan;
+            $dospem->save();
+
+            return redirect('/dosen/mahasiswa-bimbingan')->with('success', 'Berhasil mengubah status permohonan menjadi ' . $request->status);
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal melakukan verifikasi.');
+        }
     }
 }

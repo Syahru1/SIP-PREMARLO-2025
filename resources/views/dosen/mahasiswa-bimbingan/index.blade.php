@@ -30,7 +30,8 @@
                                 <div class="d-flex justify-content-between align-items-center border-bottom py-3">
                                     <div>
                                         <strong>{{ $bimbinganMahasiswa->mahasiswa->nama }}</strong><br>
-                                        NIM: {{ $bimbinganMahasiswa->mahasiswa->nim }} - {{ $bimbinganMahasiswa->mahasiswa->prodi->nama_prodi }}
+                                        {{ $bimbinganMahasiswa->mahasiswa->nim }} - {{ $bimbinganMahasiswa->mahasiswa->prodi->nama_prodi }} <br>
+                                        <strong>Nama Lomba:</strong> {{ $bimbinganMahasiswa->nama_lomba }}
                                     </div>
                                     <a href="{{ url('/dosen/detail-mahasiswa/'.$bimbinganMahasiswa->mahasiswa->id_mahasiswa) }}" class="btn btn-sm btn-primary">Detail</a>
                                 </div>
@@ -48,7 +49,7 @@
                                 </div>
                             </div>
 
-                            @foreach ($riwayatBimbinganMahasiswaList as $riwayat)
+                            @foreach ($riwayatBimbinganList as $riwayat)
                             @php
                                 switch(strtolower($riwayat->status)) {
                                     case 'disetujui':
@@ -68,15 +69,15 @@
                                         $statusText = ucfirst($riwayat->status);
                                 }
                             @endphp
-
                             <div class="card p-3 mb-3">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div>
                                         <strong>{{ $riwayat->mahasiswa->nama }}</strong>
                                         <span class="badge badge-{{ $badgeClass }} ml-2">{{ $statusText }}</span><br>
-                                        Keterangan: {{ $riwayat->keterangan }}
+                                        {{ $riwayat->mahasiswa->nim }} - {{ $riwayat->mahasiswa->prodi->nama_prodi }}<br>
+                                        <strong>Nama Lomba:</strong> {{ $riwayat->nama_lomba }}<br>
                                     </div>
-                                    <a href="{{ url('/dosen/detail-mahasiswa/'.$riwayat->mahasiswa->id_mahasiswa) }}" class="btn btn-sm btn-primary">Detail</a>
+                                    <a href="{{ url('/dosen/detail-mahasiswa-riwayat/'.$riwayat->mahasiswa->id_mahasiswa) }}" class="btn btn-sm btn-primary">Detail</a>
                                 </div>
                             </div>
                         @endforeach
@@ -114,4 +115,31 @@
 <script>
     var firstUpload = new FileUploadWithPreview('myFirstImage');
 </script>
+
+<!-- Tempatkan ini di luar tag <script> -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+@if(session('success'))
+<script>
+    Swal.fire({
+        icon: 'success',
+        title: 'Berhasil',
+        text: '{{ session("success") }}',
+        timer: 2000,
+        showConfirmButton: false
+    });
+</script>
+@endif
+
+@if(session('error'))
+<script>
+    Swal.fire({
+        icon: 'error',
+        title: 'Gagal',
+        text: '{{ session("error") }}',
+        timer: 2000,
+        showConfirmButton: false
+    });
+</script>
+@endif
 @endsection
