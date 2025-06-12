@@ -339,40 +339,40 @@ class MahasiswaController extends Controller
     public function storeLomba(Request $request)
     {
         try {
-        $request->validate([
-            'kode_lomba' => 'required',
-            'nama_lomba' => 'required',
-            'tingkat_kompetisi' => 'required',
-            'penyelenggara' => 'required',
-            'biaya_pendaftaran' => 'required',
-            'hadiah' => 'required',
-            'tanggal_pendaftaran' => 'required',
-            'lokasi' => 'required',
-            'link' => 'required',
-            'deskripsi_lomba' => 'required',
-            'bidang' => 'required|array',
-            'gambar_lomba' => 'required',
-        ]);
+            $request->validate([
+                'kode_lomba' => 'required',
+                'nama_lomba' => 'required',
+                'tingkat_kompetisi' => 'required',
+                'penyelenggara' => 'required',
+                'biaya_pendaftaran' => 'required',
+                'hadiah' => 'required',
+                'tanggal_pendaftaran' => 'required',
+                'lokasi' => 'required',
+                'link' => 'required',
+                'deskripsi_lomba' => 'required',
+                'bidang' => 'required|array',
+                'gambar_lomba' => 'required',
+            ]);
 
-        // Get NIM of logged in mahasiswa
-        $nimMahasiswa = auth()->guard('mahasiswa')->user()->nim;
+            // Get NIM of logged in mahasiswa
+            $nimMahasiswa = auth()->guard('mahasiswa')->user()->nim;
 
-        // Pisah tanggal dari flatpickr
-        [$tgl_mulai, $tgl_akhir] = explode(' to ', $request->tanggal_pendaftaran);
-        // Upload gambar (jika ada)
-        $gambar = null;
-        if ($request->hasFile('gambar_lomba')) {
-            $file = $request->file('gambar_lomba');
-            $gambar = time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('uploads/lomba'), $gambar);
-        }
+            // Pisah tanggal dari flatpickr
+            [$tgl_mulai, $tgl_akhir] = explode(' to ', $request->tanggal_pendaftaran);
+            // Upload gambar (jika ada)
+            $gambar = null;
+            if ($request->hasFile('gambar_lomba')) {
+                $file = $request->file('gambar_lomba');
+                $gambar = time() . '_' . $file->getClientOriginalName();
+                $file->move(public_path('uploads/lomba'), $gambar);
+            }
 
-        $bidang_ids_str = implode(',', $request->bidang);
+            $bidang_ids_str = implode(',', $request->bidang);
 
-        // Set default status jika tidak dikirim dari form
-        $statusLomba = $request->status_lomba ?? 'Masih Berlangsung';
-        $statusVerifikasi = $request->status_verifikasi ?? 'Belum Diverifikasi';
-        
+            // Set default status jika tidak dikirim dari form
+            $statusLomba = $request->status_lomba ?? 'Masih Berlangsung';
+            $statusVerifikasi = $request->status_verifikasi ?? 'Belum Diverifikasi';
+
             // Panggil Stored Procedure dengan NIM mahasiswa
             DB::statement("CALL sp_insert_lomba_dan_bidang(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", [
                 $request->kode_lomba,
@@ -433,40 +433,40 @@ class MahasiswaController extends Controller
     public function update_lomba(Request $request, String $id)
     {
         try {
-        $request->validate([
-            'kode_lomba' => 'required',
-            'kode_pemohon' => 'required',
-            'nama_lomba' => 'required',
-            'tingkat_kompetisi' => 'required',
-            'penyelenggara' => 'required',
-            'biaya_pendaftaran' => 'required',
-            'hadiah' => 'required',
-            'tanggal_pendaftaran' => 'required',
-            'lokasi' => 'required',
-            'link' => 'required',
-            'deskripsi_lomba' => 'required',
-            'bidang' => 'required|array',
-        ]);
-        // Pisah tanggal dari flatpickr
-        [$tgl_mulai, $tgl_akhir] = explode(' to ', $request->tanggal_pendaftaran);
-        // Upload gambar (jika ada)
-        $gambar = null;
-        // Check if gambar_lomba is a file input
-        if ($request->hasFile('gambar_lomba')) {
-            $file = $request->file('gambar_lomba');
-            $gambar = time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('uploads/lomba'), $gambar);
-        } else {
-            // If not a file input, keep the existing image if there is one
-            $existingLomba = LombaModel::find($id);
-            $gambar = $existingLomba ? $existingLomba->gambar_lomba : null;
-        }
+            $request->validate([
+                'kode_lomba' => 'required',
+                'kode_pemohon' => 'required',
+                'nama_lomba' => 'required',
+                'tingkat_kompetisi' => 'required',
+                'penyelenggara' => 'required',
+                'biaya_pendaftaran' => 'required',
+                'hadiah' => 'required',
+                'tanggal_pendaftaran' => 'required',
+                'lokasi' => 'required',
+                'link' => 'required',
+                'deskripsi_lomba' => 'required',
+                'bidang' => 'required|array',
+            ]);
+            // Pisah tanggal dari flatpickr
+            [$tgl_mulai, $tgl_akhir] = explode(' to ', $request->tanggal_pendaftaran);
+            // Upload gambar (jika ada)
+            $gambar = null;
+            // Check if gambar_lomba is a file input
+            if ($request->hasFile('gambar_lomba')) {
+                $file = $request->file('gambar_lomba');
+                $gambar = time() . '_' . $file->getClientOriginalName();
+                $file->move(public_path('uploads/lomba'), $gambar);
+            } else {
+                // If not a file input, keep the existing image if there is one
+                $existingLomba = LombaModel::find($id);
+                $gambar = $existingLomba ? $existingLomba->gambar_lomba : null;
+            }
 
-        $bidang_ids_str = implode(',', $request->bidang);
+            $bidang_ids_str = implode(',', $request->bidang);
 
-        // Set default status jika tidak dikirim dari form
-        $statusLomba = $request->status_lomba ?? 'Masih Berlangsung';
-        $statusVerifikasi = $request->status_verifikasi ?? 'Belum Diverifikasi';
+            // Set default status jika tidak dikirim dari form
+            $statusLomba = $request->status_lomba ?? 'Masih Berlangsung';
+            $statusVerifikasi = $request->status_verifikasi ?? 'Belum Diverifikasi';
 
             // Panggil Stored Procedure
             DB::statement("CALL sp_update_lomba_dan_bidang(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", [
@@ -516,7 +516,52 @@ class MahasiswaController extends Controller
         ));
     }
 
+    public function preferensi()
+    {
+        // Ambil data referensi untuk dropdown
+        $bidang = DB::table('c_bidang')->orderBy('nama_bidang', 'asc')->get();
+        $biaya = DB::table('c_biaya_pendaftaran')->get();
+        $penyelenggara = DB::table('c_penyelenggara')->get();
+        $tingkat = DB::table('c_tingkat_kompetisi')->get();
+        $hadiah = DB::table('c_hadiah')->get();
 
+        return view('mahasiswa.personalisasi.index', compact(
+            'bidang',
+            'biaya',
+            'penyelenggara',
+            'tingkat',
+            'hadiah'
+        ));
+    }
+
+    public function storePreferensi(Request $request)
+    {
+        
+        $request->validate([
+            'bidang' => 'required|array',
+            'biaya_pendaftaran' => 'required',
+            'penyelenggara' => 'required',
+            'tingkat_kompetisi' => 'required',
+            'hadiah' => 'required',
+        ]);
+// dd($request->all());
+        // Simpan preferensi ke database
+        $mahasiswaId = auth()->guard('mahasiswa')->user()->id_mahasiswa;
+
+        // Ubah array bidang menjadi string yang dipisahkan koma
+        $bidangList = implode(',', $request->bidang);
+        // Panggil stored procedure
+        DB::statement('CALL sp_insert_preferensi_mahasiswa_dan_bidang(?, ?, ?, ?, ?, ?)', [
+            $mahasiswaId,
+            $request->penyelenggara,
+            $request->biaya_pendaftaran,
+            $request->tingkat_kompetisi,
+            $request->hadiah,
+            $bidangList
+        ]);
+
+        return redirect('mahasiswa/beranda')->with('success', 'Preferensi berhasil disimpan.');
+    }
 
     public function notifikasi()
     {

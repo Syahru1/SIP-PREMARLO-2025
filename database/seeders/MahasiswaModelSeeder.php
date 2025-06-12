@@ -44,6 +44,26 @@ class MahasiswaModelSeeder extends Seeder
                 'password' => bcrypt('12345'),
                 'foto' => 'profil_cowok2.jpg',
             ],
+            [
+                'id_role' => 2,
+                'id_prodi' => 1,
+                'id_periode' => 1,
+                'username' => 'MHS004',
+                'nama' => 'EKO PRABOWO',
+                'nim' => '2241720143',
+                'password' => bcrypt('12345'),
+                'foto' => 'profil_cowok1.jpg',
+            ],
+            [
+                'id_role' => 2,
+                'id_prodi' => 1,
+                'id_periode' => 1,
+                'username' => 'MHS005',
+                'nama' => 'FUFUNIA',
+                'nim' => '2241720144',
+                'password' => bcrypt('12345'),
+                'foto' => 'profil_cowok2.jpg',
+            ],
         ];
         DB::table('mahasiswa')->insert($data);
     }
