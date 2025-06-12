@@ -20,6 +20,7 @@ use App\Models\ViewSPKMatriksNilaiOptimasiModel;
 use App\Models\PrestasiModel;
 use App\Models\ProdiModel;
 use App\Models\MahasiswaModel;
+use App\Models\PreferensiMahasiswaModel;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
@@ -498,6 +499,7 @@ class MahasiswaController extends Controller
     public function profil()
     {
         $mahasiswa = auth()->user();
+        $preferensi = PreferensiMahasiswaModel::where('id_mahasiswa', auth()->user()->id_mahasiswa)->first();
 
         // Ambil data referensi untuk tab lainnya
         $bidang = DB::table('c_bidang')->orderBy('nama_bidang', 'asc')->get();
@@ -508,6 +510,7 @@ class MahasiswaController extends Controller
 
         return view('mahasiswa.profil.index', compact(
             'mahasiswa',
+            'preferensi',
             'bidang',
             'biaya',
             'penyelenggara',
@@ -536,7 +539,7 @@ class MahasiswaController extends Controller
 
     public function storePreferensi(Request $request)
     {
-        
+
         $request->validate([
             'bidang' => 'required|array',
             'biaya_pendaftaran' => 'required',
@@ -544,7 +547,7 @@ class MahasiswaController extends Controller
             'tingkat_kompetisi' => 'required',
             'hadiah' => 'required',
         ]);
-// dd($request->all());
+        // dd($request->all());
         // Simpan preferensi ke database
         $mahasiswaId = auth()->guard('mahasiswa')->user()->id_mahasiswa;
 
@@ -561,6 +564,39 @@ class MahasiswaController extends Controller
         ]);
 
         return redirect('mahasiswa/beranda')->with('success', 'Preferensi berhasil disimpan.');
+    }
+
+    public function updatePreferensi(Request $request, $id)
+    {
+        try {
+            // Validasi input
+            $request->validate([
+                'bidang' => 'required|array',
+                'penyelenggara' => 'required',
+                'biaya_pendaftaran' => 'required',
+                'tingkat_kompetisi' => 'required',
+                'hadiah' => 'required',
+            ]);
+
+            $mahasiswaId = auth()->guard('mahasiswa')->user()->id_mahasiswa;
+
+            $bidangList = implode(',', $request->bidang);
+
+            // Panggil stored procedure update (param ke-1 sekarang id_preferensi_mahasiswa)
+            DB::statement('CALL sp_update_preferensi_mahasiswa_dan_bidang(?, ?, ?, ?, ?, ?, ?)', [
+                $id,                    // id_preferensi_mahasiswa (ambil dari URL form)
+                $mahasiswaId,
+                $request->penyelenggara,
+                $request->biaya_pendaftaran,
+                $request->tingkat_kompetisi,
+                $request->hadiah,
+                $bidangList
+            ]);
+
+            return redirect()->back()->with('success', 'Preferensi berhasil diperbarui.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal memperbarui preferensi: ' . $e->getMessage());
+        }
     }
 
     public function notifikasi()
