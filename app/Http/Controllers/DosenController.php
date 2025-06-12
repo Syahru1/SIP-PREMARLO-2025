@@ -10,6 +10,7 @@ use App\Models\BiayaPendaftaranModel;
 use App\Models\TingkatKompetisiModel;
 use App\Models\HadiahModel;
 use App\Models\BidangModel;
+use App\Models\PengajuanDospemModel;
 use Illuminate\Http\Request;
 
 class DosenController extends Controller
@@ -21,7 +22,18 @@ class DosenController extends Controller
 
     public function mahasiswa_bimbingan()
     {
-        return view('dosen.mahasiswa-bimbingan.index');
+        $dosen = auth()->user();
+
+        $bimbinganMahasiswaList = PengajuanDospemModel::where('id_dosen', $dosen->id_dosen)
+            ->where('status', 'Disetujui')
+            ->with(['mahasiswa', 'tim.anggota_tim.mahasiswa']) // penting!
+            ->get();
+
+        $riwayatBimbinganList = PengajuanDospemModel::where('id_dosen', $dosen->id_dosen)
+            ->with(['mahasiswa', 'tim.anggota_tim.mahasiswa'])
+            ->get();
+
+        return view('dosen.mahasiswa-bimbingan.index', compact('dosen', 'bimbinganMahasiswaList', 'riwayatBimbinganList'));
     }
 
     public function profil()
@@ -112,10 +124,10 @@ class DosenController extends Controller
                 'bidang' => 'required|array',
                 'gambar_lomba' => 'required',
             ]);
-            
+
             // Get NIM of logged in mahasiswa
             $nidn = auth()->guard('dosen')->user()->nidn;
-            
+
             // Pisah tanggal dari flatpickr
             [$tgl_mulai, $tgl_akhir] = explode(' to ', $request->tanggal_pendaftaran);
             // Upload gambar (jika ada)
@@ -300,8 +312,9 @@ class DosenController extends Controller
         return redirect()->back()->with('success', 'Pengalaman berhasil dihapus.');
     }
 
-    public function detail_mahasiswa()
+    public function detail_mahasiswa($id)
     {
-        return view('dosen.mahasiswa-bimbingan.detail-mahasiswa');
+        $dospem = PengajuanDospemModel::findOrFail($id);
+        return view('dosen.mahasiswa-bimbingan.detail-mahasiswa', compact('dospem'));
     }
 }
