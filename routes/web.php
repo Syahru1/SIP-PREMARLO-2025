@@ -205,10 +205,11 @@ Route::post('/logout', function () {
             Route::put('/lomba/riwayat-lomba/{id}/update', [DosenController::class, 'update_lomba'])->name('lomba');
             Route::get('/lomba/detail-lomba/{id}', [DosenController::class, 'detail_lomba'])->name('detail-lomba.mahasiswa');
 
+            // Pengajuan Dospem
+            Route::get('/mahasiswa-bimbingan', [DosenController::class, 'mahasiswa_bimbingan'])->name('mahasiswa-bimbingan');
+            Route::get('/detail-mahasiswa/{id}', [DosenController::class, 'detail_mahasiswa'])->name('detail-mahasiswa');
 
             Route::get('/notifikasi', [DosenController::class, 'notifikasi'])->name('notifikasi.dosen');
-            Route::get('/mahasiswa-bimbingan', [DosenController::class, 'mahasiswa_bimbingan'])->name('mahasiswa-bimbingan');
-            Route::get('/detail-mahasiswa', [DosenController::class, 'detail_mahasiswa'])->name('detail-mahasiswa');
             Route::get('/sertifikat', [DosenController::class, 'sertifikat'])->name('sertifikat.dosen');
             Route::get('/create-sertifikat', [DosenController::class, 'create_sertifikat'])->name('sertifikat.create.dosen');
             Route::get('/bidang-keahlian', [DosenController::class, 'bidang_keahlian'])->name('bidang-keahlian-dosen');
