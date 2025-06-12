@@ -20,6 +20,7 @@ class MasterController extends Controller
                 'program_studi' => $first->prodi->nama_prodi,
                 'jumlah_prestasi' => $prestasi->count(),
                 'total_skor' => $prestasi->sum('skor'),
+                'foto' => $first->mahasiswa->foto,
             ];
         })
         ->sortByDesc('total_skor')
@@ -48,6 +49,7 @@ class MasterController extends Controller
                 'program_studi' => $first->prodi->nama_prodi,
                 'jumlah_prestasi' => $prestasi->count(),
                 'total_skor' => $prestasi->sum('skor'),
+                'foto' => $first->mahasiswa->foto,
             ];
         })
         ->sortByDesc('total_skor')
@@ -76,6 +78,7 @@ class MasterController extends Controller
                 'program_studi' => $first->prodi->nama_prodi,
                 'jumlah_prestasi' => $prestasi->count(),
                 'total_skor' => $prestasi->sum('skor'),
+                'foto' => $first->mahasiswa->foto,
             ];
         })
         ->sortByDesc('total_skor')

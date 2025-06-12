@@ -23,7 +23,15 @@
 @endpush
 @section('content')
     <div class="layout-px-spacing">
-
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="page-header">
             <div class="page-title">
                 <h3>Rekomendasi Lomba</h3>
@@ -43,20 +51,11 @@
                         <a class="nav-link" id="underline-profile-tab" data-toggle="tab" href="#underline-profile"
                             role="tab" aria-controls="underline-profile" aria-selected="false">Pengajuan Lomba</a>
                     </li>
-                    {{-- <li class="nav-item">
+                    <li class="nav-item">
                         <a class="nav-link" id="underline-contact-tab" data-toggle="tab" href="#underline-contact"
                             role="tab" aria-controls="underline-contact" aria-selected="false">Riwayat</a>
-                    </li> --}}
+                    </li>
                 </ul>
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
                 <div class="tab-content" id="lineTabContent-3">
                     <div class="tab-pane fade show active" id="underline-home" role="tabpanel"
                         aria-labelledby="underline-home-tab">
@@ -68,73 +67,41 @@
                         aria-labelledby="underline-profile-tab">
                         @include('mahasiswa.lomba.tambah_lomba')
                     </div>
-                    {{-- <div class="tab-pane fade" id="underline-contact" role="tabpanel"
+                    <div class="tab-pane fade" id="underline-contact" role="tabpanel"
                         aria-labelledby="underline-contact-tab">
-                        <p class="mb-4">
-                        <div class="row layout-spacing">
-                            <div class="col-lg-12">
-                                <div class="widget-header">
-                                    <div class="row">
-                                        <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="table-responsive mb-4">
-                                    <table id="column-filter" class="table">
-                                        <thead>
-                                            <tr>
-                                                <th class="text-secondary"> # </th>
-                                                <th class="text-secondary">Prestasi</th>
-                                                <th class="text-secondary">Tingkat</th>
-                                                <th class="text-secondary">Tahun</th>
-                                                <th class="text-secondary">Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td class="checkbox-column"> 1 </td>
-                                                <td>Juara 1 Cyber Security ABC</td>
-                                                <td>Nasional</td>
-                                                <td>2025</td>
-                                                <td><span class="shadow-none badge badge-success">Disetujui</span></td>
-                                                <td class="text-center"><button class="btn btn-primary">Detail</button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="checkbox-column"> 2 </td>
-                                                <td>Juara 1 Cyber Security ABC</td>
-                                                <td>Nasional</td>
-                                                <td>2025</td>
-                                                <td><span class="shadow-none badge badge-warning">Proses</span></td>
-                                                <td class="text-center"><button class="btn btn-primary">Detail</button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="checkbox-column"> 3 </td>
-                                                <td>Juara 1 Cyber Security ABC</td>
-                                                <td>Nasional</td>
-                                                <td>2025</td>
-                                                <td><span class="shadow-none badge badge-danger">Ditolak</span></td>
-                                                <td class="text-center"><button class="btn btn-primary">Detail</button>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div> --}}
-                    </p>
+                        @include('mahasiswa.lomba.riwayat_lomba')
+                    </div>
                 </div>
             </div>
-
         </div>
     </div>
 
-    </div>
 @endsection
 
 @push('js')
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil',
+                text: '{{ session('success') }}',
+                timer: 2000,
+                showConfirmButton: false
+            });
+        </script>
+    @endif
+
+    @if (session('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal',
+                text: '{{ session('error') }}',
+                timer: 2000,
+                showConfirmButton: false
+            });
+        </script>
+    @endif
     {{-- <script>
         var firstUpload = new FileUploadWithPreview('myFirstImage')
     </script> --}}

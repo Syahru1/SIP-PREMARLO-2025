@@ -10,6 +10,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SPKController;
 use App\Http\Controllers\PrestasiController;
 use App\Http\Controllers\PersonalisasiController;
+use App\Http\Controllers\LombaController;
 use App\Http\Controllers\UserController;
 
 
@@ -109,8 +110,10 @@ Route::post('/logout', function () {
             Route::delete('/kelola-prodi/{id}', [AdminController::class, 'kelolaProdiDestroy']);
 
             // Laporan Analisis Prestasi
-            Route::get('/laporan-analisis-prestasi', [AdminController::class, 'laporanAnalisisPrestasiIndex'])->name('laporanAnalisisPrestasi.index');
-            Route::get('/laporan-analisis-prestasi/detail', [AdminController::class, 'laporanAnalisisPrestasiDetail'])->name('laporan.detail');
+            Route::get('/laporan-analisis-prestasi', [PrestasiController::class, 'laporanAnalisisPrestasiIndex'])->name('laporanAnalisisPrestasi.index');
+            Route::get('/laporan-analisis-prestasi/detail/{id}', [PrestasiController::class, 'laporanAnalisisPrestasiDetail'])->name('laporan.detail');
+            Route::get('/laporan-analisis-prestasi/export_excel', [PrestasiController::class, 'laporanAnalisisPrestasiExportExcel'])->name('laporanAnalisisPrestasi.exportExcel');
+            Route::get('/laporan-analisis-prestasi/export_pdf', [PrestasiController::class, 'laporanAnalisisPrestasiExportPDF'])->name('laporanAnalisisPrestasi.exportPDF');
 
             // Rekomendasi lomba
             Route::get('/rekomendasi-lomba', [SPKController::class, 'rekomendasiLombaIndex'])->name('admin.rekomendasiLomba.index');
@@ -122,8 +125,10 @@ Route::post('/logout', function () {
             Route::get('/profile/edit', [AdminController::class, 'profileEdit'])->name('profile.edit');
 
             // Verifikasi Lomba
-            Route::get('/verifikasi-lomba', [AdminController::class, 'verifikasiLombaIndex'])->name('verifikasiLomba.index');
-            Route::get('/verifikasi-lomba/detail', [AdminController::class, 'verifikasiLombaDetail'])->name('verifikasiLomba.detail');
+            Route::get('/verifikasi-lomba', [LombaController::class, 'index'])->name('verifikasiLomba.index');
+            Route::post('/verifikasi-lomba/{id}/verifikasi', [LombaController::class, 'verifikasiLomba'])->name('verifikasiLomba.index');
+            Route::post('/verifikasi-lomba/list', [LombaController::class, 'verifikasiLombaList'])->name('verifikasiLomba.detail');
+            Route::get('/verifikasi-lomba/detail/{id}', [LombaController::class, 'verifikasiLombaDetail'])->name('verifikasiLomba.detail');
 
             // Verifikasi Prestasi
             Route::get('/verifikasi-prestasi', [PrestasiController::class, 'verifikasiPrestasiIndex'])->name('verifikasiPrestasi.index');
@@ -151,14 +156,24 @@ Route::post('/logout', function () {
             // Lomba
             Route::get('/lomba', [MahasiswaController::class, 'lomba'])->name('lomba');
             Route::post('/lomba/store', [MahasiswaController::class, 'storeLomba']);
+            Route::get('/lomba/riwayat-lomba/{id}', [MahasiswaController::class, 'edit_lomba'])->name('lomba');
+            Route::put('/lomba/riwayat-lomba/{id}/update', [MahasiswaController::class, 'update_lomba'])->name('lomba');
             Route::get('/lomba/detail-lomba/{id}', [MahasiswaController::class, 'detail_lomba'])->name('detail-lomba.mahasiswa');
 
             //prestasi
             Route::get('/prestasi', [MahasiswaController::class, 'prestasi'])->name('mahasiswa.prestasi');
             Route::get('/prestasi/riwayat', [MahasiswaController::class, 'riwayat'])->name('mahasiswa.riwayat');
             Route::get('/detail-prestasi/{id}', [MahasiswaController::class, 'detailPrestasi'])->name('mahasiswa.detail-prestasi');
+            Route::get('/edit-prestasi/{id}', [MahasiswaController::class, 'editPrestasi'])->name('mahasiswa.edit-prestasi');
+            Route::put('/update-prestasi/{id}', [MahasiswaController::class, 'updatePrestasi'])->name('mahasiswa.update-prestasi');
+            Route::post('/prestasi/store', [MahasiswaController::class, 'storePrestasi']);
 
+            // preferensi
+            Route::get('/preferensi', [MahasiswaController::class, 'preferensi'])->name('mahasiswa.preferensi');
+            Route::post('/preferensi/store', [MahasiswaController::class, 'storePreferensi'])->name('mahasiswa.preferensi.store');
             Route::get('/profil', [MahasiswaController::class, 'profil'])->name('profil');
+            Route::put('/profil/{id}/update', [MahasiswaController::class, 'updatePreferensi'])->name('profil-edit');
+
             Route::get('/notifikasi', [MahasiswaController::class, 'notifikasi'])->name('notifikasi');
             Route::get('/detail-lomba', [MahasiswaController::class, 'detail_lomba'])->name('detail-lomba');
             Route::get('/sertifikat', [MahasiswaController::class, 'sertifikat'])->name('sertifikat');
@@ -183,10 +198,21 @@ Route::post('/logout', function () {
             Route::get('/beranda', [MasterController::class, 'dosen'])->name('beranda.dosen');
 
             Route::get('/profil', [DosenController::class, 'profil'])->name('profil.dosen');
+
+            // lomba
             Route::get('/lomba', [DosenController::class, 'lomba'])->name('lomba.dosen');
-            Route::get('/notifikasi', [DosenController::class, 'notifikasi'])->name('notifikasi.dosen');
+            Route::post('/lomba/store', [DosenController::class, 'storelomba'])->name('lomba.dosen');
+            Route::get('/lomba/riwayat-lomba/{id}', [DosenController::class, 'edit_lomba'])->name('lomba');
+            Route::put('/lomba/riwayat-lomba/{id}/update', [DosenController::class, 'update_lomba'])->name('lomba');
+            Route::get('/lomba/detail-lomba/{id}', [DosenController::class, 'detail_lomba'])->name('detail-lomba.mahasiswa');
+
+            // Pengajuan Dospem
             Route::get('/mahasiswa-bimbingan', [DosenController::class, 'mahasiswa_bimbingan'])->name('mahasiswa-bimbingan');
-            Route::get('/detail-mahasiswa', [DosenController::class, 'detail_mahasiswa'])->name('detail-mahasiswa');
+            Route::get('/detail-mahasiswa/{id}', [DosenController::class, 'detail_mahasiswa'])->name('detail-mahasiswa');
+            Route::get('/detail-mahasiswa-riwayat/{id}', [DosenController::class, 'detail_mahasiswa_riwayat'])->name('detail-mahasiswa');
+            Route::post('/verifikasi-dospem/{id}/verifikasi', [DosenController::class, 'verifikasi_dospem'])->name('verifikasi-dospem');
+
+            Route::get('/notifikasi', [DosenController::class, 'notifikasi'])->name('notifikasi.dosen');
             Route::get('/sertifikat', [DosenController::class, 'sertifikat'])->name('sertifikat.dosen');
             Route::get('/create-sertifikat', [DosenController::class, 'create_sertifikat'])->name('sertifikat.create.dosen');
             Route::get('/bidang-keahlian', [DosenController::class, 'bidang_keahlian'])->name('bidang-keahlian-dosen');

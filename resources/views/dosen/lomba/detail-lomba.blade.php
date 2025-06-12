@@ -10,48 +10,59 @@
 
     <div class="card component-card_4">
         <div class="card-body">
-            <h5 class="card-title">UI/UX Competition 2025</h5>
+            <h5 class="card-title">{{ $detailLomba->nama_lomba }}</h5>
 
             <table class="table table-bordered mt-4">
                 <tbody>
                     <tr>
                         <th>Nama Lomba</th>
-                        <td>UI/UX Competition 2025</td>
+                        <td>{{ $detailLomba->nama_lomba }}</td>
                     </tr>
                     <tr>
                         <th>Tanggal Pendaftaran</th>
-                        <td>1 Januari 2025 - 1 Februari 2025</td>
+                        <td>{{ $detailLomba->tanggal_mulai_pendaftaran }} - {{ $detailLomba->tanggal_akhir_pendaftaran }}</td>
                     </tr>
                     <tr>
                         <th>Bidang</th>
-                        <td>Desain dan Teknologi</td>
+                        <td>
+                            @foreach($detailBidang as $bidang)
+                                <span class="badge badge-primary">{{ $bidang->bidang->nama_bidang }}</span>
+                            @endforeach
+                        </td>
                     </tr>
                     <tr>
                         <th>Penyelenggara</th>
-                        <td>Universitas Teknologi XYZ</td>
+                        <td>{{ $detailLomba->penyelenggara->nama_penyelenggara }}</td>
                     </tr>
                     <tr>
                         <th>Hadiah</th>
-                        <td>Uang Tunai & Sertifikat</td>
+                        <td>{{ $detailLomba->hadiah->nama_hadiah }}</td>
                     </tr>
                     <tr>
                         <th>Pendaftaran</th>
-                        <td><a href="https://example.com" target="_blank">https://example.com</a></td>
+                        <td><a href="{{ $detailLomba->link_pendaftaran }}" target="_blank">{{ $detailLomba->link_pendaftaran }}</a></td>
                     </tr>
                     <tr>
                         <th>Tingkat Kompetisi</th>
-                        <td>Nasional</td>
+                        <td>{{ $detailLomba->tingkatKompetisi->nama_tingkat_kompetisi }}</td>
                     </tr>
                     <tr>
                         <th>Status</th>
-                        <td><span class="badge badge-success">Tersedia</span></td>
+                        <td>
+                            @if($detailLomba->status_lomba == 'Masih Berlangsung')
+                                <span class="badge badge-success">{{ $detailLomba->status_lomba }}</span>
+                            @elseif($detailLomba->status_lomba == 'Selesai')
+                                <span class="badge badge-danger">{{ $detailLomba->status_lomba }}</span>
+                            @else
+                                <span class="badge badge-secondary">{{ $detailLomba->status_lomba }}</span>
+                            @endif
+                        </td>
                     </tr>
                 </tbody>
             </table>
 
             <div class="mt-4 d-flex justify-content-end">
                 <a href="{{ url()->previous() }}" class="btn btn-secondary mr-2">Kembali</a>
-                <a href="#" class="btn btn-info">Daftar Sekarang</a>
             </div>
         </div>
     </div>

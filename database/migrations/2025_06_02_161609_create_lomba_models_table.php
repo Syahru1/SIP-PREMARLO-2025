@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('c_lomba', function (Blueprint $table) {
             $table->id('id_lomba');
             $table->string('kode_lomba')->unique();
+            $table->string('kode_pemohon');
             $table->string('nama_lomba');
             $table->unsignedBigInteger('id_tingkat_kompetisi')->index();
             $table->unsignedBigInteger('id_penyelenggara')->index();

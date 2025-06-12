@@ -14,9 +14,9 @@ class AdminModelSeeder extends Seeder
     public function run(): void
     {
         $data = [
-            ['id_admin' => 1, 'username' => 'ADM001', 'password' => bcrypt('12345'), 'nama_admin' => 'Danin', 'foto_admin' => 'pp_admin.png', 'id_role' => '1'],
-            ['id_admin' => 2, 'username' => 'ADM002', 'password' => bcrypt('12345'), 'nama_admin' => 'Titis Octary Satrio', 'foto_admin' => 'pp_admin.png', 'id_role' => '1'],
-            ['id_admin' => 3, 'username' => 'ADM003', 'password' => bcrypt('12345'), 'nama_admin' => 'Admin Cadangan', 'Ana Agustina' => 'pp_admin.png', 'id_role' => '1'],
+            ['id_admin' => 1, 'username' => 'ADM001', 'password' => bcrypt('12345'), 'nama_admin' => 'Eka Setiawan', 'foto_admin' => 'profil_admin1.jpg', 'id_role' => '1'],
+            ['id_admin' => 2, 'username' => 'ADM002', 'password' => bcrypt('12345'), 'nama_admin' => 'Dita Wulandari', 'foto_admin' => 'profil_admin2.jpg', 'id_role' => '1'],
+            ['id_admin' => 3, 'username' => 'ADM003', 'password' => bcrypt('12345'), 'nama_admin' => 'Apprillia', 'foto_admin' => 'profil_admin3.jpg', 'id_role' => '1'],
         ];
         DB::table('admin')->insert($data);
     }

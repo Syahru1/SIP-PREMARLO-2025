@@ -18,6 +18,12 @@ use App\Models\CriteriaModel;
 use Illuminate\Support\Facades\DB;
 use App\Models\ViewSPKMatriksNilaiOptimasiModel;
 use App\Models\PrestasiModel;
+use App\Models\ProdiModel;
+use App\Models\MahasiswaModel;
+use App\Models\PreferensiMahasiswaModel;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class MahasiswaController extends Controller
 {
@@ -39,7 +45,10 @@ class MahasiswaController extends Controller
             ->where('id_mahasiswa', $id)
             ->get();
 
-        return view('mahasiswa.prestasi.index', compact('prestasi', 'semuaRiwayat'));
+        $dosen = \App\Models\DosenModel::all();
+        $periode = \App\Models\PeriodeModel::all();
+
+        return view('mahasiswa.prestasi.index', compact('prestasi', 'semuaRiwayat', 'dosen', 'periode'));
     }
 
 
@@ -51,11 +60,135 @@ class MahasiswaController extends Controller
 
     public function detailPrestasi($id)
     {
-        $data = PrestasiModel::with([ 'dosen', 'mahasiswa', 'prodi', 'periode']) // sesuaikan relasi
+        $data = PrestasiModel::with(['dosen', 'mahasiswa', 'prodi', 'periode']) // sesuaikan relasi
             ->findOrFail($id);
 
         return view('mahasiswa.prestasi.detail-prestasi', compact('data'));
     }
+
+
+    public function editPrestasi($id)
+    {
+        $prestasi = PrestasiModel::with(['dosen', 'mahasiswa', 'prodi', 'periode'])
+            ->findOrFail($id);
+
+        $dosen = \App\Models\DosenModel::all();
+        $periode = \App\Models\PeriodeModel::all();
+
+        return view('mahasiswa.prestasi.edit-prestasi', [
+            'prestasi' => $prestasi,
+            'dosen' => $dosen,
+            'periode' => $periode
+        ]);
+    }
+
+    public function updatePrestasi(Request $request, $id)
+    {
+        $request->validate([
+            'juara_kompetisi' => 'required|string|max:255',
+            'posisi' => 'required|string|max:255',
+            'juara_kompetisi' => 'required|string|max:255',
+            'jenis_prestasi' => 'required|string|max:255',
+            'tingkat_kompetisi' => 'required|string|max:255',
+            'lokasi_kompetisi' => 'required|string|max:255',
+            'tanggal_surat_tugas' => 'required|date',
+            'tanggal_kompetisi' => 'required|date',
+            'id_dosen' => 'required|exists:dosen,id_dosen',
+            'id_periode' => 'required|exists:periode,id_periode',
+            'jumlah_univ' => 'required|integer|min:1',
+            'nomor_sertifikat' => 'required|string|max:255',
+            'link_perlombaan' => 'required|url|max:255',
+            'foto_sertifikat' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048',
+        ]);
+
+        $prestasi = PrestasiModel::findOrFail($id);
+
+        // Handle file upload if provided
+        if ($request->hasFile('foto_sertifikat')) {
+            // Delete old file if exists
+            if ($prestasi->foto_sertifikat && Storage::disk('public')->exists('uploads/prestasi/' . $prestasi->foto_sertifikat)) {
+                Storage::disk('public')->delete('uploads/prestasi/' . $prestasi->foto_sertifikat);
+            }
+            $file = $request->file('foto_sertifikat');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->storeAs('uploads/prestasi', $filename, 'public');
+            $request->merge(['foto_sertifikat' => $filename]);
+        } else {
+            // Keep the existing file name if no new file uploaded
+            $request->merge(['foto_sertifikat' => $prestasi->foto_sertifikat]);
+        }
+
+        $request->merge(['id_mahasiswa' => auth()->guard('mahasiswa')->user()->id_mahasiswa]);
+        $prestasi->status = 'Belum Diverifikasi';
+        $prestasi->update($request->all());
+
+        return redirect('mahasiswa/prestasi?tab=riwayat')->with('success', 'Data prestasi berhasil diperbarui.');
+    }
+
+    public function storePrestasi(Request $request)
+    {
+        $request->validate([
+            'juara_kompetisi' => 'required|string|max:100',
+            'nama_kompetisi' => 'required|string|max:255',
+            'posisi' => 'required|string|max:100',
+            'tingkat_kompetisi' => 'required|string|max:100',
+            'jenis_prestasi' => 'required|string|max:100',
+            'nama_kompetisi' => 'required|string|max:255',
+            'lokasi_kompetisi' => 'required|string|max:255',
+            'tanggal_surat_tugas' => 'required|date',
+            'tanggal_kompetisi' => 'required|date',
+            'id_dosen' => 'required|exists:dosen,id_dosen',
+            'id_periode' => 'required|exists:periode,id_periode',
+            'jumlah_univ' => 'required|integer|min:1',
+            'nomor_sertifikat' => 'required|string|max:255',
+            'link_perlombaan' => 'required|url|max:255',
+            'foto_sertifikat' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048',
+        ]);
+
+        try {
+            $prestasi = new PrestasiModel();
+
+            $prestasi->juara_kompetisi = $request->juara_kompetisi;
+            $prestasi->id_mahasiswa = Auth::guard('mahasiswa')->user()->id_mahasiswa;
+            $prestasi->posisi = $request->posisi;
+            $prestasi->tingkat_kompetisi = $request->tingkat_kompetisi;
+            $prestasi->jenis_prestasi = $request->jenis_prestasi;
+            $prestasi->nama_kompetisi = $request->nama_kompetisi;
+            $prestasi->lokasi_kompetisi = $request->lokasi_kompetisi;
+            $prestasi->tanggal_surat_tugas = $request->tanggal_surat_tugas;
+            $prestasi->tanggal_kompetisi = $request->tanggal_kompetisi;
+            $prestasi->id_dosen = $request->id_dosen;
+            $prestasi->id_periode = $request->id_periode;
+            $prestasi->jumlah_univ = $request->jumlah_univ;
+            $prestasi->nomor_sertifikat = $request->nomor_sertifikat;
+            $prestasi->link_perlombaan = $request->link_perlombaan;
+            $prestasi->id_prodi = ProdiModel::where('id_prodi', Auth::guard('mahasiswa')->user()->id_prodi)->value('id_prodi');
+            $prestasi->status = 'Belum Diverifikasi';
+            $prestasi->skor = 0;
+            $prestasi->catatan = null;
+            $prestasi->tanggal_pengajuan = now();
+
+            // Simpan foto sertifikat
+            if ($request->hasFile('foto_sertifikat')) {
+                $file = $request->file('foto_sertifikat');
+                $gambar = time() . '_' . $file->getClientOriginalName();
+                $file->move(public_path('uploads/prestasi'), $gambar);
+                $prestasi->foto_sertifikat = 'uploads/prestasi/' . $gambar;
+            }
+
+
+            $prestasi->save();
+
+            return redirect('mahasiswa/prestasi')->with('success', 'Data prestasi berhasil ditambahkan.');
+        } catch (\Exception $e) {
+            Log::error('Gagal simpan prestasi: ' . $e->getMessage());
+            return response()->json([
+                'status' => false,
+                'message' => 'Terjadi kesalahan: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
 
     public function lomba()
     {
@@ -64,13 +197,6 @@ class MahasiswaController extends Controller
 
         // Retrieve lomba data for this specific user
         $lombaList = SPKMatriksModel::where('id_mahasiswa', $id)->get();
-
-        if ($lombaList->isEmpty()) {
-            return response()->json([
-                'status' => false,
-                'message' => 'Data lomba tidak ditemukan untuk mahasiswa ini',
-            ]);
-        }
 
         // === Ambil semua data kriteria dan bobot ===
         $kriteria = CriteriaModel::all()->keyBy('nama_kriteria');
@@ -175,6 +301,24 @@ class MahasiswaController extends Controller
             $kd;
         }
         // Pass the data to the view
+        // Get filter parameter from request
+        $nim_filter = request('nim_filter', null);
+
+        // Get the logged-in user's NIM as default
+        $loggedInNim = auth()->guard('mahasiswa')->user()->nim;
+
+        // Use the filtered NIM if provided, otherwise use logged-in user's NIM
+        $filterNim = $nim_filter ?: $loggedInNim;
+
+        // Use NIM for filtering the lomba data
+        $riwayat = LombaModel::where('kode_pemohon', $filterNim)
+            ->orderByRaw("FIELD(status_verifikasi, 'Belum Diverifikasi', 'Ditolak', 'Diverifikasi')")
+            ->get();
+
+        // Continue with existing code...
+        $dataLomba = LombaModel::where('status_verifikasi', 'Diverifikasi')
+            ->orderBy('created_at')
+            ->get();
         return view('mahasiswa.lomba.index', [
             'lombaList' => $spkNilaiOptimasi,
             'penyelenggara' => $penyelenggara,
@@ -182,63 +326,73 @@ class MahasiswaController extends Controller
             'tingkatKompetisi' => $tingkatKompetisi,
             'hadiah' => $hadiah,
             'kodeLomba' => 'LMB' . $kd,
-            'bidang' => $bidang
+            'bidang' => $bidang,
+            'dataLomba' => $dataLomba,
+            'riwayatLomba' => $riwayat // Pass the filter value to view
         ]);
     }
 
     public function storeLomba(Request $request)
     {
-        $request->validate([
-            'kode_lomba' => 'required',
-            'nama_lomba' => 'required',
-            'tingkat_kompetisi' => 'required',
-            'penyelenggara' => 'required',
-            'biaya_pendaftaran' => 'required',
-            'hadiah' => 'required',
-            'tanggal_pendaftaran' => 'required',
-            'lokasi' => 'required',
-            'link' => 'required',
-            'deskripsi_lomba' => 'required',
-            'bidang' => 'required|array',
-        ]);
+        try {
+            $request->validate([
+                'kode_lomba' => 'required',
+                'nama_lomba' => 'required',
+                'tingkat_kompetisi' => 'required',
+                'penyelenggara' => 'required',
+                'biaya_pendaftaran' => 'required',
+                'hadiah' => 'required',
+                'tanggal_pendaftaran' => 'required',
+                'lokasi' => 'required',
+                'link' => 'required',
+                'deskripsi_lomba' => 'required',
+                'bidang' => 'required|array',
+                'gambar_lomba' => 'required',
+            ]);
 
-        // Pisah tanggal dari flatpickr
-        [$tgl_mulai, $tgl_akhir] = explode(' to ', $request->tanggal_pendaftaran);
-        // Upload gambar (jika ada)
-        $gambar = null;
-        if ($request->hasFile('gambar_lomba')) {
-            $file = $request->file('gambar_lomba');
-            $gambar = time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('uploads/lomba'), $gambar);
+            // Get NIM of logged in mahasiswa
+            $nimMahasiswa = auth()->guard('mahasiswa')->user()->nim;
+
+            // Pisah tanggal dari flatpickr
+            [$tgl_mulai, $tgl_akhir] = explode(' to ', $request->tanggal_pendaftaran);
+            // Upload gambar (jika ada)
+            $gambar = null;
+            if ($request->hasFile('gambar_lomba')) {
+                $file = $request->file('gambar_lomba');
+                $gambar = time() . '_' . $file->getClientOriginalName();
+                $file->move(public_path('uploads/lomba'), $gambar);
+            }
+
+            $bidang_ids_str = implode(',', $request->bidang);
+
+            // Set default status jika tidak dikirim dari form
+            $statusLomba = $request->status_lomba ?? 'Masih Berlangsung';
+            $statusVerifikasi = $request->status_verifikasi ?? 'Belum Diverifikasi';
+
+            // Panggil Stored Procedure dengan NIM mahasiswa
+            DB::statement("CALL sp_insert_lomba_dan_bidang(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", [
+                $request->kode_lomba,
+                $nimMahasiswa,  // NIM mahasiswa yang login
+                $request->nama_lomba,
+                $request->tingkat_kompetisi,
+                $request->penyelenggara,
+                $request->biaya_pendaftaran,
+                $request->hadiah,
+                $tgl_mulai,
+                $tgl_akhir,
+                $request->lokasi,
+                $request->link,
+                $request->deskripsi_lomba,
+                $statusLomba,
+                $statusVerifikasi,
+                $gambar,
+                $bidang_ids_str
+            ]);
+
+            return redirect()->back()->with('success', 'Lomba berhasil ditambahkan.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal menambahkan lomba');
         }
-
-        $bidang_ids_str = implode(',', $request->bidang);
-        
-        // Set default status jika tidak dikirim dari form
-        $statusLomba = $request->status_lomba ?? 'Masih Berlangsung';
-        $statusVerifikasi = $request->status_verifikasi ?? 'Belum Diverifikasi';
-        // dd($statusLomba, $statusVerifikasi);
-
-        // Panggil Stored Procedure
-        DB::statement("CALL sp_insert_lomba_dan_bidang(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", [
-            $request->kode_lomba,
-            $request->nama_lomba,
-            $request->tingkat_kompetisi,
-            $request->penyelenggara,
-            $request->biaya_pendaftaran,
-            $request->hadiah,
-            $tgl_mulai,
-            $tgl_akhir,
-            $request->lokasi,
-            $request->link,
-            $request->deskripsi_lomba,
-            $statusLomba,
-            $statusVerifikasi,
-            $gambar,
-            $bidang_ids_str
-        ]);
-
-        return redirect('mahasiswa/lomba')->with('success', 'Lomba berhasil ditambahkan.');
     }
 
     public function detail_lomba(String $id)
@@ -251,9 +405,193 @@ class MahasiswaController extends Controller
         ]);
     }
 
+    public function edit_lomba(String $id)
+    {
+        $detailLomba = LombaModel::where('id_lomba', $id)->first();
+        $detailBidang = BidangLombaModel::where('id_lomba', $id)->get();
+        $penyelenggara = PenyelenggaraModel::all();
+        $biayaPendaftaran = BiayaPendaftaranModel::all();
+        $tingkatKompetisi = TingkatKompetisiModel::all();
+        $hadiah = HadiahModel::all();
+        $bidang = BidangModel::all();
+
+        return view('mahasiswa.lomba.edit_riwayat_lomba', [
+            'detailLomba' => $detailLomba,
+            'detailBidang' => $detailBidang,
+            'penyelenggara' => $penyelenggara,
+            'biayaPendaftaran' => $biayaPendaftaran,
+            'tingkatKompetisi' => $tingkatKompetisi,
+            'hadiah' => $hadiah,
+            'bidang' => $bidang
+        ]);
+    }
+
+    public function update_lomba(Request $request, String $id)
+    {
+        try {
+            $request->validate([
+                'kode_lomba' => 'required',
+                'kode_pemohon' => 'required',
+                'nama_lomba' => 'required',
+                'tingkat_kompetisi' => 'required',
+                'penyelenggara' => 'required',
+                'biaya_pendaftaran' => 'required',
+                'hadiah' => 'required',
+                'tanggal_pendaftaran' => 'required',
+                'lokasi' => 'required',
+                'link' => 'required',
+                'deskripsi_lomba' => 'required',
+                'bidang' => 'required|array',
+            ]);
+            // Pisah tanggal dari flatpickr
+            [$tgl_mulai, $tgl_akhir] = explode(' to ', $request->tanggal_pendaftaran);
+            // Upload gambar (jika ada)
+            $gambar = null;
+            // Check if gambar_lomba is a file input
+            if ($request->hasFile('gambar_lomba')) {
+                $file = $request->file('gambar_lomba');
+                $gambar = time() . '_' . $file->getClientOriginalName();
+                $file->move(public_path('uploads/lomba'), $gambar);
+            } else {
+                // If not a file input, keep the existing image if there is one
+                $existingLomba = LombaModel::find($id);
+                $gambar = $existingLomba ? $existingLomba->gambar_lomba : null;
+            }
+
+            $bidang_ids_str = implode(',', $request->bidang);
+
+            // Set default status jika tidak dikirim dari form
+            $statusLomba = $request->status_lomba ?? 'Masih Berlangsung';
+            $statusVerifikasi = $request->status_verifikasi ?? 'Belum Diverifikasi';
+
+            // Panggil Stored Procedure
+            DB::statement("CALL sp_update_lomba_dan_bidang(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", [
+                $id,
+                $request->kode_lomba,
+                $request->kode_pemohon,
+                $request->nama_lomba,
+                $request->tingkat_kompetisi,
+                $request->penyelenggara,
+                $request->biaya_pendaftaran,
+                $request->hadiah,
+                $tgl_mulai,
+                $tgl_akhir,
+                $request->lokasi,
+                $request->link,
+                $request->deskripsi_lomba,
+                $statusLomba,
+                $statusVerifikasi,
+                $gambar,
+                $bidang_ids_str
+            ]);
+
+            return redirect('mahasiswa/lomba')->with('success', 'Lomba berhasil diperbarui.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal melakukan verifikasi.');
+        }
+    }
+
     public function profil()
     {
-        return view('mahasiswa.profil.index');
+        $mahasiswa = auth()->user();
+        $preferensi = PreferensiMahasiswaModel::where('id_mahasiswa', auth()->user()->id_mahasiswa)->first();
+
+        // Ambil data referensi untuk tab lainnya
+        $bidang = DB::table('c_bidang')->orderBy('nama_bidang', 'asc')->get();
+        $biaya = DB::table('c_biaya_pendaftaran')->get();
+        $penyelenggara = DB::table('c_penyelenggara')->get();
+        $tingkat = DB::table('c_tingkat_kompetisi')->get();
+        $hadiah = DB::table('c_hadiah')->get();
+
+        return view('mahasiswa.profil.index', compact(
+            'mahasiswa',
+            'preferensi',
+            'bidang',
+            'biaya',
+            'penyelenggara',
+            'tingkat',
+            'hadiah'
+        ));
+    }
+
+    public function preferensi()
+    {
+        // Ambil data referensi untuk dropdown
+        $bidang = DB::table('c_bidang')->orderBy('nama_bidang', 'asc')->get();
+        $biaya = DB::table('c_biaya_pendaftaran')->get();
+        $penyelenggara = DB::table('c_penyelenggara')->get();
+        $tingkat = DB::table('c_tingkat_kompetisi')->get();
+        $hadiah = DB::table('c_hadiah')->get();
+
+        return view('mahasiswa.personalisasi.index', compact(
+            'bidang',
+            'biaya',
+            'penyelenggara',
+            'tingkat',
+            'hadiah'
+        ));
+    }
+
+    public function storePreferensi(Request $request)
+    {
+
+        $request->validate([
+            'bidang' => 'required|array',
+            'biaya_pendaftaran' => 'required',
+            'penyelenggara' => 'required',
+            'tingkat_kompetisi' => 'required',
+            'hadiah' => 'required',
+        ]);
+        // dd($request->all());
+        // Simpan preferensi ke database
+        $mahasiswaId = auth()->guard('mahasiswa')->user()->id_mahasiswa;
+
+        // Ubah array bidang menjadi string yang dipisahkan koma
+        $bidangList = implode(',', $request->bidang);
+        // Panggil stored procedure
+        DB::statement('CALL sp_insert_preferensi_mahasiswa_dan_bidang(?, ?, ?, ?, ?, ?)', [
+            $mahasiswaId,
+            $request->penyelenggara,
+            $request->biaya_pendaftaran,
+            $request->tingkat_kompetisi,
+            $request->hadiah,
+            $bidangList
+        ]);
+
+        return redirect('mahasiswa/beranda')->with('success', 'Preferensi berhasil disimpan.');
+    }
+
+    public function updatePreferensi(Request $request, $id)
+    {
+        try {
+            // Validasi input
+            $request->validate([
+                'bidang' => 'required|array',
+                'penyelenggara' => 'required',
+                'biaya_pendaftaran' => 'required',
+                'tingkat_kompetisi' => 'required',
+                'hadiah' => 'required',
+            ]);
+
+            $mahasiswaId = auth()->guard('mahasiswa')->user()->id_mahasiswa;
+
+            $bidangList = implode(',', $request->bidang);
+
+            // Panggil stored procedure update (param ke-1 sekarang id_preferensi_mahasiswa)
+            DB::statement('CALL sp_update_preferensi_mahasiswa_dan_bidang(?, ?, ?, ?, ?, ?, ?)', [
+                $id,                    // id_preferensi_mahasiswa (ambil dari URL form)
+                $mahasiswaId,
+                $request->penyelenggara,
+                $request->biaya_pendaftaran,
+                $request->tingkat_kompetisi,
+                $request->hadiah,
+                $bidangList
+            ]);
+
+            return redirect()->back()->with('success', 'Preferensi berhasil diperbarui.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal memperbarui preferensi: ' . $e->getMessage());
+        }
     }
 
     public function notifikasi()
@@ -274,7 +612,7 @@ class MahasiswaController extends Controller
             'photo' => 'foto-profil.jpg', // misal ini file sudah ada di storage
         ];
 
-    return view('mahasiswa.profil.edit-profil', compact('user'));
+        return view('mahasiswa.profil.edit-profil', compact('user'));
     }
 
 
@@ -344,5 +682,10 @@ class MahasiswaController extends Controller
         // logika hapus dari database
         // Sertifikat::destroy($id); // jika pakai model
         return redirect()->back()->with('success', 'Pengalaman berhasil dihapus.');
+    }
+
+    public function bimbingan()
+    {
+        return view('mahasiswa.bimbingan.index');
     }
 }

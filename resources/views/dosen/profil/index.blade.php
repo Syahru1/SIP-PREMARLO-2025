@@ -1,13 +1,4 @@
 @extends('layout.template')
-@php
-    // Dummy user dosen dengan field yang disederhanakan
-    $user = (object)[
-        'name' => 'Draco Malfoy',
-        'nidn' => '202310001',
-        'email' => 'draco@example.com',
-        'photo' => null,
-    ];
-@endphp
 
 @section('content')
 <div class="layout-px-spacing">
@@ -22,10 +13,10 @@
         <div class="d-flex align-items-center justify-content-between">
             <!-- Foto Profil -->
             <div class="me-4" style="margin-left: 1rem;">
-                <img src="{{ $user->photo ? asset('storage/' . $user->photo) : 'https://via.placeholder.com/80x80.png?text=Foto' }}"
-                     alt="Foto Profil"
-                     class="rounded-circle border border-2 border-dark"
-                     width="80" height="80">
+                <img src="{{ url('uploads/profil/' . $dosen->foto) }}"
+                    alt="Foto Profil"
+                    class="rounded-circle border border-2 border-dark"
+                    width="80" height="80">
             </div>
 
             <!-- Informasi Dosen -->
@@ -34,24 +25,19 @@
                     <div class="row mb-2">
                         <div class="col-md-4">
                             <div class="text-muted">Nama</div>
-                            <div class="text-black">{{ $user->name ?? '-' }}</div>
+                            <div class="text-black">{{ $dosen->nama_dosen ?? '-' }}</div>
                         </div>
                         <div class="col-md-4">
                             <div class="text-muted">NIDN</div>
-                            <div class="text-black">{{ $user->nidn ?? '-' }}</div>
+                            <div class="text-black">{{ $dosen->nidn ?? '-' }}</div>
                         </div>
                         <div class="col-md-4">
-                            <div class="text-muted">Email</div>
-                            <div class="text-black">
-                                <a href="mailto:{{ $user->email }}" class="text-black">{{ $user->email }}</a>
-                            </div>
+                        <div class="text-muted">Username</div>
+                            <div class="text-black">{{ $dosen->username ?? '-' }}</div>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <!-- Tombol Edit -->
-            <a href="{{ url('dosen/edit-profil') }}" class="btn btn-primary mb-2 mr-2">Edit</a>
         </div>
     </div>
 
@@ -62,14 +48,11 @@
                 <li class="nav-item">
                     <a class="nav-link active" id="kompetensi-tab" data-toggle="tab" href="#kompetensi" role="tab" aria-controls="kompetensi" aria-selected="true">Kompetensi</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="info-akun-tab" data-toggle="tab" href="#info-akun" role="tab" aria-controls="info-akun" aria-selected="false">Informasi Akun</a>
-                </li>
             </ul>
 
             <div class="tab-content" id="lineTabContent">
                 <div class="tab-pane fade show active" id="kompetensi" role="tabpanel" aria-labelledby="kompetensi-tab">
-                    
+
                     {{-- Bidang Keahlian --}}
                     <div class="mb-4 card">
                         <div class="card-header d-flex justify-content-between align-items-center">
@@ -124,31 +107,6 @@
                         </div>
                     </div>
 
-                </div>
-
-                <div class="tab-pane fade" id="info-akun" role="tabpanel" aria-labelledby="info-akun-tab">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table mb-0" style="border-top: none; table-layout: fixed;">
-                                    <tbody>
-                                        <tr>
-                                            <td class="text-muted" style="width: 40%;">Nama</td>
-                                            <td class="text-black">{{ $user->name ?? '-' }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-muted">NIDN</td>
-                                            <td class="text-black">{{ $user->nidn ?? '-' }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-muted">Email</td>
-                                            <td class="text-black">{{ $user->email ?? '-' }}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
                 </div>
 
             </div>

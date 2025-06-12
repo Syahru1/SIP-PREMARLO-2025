@@ -9,6 +9,7 @@ use App\Models\SPKBobotModel;
 use App\Models\SPKNilaiOptimasiModel;
 use App\Models\SPKNormalisasiModel;
 use Illuminate\Database\Seeder;
+use Database\Seeders\PengajuanDospemSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -50,6 +51,12 @@ class DatabaseSeeder extends Seeder
             //tables lomba
             LombaModelSeeder::class,
             BidangLombaModelSeeder::class,
+
+            //tables pengajuan dosen
+            TimModelSeeder::class,
+            AnggotaTimMahasiswaSeeder::class,
+            PengajuanDospemSeeder::class,
+
         ]);
         // \App\Models\User::factory(10)->create();
 

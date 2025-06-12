@@ -10,7 +10,7 @@
 
     <div class="card component-card_4">
         <div class="card-body">
-            <h5 class="card-title">UI/UX Competition 2025</h5>
+            <h5 class="card-title">{{ $detailLomba->nama_lomba }}</h5>
 
             <table class="table table-bordered mt-4">
                 <tbody>

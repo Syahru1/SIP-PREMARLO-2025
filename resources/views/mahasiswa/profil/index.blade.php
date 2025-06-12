@@ -1,374 +1,220 @@
 @extends('layout.template')
-@php
-    // Dummy user jika tidak tersedia dari controller
-    $user = (object)[
-        'name' => 'Draco Malfoy',
-        'nim' => '202310001',
-        'prodi' => 'D-IV Teknik Informatika',
-        'lokasi' => 'Malang, Jawa Timur',
-        'email' => 'draco@example.com',
-        'photo' => null,
-        'angkatan' => '2023',
-        'periode' => '2024/2025 Genap',
-        'password' => '*****'
-    ];
-@endphp
 
 @section('content')
-<div class="layout-px-spacing">
+    <div class="layout-px-spacing">
 
-    <div class="page-header">
-        <div class="page-title">
-            <h3>Profil Saya</h3>
-        </div>
-    </div>
-
-    <div class="card component-card_4 mb-4 p-4">
-    <div class="d-flex align-items-center justify-content-between">
-        <!-- Foto Profil -->
-        <div class="me-4" style="margin-left: 1rem;">
-            <img src="{{ $user->photo ? asset('storage/' . $user->photo) : 'https://via.placeholder.com/80x80.png?text=Foto' }}"
-                 alt="Foto Profil"
-                 class="rounded-circle border border-2 border-dark"
-                 width="80" height="80">
+        <div class="page-header">
+            <div class="page-title">
+                <h3>Profil Saya</h3>
+            </div>
         </div>
 
-        <!-- Informasi Mahasiswa (2 baris, masing-masing 2 kolom) -->
-         <div class="flex-grow-1" style="text-align:left; margin-left: 8rem;">
-            <div class="container px-0">
-                <!-- Baris 1 -->
-                <div class="row mb-2 ">
-                    <div class="col-md-4 ">
-                        <div class="text-muted">Nama</div>
-                        <div class="text-black">{{ $user->name ?? '-' }}</div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="text-muted">Prodi</div>
-                        <div class="text-black">{{ $user->prodi ?? '-' }}</div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="text-muted">Email</div>
-                        <div class="text-black">
-                            <a href="mailto:{{ $user->email }}" class="text-black">{{ $user->email }}</a>
-                        </div>
-                    </div>
+        <div class="card component-card_4 mb-4 p-4">
+            <div class="d-flex align-items-center justify-content-between">
+                <!-- Foto Profil -->
+                <div class="me-4" style="margin-left: 1rem;">
+                    <img src="{{ url('uploads/profil/' . $mahasiswa->foto) }}" alt="Foto Profil"
+                        class="rounded-circle border border-dark" width="80" height="80">
                 </div>
 
-                <!-- Baris 2 -->
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="text-muted">NIM</div>
-                        <div class="text-black">{{ $user->nim ?? '-' }}</div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="text-muted">Periode</div>
-                        <div class="text-black">{{ $user->periode ?? '-' }}</div>
-                    </div>
-                     <div class="col-md-4">
-                        <div class="text-muted">Lokasi</div>
-                        <div class="text-black">{{ $user->lokasi ?? '-' }}</div>
+                <!-- Informasi Mahasiswa (2 baris, masing-masing 2 kolom) -->
+                <div class="flex-grow-1" style="text-align:left; margin-left: 8rem;">
+                    <div class="container px-0">
+                        <!-- Baris 1 -->
+                        <div class="row mb-2 ">
+                            <div class="col-md-4 ">
+                                <div class="text-muted">Nama</div>
+                                <div class="text-black">{{ $mahasiswa->nama ?? '-' }}</div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="text-muted">Prodi</div>
+                                <div class="text-black">{{ $mahasiswa->prodi->nama_prodi ?? '-' }}</div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="text-muted">Username</div>
+                                <div class="text-black">{{ $mahasiswa->username ?? '-' }}</div>
+                            </div>
+                        </div>
+
+                        <!-- Baris 2 -->
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="text-muted">NIM</div>
+                                <div class="text-black">{{ $mahasiswa->nim ?? '-' }}</div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="text-muted">Periode</div>
+                                <div class="text-black">{{ $mahasiswa->periode->nama_periode ?? '-' }}</div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="text-muted">Lokasi</div>
+                                <div class="text-black">{{ $mahasiswa->lokasi ?? '-' }}</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Tombol Edit -->
-        <a href="{{ url('mahasiswa/edit-profil') }}" class="btn btn-primary mb-2 mr-2">Edit</a>
-
-    </div>
-</div>
-
-    <div class="card component-card_4">
-        <div class="card-body">
+        <div class="card component-card_4">
+            <div class="card-body">
 
 
-            <ul class="nav nav-tabs mb-3" id="lineTab" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link active" id="underline-home-tab" data-toggle="tab" href="#underline-home" role="tab" aria-controls="underline-home" aria-selected="true">Kompetensi</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="underline-preference-tab" data-toggle="tab" href="#underline-preference" role="tab" aria-controls="underline-preference" aria-selected="false">Preferensi</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="underline-profile-tab" data-toggle="tab" href="#underline-profile" role="tab" aria-controls="underline-profile" aria-selected="false">Informasi akun</a>
-                </li>
-            </ul>
+                <ul class="nav nav-tabs mb-3" id="lineTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="underline-home-tab" data-toggle="tab" href="#underline-home"
+                            role="tab" aria-controls="underline-home" aria-selected="true">Kompetensi</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="underline-preference-tab" data-toggle="tab" href="#underline-preference"
+                            role="tab" aria-controls="underline-preference" aria-selected="false">Preferensi</a>
+                    </li>
+                </ul>
 
-            <div class="tab-content" id="lineTabContent-3">
-                <div class="tab-pane fade show active" id="underline-home" role="tabpanel" aria-labelledby="underline-home-tab">
-                    <div class="mb-4 card">
-                        <div class="card-header d-flex justify-content-between align-items-center">
-                            <h5 class="card-title mb-0 text-black" style="font-weight: bold !important;">Minat</h5>
-                            <div class="d-flex align-items-center">
+                <div class="tab-content" id="lineTabContent-3">
+                    <div class="tab-pane fade show active" id="underline-home" role="tabpanel"
+                        aria-labelledby="underline-home-tab">
+                        <div class="mb-4 card">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h5 class="card-title mb-0 text-black" style="font-weight: bold !important;">Bidang Keahlian
+                                </h5>
+                                <div class="d-flex align-items-center">
 
-                             <a href="{{ url('mahasiswa/minat') }}" class="btn btn-secondary mb-2 mr-2">Detail</a>
+                                    <a href="{{ url('mahasiswa/bidang-keahlian') }}"
+                                        class="btn btn-secondary mb-2 mr-2">Detail</a>
 
 
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="skill-item mb-3">
+                                    <div class="text-black">Isi detail keahlian ditampilkan di sini...</div>
+                                    <div role="separator" class="specialist-divider mt-2"></div>
+                                </div>
+
+                                <div class="skill-item mb-3">
+                                    <div class="text-black">Isi detail keahlian ditampilkan di sini...</div>
+                                    <div role="separator" class="specialist-divider mt-2"></div>
+                                </div>
                             </div>
                         </div>
-                        <div class="card-body">
-                            <div class="skill-item mb-3">
-                                <div class="text-black">Isi detail minat ditampilkan di sini...</div>
-                                <div role="separator" class="specialist-divider mt-2"></div>
-                            </div>
 
-                            <div class="skill-item mb-3">
-                                <div class="text-black">Isi detail minat ditampilkan di sini...</div>
-                                <div role="separator" class="specialist-divider mt-2"></div>
+                        <div class="mb-4 card">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h5 class="card-title mb-0 text-black" style="font-weight: bold !important;">Sertifikasi
+                                </h5>
+                                <div class="d-flex align-items-center">
+                                    <a href="{{ url('mahasiswa/sertifikat') }}"
+                                        class="btn btn-secondary mb-2 mr-2">Detail</a>
+
+
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="skill-item mb-3">
+                                    <div class="text-black">Isi sertifikasi ditampilkan di sini...</div>
+                                    <div role="separator" class="specialist-divider mt-2"></div>
+                                </div>
+
+                                <div class="skill-item mb-3">
+                                    <div class="text-black">Isi sertifikasi ditampilkan di sini...</div>
+                                    <div role="separator" class="specialist-divider mt-2"></div>
+                                </div>
                             </div>
                         </div>
+
+                        <div class="mb-4 card">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h5 class="card-title mb-0 text-black" style="font-weight: bold !important;">Pengalaman</h5>
+                                <div class="d-flex align-items-center">
+                                    <a href="{{ url('mahasiswa/pengalaman') }}"
+                                        class="btn btn-secondary mb-2 mr-2">Detail</a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="skill-item mb-3">
+                                    <div class="text-black">Isi pengalaman ditampilkan di sini...</div>
+                                    <div role="separator" class="specialist-divider mt-2"></div>
+                                </div>
+
+                                <div class="skill-item mb-3">
+                                    <div class="text-black">Isi pengalaman ditampilkan di sini...</div>
+                                    <div role="separator" class="specialist-divider mt-2"></div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
 
-                    <div class="mb-4 card">
-                        <div class="card-header d-flex justify-content-between align-items-center">
-                            <h5 class="card-title mb-0 text-black" style="font-weight: bold !important;">Bidang Keahlian</h5>
-                            <div class="d-flex align-items-center">
 
-                            <a href="{{ url('mahasiswa/bidang-keahlian') }}" class="btn btn-secondary mb-2 mr-2">Detail</a>
-
-
+                    <div class="tab-pane fade" id="underline-preference" role="tabpanel"
+                        aria-labelledby="underline-preference-tab">
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
                             </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="skill-item mb-3">
-                                <div class="text-black">Isi detail keahlian ditampilkan di sini...</div>
-                                <div role="separator" class="specialist-divider mt-2"></div>
-                            </div>
-
-                            <div class="skill-item mb-3">
-                                <div class="text-black">Isi detail keahlian ditampilkan di sini...</div>
-                                <div role="separator" class="specialist-divider mt-2"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mb-4 card">
-                        <div class="card-header d-flex justify-content-between align-items-center">
-                            <h5 class="card-title mb-0 text-black" style="font-weight: bold !important;">Sertifikasi</h5>
-                            <div class="d-flex align-items-center">
-                           <a href="{{ url('mahasiswa/sertifikat') }}" class="btn btn-secondary mb-2 mr-2">Detail</a>
-
-                           
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="skill-item mb-3">
-                                <div class="text-black">Isi sertifikasi ditampilkan di sini...</div>
-                                <div role="separator" class="specialist-divider mt-2"></div>
-                            </div>
-
-                            <div class="skill-item mb-3">
-                                <div class="text-black">Isi sertifikasi ditampilkan di sini...</div>
-                                <div role="separator" class="specialist-divider mt-2"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mb-4 card">
-                        <div class="card-header d-flex justify-content-between align-items-center">
-                            <h5 class="card-title mb-0 text-black" style="font-weight: bold !important;">Pengalaman</h5>
-                            <div class="d-flex align-items-center">
-                             <a href="{{ url('mahasiswa/pengalaman') }}" class="btn btn-secondary mb-2 mr-2">Detail</a>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="skill-item mb-3">
-                                <div class="text-black">Isi pengalaman ditampilkan di sini...</div>
-                                <div role="separator" class="specialist-divider mt-2"></div>
-                            </div>
-
-                            <div class="skill-item mb-3">
-                                <div class="text-black">Isi pengalaman ditampilkan di sini...</div>
-                                <div role="separator" class="specialist-divider mt-2"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                
-                <div class="tab-pane fade" id="underline-preference" role="tabpanel" aria-labelledby="underline-preference-tab">
-                    <div class="card">
-                        <div class="card-body">
-                        {{-- === FORM PERSONALISASI PREFERENSI (STATIC PREVIEW) === --}}
-                        <form id="formPersonal" method="POST">
-                            @csrf
-
-                            {{-- === BIDANG YANG DIMINATI === --}}
-                            <div class="mb-4">
-                                <label class="form-label fw-semibold text-dark">Bidang yang Kamu Minati</label>
-                                <div class="row">
-                                    @for ($i = 1; $i <= 4; $i++)
-                                    <div class="col-md-6 mb-2">
-                                        <div class="form-check rounded border px-3 py-2 shadow-sm bg-light">
-                                            <input class="form-check-input me-2" type="checkbox" name="bidang[]" value="{{ $i }}" id="bidang{{ $i }}">
-                                            <label class="form-check-label text-dark" for="bidang{{ $i }}">
-                                                Bidang Contoh {{ $i }}
-                                            </label>
-                                        </div>
-                                    </div>
-                                    @endfor
-                                </div>
-                            </div>
-
-                            {{-- === BIAYA PENDAFTARAN IDEAL === --}}
-                            <div class="mb-4">
-                                <label class="form-label fw-semibold text-dark">Biaya Pendaftaran Ideal</label>
-                                <div class="input-group rounded shadow-sm">
-                                    <span class="input-group-text bg-white border-end-0">
-                                        <i class="bi bi-cash-stack text-muted"></i>
-                                    </span>
-                                    <select name="biaya_pendaftaran" class="form-select border-start-0">
-                                        <option value="">-- Pilih Rentang Biaya --</option>
-                                        <option value="1">Gratis</option>
-                                        <option value="2">Rp 1.000 - Rp 50.000</option>
-                                        <option value="3">Rp 50.001 - Rp 200.000</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            {{-- === PENYELENGGARA FAVORIT === --}}
-                            <div class="mb-4">
-                                <label class="form-label fw-semibold text-dark">Penyelenggara Favorit</label>
-                                <div class="input-group rounded shadow-sm">
-                                    <span class="input-group-text bg-white border-end-0">
-                                        <i class="bi bi-building text-muted"></i>
-                                    </span>
-                                    <select name="penyelenggara" class="form-select border-start-0">
-                                        <option value="">-- Pilih Penyelenggara --</option>
-                                        <option value="1">Pusat Prestasi Nasional</option>
-                                        <option value="2">Kemendikbud Ristek</option>
-                                        <option value="3">Lembaga Swasta</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            {{-- === TINGKAT KOMPETISI === --}}
-                            <div class="mb-4">
-                                <label class="form-label fw-semibold text-dark">Tingkat Kompetisi</label>
-                                <div class="input-group rounded shadow-sm">
-                                    <span class="input-group-text bg-white border-end-0">
-                                        <i class="bi bi-bar-chart text-muted"></i>
-                                    </span>
-                                    <select name="tingkat" class="form-select border-start-0">
-                                        <option value="">-- Pilih Tingkat --</option>
-                                        <option value="1">Kampus</option>
-                                        <option value="2">Regional</option>
-                                        <option value="3">Nasional</option>
-                                        <option value="4">Internasional</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            {{-- === HADIAH DIUTAMAKAN === --}}
-                            <div class="mb-4">
-                                <label class="form-label fw-semibold text-dark">Hadiah yang Diutamakan</label>
-                                <div class="input-group rounded shadow-sm">
-                                    <span class="input-group-text bg-white border-end-0">
-                                        <i class="bi bi-gift text-muted"></i>
-                                    </span>
-                                    <select name="hadiah" class="form-select border-start-0">
-                                        <option value="">-- Pilih Hadiah --</option>
-                                        <option value="1">Uang Tunai</option>
-                                        <option value="2">Beasiswa</option>
-                                        <option value="3">Sertifikat</option>
-                                        <option value="4">Laptop / Gadget</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            {{-- === BUTTON SIMPAN === --}}
-                            <div class="d-flex justify-content-end mt-4">
-                                <button type="submit" class="btn btn-secondary px-4 py-2">
-                                    <i class="bi bi-check-circle me-1"></i> Simpan Preferensi
-                                </button>
-                            </div>
-                        </form>
-                        {{-- === END FORM PERSONALISASI (STATIC PREVIEW) === --}}
-                        </div>           
+                        @endif
+                        @include('mahasiswa.profil.preferensi')
                     </div>
                 </div>
-
-                <div class="tab-pane fade" id="underline-profile" role="tabpanel" aria-labelledby="underline-profile-tab">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table mb-0" style="border-top: none; table-layout: fixed;">
-                                    <tbody>
-                                        <tr>
-                                            <td class="text-muted" style="width: 40%;">Nama</td>
-                                            <td class="text-black" style="width: 60%;">{{ $user->name ?? '-' }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-muted">NIM</td>
-                                            <td class="text-black">{{ $user->nim ?? '-' }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-muted">Prodi</td>
-                                            <td class="text-black">{{ $user->prodi ?? '-' }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-muted">Periode</td>
-                                            <td class="text-black">{{ $user->periode ?? '-' }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-muted">Email</td>
-                                            <td class="text-black">{{ $user->email ?? '-' }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-muted">Lokasi</td>
-                                            <td class="text-black">{{ $user->lokasi ?? '-' }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-muted">Angkatan</td>
-                                            <td class="text-black">{{ $user->angkatan ?? '-' }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-muted">Password</td>
-                                            <td class="text-black">{{ $user->password ?? '-' }}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
             </div>
 
         </div>
-    </div>
+        @if (session('success'))
+            <script>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil',
+                    text: '{{ session('success') }}',
+                    timer: 2000,
+                    showConfirmButton: false
+                });
+            </script>
+        @endif
 
-</div>
+        @if (session('error'))
+            <script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Gagal',
+                    text: '{{ session('error') }}',
+                    timer: 2000,
+                    showConfirmButton: false
+                });
+            </script>
+        @endif
+    @endsection
 
-@endsection
 
-
-<style>
-    .nav-tabs .nav-link {
-        color: #6c757d;
-        border: none;
-        border-bottom: 3px solid transparent;
-        transition: all 0.3s ease;
-    }
-
-    .nav-tabs .nav-link.active {
-        color: #6f42c1 !important;
-        font-weight: 600;
-        border-bottom: 3px solid #6f42c1 !important;
-    }
-
-    .nav-tabs .nav-link:hover {
-        color: #5a32a3;
-    }
-</style>
-
-@section('scripts')
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        if (typeof feather !== 'undefined') {
-            feather.replace();
+    <style>
+        .nav-tabs .nav-link {
+            color: #6c757d;
+            border: none;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
         }
-    });
-</script>
-@endsection
+
+        .nav-tabs .nav-link.active {
+            color: #6f42c1 !important;
+            font-weight: 600;
+            border-bottom: 3px solid #6f42c1 !important;
+        }
+
+        .nav-tabs .nav-link:hover {
+            color: #5a32a3;
+        }
+    </style>
+
+    @section('scripts')
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                if (typeof feather !== 'undefined') {
+                    feather.replace();
+                }
+            });
+        </script>
+    @endsection

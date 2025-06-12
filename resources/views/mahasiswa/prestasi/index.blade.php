@@ -76,27 +76,61 @@
 
                 {{-- Pencatatan Prestasi Tab --}}
                 <div class="tab-pane fade" id="underline-profile" role="tabpanel" aria-labelledby="underline-profile-tab">
-                    <form>
+                    <form id="form_prestasi" method="POST" action="{{ url('mahasiswa/prestasi/store') }}" enctype="multipart/form-data">
+                        @csrf
+
                         <div class="form-group mb-4">
-                            <label class="text-black" for="inputPrestasi">Nama Prestasi</label>
-                            <input type="text" class="form-control border border-secondary" id="inputPrestasi">
+                            <label class="text-black" for="inputJuara">Nama Prestasi</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="inputJuara" name="juara_kompetisi" readonly>
+                                <div class="input-group-append">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <!-- Icon caret-down -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                                            <path d="M7.247 11.14L2.451 5.658C1.885 5.012 2.345 4 3.204 4h9.592c.86 0 1.319 1.012.753 1.658l-4.796 5.482a1 1 0 01-1.506 0z"/>
+                                        </svg>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="javascript:void(0);" onclick="setJuara('Juara 1')">Juara 1</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" onclick="setJuara('Juara 2')">Juara 2</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" onclick="setJuara('Juara 3')">Juara 3</a>
+                                    </div>
+                                </div>
+                            </div>
+                            @error('juara_kompetisi') <small class="text-danger">{{ $message }}</small> @enderror
                         </div>
+
                         <div class="form-group mb-4">
                             <label class="text-black" for="inputAnggota">Nama Anggota</label>
-                            <input type="text" class="form-control border border-secondary" id="inputAnggota">
+                            <input type="text" class="form-control border border-secondary" id="inputAnggota" value="{{ Auth::guard('mahasiswa')->user()->nama }}" readonly>
                         </div>
+
                         <div class="form-group mb-4">
                             <label class="text-black" for="inputPosisi">Posisi</label>
-                            <input type="text" class="form-control border border-secondary" id="inputPosisi">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="inputPosisi" name="posisi" readonly>
+                                <div class="input-group-append">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                                            <path d="M7.247 11.14L2.451 5.658C1.885 5.012 2.345 4 3.204 4h9.592c.86 0 1.319 1.012.753 1.658l-4.796 5.482a1 1 0 01-1.506 0z"/>
+                                        </svg>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="javascript:void(0);" onclick="setPosisi('Ketua')">Ketua</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" onclick="setPosisi('Anggota')">Anggota</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+
                         <div class="form-group mb-4">
                             <label class="text-black" for="inputTingkat">Tingkat Kompetisi</label>
                             <div class="input-group">
-                                <input type="text" class="form-control border-secondary bg-white text-dark" id="inputTingkat" aria-label="Text input with segmented dropdown button" readonly>
+                                <input type="text" class="form-control" id="inputTingkat" name="tingkat_kompetisi" readonly>
                                 <div class="input-group-append">
-                                    <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
-                                            <path d="M7.247 11.14 2.451 5.658C1.885 5.012 2.345 4 3.204 4h9.592c.86 0 1.319 1.012.753 1.658l-4.796 5.482a1 1 0 0 1-1.506 0z" />
+                                            <path d="M7.247 11.14L2.451 5.658C1.885 5.012 2.345 4 3.204 4h9.592c.86 0 1.319 1.012.753 1.658l-4.796 5.482a1 1 0 01-1.506 0z"/>
                                         </svg>
                                     </button>
                                     <div class="dropdown-menu">
@@ -107,128 +141,91 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="form-group mb-4">
-                            <label class="text-black" for="inputJenis">Jenis Kompetisi</label>
+                            <label class="text-black" for="inputJenis">Jenis Prestasi</label>
                             <div class="input-group">
-                                <input type="text" class="form-control border-secondary bg-white text-dark" id="inputJenis" aria-label="Text input with segmented dropdown button" readonly>
+                                <input type="text" class="form-control" id="inputJenis" name="jenis_prestasi" readonly>
                                 <div class="input-group-append">
-                                    <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
-                                            <path d="M7.247 11.14 2.451 5.658C1.885 5.012 2.345 4 3.204 4h9.592c.86 0 1.319 1.012.753 1.658l-4.796 5.482a1 1 0 0 1-1.506 0z" />
+                                            <path d="M7.247 11.14L2.451 5.658C1.885 5.012 2.345 4 3.204 4h9.592c.86 0 1.319 1.012.753 1.658l-4.796 5.482a1 1 0 01-1.506 0z"/>
                                         </svg>
                                     </button>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="javascript:void(0);" onclick="setJenis('Kompetisi A')">Kompetisi A</a>
-                                        <a class="dropdown-item" href="javascript:void(0);" onclick="setJenis('Kompetisi B')">Kompetisi B</a>
-                                        <a class="dropdown-item" href="javascript:void(0);" onclick="setJenis('Kompetisi C')">Kompetisi C</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" onclick="setJenis('Sains')">Sains</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" onclick="setJenis('Olahraga')">Olahraga</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" onclick="setJenis('Lain-lain')">Lain-lain</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
                         <div class="form-group mb-4">
-                            <label class="text-black" for="inputJuara">Juara</label>
-                            <div class="input-group">
-                                <input type="text" class="form-control border-secondary bg-white text-dark" id="inputJuara" aria-label="Text input with segmented dropdown button" readonly>
-                                <div class="input-group-append">
-                                    <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
-                                            <path d="M7.247 11.14 2.451 5.658C1.885 5.012 2.345 4 3.204 4h9.592c.86 0 1.319 1.012.753 1.658l-4.796 5.482a1 1 0 0 1-1.506 0z" />
-                                        </svg>
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="javascript:void(0);" onclick="setJuara('Juara 1')">Juara 1</a>
-                                        <a class="dropdown-item" href="javascript:void(0);" onclick="setJuara('Juara 2')">Juara 2</a>
-                                        <a class="dropdown-item" href="javascript:void(0);" onclick="setJuara('Juara 3')">Juara 3</a>
-                                    </div>
-                                </div>
-                            </div>
+                            <label class="text-black" for="inputKOmpetisi">Nama Kompetisi</label>
+                            <input type="text" class="form-control" id="inputKompetisi" name="nama_kompetisi">
                         </div>
+
                         <div class="form-group mb-4">
-                            <label class="text-black" for="inputLokasi">Lokasi</label>
-                            <input type="text" class="form-control border border-secondary" id="inputLokasi">
+                            <label class="text-black" for="inputLokasi">Nama Penyelenggara</label>
+                            <input type="text" class="form-control" id="inputLokasi" name="lokasi_kompetisi">
                         </div>
+
                         <div class="form-group mb-4">
                             <label class="text-black" for="inputTanggalSuratTugas">Tanggal Surat Tugas</label>
-                            <input type="date" class="form-control border border-secondary" id="inputTanggalSuratTugas">
+                            <input type="date" class="form-control border border-secondary" id="inputTanggalSuratTugas" name="tanggal_surat_tugas">
                         </div>
+
                         <div class="form-group mb-4">
                             <label class="text-black" for="inputTanggalKompetisi">Tanggal Kompetisi</label>
-                            <input type="date" class="form-control border border-secondary" id="inputTanggalKompetisi">
-                        </div>
-                        <div class="form-group mb-4">
-                            <label class="text-black" for="inputDosenPembimbing">Dosen Pembimbing</label>
-                            <div class="input-group">
-                                <input type="text" class="form-control border-secondary bg-white text-dark" id="inputDosenPembimbing" aria-label="Text input with segmented dropdown button" readonly>
-                                <div class="input-group-append">
-                                    <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
-                                            <path d="M7.247 11.14 2.451 5.658C1.885 5.012 2.345 4 3.204 4h9.592c.86 0 1.319 1.012.753 1.658l-4.796 5.482a1 1 0 0 1-1.506 0z" />
-                                        </svg>
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="javascript:void(0);" onclick="setDosenPembimbing('Dosen 1')">Dosen 1</a>
-                                        <a class="dropdown-item" href="javascript:void(0);" onclick="setDosenPembimbing('Dosen 2')">Dosen 2</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group mb-4">
-                            <label class="text-black" for="inputNIDN">NIDN</label>
-                            <input type="text" class="form-control border border-secondary" id="inputNIDN">
-                        </div>
-                        <div class="form-group mb-4">
-                            <label class="text-black" for="inputPeriode">Periode</label>
-                            <div class="input-group">
-                                <input type="text" class="form-control border border-secondary text-black bg-white" id="inputPeriode" aria-label="Text input with segmented dropdown button" readonly>
-                                <div class="input-group-append">
-                                    <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
-                                            <path d="M7.247 11.14 2.451 5.658C1.885 5.012 2.345 4 3.204 4h9.592c.86 0 1.319 1.012.753 1.658l-4.796 5.482a1 1 0 0 1-1.506 0z" />
-                                        </svg>
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="javascript:void(0);" onclick="setPeriode('2023/2024 Ganjil')">2023/2024 Ganjil</a>
-                                        <a class="dropdown-item" href="javascript:void(0);" onclick="setPeriode('2024/2025 Genap')">2024/2025 Genap</a>
-                                        <a class="dropdown-item" href="javascript:void(0);" onclick="setPeriode('2025/2026 Ganjil')">2025/2026 Ganjil</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group mb-4">
-                            <label class="text-black" for="inputJumlahUniv">Jumlah Universitas</label>
-                            <input type="number" class="form-control border border-secondary" id="inputJumlahUniv">
-                        </div>
-                        <div class="form-group mb-4">
-                            <label class="text-black" for="inputNomorSertifikat">Nomor Sertifikat</label>
-                            <input type="text" class="form-control border border-secondary" id="inputNomorSertifikat">
-                        </div>
-                        <div class="form-group mb-4">
-                            <label class="text-black" for="inputTanggalPengajuan">Tanggal Pengajuan</label>
-                            <input type="date" class="form-control border border-secondary" id="inputTanggalPengajuan">
-                        </div>
-                        <div class="form-group mb-4">
-                            <label class="text-black" for="inputLinkWeb">Link Web</label>
-                            <input type="url" class="form-control border border-secondary" id="inputLinkWeb">
+                            <input type="date" class="form-control border border-secondary" id="inputTanggalKompetisi" name="tanggal_kompetisi">
                         </div>
 
-                        {{-- File Upload for Certificate --}}
-                        <div class="form-group mb-4">
-                            <label class="text-black" for="inputSertifikat">Bukti File Sertifikat</label>
-                            <div class="custom-file-container" data-upload-id="certificateUpload">
-                                <label class="custom-file-container__custom-file" >
-                                    <input type="file" class="custom-file-container__custom-file__custom-file-input" accept="image/*, application/pdf" aria-label="Choose File" id="inputSertifikat">
-                                    <span class="custom-file-container__custom-file__custom-file-control"></span>
-                                </label>
-                                <div class="custom-file-container__image-preview"></div>
-                            </div>
+                        <div class="form-group">
+                            <label for="id_dosen">Dosen Pembimbing</label>
+                            <select id="id_dosen" name="id_dosen" class="form-control" required>
+                                <option value="">- Pilih Dosen Pembimbing -</option>
+                                @foreach($dosen as $p)
+                                    <option value="{{ $p->id_dosen }}">{{ $p->nama_dosen }}</option>
+                                @endforeach
+                            </select>
+                            <small class="text-danger error-text" id="error-id_dosen"></small>
                         </div>
 
-                        <div class="d-flex justify-content-end mt-4">
-                            <button type="button" class="btn btn-danger mr-2">Batal</button>
-                            <input type="submit" name="time" class="btn btn-success" value="Kirim">
+                        <div class="form-group">
+                            <label for="id_periode">Periode</label>
+                            <select id="id_periode" name="id_periode" class="form-control" required>
+                                <option value="">- Pilih Periode -</option>
+                                @foreach($periode as $p)
+                                    <option value="{{ $p->id_periode }}">{{ $p->nama_periode }}</option>
+                                @endforeach
+                            </select>
+                            <small class="text-danger error-text" id="error-id_periode"></small>
                         </div>
+
+
+                        <div class="form-group mb-4">
+                            <label for="jumlah_univ">Jumlah Universitas</label>
+                            <input type="number" class="form-control" id="jumlah_univ" name="jumlah_univ" min="1" required>
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="nomor_sertifikat">Nomor Sertifikat</label>
+                            <input type="text" class="form-control" id="nomor_sertifikat" name="nomor_sertifikat" required>
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="link_perlombaan">Link Pendaftaran</label>
+                            <input type="url" class="form-control" id="link_perlombaan" name="link_perlombaan" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="image">Upload Foto Sertifikat</label>
+                            <input type="file" class="form-control" id="image" name="foto_sertifikat">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary mt-3">Simpan Prestasi</button>
                     </form>
                 </div>
+
 
                 {{-- Riwayat Tab --}}
                 <div class="tab-pane fade" id="underline-contact" role="tabpanel" aria-labelledby="underline-contact-tab">
@@ -252,7 +249,7 @@
                                                 <th class="text-center text-secondary">Tingkat Kompetisi</th>
                                                 <th class="text-center text-secondary">Tahun</th>
                                                 <th class="text-center text-secondary">Status</th>
-                                                <th class="text-center text-secondary text-center">Aksi</th>
+                                                <th class="text-center text-secondary">Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -274,10 +271,15 @@
                                                         @endphp
                                                         <span class="badge {{ $badgeClass }}">{{ $riwayat->status }}</span>
                                                     </td>
-                                                    <td class="text-center">
+                                                    <td>
                                                         <a href="{{ url('mahasiswa/detail-prestasi/' . $riwayat->id_prestasi) }}" class="btn btn-primary btn-sm">
                                                             Detail
                                                         </a>
+                                                        @if($riwayat->status == 'Ditolak')
+                                                            <a href="{{ url('mahasiswa/edit-prestasi/' . $riwayat->id_prestasi) }}" class="btn btn-warning btn-sm">
+                                                                Edit
+                                                            </a>
+                                                        @endif
                                                     </td>
                                                 </tr>
                                             @empty
@@ -319,52 +321,57 @@
     }
 </style>
 
+<!-- SweetAlert Library -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- Inisialisasi DataTables dan fungsi lainnya -->
 <script>
-    // Initialize FileUploadWithPreview for the certificate
-    // Make sure you have the 'file-upload-with-preview.min.js' script loaded in your layout.template
-    var certificateUpload = new FileUploadWithPreview('certificateUpload');
 
-    function setTingkat(value) {
-        document.getElementById("inputTingkat").value = value;
-    }
+  function setJuara(value) {
+    document.getElementById('inputJuara').value = value;
+  }
 
-    function setJenis(value) {
-        document.getElementById("inputJenis").value = value;
-    }
+  function setPosisi(value) {
+    document.getElementById('inputPosisi').value = value;
+  }
 
-    function setJuara(value) {
-        document.getElementById("inputJuara").value = value;
-    }
+  function setTingkat(value) {
+    document.getElementById('inputTingkat').value = value;
+  }
 
-    function setDosenPembimbing(value) {
-        document.getElementById("inputDosenPembimbing").value = value;
-    }
-
-    function setPeriode(value) {
-        document.getElementById("inputPeriode").value = value;
-    }
-
-    $('#tabel_prestasi').DataTable({
-    paging: true,
-    searching: true,
-    ordering: true,
-    responsive: true,
-    columnDefs: [
-        { orderable: false, targets: 5 } // kolom aksi tidak bisa diurutkan
-    ]
-});
-    $('#tabel_riwayat').DataTable({
-    paging: true,
-    searching: true,
-    ordering: true,
-    responsive: true,
-    columnDefs: [
-        { orderable: false, targets: 6 } // kolom aksi tidak bisa diurutkan
-    ]
-});
-
-
-
+  function setJenis(value) {
+    document.getElementById('inputJenis').value = value;
+  }
 </script>
+
+
+<!-- SweetAlert ketika ada session success -->
+@if(session('success'))
+<script>
+    Swal.fire({
+        icon: 'success',
+        title: 'Berhasil!',
+        text: '{{ session('success') }}',
+        showConfirmButton: false,
+        timer: 2000
+    });
+</script>
+@endif
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const tab = urlParams.get('tab');
+
+        if (tab === 'riwayat') {
+            const targetTab = document.querySelector('a[href="#underline-contact"]');
+            if (targetTab) {
+                targetTab.click(); // Aktifkan tab Riwayat
+            }
+        }
+    });
+</script>
+
+
 
 @endsection

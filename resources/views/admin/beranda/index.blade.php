@@ -27,18 +27,21 @@
                 @foreach ($peringkatMahasiswa as $index => $mhs)
                     <div class="col-md-4 mb-3">
                         <div class="card shadow-sm h-100">
-                            <div class="card-body d-flex align-items-start gap-3">
-                                <div class="usr-img-frame border border-dark rounded-circle flex-shrink-0" style="width: 60px; height: 60px;">
-                                    <img alt="avatar" src="{{ asset('assets/img/90x90.jpg') }}" class="img-fluid rounded-circle w-100 h-100 object-fit-cover">
+                            <div class="card shadow-sm h-100">
+                                <div class="card-body d-flex align-items-start gap-4">
+                                    <div class="usr-img-frame border border-dark rounded-circle flex-shrink-0" style="width: 60px; height: 60px; overflow: hidden;">
+                                        <img src="{{ url('uploads/profil/' . $mhs['foto']) }}" class="rounded-circle border w-100 h-100" alt="avatar">
+                                    </div>
+                                    <div class="flex-grow-1 ps-1" style="padding-left: 10px">
+                                        <h6 class="mb-1 fw-bold text-uppercase">{{ $mhs['nama'] }}</h6>
+                                        <small class="text-muted">{{ $mhs['program_studi'] }}</small><br>
+                                        <span class="badge bg-success mt-2 d-inline-block">Prestasi: {{ $mhs['jumlah_prestasi'] }}</span>
+                                        <span class="badge bg-primary mt-1 d-inline-block">Skor: {{ $mhs['total_skor'] }}</span>
+                                    </div>
+                                    <div class="ms-auto fs-5 text-secondary fw-bold">#{{ $index + 1 }}</div>
                                 </div>
-                                <div class="flex-grow-1">
-                                    <h6 class="mb-1">{{ $mhs['nama'] }}</h6>
-                                    <small class="text-muted">{{ $mhs['program_studi'] }}</small><br>
-                                    <span class="badge bg-success mt-2 d-inline-block">Prestasi: {{ $mhs['jumlah_prestasi'] }}</span><br>
-                                    <span class="badge bg-primary mt-1 d-inline-block">Skor: {{ $mhs['total_skor'] }}</span>
-                                </div>
-                                <div class="ms-auto fs-5 text-secondary fw-bold">#{{ $index + 1 }}</div>
                             </div>
+
                         </div>
                     </div>
                 @endforeach

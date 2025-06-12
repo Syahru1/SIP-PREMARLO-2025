@@ -682,6 +682,30 @@ class BidangLombaModelSeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
+            [
+                'id_lomba' => 28,
+                'id_bidang' => 5,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'id_lomba' => 28,
+                'id_bidang' => 4,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'id_lomba' => 28,
+                'id_bidang' => 8,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'id_lomba' => 28,
+                'id_bidang' => 3,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
         ]);
     }
 }
