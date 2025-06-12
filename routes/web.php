@@ -139,7 +139,7 @@ Route::post('/logout', function () {
             Route::delete('/verifikasi-prestasi/{id}', [PrestasiController::class, 'verifikasiPrestasiDestroy']);
 
         });
-    });
+    // });
 
     Route::middleware(['auth:mahasiswa'])->group(function () {
         Route::group(['prefix' => 'mahasiswa'],function () {
