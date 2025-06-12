@@ -1,50 +1,6 @@
 @extends('layout.template')
 
 @section('content')
-@php
-    $dataPrestasi = collect([
-        (object)[
-            'id' => 1,
-            'nim' => '2341******',
-            'nama' => 'Syahrul',
-            'angkatan' => '2023',
-            'prodi' => 'D-IV TEKNIK INFORMATIKA',
-            'status' => 'Pending'
-        ],
-        (object)[
-            'id' => 2,
-            'nim' => '2341******',
-            'nama' => 'Dewita',
-            'angkatan' => '2024',
-            'prodi' => 'D-IV SISTEM INFORMASI BISNIS',
-            'status' => 'Pending'
-        ],
-        (object)[
-            'id' => 3,
-            'nim' => '2341******',
-            'nama' => 'Ghaffar',
-            'angkatan' => '2023',
-            'prodi' => 'D-IV TEKNIK INFORMATIKA',
-            'status' => 'Pending'
-        ],
-        (object)[
-            'id' => 4,
-            'nim' => '2341******',
-            'nama' => 'Afifah',
-            'angkatan' => '2024',
-            'prodi' => 'D-IV TEKNIK INFORMATIKA',
-            'status' => 'Pending'
-        ],
-        (object)[
-            'id' => 5,
-            'nim' => '2341******',
-            'nama' => 'Agil',
-            'angkatan' => '2023',
-            'prodi' => 'D-IV TEKNIK INFORMATIKA',
-            'status' => 'Pending'
-        ],
-    ]);
-@endphp
 
 <div class="layout-px-spacing">
     <div class="page-header">
@@ -64,35 +20,18 @@
 
                 <div class="widget-content widget-content-area">
                     <div class="table-responsive mb-4">
-                        <table class="table mb-0">
+                        <table class="table mb-0" id="table_prestasi">
                             <thead>
                                 <tr>
-                                    <th>#</th>
+                                    <th>No</th>
                                     <th>NIM</th>
                                     <th>Nama Mahasiswa</th>
-                                    <th>Angkatan</th>
-                                    <th>Program Studi</th>
+                                    <th>Juara Kompetisi</th>
+                                    <th>Nama Kompetisi</th>
                                     <th>Status</th>
-                                    <th class="text-center">Aksi</th>
+                                    <th class="text-center"></th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                @foreach ($dataPrestasi as $index => $mhs)
-                                <tr>
-                                    <td>{{ $index + 1 }}</td>
-                                    <td>{{ $mhs->nim }}</td>
-                                    <td>{{ $mhs->nama }}</td>
-                                    <td>{{ $mhs->angkatan }}</td>
-                                    <td>{{ $mhs->prodi }}</td>
-                                    <td>
-                                        <span class="badge badge-primary">{{ $mhs->status }}</span>
-                                    </td>
-                                    <td class="text-center">
-                                        <a href="{{ url('/admin/verifikasi-prestasi/detail') }}" class="btn btn-outline-primary btn-sm" data-id="{{ $mhs->id }}">Lihat Detail Prestasi</a>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -101,3 +40,105 @@
     </div>
 </div>
 @endsection
+
+@push('js')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function modalAction(url = '') {
+        $('#myModal').load(url, function() {
+            $('#myModal').modal('show');
+        });
+    }
+
+    var dataPrestasi;
+    $(document).ready(function() {
+        dataPrestasi = $('#table_prestasi').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: "{{ url('admin/verifikasi-prestasi/list') }}",
+                type: "POST",
+                data: function(d) {
+                    d._token = "{{ csrf_token() }}";
+                }
+            },
+            columns: [
+                {
+                    data: 'DT_RowIndex',
+                    name: 'DT_RowIndex',
+                    className: "text-center",
+                    orderable: false,
+                    searchable: false
+                },
+                {
+                    data: "mahasiswa.nim",
+                    name: "mahasiswa.nim",
+                    className: "text-center"
+                },
+                {
+                    data: "mahasiswa.nama",
+                    name: "mahasiswa.nama",
+                    className: "text-center"
+                },
+                {
+                    data: "juara_kompetisi",
+                    name: "juara_kompetisi",
+                    className: "text-center"
+                },
+                {
+                    data: "nama_kompetisi",
+                    name: "nama_kompetisi",
+                    className: "text-center"
+                },
+                {
+                    data: "status",
+                    name: "status",
+                    className: "text-center",
+                    render: function(data) {
+                        let badgeClass = 'badge-secondary';
+                        if (data === 'Sudah Diverifikasi') badgeClass = 'badge-success';
+                        else if (data === 'Ditolak') badgeClass = 'badge-danger';
+                        else if (data === 'Belum Diverifikasi') badgeClass = 'badge-warning';
+
+                        return `<span class="badge ${badgeClass}">${data}</span>`;
+                    }
+                },
+                {
+                    data: "aksi",
+                    name: "aksi",
+                    className: "text-center",
+                    orderable: false,
+                    searchable: false
+                }
+            ]
+        });
+
+        $('#myModal').on('hidden.bs.modal', function () {
+            dataPrestasi.ajax.reload(null, false);
+            $(this).find('form')[0]?.reset();
+            $('.error-text').text('');
+        });
+
+        @if(session('success'))
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: '{{ session('success') }}',
+                showConfirmButton: false,
+                timer: 2000
+            });
+        @endif
+
+        @if(session('error'))
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal!',
+                text: '{{ session('error') }}',
+                showConfirmButton: true
+            });
+        @endif
+    });
+</script>
+@endpush
+
+

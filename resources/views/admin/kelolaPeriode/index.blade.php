@@ -86,7 +86,7 @@
         });
     });
 
-    // Submit Tambah & Edit AJAX 
+    // Submit Tambah & Edit AJAX
     $(document).on('submit', '.ajax-form', function(e) {
     e.preventDefault();
     let form = this;

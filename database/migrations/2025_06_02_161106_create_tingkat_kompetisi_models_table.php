@@ -13,10 +13,13 @@ return new class extends Migration
     {
         Schema::create('c_tingkat_kompetisi', function (Blueprint $table) {
             $table->id('id_tingkat_kompetisi');
+            $table->unsignedBigInteger('id_criteria')->index();
             $table->string('kode_tingkat_kompetisi')->unique();
             $table->string('nama_tingkat_kompetisi');
             $table->integer('skor');
             $table->timestamps();
+            
+            $table->foreign('id_criteria')->references('id_criteria')->on('criteria')->onDelete('cascade');
         });
     }
 

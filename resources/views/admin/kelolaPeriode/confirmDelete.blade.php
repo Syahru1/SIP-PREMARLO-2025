@@ -14,7 +14,7 @@
 
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-            <form action="{{ url('admin/kelola-periode/' . $periode->id_periode) }}" method="POST" class="ajax-delete-form">
+            <form action="{{ url('admin/kelola-periode/delete/' . $periode->id_periode) }}" method="POST" class="ajax-delete-form">
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="btn btn-danger">Hapus</button>

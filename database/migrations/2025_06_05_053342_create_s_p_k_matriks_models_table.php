@@ -14,11 +14,12 @@ return new class extends Migration
         Schema::create('spk_matriks', function (Blueprint $table) {
             $table->id('id_matriks');
             $table->unsignedBigInteger('id_mahasiswa')->index();
-            $table->unsignedBigInteger('id_bidang')->index();
-            $table->unsignedBigInteger('id_penyelenggara')->index();
-            $table->unsignedBigInteger('id_biaya_pendaftaran')->index();
-            $table->unsignedBigInteger('id_tingkat_kompetisi')->index();
-            $table->unsignedBigInteger('id_hadiah')->index();
+            $table->unsignedBigInteger('id_lomba')->index();
+            $table->decimal('bidang', 5, 2)->default(0.00)->nullable();
+            $table->decimal('penyelenggara', 5, 2)->default(0.00)->nullable();
+            $table->decimal('biaya_pendaftaran', 5, 2)->default(0.00)->nullable();
+            $table->decimal('tingkat_kompetisi', 5, 2)->default(0.00)->nullable();
+            $table->decimal('hadiah', 5, 2)->default(0.00)->nullable();
             $table->timestamps();
 
             //foreign keys
@@ -26,25 +27,9 @@ return new class extends Migration
                 ->references('id_mahasiswa')
                 ->on('mahasiswa')
                 ->onDelete('cascade');
-            $table->foreign('id_bidang')
-                ->references('id_bidang')
-                ->on('c_bidang')
-                ->onDelete('cascade');
-            $table->foreign('id_penyelenggara')
-                ->references('id_penyelenggara')
-                ->on('c_penyelenggara')
-                ->onDelete('cascade');
-            $table->foreign('id_biaya_pendaftaran')
-                ->references('id_biaya_pendaftaran')
-                ->on('c_biaya_pendaftaran')
-                ->onDelete('cascade');
-            $table->foreign('id_tingkat_kompetisi')
-                ->references('id_tingkat_kompetisi')
-                ->on('c_tingkat_kompetisi')
-                ->onDelete('cascade');
-            $table->foreign('id_hadiah')
-                ->references('id_hadiah')
-                ->on('c_hadiah')
+            $table->foreign('id_lomba')
+                ->references('id_lomba')
+                ->on('c_lomba')
                 ->onDelete('cascade');
         });
     }

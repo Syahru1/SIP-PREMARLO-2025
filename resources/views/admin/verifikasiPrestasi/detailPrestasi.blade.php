@@ -1,73 +1,160 @@
 @extends('layout.template')
 
 @section('content')
-@php
-    $detailPrestasi = (object)[
-        'nama_lomba' => 'Lomba Debat Mahasiswa',
-        'kategori' => 'Akademik',
-        'tingkat' => 'Nasional',
-        'penyelenggara' => 'Puspresnas',
-        'tahun' => '2023',
-        'file_url' => asset('assets/img/image.png'),
-        'catatan' => 'File Tidak Bisa Dibuka'
-    ];
-@endphp
-
 <div class="layout-px-spacing">
     <div class="page-header">
         <div class="page-title">
-            <h3>Detail Prestasi</h3>
+            <h3>Detail Prestasi Mahasiswa</h3>
         </div>
     </div>
 
-    <div class="card component-card_4">
-        <div class="card-body">
-            <div class="tab-content" id="lineTabContent-3">
-                <div class="tab-pane fade show active" id="detail-prestasi" role="tabpanel" aria-labelledby="detail-tab">
-                    <form>
-                        <div class="form-group mb-4">
-                            <label class="text-black" for="namaLomba">Nama Lomba</label>
-                            <input type="text" class="form-control border border-secondary text-dark bg-white" id="namaLomba" value="{{ $detailPrestasi->nama_lomba }}" readonly>
-                        </div>
+    <div class="row layout-spacing">
+        @if (session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
+        @if (session('error'))
+            <div class="alert alert-danger">{{ session('error') }}</div>
+        @endif
 
+        <div class="col-lg-12">
+            <form method="POST" action="{{ url('admin/verifikasi-prestasi/' . $prestasi->id_prestasi) . '/verifikasi' }}" id="form-terima">
+                <div class="statbox widget box box-shadow">
+                    <div class="widget-content widget-content-area">
                         <div class="form-group mb-4">
-                            <label class="text-black" for="kategori">Kategori</label>
-                            <input type="text" class="form-control border border-secondary text-dark bg-white" id="kategori" value="{{ $detailPrestasi->kategori }}" readonly>
-                        </div>
+                                <label class="text-black" for="nama">Nama Mahasiswa</label>
+                                <input type="text" class="form-control border border-secondary text-dark bg-white" id="nama" value="{{ $prestasi->mahasiswa->nama }}" readonly>
+                            </div>
 
-                        <div class="form-group mb-4">
-                            <label class="text-black" for="tingkat">Tingkat</label>
-                            <input type="text" class="form-control border border-secondary text-dark bg-white" id="tingkat" value="{{ $detailPrestasi->tingkat }}" readonly>
-                        </div>
+                            <div class="form-group mb-4">
+                                <label class="text-black" for="nim">NIM</label>
+                                <input type="text" class="form-control border border-secondary text-dark bg-white" id="nim" value="{{ $prestasi->mahasiswa->nim }}" readonly>
+                            </div>
 
-                        <div class="form-group mb-4">
-                            <label class="text-black" for="penyelenggara">Penyelenggara</label>
-                            <input type="text" class="form-control border border-secondary text-dark bg-white" id="penyelenggara" value="{{ $detailPrestasi->penyelenggara }}" readonly>
-                        </div>
+                            <div class="form-group mb-4">
+                                <label class="text-black" for="prodi">Program Studi</label>
+                                <input type="text" class="form-control border border-secondary text-dark bg-white" id="prodi" value="{{ $prestasi->prodi->nama_prodi }}" readonly>
+                            </div>
 
-                        <div class="form-group mb-4">
-                            <label class="text-black" for="tahun">Tahun</label>
-                            <input type="text" class="form-control border border-secondary text-dark bg-white" id="tahun" value="{{ $detailPrestasi->tahun }}" readonly>
-                        </div>
+                            <div class="form-group mb-4">
+                                <label class="text-black" for="posisi">Posisi</label>
+                                <input type="text" class="form-control border border-secondary text-dark bg-white" id="posisi" value="{{ $prestasi->posisi }}" readonly>
+                            </div>
 
-                        <div class="form-group mb-4">
-                            <label class="text-black" for="buktiLomba">Bukti Prestasi (PDF/PNG/JPG)</label><br>
-                            <a href="{{ $detailPrestasi->file_url }}" class="btn btn-primary" id="btnDownload" download>Download File</a>
-                        </div>
+                            <div class="form-group mb-4">
+                                <label class="text-black" for="nama_kompetisi">Nama Kompetisi</label>
+                                <input type="text" class="form-control border border-secondary text-dark bg-white" id="nama_kompetisi" value="{{ $prestasi->nama_kompetisi }}" readonly>
+                            </div>
 
-                        <div class="form-group mb-4">
-                            <label class="text-black" for="catatan">Catatan</label>
-                            <input type="text" class="form-control border border-secondary text-dark bg-white" id="catatan" value="{{ $detailPrestasi->catatan }}">
-                        </div>
+                            <div class="form-group mb-4">
+                                <label class="text-black" for="juara">Juara</label>
+                                <input type="text" class="form-control border border-secondary text-dark bg-white" id="juara" value="{{ $prestasi->juara_kompetisi }}" readonly>
+                            </div>
 
-                        <div class="d-flex justify-content-end gap-3 mt-4">
-                            <button type="button" class="btn btn-danger" onclick="window.location.href='{{ url('/admin/verifikasi-prestasi') }}'">Tolak</button>
-                            <button type="button" class="btn btn-success" onclick="window.location.href='{{ url('/admin/verifikasi-prestasi') }}'">Terima</button>
-                        </div>
-                    </form>
+                            <div class="form-group mb-4">
+                                <label class="text-black" for="tingkat_kompetisi">Tingkat Kompetisi</label>
+                                <input type="text" class="form-control border border-secondary text-dark bg-white" id="tingkat_kompetisi" value="{{ $prestasi->tingkat_kompetisi }}" readonly>
+                            </div>
+
+                            <div class="form-group mb-4">
+                                <label class="text-black" for="jenis_prestasi">Jenis Prestasi</label>
+                                <input type="text" class="form-control border border-secondary text-dark bg-white" id="jenis_prestasi" value="{{ $prestasi->jenis_prestasi }}" readonly>
+                            </div>
+
+                            <div class="form-group mb-4">
+                                <label class="text-black" for="lokasi_kompetisi">Lokasi Kompetisi</label>
+                                <input type="text" class="form-control border border-secondary text-dark bg-white" id="lokasi_kompetisi" value="{{ $prestasi->lokasi_kompetisi }}" readonly>
+                            </div>
+
+                            <div class="form-group mb-4">
+                                <label class="text-black" for="tanggal_surat_tugas">Tanggal Surat Tugas</label>
+                                <input type="text" class="form-control border border-secondary text-dark bg-white" id="tanggal_surat_tugas" value="{{ $prestasi->tanggal_surat_tugas }}" readonly>
+                            </div>
+
+                            <div class="form-group mb-4">
+                                <label class="text-black" for="tanggal_kompetisi">Tanggal Kompetisi</label>
+                                <input type="text" class="form-control border border-secondary text-dark bg-white" id="tanggal_kompetisi" value="{{ $prestasi->tanggal_kompetisi }}" readonly>
+                            </div>
+
+                            <div class="form-group mb-4">
+                                <label class="text-black" for="dosen">Dosen Pembimbing</label>
+                                <input type="text" class="form-control border border-secondary text-dark bg-white" id="dosen" value="{{ $prestasi->dosen->nama_dosen }}" readonly>
+                            </div>
+
+                            <div class="form-group mb-4">
+                                <label class="text-black" for="tahun_periode">Tahun Periode</label>
+                                <input type="text" class="form-control border border-secondary text-dark bg-white" id="tahun_periode" value="{{ $prestasi->periode->nama_periode }}" readonly>
+                            </div>
+
+                            <div class="form-group mb-4">
+                                <label class="text-black" for="jumlah_univ">Jumlah Universitas</label>
+                                <input type="text" class="form-control border border-secondary text-dark bg-white" id="jumlah_univ" value="{{ $prestasi->jumlah_univ }}" readonly>
+                            </div>
+
+                            <div class="form-group mb-4">
+                                <label class="text-black" for="nomor_sertifikat">Nomor Sertifikat</label>
+                                <input type="text" class="form-control border border-secondary text-dark bg-white" id="nomor_sertifikat" value="{{ $prestasi->nomor_sertifikat }}" readonly>
+                            </div>
+
+                            <div class="form-group mb-4">
+                                <label class="text-black" for="foto_sertifikat">Foto Sertifikat</label><br>
+                                <a href="{{ $prestasi->foto_sertifikat }}" target="_blank">
+                                    <img src="{{ $prestasi->foto_sertifikat }}" alt="Foto Sertifikat" style="max-width: 100%; height: auto; border: 1px solid #ccc; padding: 5px;">
+                                </a>
+                            </div>
+
+                            <div class="form-group mb-4">
+                                <label class="text-black" for="link_perlombaan">Link Pendaftaran</label><br>
+                                <a href="{{ $prestasi->link_perlombaan }}" target="_blank" class="form-control border border-secondary text-dark bg-white d-block" style="text-decoration:none;">
+                                    {{ $prestasi->link_perlombaan }}
+                                </a>
+                            </div>
+
+                            <div class="verifikasi-section mt-3">
+                                <form method="POST" action="{{ url('admin/verifikasi-prestasi/' . $prestasi->id_prestasi . '/verifikasi') }}">
+                                    @csrf
+                                    <div class="form-group">
+                                        <label>Catatan (Opsional)</label>
+                                        <textarea name="catatan" class="form-control">{{ old('catatan', $prestasi->catatan) }}</textarea>
+                                    </div>
+
+                                    <div class="d-flex gap-2 mt-2">
+                                        <button type="submit" name="status" value="Sudah Diverifikasi" class="btn btn-success">Terima</button>
+                                        <button type="submit" name="status" value="Ditolak" class="btn btn-danger">Tolak</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>
+
+<!-- Load SweetAlert library -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+@if(session('success'))
+<script>
+    Swal.fire({
+        icon: 'success',
+        title: 'Berhasil',
+        text: '{{ session("success") }}',
+        timer: 2000,
+        showConfirmButton: false
+    });
+</script>
+@endif
+
+@if(session('error'))
+<script>
+    Swal.fire({
+        icon: 'error',
+        title: 'Gagal',
+        text: '{{ session("error") }}',
+        timer: 2000,
+        showConfirmButton: false
+    });
+</script>
+@endif
 @endsection

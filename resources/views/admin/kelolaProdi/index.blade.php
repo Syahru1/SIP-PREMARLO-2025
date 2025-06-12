@@ -39,6 +39,7 @@
 @endsection
 
 @push('js')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     function modalAction(url = '') {
         $('#myModal').load(url, function() {
@@ -46,10 +47,10 @@
         });
     }
 
-    var dataPeriode;
+    var dataProdi;
     $(document).ready(function() {
-        dataPeriode = $('#table_prodi').DataTable({
-            processing: true,
+        dataProdi = $('#table_prodi').DataTable({
+            processing: false,
             serverSide: true,
             ajax: {
                 url: "{{ url('admin/kelola-prodi/list') }}",
@@ -68,9 +69,9 @@
                 },
                 {
                     data: "kode_prodi",
-                    name: "nama_prodi",
+                    name: "kode_prodi",
                     className: "text-center"
-                    
+
                 },
                 {
                     data: "nama_prodi",
@@ -85,6 +86,89 @@
                     searchable: false
                 }
             ]
+        });
+    });
+
+    $('#myModal').on('hidden.bs.modal', function () {
+            dataProdi.ajax.reload(null, false);
+            $(this).find('form')[0]?.reset();
+            $('.error-text').text('');
+    });
+
+    // Simpan Tambah / Edit
+    $(document).on('submit', '.ajax-form', function(e) {
+        e.preventDefault();
+        let form = this;
+        let formData = new FormData(form);
+
+        $('.error-text').text('');
+
+        $.ajax({
+            url: form.action,
+            method: form.method,
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(res) {
+                if (res.status) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Berhasil',
+                        text: res.message,
+                        showConfirmButton: false,
+                        timer: 1500,
+                        didClose: () => {
+                            $('#myModal').modal('hide');
+                        }
+                    });
+                }
+            },
+            error: function(xhr) {
+                if (xhr.status === 422) {
+                    let errors = xhr.responseJSON.errors;
+                    $.each(errors, function(key, val) {
+                        $('#error-' + key).text(val[0]);
+                    });
+                } else {
+                    Swal.fire('Error', 'Gagal menyimpan data', 'error');
+                }
+            }
+        });
+    });
+
+    // Hapus
+    $(document).on('submit', '.ajax-delete-form', function(e) {
+        e.preventDefault();
+        let form = this;
+
+        Swal.fire({
+            title: 'Yakin ingin menghapus?',
+            text: "Data yang dihapus tidak bisa dikembalikan!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Ya, hapus!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: form.action,
+                    method: 'POST',
+                    data: $(form).serialize(),
+                    success: function(res) {
+                        if (res.status) {
+                            Swal.fire('Berhasil', res.message, 'success');
+                            $('#myModal').modal('hide');
+                            dataProdi.ajax.reload(null, false);
+                        } else {
+                            Swal.fire('Gagal', res.message, 'error');
+                        }
+                    },
+                    error: function() {
+                        Swal.fire('Error', 'Gagal menghapus data', 'error');
+                    }
+                });
+            }
         });
     });
 </script>

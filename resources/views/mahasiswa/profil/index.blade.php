@@ -87,6 +87,9 @@
                     <a class="nav-link active" id="underline-home-tab" data-toggle="tab" href="#underline-home" role="tab" aria-controls="underline-home" aria-selected="true">Kompetensi</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" id="underline-preference-tab" data-toggle="tab" href="#underline-preference" role="tab" aria-controls="underline-preference" aria-selected="false">Preferensi</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" id="underline-profile-tab" data-toggle="tab" href="#underline-profile" role="tab" aria-controls="underline-profile" aria-selected="false">Informasi akun</a>
                 </li>
             </ul>
@@ -181,6 +184,109 @@
                         </div>
                     </div>
 
+                </div>
+
+                
+                <div class="tab-pane fade" id="underline-preference" role="tabpanel" aria-labelledby="underline-preference-tab">
+                    <div class="card">
+                        <div class="card-body">
+                        {{-- === FORM PERSONALISASI PREFERENSI (STATIC PREVIEW) === --}}
+                        <form id="formPersonal" method="POST">
+                            @csrf
+
+                            {{-- === BIDANG YANG DIMINATI === --}}
+                            <div class="mb-4">
+                                <label class="form-label fw-semibold text-dark">Bidang yang Kamu Minati</label>
+                                <div class="row">
+                                    @for ($i = 1; $i <= 4; $i++)
+                                    <div class="col-md-6 mb-2">
+                                        <div class="form-check rounded border px-3 py-2 shadow-sm bg-light">
+                                            <input class="form-check-input me-2" type="checkbox" name="bidang[]" value="{{ $i }}" id="bidang{{ $i }}">
+                                            <label class="form-check-label text-dark" for="bidang{{ $i }}">
+                                                Bidang Contoh {{ $i }}
+                                            </label>
+                                        </div>
+                                    </div>
+                                    @endfor
+                                </div>
+                            </div>
+
+                            {{-- === BIAYA PENDAFTARAN IDEAL === --}}
+                            <div class="mb-4">
+                                <label class="form-label fw-semibold text-dark">Biaya Pendaftaran Ideal</label>
+                                <div class="input-group rounded shadow-sm">
+                                    <span class="input-group-text bg-white border-end-0">
+                                        <i class="bi bi-cash-stack text-muted"></i>
+                                    </span>
+                                    <select name="biaya_pendaftaran" class="form-select border-start-0">
+                                        <option value="">-- Pilih Rentang Biaya --</option>
+                                        <option value="1">Gratis</option>
+                                        <option value="2">Rp 1.000 - Rp 50.000</option>
+                                        <option value="3">Rp 50.001 - Rp 200.000</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            {{-- === PENYELENGGARA FAVORIT === --}}
+                            <div class="mb-4">
+                                <label class="form-label fw-semibold text-dark">Penyelenggara Favorit</label>
+                                <div class="input-group rounded shadow-sm">
+                                    <span class="input-group-text bg-white border-end-0">
+                                        <i class="bi bi-building text-muted"></i>
+                                    </span>
+                                    <select name="penyelenggara" class="form-select border-start-0">
+                                        <option value="">-- Pilih Penyelenggara --</option>
+                                        <option value="1">Pusat Prestasi Nasional</option>
+                                        <option value="2">Kemendikbud Ristek</option>
+                                        <option value="3">Lembaga Swasta</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            {{-- === TINGKAT KOMPETISI === --}}
+                            <div class="mb-4">
+                                <label class="form-label fw-semibold text-dark">Tingkat Kompetisi</label>
+                                <div class="input-group rounded shadow-sm">
+                                    <span class="input-group-text bg-white border-end-0">
+                                        <i class="bi bi-bar-chart text-muted"></i>
+                                    </span>
+                                    <select name="tingkat" class="form-select border-start-0">
+                                        <option value="">-- Pilih Tingkat --</option>
+                                        <option value="1">Kampus</option>
+                                        <option value="2">Regional</option>
+                                        <option value="3">Nasional</option>
+                                        <option value="4">Internasional</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            {{-- === HADIAH DIUTAMAKAN === --}}
+                            <div class="mb-4">
+                                <label class="form-label fw-semibold text-dark">Hadiah yang Diutamakan</label>
+                                <div class="input-group rounded shadow-sm">
+                                    <span class="input-group-text bg-white border-end-0">
+                                        <i class="bi bi-gift text-muted"></i>
+                                    </span>
+                                    <select name="hadiah" class="form-select border-start-0">
+                                        <option value="">-- Pilih Hadiah --</option>
+                                        <option value="1">Uang Tunai</option>
+                                        <option value="2">Beasiswa</option>
+                                        <option value="3">Sertifikat</option>
+                                        <option value="4">Laptop / Gadget</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            {{-- === BUTTON SIMPAN === --}}
+                            <div class="d-flex justify-content-end mt-4">
+                                <button type="submit" class="btn btn-secondary px-4 py-2">
+                                    <i class="bi bi-check-circle me-1"></i> Simpan Preferensi
+                                </button>
+                            </div>
+                        </form>
+                        {{-- === END FORM PERSONALISASI (STATIC PREVIEW) === --}}
+                        </div>           
+                    </div>
                 </div>
 
                 <div class="tab-pane fade" id="underline-profile" role="tabpanel" aria-labelledby="underline-profile-tab">

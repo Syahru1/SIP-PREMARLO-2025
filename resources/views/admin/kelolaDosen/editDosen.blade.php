@@ -42,6 +42,12 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="nidn">NIDN</label>
+                    <input type="text" name="nidn" class="form-control" value="{{ $dosen->nidn }}" required>
+                    <span class="text-danger error-text" id="error-nidn"></span>
+                </div>
+
+                <div class="form-group">
                     <label for="email">Email</label>
                     <input type="email" name="email" class="form-control" value="{{ $dosen->email }}" required>
                     <span class="text-danger error-text" id="error-email"></span>

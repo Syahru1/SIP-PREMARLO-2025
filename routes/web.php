@@ -7,6 +7,11 @@ use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\DosenController;
 use App\Http\Controllers\MasterController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\SPKController;
+use App\Http\Controllers\PrestasiController;
+use App\Http\Controllers\PersonalisasiController;
+use App\Http\Controllers\UserController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +26,10 @@ use App\Http\Controllers\AuthController;
 
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/login', [AuthController::class, 'postlogin']);
+
+Route::get('/test-personalisasi', [PersonalisasiController::class,'test']);
+Route::get('/get-bidang', [PersonalisasiController::class,'getBidang'])->name('get.bidang');
+
 
 Route::post('/logout', function () {
     Auth::logout();
@@ -45,15 +54,14 @@ Route::post('/logout', function () {
 
             // Kelola Pengguna Admin
             Route::get('/kelola-admin', [AdminController::class, 'kelolaAdminIndex'])->name('kelolaAdmin.index');
+            Route::post('/kelola-admin/list', [AdminController::class, 'kelolaAdminList']);
             Route::get('/kelola-admin/tambah', [AdminController::class, 'kelolaAdminTambah'])->name('kelolaAdmin.tambah');
             Route::post('/kelola-admin/store', [AdminController::class, 'kelolaAdminStore']);
-            Route::get('/kelola-admin/edit', [AdminController::class, 'kelolaAdminEdit'])->name('kelolaAdmin.edit');
-            Route::get('/kelola-admin/edit/{id}', [AdminController::class, 'kelolaAdminEdit']);
-            Route::put('/kelola-admin/update/{id}', [AdminController::class, 'kelolaAdminUpdate'])->name('kelola.update');
-            Route::get('/kelola-admin/delete/{id}', [AdminController::class, 'kelolaAdminConfirm']);
+            Route::get('/kelola-admin/edit/{id}', [AdminController::class, 'kelolaAdminEdit'])->name('kelolaAdmin.edit');
+            Route::put('/kelola-admin/update/{id}', [AdminController::class, 'kelolaAdminUpdate'])->name('kelolaAdmin.update');
+            Route::get('/kelola-admin/confirm-delete/{id}', [AdminController::class, 'kelolaAdminConfirmDelete']);
             Route::delete('/kelola-admin/delete/{id}', [AdminController::class, 'kelolaAdminDelete']);
             Route::delete('/kelola-admin/{id}', [AdminController::class, 'kelolaAdminDestroy']);
-            Route::post('/kelola-admin/list', [AdminController::class, 'kelolaAdminList']);
 
             // Kelola Pengguna Dosen
             Route::get('/kelola-pengguna-dosen', [AdminController::class, 'kelolaDosenIndex'])->name('kelolaDosen.index');
@@ -69,8 +77,14 @@ Route::post('/logout', function () {
 
             // Kelola Pengguna Mahasiswa
             Route::get('/kelola-pengguna-mahasiswa', [AdminController::class, 'kelolaMahasiswaIndex'])->name('kelolaMahasiswa.index');
+            Route::post('/kelola-mahasiswa/list', [AdminController::class, 'kelolaMahasiswaList']);
             Route::get('/kelola-mahasiswa/tambah', [AdminController::class, 'kelolaMahasiswaTambah'])->name('kelolaMahasiswa.tambah');
-            Route::get('/kelola-mahasiswa/edit', [AdminController::class, 'kelolaMahasiswaEdit'])->name('kelolaMahasiswa.edit');
+            Route::post('/kelola-mahasiswa/store', [AdminController::class, 'kelolaMahasiswaStore']);
+            Route::get('/kelola-mahasiswa/edit/{id}', [AdminController::class, 'kelolaMahasiswaEdit'])->name('kelola-mahasiswa.edit');
+            Route::put('/kelola-mahasiswa/update/{id}', [AdminController::class, 'kelolaMahasiswaUpdate'])->name('kelola-mahasiswa.update');
+            Route::get('/kelola-mahasiswa/confirm-delete/{id}', [AdminController::class, 'kelolaMahasiswaConfirmDelete']);
+            Route::delete('/kelola-mahasiswa/delete/{id}', [AdminController::class, 'kelolaMahasiswaDelete']);
+            Route::delete('/kelola-mahasiswa/{id}', [AdminController::class, 'kelolaMahasiswaDestroy']);
 
             // Kelola Periode
             Route::get('/kelola-periode', [AdminController::class, 'kelolaPeriodeIndex']);
@@ -90,7 +104,7 @@ Route::post('/logout', function () {
             Route::post('/kelola-prodi/store', [AdminController::class, 'kelolaProdiStore']);
             Route::get('/kelola-prodi/edit/{id}', [AdminController::class, 'kelolaProdiEdit']);
             Route::put('/kelola-prodi/update/{id}', [AdminController::class, 'kelolaProdiUpdate'])->name('kelola-prodi.update');
-            Route::get('/kelola-prodi/delete/{id}', [AdminController::class, 'kelolaProdiConfirm']);
+            Route::get('/kelola-prodi/confirm-delete/{id}', [AdminController::class, 'kelolaProdiConfirmDelete']);
             Route::delete('/kelola-prodi/delete/{id}', [AdminController::class, 'kelolaProdiDelete']);
             Route::delete('/kelola-prodi/{id}', [AdminController::class, 'kelolaProdiDestroy']);
 
@@ -99,12 +113,9 @@ Route::post('/logout', function () {
             Route::get('/laporan-analisis-prestasi/detail', [AdminController::class, 'laporanAnalisisPrestasiDetail'])->name('laporan.detail');
 
             // Rekomendasi lomba
-            Route::get('/rekomendasi-lomba', [AdminController::class, 'rekomendasiLombaIndex'])->name('admin.rekomendasiLomba.index');
-            Route::get('/rekomendasi-lomba/lihat', [AdminController::class, 'rekomendasiLombaLihat'])->name('rekomendasi.lomba.lihat');
-
-            // Rekomendasi Lomba
-            Route::get('/rekomendasi-lomba', [AdminController::class, 'rekomendasiLombaIndex'])->name('laporanRekomendasiLomba.index');
-            Route::get('/rekomendasi-lomba/lihat', [AdminController::class, 'rekomendasiLombaLihat'])->name('laporanRekomendasiLomba.lihat');
+            Route::get('/rekomendasi-lomba', [SPKController::class, 'rekomendasiLombaIndex'])->name('admin.rekomendasiLomba.index');
+            Route::get('/rekomendasi-lomba/lihat/{id}', [SPKController::class, 'rekomendasiLombaLihat'])->name('rekomendasi.lomba.lihat');
+            Route::post('/rekomendasi-lomba/list', [SPKController::class, 'rekomendasiListMahasiswa'])->name('rekomendasi-lomba.list');
 
             // Profile
             Route::get('/profile', [AdminController::class, 'profileIndex'])->name('profile.index');
@@ -115,22 +126,40 @@ Route::post('/logout', function () {
             Route::get('/verifikasi-lomba/detail', [AdminController::class, 'verifikasiLombaDetail'])->name('verifikasiLomba.detail');
 
             // Verifikasi Prestasi
-            Route::get('/verifikasi-prestasi', [AdminController::class, 'verifikasiPrestasiIndex'])->name('verifikasiPrestasi.index');
-            Route::get('/verifikasi-prestasi/detail', [AdminController::class, 'verifikasiPrestasiDetail'])->name('verifikasiPrestasi.detail');
-        });
-    // });
+            Route::get('/verifikasi-prestasi', [PrestasiController::class, 'verifikasiPrestasiIndex'])->name('verifikasiPrestasi.index');
+            Route::post('/verifikasi-prestasi/list', [PrestasiController::class, 'verifikasiPrestasiList'])->name('verifikasiPrestasi.index');
+            Route::get('/verifikasi-prestasi/detail/{id}', [PrestasiController::class, 'verifikasiPrestasiDetail'])->name('verifikasiPrestasi.detail');
+            Route::post('/verifikasi-prestasi/{id}/verifikasi', [PrestasiController::class, 'verifikasiPrestasi']);
+            Route::get('/verifikasi-prestasi/tambah', [PrestasiController::class, 'verifikasiPrestasiTambah']);
+            Route::post('/verifikasi-prestasi/store', [PrestasiController::class, 'verifikasiPrestasiStore']);
+            Route::get('/verifikasi-prestasi/edit/{id}', [PrestasiController::class, 'verifikasiPrestasiEdit']);
+            Route::put('/verifikasi-prestasi/update/{id}', [PrestasiController::class, 'verifikasiPrestasiUpdate'])->name('verifikasi-prestasi.update');
+            Route::get('/verifikasi-prestasi/confirm-delete/{id}', [PrestasiController::class, 'verifikasiPrestasiConfirmDelete']);
+            Route::delete('/verifikasi-prestasi/delete/{id}', [PrestasiController::class, 'verifikasiPrestasiDelete']);
+            Route::delete('/verifikasi-prestasi/{id}', [PrestasiController::class, 'verifikasiPrestasiDestroy']);
 
-    // MAHASISWA
-    // Route::middleware(['auth:mahasiswa'])->group(function () {
+        });
+    });
+
+    Route::middleware(['auth:mahasiswa'])->group(function () {
         Route::group(['prefix' => 'mahasiswa'],function () {
             // Beranda
             Route::get('/beranda', [MasterController::class, 'mahasiswa'])->name('beranda.mahasiswa');
+            Route::get('/mahasiswa/prestasi/pencatatan', [MahasiswaController::class, 'pencatatan'])->name('mahasiswa.prestasi.pencatatan');
+            Route::get('/mahasiswa/prestasi/riwayat', [MahasiswaController::class, 'riwayat'])->name('mahasiswa.prestasi.riwayat');
 
-            Route::get('/prestasi', [MahasiswaController::class, 'prestasi'])->name('prestasi');
+            // Lomba
             Route::get('/lomba', [MahasiswaController::class, 'lomba'])->name('lomba');
+            Route::post('/lomba/store', [MahasiswaController::class, 'storeLomba']);
+            Route::get('/lomba/detail-lomba/{id}', [MahasiswaController::class, 'detail_lomba'])->name('detail-lomba.mahasiswa');
+
+            //prestasi
+            Route::get('/prestasi', [MahasiswaController::class, 'prestasi'])->name('mahasiswa.prestasi');
+            Route::get('/prestasi/riwayat', [MahasiswaController::class, 'riwayat'])->name('mahasiswa.riwayat');
+            Route::get('/detail-prestasi/{id}', [MahasiswaController::class, 'detailPrestasi'])->name('mahasiswa.detail-prestasi');
+
             Route::get('/profil', [MahasiswaController::class, 'profil'])->name('profil');
             Route::get('/notifikasi', [MahasiswaController::class, 'notifikasi'])->name('notifikasi');
-            Route::get('/detail-prestasi', [MahasiswaController::class, 'detail_prestasi'])->name('detail-prestasi');
             Route::get('/detail-lomba', [MahasiswaController::class, 'detail_lomba'])->name('detail-lomba');
             Route::get('/sertifikat', [MahasiswaController::class, 'sertifikat'])->name('sertifikat');
             Route::get('/create-sertifikat', [MahasiswaController::class, 'create_sertifikat'])->name('sertifikat.create');
@@ -145,7 +174,7 @@ Route::post('/logout', function () {
             Route::get('/edit-profil', [MahasiswaController::class, 'edit_profil'])->name('edit-profil');
 
         });
-    // });
+    });
 
     // DOSEN
     Route::middleware(['auth:dosen'])->group(function () {

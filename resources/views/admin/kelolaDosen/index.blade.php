@@ -22,6 +22,7 @@
                                     <th>No</th>
                                     <th class="text-center">Username</th>
                                     <th class="text-center">Nama Dosen</th>
+                                    <th class="text-center">NIDN</th>
                                     <th class="text-center">Email</th>
                                     <th class="text-center">Aksi</th>
                                 </tr>
@@ -60,34 +61,39 @@
                 }
             },
             columns: [
-                { 
-                    data: 'DT_RowIndex', 
-                    name: 'DT_RowIndex', 
-                    className: "text-center", 
-                    orderable: false, 
-                    searchable: false 
+                {
+                    data: 'DT_RowIndex',
+                    name: 'DT_RowIndex',
+                    className: "text-center",
+                    orderable: false,
+                    searchable: false
                 },
-                { 
-                    data: "username", 
-                    name: "username", 
-                    className: "text-center" 
+                {
+                    data: "username",
+                    name: "username",
+                    className: "text-center"
                 },
-                { 
-                    data: "nama_dosen", 
-                    name: "nama_dosen", 
-                    className: "text-center" 
+                {
+                    data: "nama_dosen",
+                    name: "nama_dosen",
+                    className: "text-center"
                 },
-                { 
-                    data: "email", 
-                    name: "email", 
-                    className: "text-center" 
+                {
+                    data: "nidn",
+                    name: "nidn",
+                    className: "text-center"
                 },
-                { 
-                    data: "aksi", 
-                    name: "aksi", 
-                    className: "text-center", 
-                    orderable: false, 
-                    searchable: false 
+                {
+                    data: "email",
+                    name: "email",
+                    className: "text-center"
+                },
+                {
+                    data: "aksi",
+                    name: "aksi",
+                    className: "text-center",
+                    orderable: false,
+                    searchable: false
                 }
             ]
         });

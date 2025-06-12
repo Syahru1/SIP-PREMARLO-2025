@@ -13,38 +13,106 @@
             <table class="table table-borderless">
                 <tr>
                     <th>Nama Prestasi</th>
-                    <td>Juara 1 Cyber Security ABC</td>
+                    <td>{{$data->juara_kompetisi}}</td>
                 </tr>
                 <tr>
-                    <th>Kategori</th>
-                    <td>Akademik</td>
+                    <th>Nama Anggota</th>
+                    <td>{{$data->mahasiswa->nama}}</td>
                 </tr>
                 <tr>
-                    <th>Tingkat</th>
-                    <td>Nasional</td>
+                    <th>Posisi</th>
+                    <td>{{$data->posisi}}</td>
                 </tr>
                 <tr>
-                    <th>Penyelenggara</th>
-                    <td>Kementrian</td>
+                    <th>Nama Kompetisi</th>
+                    <td>{{$data->nama_kompetisi}}</td>
                 </tr>
                 <tr>
-                    <th>Tahun</th>
-                    <td>2025</td>
+                    <th>Tingkat Kompetisi</th>
+                    <td>{{$data->tingkat_kompetisi}}</td>
+                </tr>
+                <tr>
+                    <th>Jenis Prestasi</th>
+                    <td>{{$data->jenis_prestasi}}</td>
+                </tr>
+                <tr>
+                    <th>Lokasi</th>
+                    <td>{{$data->lokasi_kompetisi}}</td>
+                </tr>
+                <tr>
+                    <th>Tanggal Surat Tugas</th>
+                    <td>{{$data->tanggal_surat_tugas}}</td>
+                </tr>
+                <tr>
+                    <th>Tanggal Kompetisi</th>
+                    <td>{{$data->tanggal_kompetisi}}</td>
+                </tr>
+                <tr>
+                    <th>Dosen Pembimbing</th>
+                    <td>{{$data->dosen->nama_dosen}}</td>
+                </tr>
+                <tr>
+                    <th>NIDN</th>
+                    <td>{{$data->dosen->nidn}}</td>
+                </tr>
+                <tr>
+                    <th>Periode</th>
+                    <td>{{$data->periode->nama_periode}}</td>
+                </tr>
+                <tr>
+                    <th>Jumlah Universitas</th>
+                    <td>{{$data->jumlah_univ}}</td>
+                </tr>
+                <tr>
+                    <th>Nomor Sertifikat</th>
+                    <td>{{$data->nomor_sertifikat}}</td>
+                </tr>
+                <tr>
+                    <th>Tanggal Pengajuan</th>
+                    <td>{{$data->tanggal_pengajuan}}</td>
+                </tr>
+                <tr>
+                    <th>Link Pendaftaran</th>
+                    <td>
+                        <a href="{{ $data->link_perlombaan }}" target="_blank">
+                            {{ $data->link_perlombaan }}
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Foto Sertifikat</th>
+                    <td>
+                        <a href="{{ asset('storage/sertifikat/' . $data->foto_sertifikat) }}" target="_blank">
+                            <img src="{{ asset('storage/sertifikat/' . $data->foto_sertifikat) }}"
+                                alt="Bukti Sertifikat"
+                                width="200"
+                                class="img-fluid rounded shadow">
+                        </a>
+                        <p class="mt-2 text-muted">Klik gambar untuk melihat ukuran penuh.</p>
+                    </td>
+                </tr>
+                    <th>Catatan</th>
+                    <td>{{$data->catatan}}</td>
                 </tr>
                 <tr>
                     <th>Status</th>
-                    <td><span class="badge badge-success">Disetujui</span></td>
-                </tr>
-                <tr>
-                    <th>Bukti Prestasi</th>
                     <td>
-                        <img src="https://via.placeholder.com/200x150.png?text=Bukti+Prestasi" alt="Bukti Prestasi" width="200">
+                        @php
+                            $badgeClass = match($data->status) {
+                                'Sudah Diverifikasi' => 'badge-success',
+                                'Ditolak' => 'badge-danger',
+                                'Belum Diverifikasi' => 'badge-warning',
+                                default => 'badge-secondary'
+                            };
+                        @endphp
+                        <span class="badge {{ $badgeClass }}">{{ $data->status }}</span>
                     </td>
                 </tr>
+
             </table>
 
             <div class="mt-4 d-flex justify-content-end">
-                <a href="#" onclick="history.back()" class="btn btn-secondary">Kembali</a>
+                <a href="javascript:void(0);" onclick="history.back()" class="btn btn-secondary">Kembali</a>
             </div>
         </div>
     </div>

@@ -12,21 +12,20 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('spk_nilai_optimasi', function (Blueprint $table) {
-            $table->id('id_nilai_optimasi');
-            $table->unsignedBigInteger('id_bobot')->index();
+            $table->id('id_matriks');
             $table->unsignedBigInteger('id_mahasiswa')->index();
-            $table->decimal('nilai_optimasi', 10, 5)->nullable();
+            $table->unsignedBigInteger('id_lomba')->index();
+            $table->decimal('nilai_optimasi', 10, 5)->default(0.00000)->nullable();
             $table->timestamps();
 
             //foreign keys
-            $table->foreign('id_bobot')
-                ->references('id_bobot')
-                ->on('spk_bobot')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
             $table->foreign('id_mahasiswa')
                 ->references('id_mahasiswa')
                 ->on('mahasiswa')
+                ->onDelete('cascade');
+            $table->foreign('id_lomba')
+                ->references('id_lomba')
+                ->on('c_lomba')
                 ->onDelete('cascade');
         });
     }
