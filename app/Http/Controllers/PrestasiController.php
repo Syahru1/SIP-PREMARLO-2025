@@ -39,11 +39,11 @@ class PrestasiController extends Controller
         $prestasi = PrestasiModel::find($id);
 
         if (!$prestasi) {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Data prestasi tidak ditemukan',
-                ]);
-            }
+            return response()->json([
+                'status' => false,
+                'message' => 'Data prestasi tidak ditemukan',
+            ]);
+        }
 
         return view('admin.verifikasiPrestasi.detailPrestasi', ['prestasi' => $prestasi]);
     }
@@ -57,33 +57,33 @@ class PrestasiController extends Controller
             $prestasi->catatan = $request->catatan;
 
 
-            if($request->status == 'Sudah Diverifikasi'){
+            if ($request->status == 'Sudah Diverifikasi') {
                 $skor = 0;
 
-                if($prestasi->juara_kompetisi == 'Juara 1' && $prestasi->tingkat_kompetisi == 'Internasional'){
+                if ($prestasi->juara_kompetisi == 'Juara 1' && $prestasi->tingkat_kompetisi == 'Internasional') {
                     $skor = 100;
-                } elseif($prestasi->juara_kompetisi == 'Juara 2' && $prestasi->tingkat_kompetisi == 'Internasional'){
+                } elseif ($prestasi->juara_kompetisi == 'Juara 2' && $prestasi->tingkat_kompetisi == 'Internasional') {
                     $skor = 80;
-                } elseif($prestasi->juara_kompetisi == 'Juara 3' && $prestasi->tingkat_kompetisi == 'Internasional'){
+                } elseif ($prestasi->juara_kompetisi == 'Juara 3' && $prestasi->tingkat_kompetisi == 'Internasional') {
                     $skor = 60;
-                } elseif($prestasi->juara_kompetisi == 'Juara 1' && $prestasi->tingkat_kompetisi == 'Nasional'){
+                } elseif ($prestasi->juara_kompetisi == 'Juara 1' && $prestasi->tingkat_kompetisi == 'Nasional') {
                     $skor = 70;
-                } elseif($prestasi->juara_kompetisi == 'Juara 2' && $prestasi->tingkat_kompetisi == 'Nasional'){
+                } elseif ($prestasi->juara_kompetisi == 'Juara 2' && $prestasi->tingkat_kompetisi == 'Nasional') {
                     $skor = 50;
-                } elseif($prestasi->juara_kompetisi == 'Juara 3' && $prestasi->tingkat_kompetisi == 'Nasional'){
+                } elseif ($prestasi->juara_kompetisi == 'Juara 3' && $prestasi->tingkat_kompetisi == 'Nasional') {
                     $skor = 30;
-                } elseif($prestasi->juara_kompetisi == 'Juara 1' && $prestasi->tingkat_kompetisi == 'Regional'){
+                } elseif ($prestasi->juara_kompetisi == 'Juara 1' && $prestasi->tingkat_kompetisi == 'Regional') {
                     $skor = 40;
-                } elseif($prestasi->juara_kompetisi == 'Juara 2' && $prestasi->tingkat_kompetisi == 'Regional'){
+                } elseif ($prestasi->juara_kompetisi == 'Juara 2' && $prestasi->tingkat_kompetisi == 'Regional') {
                     $skor = 30;
-                } elseif($prestasi->juara_kompetisi == 'Juara 3' && $prestasi->tingkat_kompetisi == 'Regional'){
+                } elseif ($prestasi->juara_kompetisi == 'Juara 3' && $prestasi->tingkat_kompetisi == 'Regional') {
                     $skor = 10;
                 }
 
                 $prestasi->skor = $skor;
             }
 
-            if($request->status == 'Belum Diverifikasi' || $request->status == 'Ditolak'){
+            if ($request->status == 'Belum Diverifikasi' || $request->status == 'Ditolak') {
                 $skor = 0;
                 $prestasi->skor = $skor;
             }
@@ -95,19 +95,45 @@ class PrestasiController extends Controller
         }
     }
 
-         // Laporan Analisis Prestasi
+    // Laporan Analisis Prestasi
     public function laporanAnalisisPrestasiIndex()
     {
         $prestasi = PrestasiModel::with(['prodi', 'periode', 'mahasiswa', 'dosen'])
             ->where('status', 'Sudah Diverifikasi')
             ->get();
 
-        return view('admin.laporanAnalisisPrestasi.index', compact('prestasi'));
+        // // DATA UNTUK GRAFIK 1: Jumlah Prestasi per Tahun
+        // $prestasiPerTahun = PrestasiModel::selectRaw('periode.nama_periode as tahun, COUNT(*) as jumlah')
+        //     ->join('periode', 'prestasi.id_periode', '=', 'periode.id_periode')
+        //     ->where('prestasi.status', 'Sudah Diverifikasi')
+        //     ->groupBy('periode.nama_periode')
+        //     ->orderBy('periode.nama_periode', 'asc')
+        //     ->pluck('jumlah', 'tahun'); // menghasilkan array ['2022'=>10, '2023'=>15,...]
+
+        // // DATA UNTUK GRAFIK 2: Persentase Prestasi Berdasarkan Jenis Prestasi
+        // $prestasiPerJenis = PrestasiModel::selectRaw('jenis_prestasi, COUNT(*) as jumlah')
+        //     ->where('status', 'Sudah Diverifikasi')
+        //     ->groupBy('jenis_prestasi')
+        //     ->pluck('jumlah', 'jenis_prestasi'); // menghasilkan array ['Sains'=>20, 'Olahraga'=>10,...]
+
+        // Data Grafik 1: Jumlah Prestasi per Tahun
+        $prestasiPerTahun = $prestasi->groupBy(function ($item) {
+            return $item->periode->nama_periode ?? 'Tidak Ada Periode';
+        })->map(function ($item) {
+            return $item->count();
+        });
+
+        // Data Grafik 2: Persentase Prestasi per Jenis
+        $prestasiPerJenis = $prestasi->groupBy('jenis_prestasi')->map(function ($item) {
+            return $item->count();
+        });
+
+        return view('admin.laporanAnalisisPrestasi.index', compact('prestasi', 'prestasiPerTahun', 'prestasiPerJenis'));
     }
 
     public function laporanAnalisisPrestasiDetail($id)
     {
-        $data = PrestasiModel::with([ 'dosen', 'mahasiswa', 'prodi', 'periode']) // sesuaikan relasi
+        $data = PrestasiModel::with(['dosen', 'mahasiswa', 'prodi', 'periode']) // sesuaikan relasi
             ->findOrFail($id);
 
         return view('admin.laporanAnalisisPrestasi.detailPrestasi', compact('data'));
@@ -204,5 +230,4 @@ class PrestasiController extends Controller
                 'Attachment' => false,
             ]);
     }
-
 }
