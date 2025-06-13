@@ -83,10 +83,10 @@ dimiliki
             </td>
         </tr>
         <tr>
-            <td>Database designer Backend Developer</td>
+            <td>Database designer <br>Backend Developer</td>
             <td>UI/UX designer<br>Frontend Developer</td>
             <td>UI/UX designer<br>Frontend Developer</td>
-            <td>Backend developer<br>Backend Developer</td>
+            <td>Database designer<br> Backend Developer</td>
         </tr>
     </table>
 </div>
