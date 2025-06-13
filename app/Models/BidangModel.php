@@ -19,4 +19,7 @@ class BidangModel extends Model
     public function bidangLomba(){
         return $this->hasMany(BidangLombaModel::class, 'id_bidang');
     }
+    public function preferensiBidang(){
+        return $this->hasMany(PreferensiBidangModel::class, 'id_preferensi_bidang');
+    }
 }

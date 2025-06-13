@@ -28,4 +28,20 @@ class PreferensiMahasiswaModel extends Model
     {
         return $this->hasMany(BidangLombaModel::class, 'id_preferensi_mahasiswa', 'id_preferensi_mahasiswa');
     }
+    public function tingkatKompetisi()
+    {
+        return $this->belongsTo(TingkatKompetisiModel::class, 'id_tingkat_kompetisi'); // sesuaikan nama model & foreign key
+    }
+    public function Penyelenggara()
+    {
+        return $this->belongsTo(PenyelenggaraModel::class, 'id_penyelenggara'); // sesuaikan nama model & foreign key
+    }
+    public function biayaPendaftaran()
+    {
+        return $this->belongsTo(BiayaPendaftaranModel::class, 'id_biaya_pendaftaran'); // sesuaikan nama model & foreign key
+    }
+    public function hadiah()
+    {
+        return $this->belongsTo(HadiahModel::class, 'id_hadiah'); // sesuaikan nama model & foreign key
+    }
 }
