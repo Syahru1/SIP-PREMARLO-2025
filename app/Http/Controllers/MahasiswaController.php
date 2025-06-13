@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use App\Models\PengajuanDospemModel;
 use App\Models\DosenModel;
+use Illuminate\Support\Str;
 
 class MahasiswaController extends Controller
 {
@@ -708,38 +709,57 @@ class MahasiswaController extends Controller
 
     public function storePengajuanDospem(Request $request)
     {
-        $request->validate([
+        // Validasi input
+        $rules = [
             'nama_tim' => 'required|string|max:255',
             'nama_lomba' => 'required|string',
             'deskripsi_lomba' => 'required|string',
             'proposal' => 'required|file|mimes:pdf|max:2048',
             'id_dosen' => 'required|exists:dosen,id_dosen',
             'ketua_tim' => 'required|exists:mahasiswa,id_mahasiswa',
-            'anggota_.*' => 'nullable|exists:mahasiswa,id_mahasiswa',
-        ]);
+        ];
+
+        // Validasi anggota_1 sampai anggota_4
+        for ($i = 1; $i <= 4; $i++) {
+            $rules["anggota_$i"] = 'nullable|exists:mahasiswa,id_mahasiswa';
+        }
+
+        $request->validate($rules);
 
         try {
-            // Simpan foto sertifikat
+            // Simpan file proposal ke folder uploads/proposal
             if ($request->hasFile('proposal')) {
                 $file = $request->file('proposal');
                 $namaFile = time() . '_' . $file->getClientOriginalName();
                 $file->move(public_path('uploads/proposal'), $namaFile);
-                $proposal = $namaFile; // hanya nama file saja
+                $proposal = $namaFile;
+            } else {
+                $proposal = null;
             }
 
-            // Ambil data
-            $namaTim = $request->nama_tim;
+            // Ambil data input
+            $namaTim = $request->input('nama_tim');
+            $namaLomba = $request->input('nama_lomba');
+            $deskripsiLomba = $request->input('deskripsi_lomba');
+            $idDosen = $request->input('id_dosen');
             $idKetua = auth()->user()->id_mahasiswa;
-            $anggota = $request->anggota_tim ?? [];
-            $idAnggota = array_pad($anggota, 4, null); // isi jadi 4 elemen
 
-            // Panggil stored procedure
+            // Ambil anggota satu per satu dari form
+            $anggota = [];
+            for ($i = 1; $i <= 4; $i++) {
+                $anggota[] = $request->input("anggota_$i") ?: null;
+            }
+
+            // Pad anggota jadi 4 elemen, isi null jika kurang
+            $idAnggota = array_pad($anggota, 4, null);
+
+            // Jalankan stored procedure
             DB::statement('CALL sp_buat_pengajuan_dospem(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [
                 $namaTim,
-                $request->nama_lomba,         // benar
-                $request->deskripsi_lomba,    // benar
+                $namaLomba,
+                $deskripsiLomba,
                 $proposal,
-                $request->id_dosen,
+                $idDosen,
                 $idKetua,
                 $idAnggota[0],
                 $idAnggota[1],
@@ -747,12 +767,12 @@ class MahasiswaController extends Controller
                 $idAnggota[3],
             ]);
 
-
             return redirect('mahasiswa/bimbingan-form')->with('success', 'Pengajuan dospem berhasil dibuat.');
         } catch (\Exception $e) {
             return back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
     }
+
 
     public function editPengajuanDospem($id)
     {
@@ -763,52 +783,81 @@ class MahasiswaController extends Controller
         return view('mahasiswa.bimbingan.edit-pengajuan', compact('dospem', 'dosenList', 'anggotaTim'));
     }
 
-    public function updatePengajuanDospem(Request $request, $id)
-    {
-        $validated = $request->validate([
-            'nama_tim' => 'required|string|max:255',
-            'nama_lomba' => 'required|string|max:255',
-            'deskripsi_lomba' => 'required|string',
-            'proposal' => 'nullable|file|mimes:pdf',
-            'id_dosen' => 'required|integer',
-            'ketua_tim' => 'required|integer',
-            'anggota_1' => 'nullable|integer',
-            'anggota_2' => 'nullable|integer',
-            'anggota_3' => 'nullable|integer',
-            'anggota_4' => 'nullable|integer',
+
+public function updatePengajuanDospem(Request $request, $id)
+{
+    $validated = $request->validate([
+        'nama_tim' => 'required|string|max:255',
+        'nama_lomba' => 'required|string|max:255',
+        'deskripsi_lomba' => 'required|string',
+        'proposal' => 'nullable|file|mimes:pdf|max:2048',
+        'id_dosen' => 'required|exists:dosen,id_dosen',
+        'ketua_tim' => 'required|exists:mahasiswa,id_mahasiswa',
+        'anggota_1' => 'nullable|exists:mahasiswa,id_mahasiswa',
+        'anggota_2' => 'nullable|exists:mahasiswa,id_mahasiswa',
+        'anggota_3' => 'nullable|exists:mahasiswa,id_mahasiswa',
+        'anggota_4' => 'nullable|exists:mahasiswa,id_mahasiswa',
+    ]);
+
+    try {
+        $pengajuan = \App\Models\PengajuanDospemModel::findOrFail($id);
+
+        $anggota = array_filter([
+            $validated['anggota_1'] ?? null,
+            $validated['anggota_2'] ?? null,
+            $validated['anggota_3'] ?? null,
+            $validated['anggota_4'] ?? null,
         ]);
 
-        try {
-            $proposal = null;
-            if ($request->hasFile('proposal')) {
-                $file = $request->file('proposal');
-                $namaFile = time() . '_' . $file->getClientOriginalName();
+        // Cek ketua tidak jadi anggota
+        if (in_array($validated['ketua_tim'], $anggota)) {
+            return back()->with('error', 'Ketua tim tidak boleh menjadi anggota.');
+        }
+
+        // Cek tidak ada duplikat antar anggota
+        if (count($anggota) !== count(array_unique($anggota))) {
+            return back()->with('error', 'Anggota tim tidak boleh ada yang sama.');
+        }
+
+        // Update proposal jika diunggah ulang
+        $proposal = $pengajuan->proposal;
+        if ($request->hasFile('proposal')) {
+            $file = $request->file('proposal');
+            if ($file->isValid()) {
+                $oldPath = public_path('uploads/proposal/' . $proposal);
+                if (file_exists($oldPath)) {
+                    unlink($oldPath);
+                }
+                $namaFile = time() . '_' . Str::random(10) . '.' . $file->getClientOriginalExtension();
                 $file->move(public_path('uploads/proposal'), $namaFile);
                 $proposal = $namaFile;
-            } else {
-                $pengajuan = \App\Models\PengajuanDospemModel::find($id);
-                $proposal = $pengajuan ? $pengajuan->proposal : null;
             }
-
-            DB::statement("CALL sp_update_pengajuan_dospem(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [
-                $id,
-                $validated['nama_tim'],
-                $validated['nama_lomba'],
-                $validated['deskripsi_lomba'],
-                $proposal, // nama file, bukan binary
-                $validated['id_dosen'],
-                $validated['ketua_tim'],
-                $validated['anggota_1'] ?? null,
-                $validated['anggota_2'] ?? null,
-                $validated['anggota_3'] ?? null,
-                $validated['anggota_4'] ?? null,
-            ]);
-
-            return redirect('mahasiswa/bimbingan-form')->with('success', 'Pengajuan berhasil diperbarui.');
-        } catch (\Throwable $e) {
-            Log::error('Gagal update pengajuan: ' . $e->getMessage());
-            return redirect()->back()->with('error', 'Terjadi kesalahan saat memperbarui pengajuan. Silakan coba lagi.');
         }
+
+        // Jalankan SP
+        DB::statement('CALL sp_update_pengajuan_dospem(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [
+            $id,
+            $validated['nama_tim'],
+            $validated['nama_lomba'],
+            $validated['deskripsi_lomba'],
+            $proposal,
+            $validated['id_dosen'],
+            $validated['ketua_tim'],
+            $validated['anggota_1'] ?? null,
+            $validated['anggota_2'] ?? null,
+            $validated['anggota_3'] ?? null,
+            $validated['anggota_4'] ?? null,
+        ]);
+        
+
+        return redirect('mahasiswa/bimbingan-form')->with('success', 'Pengajuan berhasil diperbarui.');
+    } catch (\Throwable $e) {
+        Log::error('Gagal update pengajuan #' . $id . ': ' . $e->getMessage());
+        return back()->with('error', 'Terjadi kesalahan saat memperbarui pengajuan. Silakan coba lagi.');
     }
+}
+
+
+
 
 }

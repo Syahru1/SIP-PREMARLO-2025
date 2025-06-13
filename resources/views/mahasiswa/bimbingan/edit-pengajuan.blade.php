@@ -19,34 +19,29 @@
                     @method('PUT')
                     <div class="card-body">
 
-                        <!-- Nama Tim -->
                         <div class="mb-3">
-                            <label class="form-label fw-semibold text-black">Nama Tim</label>
-                            <input type="text" class="form-control" name="nama_tim" value="{{ $dospem->tim->nama_tim }}" required>
+                            <label for="nama_tim" class="form-label fw-semibold text-black">Nama Tim</label>
+                            <input type="text" class="form-control" id="nama_tim" name="nama_tim" value="{{ $dospem->tim->nama_tim }}" required placeholder="Masukkan nama tim" title="Masukkan nama tim">
                         </div>
 
-                        <!-- Nama Lomba -->
                         <div class="mb-3">
-                            <label class="form-label fw-semibold text-black">Nama Lomba</label>
-                            <input type="text" class="form-control" name="nama_lomba" value="{{ $dospem->nama_lomba }}" required>
+                            <label for="nama_lomba" class="form-label fw-semibold text-black">Nama Lomba</label>
+                            <input type="text" class="form-control" id="nama_lomba" name="nama_lomba" value="{{ $dospem->nama_lomba }}" required placeholder="Masukkan nama lomba" title="Masukkan nama lomba">
                         </div>
 
-                        <!-- Deskripsi Lomba -->
                         <div class="mb-3">
-                            <label class="form-label fw-semibold text-black">Deskripsi Lomba</label>
-                            <textarea rows="3" class="form-control" name="deskripsi_lomba" required>{{ $dospem->deskripsi_lomba }}</textarea>
+                            <label for="deskripsi_lomba" class="form-label fw-semibold text-black">Deskripsi Lomba</label>
+                            <textarea rows="3" class="form-control" id="deskripsi_lomba" name="deskripsi_lomba" required placeholder="Masukkan deskripsi lomba" title="Masukkan deskripsi lomba">{{ $dospem->deskripsi_lomba }}</textarea>
                         </div>
 
-                        <!-- Upload Proposal -->
                         <div class="mb-3">
-                            <label class="form-label fw-semibold text-black">Upload Proposal (PDF)</label>
-                            <input type="file" class="form-control" name="proposal" accept=".pdf">
+                            <label for="proposal" class="form-label fw-semibold text-black">Upload Proposal (PDF)</label>
+                            <input type="file" class="form-control" id="proposal" name="proposal" accept=".pdf" title="Unggah proposal dalam format PDF">
                         </div>
 
-                        <!-- Dosen Pembimbing -->
                         <div class="mb-3">
-                            <label class="form-label fw-semibold text-black">Pilih Dosen Pembimbing</label>
-                            <select name="id_dosen" class="form-control" required>
+                            <label for="id_dosen" class="form-label fw-semibold text-black">Pilih Dosen Pembimbing</label>
+                            <select name="id_dosen" id="id_dosen" class="form-control" required title="Pilih dosen pembimbing">
                                 <option value="{{ $dospem->id_dosen }}" selected>{{ $dospem->dosen->nama_dosen }}</option>
                                 @foreach ($dosenList as $dosen)
                                     @if ($dosen->id_dosen != $dospem->id_dosen)
@@ -56,27 +51,24 @@
                             </select>
                         </div>
 
-                        <!-- Ketua Tim -->
                         <div class="mb-3">
                             <label class="form-label fw-semibold text-black">Ketua Tim</label>
-                            <input type="text" class="form-control" value="{{ auth()->user()->nama }}" readonly>
+                            <input type="text" class="form-control" value="{{ auth()->user()->nama }}" readonly title="Nama ketua tim">
                             <input type="hidden" name="ketua_tim" value="{{ auth()->user()->id_mahasiswa }}">
                         </div>
 
-                        <!-- Anggota Tim -->
                         @for ($i = 1; $i <= 4; $i++)
                             <div class="mb-3">
-                                <label class="form-label fw-semibold text-black">Anggota {{ $i }}</label>
-                                <select name="anggota_{{ $i }}" class="form-control anggota-select">
+                                <label for="anggota_{{ $i }}" class="form-label fw-semibold text-black">Anggota {{ $i }}</label>
+                                <select name="anggota_{{ $i }}" id="anggota_{{ $i }}" class="form-control anggota-select" title="Pilih anggota tim ke-{{ $i }}">
                                     <option value="">Pilih Anggota {{ $i }}</option>
-                                    @php
-                                        $anggotaIndex = $i;
-                                        $anggota = $dospem->tim->anggota_tim[$anggotaIndex]->mahasiswa ?? null;
-                                    @endphp
                                     @foreach ($anggotaTim as $mhs)
                                         @if ($mhs->id_mahasiswa != auth()->user()->id_mahasiswa)
+                                            @php
+                                                $existingAnggota = $dospem->tim->anggota_tim[$i]->id_mahasiswa ?? null;
+                                            @endphp
                                             <option value="{{ $mhs->id_mahasiswa }}"
-                                                {{ (isset($anggota) && $anggota->id_mahasiswa == $mhs->id_mahasiswa) ? 'selected' : '' }}>
+                                                {{ old("anggota_$i", $existingAnggota) == $mhs->id_mahasiswa ? 'selected' : '' }}>
                                                 {{ $mhs->nama }}
                                             </option>
                                         @endif
