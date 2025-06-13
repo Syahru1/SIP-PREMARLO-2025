@@ -102,7 +102,7 @@ class MahasiswaController extends Controller
             'jumlah_univ' => 'required|integer|min:1',
             'nomor_sertifikat' => 'required|string|max:255',
             'link_perlombaan' => 'required|url|max:255',
-            'foto_sertifikat' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048',
+            // 'foto_sertifikat' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048',
         ]);
 
         $prestasi = PrestasiModel::findOrFail($id);
