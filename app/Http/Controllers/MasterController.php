@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\PrestasiModel;
+use App\Models\LombaModel;
 
 class MasterController extends Controller
 {
@@ -26,8 +27,12 @@ class MasterController extends Controller
         ->sortByDesc('total_skor')
         ->values();
 
+        $dataLomba = LombaModel::where('status_verifikasi', 'Diverifikasi')
+            ->orderBy('created_at')
+            ->get();
         return view('dosen.beranda.index',[
             "title" => "Dashboard",
+            "dataLomba" => $dataLomba,
             "peringkatMahasiswa" => $peringkatMahasiswa
         ]);
         // if (auth()->user()->role == 'Owner') {
@@ -83,8 +88,12 @@ class MasterController extends Controller
         })
         ->sortByDesc('total_skor')
         ->values();
+        $dataLomba = LombaModel::where('status_verifikasi', 'Diverifikasi')
+            ->orderBy('created_at')
+            ->get();
         return view('mahasiswa.beranda.index',[
             "title" => "Dashboard",
+            "dataLomba" => $dataLomba,
             "peringkatMahasiswa" => $peringkatMahasiswa
         ]);
         // if (auth()->user()->role == 'Kasir') {
