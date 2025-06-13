@@ -48,7 +48,7 @@ class AuthController extends Controller
                         break;
                     case 'mahasiswa':
                         // Ambil id_mahasiswa
-                        $mahasiswaId = Auth::guard('mahasiswa')->user()->id;
+                        $mahasiswaId = Auth::guard('mahasiswa')->user()->id_mahasiswa;
 
                         // Panggil stored procedure setelah login berhasil
                         DB::statement('CALL sp_cek_preferensi_mahasiswa(?, @p_status)', [$mahasiswaId]);
