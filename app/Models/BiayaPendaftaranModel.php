@@ -21,4 +21,9 @@ class BiayaPendaftaranModel extends Model
     {
         return $this->hasMany(LombaModel::class, 'id_lomba'); // sesuaikan nama model & foreign key
     }
+
+    public function preferensiMahasiswa()
+    {
+        return $this->hasMany(PreferensiMahasiswaModel::class, 'id_preferensi_mahasiswa'); // sesuaikan nama model & foreign key
+    }
 }

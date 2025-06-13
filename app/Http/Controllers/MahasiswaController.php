@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use App\Models\PengajuanDospemModel;
 use App\Models\DosenModel;
+use App\Models\PreferensiBidangModel;
 use Illuminate\Support\Str;
 
 class MahasiswaController extends Controller
@@ -498,7 +499,7 @@ class MahasiswaController extends Controller
     {
         $mahasiswa = auth()->user();
         $preferensi = PreferensiMahasiswaModel::where('id_mahasiswa', auth()->user()->id_mahasiswa)->first();
-
+        $detailBidang = PreferensiBidangModel::where('id_mahasiswa', auth()->user()->id_mahasiswa)->get();
         // Ambil data referensi untuk tab lainnya
         $bidang = DB::table('c_bidang')->orderBy('nama_bidang', 'asc')->get();
         $biaya = DB::table('c_biaya_pendaftaran')->get();
@@ -509,6 +510,7 @@ class MahasiswaController extends Controller
         return view('mahasiswa.profil.index', compact(
             'mahasiswa',
             'preferensi',
+            'detailBidang',
             'bidang',
             'biaya',
             'penyelenggara',

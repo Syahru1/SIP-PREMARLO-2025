@@ -63,7 +63,7 @@
                 <ul class="nav nav-tabs mb-3" id="lineTab" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link active" id="underline-home-tab" data-toggle="tab" href="#underline-home"
-                            role="tab" aria-controls="underline-home" aria-selected="true">Kompetensi</a>
+                            role="tab" aria-controls="underline-home" aria-selected="true">Peminatan</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" id="underline-preference-tab" data-toggle="tab" href="#underline-preference"
@@ -75,75 +75,8 @@
                     <div class="tab-pane fade show active" id="underline-home" role="tabpanel"
                         aria-labelledby="underline-home-tab">
                         <div class="mb-4 card">
-                            <div class="card-header d-flex justify-content-between align-items-center">
-                                <h5 class="card-title mb-0 text-black" style="font-weight: bold !important;">Bidang Keahlian
-                                </h5>
-                                <div class="d-flex align-items-center">
-
-                                    <a href="{{ url('mahasiswa/bidang-keahlian') }}"
-                                        class="btn btn-secondary mb-2 mr-2">Detail</a>
-
-
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="skill-item mb-3">
-                                    <div class="text-black">Isi detail keahlian ditampilkan di sini...</div>
-                                    <div role="separator" class="specialist-divider mt-2"></div>
-                                </div>
-
-                                <div class="skill-item mb-3">
-                                    <div class="text-black">Isi detail keahlian ditampilkan di sini...</div>
-                                    <div role="separator" class="specialist-divider mt-2"></div>
-                                </div>
-                            </div>
+                            @include('mahasiswa.profil.peminatan')
                         </div>
-
-                        <div class="mb-4 card">
-                            <div class="card-header d-flex justify-content-between align-items-center">
-                                <h5 class="card-title mb-0 text-black" style="font-weight: bold !important;">Sertifikasi
-                                </h5>
-                                <div class="d-flex align-items-center">
-                                    <a href="{{ url('mahasiswa/sertifikat') }}"
-                                        class="btn btn-secondary mb-2 mr-2">Detail</a>
-
-
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="skill-item mb-3">
-                                    <div class="text-black">Isi sertifikasi ditampilkan di sini...</div>
-                                    <div role="separator" class="specialist-divider mt-2"></div>
-                                </div>
-
-                                <div class="skill-item mb-3">
-                                    <div class="text-black">Isi sertifikasi ditampilkan di sini...</div>
-                                    <div role="separator" class="specialist-divider mt-2"></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="mb-4 card">
-                            <div class="card-header d-flex justify-content-between align-items-center">
-                                <h5 class="card-title mb-0 text-black" style="font-weight: bold !important;">Pengalaman</h5>
-                                <div class="d-flex align-items-center">
-                                    <a href="{{ url('mahasiswa/pengalaman') }}"
-                                        class="btn btn-secondary mb-2 mr-2">Detail</a>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="skill-item mb-3">
-                                    <div class="text-black">Isi pengalaman ditampilkan di sini...</div>
-                                    <div role="separator" class="specialist-divider mt-2"></div>
-                                </div>
-
-                                <div class="skill-item mb-3">
-                                    <div class="text-black">Isi pengalaman ditampilkan di sini...</div>
-                                    <div role="separator" class="specialist-divider mt-2"></div>
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
 
 
