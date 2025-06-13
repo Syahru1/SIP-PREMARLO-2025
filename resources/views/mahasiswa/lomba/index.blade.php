@@ -45,15 +45,15 @@
                 <ul class="nav nav-tabs mb-3" id="lineTab" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link active" id="underline-home-tab" data-toggle="tab" href="#underline-home"
-                            role="tab" aria-controls="underline-home" aria-selected="true">Rekomendasi Lomba</a>
+                            role="tab" name="rekomendasi" aria-controls="underline-home" aria-selected="true">Rekomendasi Lomba</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" id="underline-profile-tab" data-toggle="tab" href="#underline-profile"
-                            role="tab" aria-controls="underline-profile" aria-selected="false">Pengajuan Lomba</a>
+                            role="tab" name="pengajuan" aria-controls="underline-profile" aria-selected="false">Pengajuan Lomba</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" id="underline-contact-tab" data-toggle="tab" href="#underline-contact"
-                            role="tab" aria-controls="underline-contact" aria-selected="false">Riwayat</a>
+                            role="tab" name="riwayat" aria-controls="underline-contact" aria-selected="false">Riwayat</a>
                     </li>
                 </ul>
                 <div class="tab-content" id="lineTabContent-3">
@@ -75,10 +75,8 @@
             </div>
         </div>
     </div>
-
-@endsection
-
-@push('js')
+<!-- SweetAlert Library -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @if (session('success'))
         <script>
             Swal.fire({
@@ -102,6 +100,9 @@
             });
         </script>
     @endif
+@endsection
+
+@push('js')
     {{-- <script>
         var firstUpload = new FileUploadWithPreview('myFirstImage')
     </script> --}}

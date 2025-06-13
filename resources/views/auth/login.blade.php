@@ -47,9 +47,9 @@
                         placeholder="Masukkan Password Anda">
                 </div>
 
-                <div class="d-flex justify-content-end mb-4">
+                {{-- <div class="d-flex justify-content-end mb-4">
                     <a class="text-link" href="#">Lupa Password</a>
-                </div>
+                </div> --}}
 
                 <div class="d-grid">
                     <button type="submit" class="btn btn-login">Login</button>
@@ -60,6 +60,8 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- SweetAlert Library -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
     <script src="{{ asset('assets/js/libs/jquery-3.1.1.min.js') }}"></script>
@@ -92,73 +94,75 @@
         // Setup CSRF token untuk AJAX
         $.ajaxSetup({
             headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
 
         // Validasi dan submit form login
         $(document).ready(function() {
             $('#form-login').on('submit', function(e) {
-            e.preventDefault();
+                e.preventDefault();
 
-            // Hapus error sebelumnya
-            $('.invalid-feedback').remove();
-            $('.is-invalid').removeClass('is-invalid');
+                // Hapus error sebelumnya
+                $('.invalid-feedback').remove();
+                $('.is-invalid').removeClass('is-invalid');
 
-            let username = $('#username').val().trim();
-            let password = $('#password').val().trim();
-            let valid = true;
+                let username = $('#username').val().trim();
+                let password = $('#password').val().trim();
+                let valid = true;
 
-            // Validasi username
-            if (username.length < 6 || username.length > 10) {
-                $('#username').addClass('is-invalid')
-                .after('<span class="invalid-feedback d-block">Username harus 4-20 karakter.</span>');
-                valid = false;
-            }
-
-            // Validasi password
-            if (password.length < 5 || password.length > 16) {
-                $('#password').addClass('is-invalid')
-                .after('<span class="invalid-feedback d-block">Password harus 5-20 karakter.</span>');
-                valid = false;
-            }
-
-            if (!valid) return;
-
-            // AJAX login
-            $.ajax({
-                url: $(this).attr('action'),
-                type: 'POST',
-                data: {
-                username: username,
-                password: password,
-                _token: $('meta[name="csrf-token"]').attr('content')
-                },
-                success: function(response) {
-                if (response.status) {
-                    Swal.fire({
-                    icon: 'success',
-                    title: 'Berhasil',
-                    text: response.message,
-                    }).then(function() {
-                    window.location = response.redirect;
-                    });
-                } else {
-                    Swal.fire({
-                    icon: 'error',
-                    title: 'Terjadi Kesalahan',
-                    text: response.message
-                    });
+                // Validasi username
+                if (username.length < 6 || username.length > 10) {
+                    $('#username').addClass('is-invalid')
+                        .after(
+                            '<span class="invalid-feedback d-block">Username harus 4-20 karakter.</span>');
+                    valid = false;
                 }
-                },
-                error: function(xhr) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Terjadi Kesalahan',
-                    text: 'Username atau password salah.'
+
+                // Validasi password
+                if (password.length < 5 || password.length > 16) {
+                    $('#password').addClass('is-invalid')
+                        .after(
+                            '<span class="invalid-feedback d-block">Password harus 5-20 karakter.</span>');
+                    valid = false;
+                }
+
+                if (!valid) return;
+
+                // AJAX login
+                $.ajax({
+                    url: $(this).attr('action'),
+                    type: 'POST',
+                    data: {
+                        username: username,
+                        password: password,
+                        _token: $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        if (response.status) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Berhasil',
+                                text: response.message,
+                            }).then(function() {
+                                window.location = response.redirect;
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Terjadi Kesalahan',
+                                text: response.message
+                            });
+                        }
+                    },
+                    error: function(xhr) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Terjadi Kesalahan',
+                            text: 'Username atau password salah.'
+                        });
+                    }
                 });
-                }
-            });
             });
         });
     </script>

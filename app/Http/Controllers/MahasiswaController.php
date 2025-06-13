@@ -393,9 +393,9 @@ class MahasiswaController extends Controller
                 $bidang_ids_str
             ]);
 
-            return redirect()->back()->with('success', 'Lomba berhasil ditambahkan.');
+            return redirect('mahasiswa/lomba?tab=pengajuan')->with('success', 'Lomba berhasil ditambahkan.');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Gagal menambahkan lomba');
+            return redirect('mahasiswa/lomba?tab=pengajuan')->with('error', 'Gagal menambahkan lomba');
         }
     }
 
@@ -489,7 +489,7 @@ class MahasiswaController extends Controller
                 $bidang_ids_str
             ]);
 
-            return redirect('mahasiswa/lomba')->with('success', 'Lomba berhasil diperbarui.');
+            return redirect('mahasiswa/lomba?tab=riwayat')->with('success', 'Lomba berhasil diperbarui.');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Gagal melakukan verifikasi.');
         }
