@@ -562,6 +562,7 @@ class MahasiswaController extends Controller
             $request->hadiah,
             $bidangList
         ]);
+        DB::statement('CALL sp_hitung_spk_matriks()');
 
         return redirect('mahasiswa/beranda')->with('success', 'Preferensi berhasil disimpan.');
     }
@@ -592,6 +593,7 @@ class MahasiswaController extends Controller
                 $request->hadiah,
                 $bidangList
             ]);
+            DB::statement('CALL sp_hitung_spk_matriks()');
 
             return redirect()->back()->with('success', 'Preferensi berhasil diperbarui.');
         } catch (\Exception $e) {
