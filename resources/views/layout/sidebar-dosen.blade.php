@@ -6,12 +6,12 @@
 
                 <ul class="navbar-nav theme-brand flex-row  text-center">
                     <li class="nav-item theme-logo">
-                        <a href="index.html">
+                        <a href="{{ url('dosen/beranda') }}">
                             <img src="{{ asset('assets/img/favicon.ico') }}" class="navbar-logo" alt="logo">
                         </a>
                     </li>
                     <li class="nav-item theme-text">
-                        <a href="index.html" class="nav-link"> COMPQUEST </a>
+                        <a href="{{ url('dosen/beranda') }}" class="nav-link"> COMPQUEST </a>
                     </li>
                 </ul>
 
