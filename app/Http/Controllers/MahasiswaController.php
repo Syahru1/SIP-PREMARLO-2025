@@ -102,7 +102,7 @@ class MahasiswaController extends Controller
             'jumlah_univ' => 'required|integer|min:1',
             'nomor_sertifikat' => 'required|string|max:255',
             'link_perlombaan' => 'required|url|max:255',
-            'foto_sertifikat' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048',
+            // 'foto_sertifikat' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048',
         ]);
 
         $prestasi = PrestasiModel::findOrFail($id);
@@ -562,6 +562,7 @@ class MahasiswaController extends Controller
             $request->hadiah,
             $bidangList
         ]);
+        DB::statement('CALL sp_hitung_spk_matriks()');
 
         return redirect('mahasiswa/beranda')->with('success', 'Preferensi berhasil disimpan.');
     }
@@ -592,6 +593,7 @@ class MahasiswaController extends Controller
                 $request->hadiah,
                 $bidangList
             ]);
+            DB::statement('CALL sp_hitung_spk_matriks()');
 
             return redirect()->back()->with('success', 'Preferensi berhasil diperbarui.');
         } catch (\Exception $e) {

@@ -85,7 +85,7 @@
                             <p class="card-text">{{ $data->deskripsi_lomba }}</p>
                             <div class="form-row">
                                 <div class="col">
-                                    <a href="{{ url('dosen/lomba/detail-lomba/' . $data->id_lomba) }}"
+                                    <a href="{{ url('mahasiswa/lomba/detail-lomba/' . $data->id_lomba) }}"
                                         class="btn btn-primary">Detail</a>
                                 </div>
                                 <div class="col">
