@@ -18,13 +18,13 @@ class CriteriaModelSeeder extends Seeder
                 'kode_kriteria' => 'CRT001',
                 'nama_kriteria' => 'Bidang',
                 'jenis_kriteria' => 'Benefit',
-                'bobot_kriteria' => 30,
+                'bobot_kriteria' => 20,
             ],
             [
                 'kode_kriteria' => 'CRT002',
                 'nama_kriteria' => 'Penyelenggara',
                 'jenis_kriteria' => 'Benefit',
-                'bobot_kriteria' => 15,
+                'bobot_kriteria' => 20,
             ],
             [
                 'kode_kriteria' => 'CRT003',
@@ -36,7 +36,7 @@ class CriteriaModelSeeder extends Seeder
                 'kode_kriteria' => 'CRT004',
                 'nama_kriteria' => 'Biaya Pendaftaran',
                 'jenis_kriteria' => 'Cost',
-                'bobot_kriteria' => 15,
+                'bobot_kriteria' => 20,
             ],
             [
                 'kode_kriteria' => 'CRT005',
